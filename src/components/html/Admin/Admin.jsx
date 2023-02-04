@@ -193,8 +193,8 @@ export function Admin() {
               <div className='h-full px-6 pt-2 pb-8'>
                 <div className='flex h-full'>
                   <div className='' style={{ width: `17rem` }}>
-                    <ul className='w-full first-letter:p-2 menu bg-base-100 rounded-box'>
-                      <li>
+                    <ul className='w-full px-2 py-2 first-letter:p-2 menu bg-base-100 rounded-box'>
+                      <li className='text-black  bg-teal-300 rounded-xl'>
                         <a>
                           <svg
                             xmlns='http://www.w3.org/2000/svg'
