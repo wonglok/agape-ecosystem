@@ -9,10 +9,10 @@ export function Admin() {
       {/*  */}
       {/*  */}
 
-      <div className='w-full h-full p-5 pb-10  from-green-300 to-blue-900 bg-gradient-to-t'>
+      <div className='w-full h-full p-5 pb-5  from-green-200 to-teal-900 bg-gradient-to-t'>
         <div
           style={{ maxWidth: '1920px' }}
-          className='w-full h-full mx-auto text-base-content glass rounded-box bg-opacity-60 backdrop-blur-lg'>
+          className='w-full h-full mx-auto shadow-lg text-base-content glass rounded-box bg-opacity-60 backdrop-blur-lg'>
           <>
             <div class='px-2 pt-2' style={{ height: '4.5rem' }}>
               <div class='navbar text-primary-content rounded-box space-x-1'>
@@ -192,8 +192,8 @@ export function Admin() {
             <div className='h-full' style={{ height: 'calc(100% - 4.5rem)' }}>
               <div className='h-full px-6 pt-2 pb-8'>
                 <div className='flex h-full'>
-                  <div className='' style={{ width: `14rem` }}>
-                    <ul className='w-56 p-2 menu bg-base-100 rounded-box'>
+                  <div className='' style={{ width: `17rem` }}>
+                    <ul className='w-full first-letter:p-2 menu bg-base-100 rounded-box'>
                       <li>
                         <a>
                           <svg
@@ -250,8 +250,8 @@ export function Admin() {
                       </li>
                     </ul>
                   </div>
-                  <div className='h-full ml-5' style={{ width: `calc(100% - 14rem)` }}>
-                    <div className='h-full p-4 bg-white rounded-2xl'>
+                  <div className='h-full ml-5' style={{ width: `calc(100% - 17rem)` }}>
+                    <div className='h-full p-4 bg-white shadow-xl rounded-2xl'>
                       <div className=''></div>
                     </div>
                   </div>
