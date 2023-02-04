@@ -1,8 +1,8 @@
 {
-  "name": "react-three-next",
-  "version": "2.0.0",
+  "name": "agape-ecosystem",
+  "version": "0.0.1",
   "authors": [
-    "Renaud ROHLINGER <https://twitter.com/onirenaud>"
+    "Lok Wong <https://twitter.com/wonglok831>"
   ],
   "license": "MIT",
   "private": true,
