@@ -178,7 +178,7 @@ export function Admin() {
                   <div tabindex='0' class='py-2 dropdown-content'>
                     <div class='shadow-xl card compact bg-neutral-focus text-neutral-content rounded-box w-72'>
                       <div class='card-body'>
-                        <h2 class='font-extrabold capitalize card-title'>🥺 See you around...👋🏻</h2>
+                        <h2 class='font-extrabold capitalize card-title'> See you around... 🥺 👋🏻</h2>
                         <LogoutButton></LogoutButton>
                       </div>
                     </div>
