@@ -10,7 +10,6 @@ export function Admin() {
         }}>
         Signout
       </button>
-      <div>Yo</div>
     </Gate>
   )
 }
