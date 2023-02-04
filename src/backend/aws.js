@@ -3,8 +3,6 @@ import md5 from 'md5'
 import { v4 } from 'uuid'
 import { proxy, useSnapshot } from 'valtio'
 import { useEffect } from 'react'
-import { LoginPage } from './LoginPage'
-import { Triangle } from '@/pages/_app'
 
 export const AWSData = proxy({ jwt: '', canShow: false, userIDFromServer: false })
 
@@ -46,16 +44,6 @@ export function Hydration({}) {
   }, [aws.jwt])
 
   return null
-}
-
-export function Gate({ children }) {
-  let aws = useSnapshot(AWSData)
-
-  if (aws.canShow) {
-    return aws.userIDFromServer ? children : <LoginPage />
-  } else {
-    return <Triangle></Triangle>
-  }
 }
 
 export const getMD5ID = () => {

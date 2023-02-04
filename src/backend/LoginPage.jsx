@@ -7,7 +7,7 @@ export function LoginPage() {
       <div className='flex items-center justify-center w-full h-full'>
         <div>
           <button
-            className='p-2 px-5 text-white bg-yellow-500 rounded-xl'
+            className='p-2 px-12 text-white bg-yellow-500 rounded-xl'
             onClick={() => {
               loginMetamask()
             }}>
