@@ -18,7 +18,7 @@ export function Admin() {
               <div class='navbar text-primary-content rounded-box space-x-1'>
                 <div class='justify-center flex-1 pr-2 mx-2 md:flex md:justify-start'>
                   <div className='flex items-center px-5 mr-5 text-black bg-gray-100 rounded-2xl'>
-                    <div class='text-lg breadcrumbs'>
+                    <div class='text-lg shadow-xl breadcrumbs'>
                       <ul>
                         <li>
                           <a href='/' target={'_blank'} referrerPolicy='no-referrer'>
@@ -171,14 +171,14 @@ export function Admin() {
                     <button
                       aria-label='navbar component'
                       class='hidden border-none btn btn-ghost mask mask-squircle btn-square focus:bg-base-content focus:bg-opacity-50 md:flex'>
-                      <div class='avatar'>
+                      <div class='shadow-lg avatar'>
                         <div class='w-10 h-10 mask mask-squircle'>
                           <img src='/img/user-image/faces/dog128.png' alt='Avatar Tailwind CSS Component' />
                         </div>
                       </div>
                     </button>
                   </div>
-                  <div tabindex='0' class='py-2 dropdown-content'>
+                  <div tabindex='0' class='py-2 dropdown-content '>
                     <div class='shadow-xl card compact bg-neutral-focus text-neutral-content rounded-box w-72'>
                       <div class='card-body'>
                         <h2 class='font-extrabold capitalize card-title'> See you around... 🥺 👋🏻</h2>
@@ -193,8 +193,8 @@ export function Admin() {
               <div className='h-full px-6 pt-2 pb-8'>
                 <div className='flex h-full'>
                   <div className='' style={{ width: `17rem` }}>
-                    <ul className='w-full px-2 pt-2 first-letter:p-2 menu bg-base-100 rounded-box'>
-                      <li className='mb-2 text-teal-900 bg-teal-300 rounded-xl'>
+                    <ul className='w-full px-2 pt-2 shadow-xl first-letter:p-2 menu bg-base-100 rounded-box'>
+                      <li className='mb-2 text-black bg-teal-300 rounded-xl'>
                         <a>
                           <svg
                             xmlns='http://www.w3.org/2000/svg'
@@ -209,10 +209,10 @@ export function Admin() {
                               d='M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6'
                             />
                           </svg>
-                          Item 2
+                          Dashboard Home
                         </a>
                       </li>
-                      <li className='mb-2 text-teal-900 bg-teal-300 rounded-xl'>
+                      <li className='mb-2 text-black bg-white rounded-xl'>
                         <a>
                           <svg
                             xmlns='http://www.w3.org/2000/svg'
@@ -230,7 +230,7 @@ export function Admin() {
                           Item 1
                         </a>
                       </li>
-                      <li className='mb-2 text-teal-900 bg-teal-300 rounded-xl'>
+                      <li className='mb-2 text-black bg-white rounded-xl'>
                         <a>
                           <svg
                             xmlns='http://www.w3.org/2000/svg'
