@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
 /* eslint-disable @next/next/no-img-element */
 import { Gate } from '@/backend/Gate'
 import { LogoutButton } from '@/backend/LogoutButton'
@@ -9,7 +10,9 @@ export function Admin() {
       {/*  */}
 
       <div className='w-full h-full p-5 pb-10  from-green-300 to-blue-900 bg-gradient-to-t'>
-        <div className='w-full h-full mx-auto text-base-content glass rounded-box bg-opacity-60 backdrop-blur-lg'>
+        <div
+          style={{ maxWidth: '1920px' }}
+          className='w-full h-full mx-auto text-base-content glass rounded-box bg-opacity-60 backdrop-blur-lg'>
           <>
             <div class='px-2 pt-2' style={{ height: '4.5rem' }}>
               <div class='navbar text-primary-content rounded-box space-x-1'>
@@ -18,7 +21,7 @@ export function Admin() {
                     <div class='text-lg breadcrumbs'>
                       <ul>
                         <li>
-                          <a>
+                          <a href='/' target={'_blank'} referrerPolicy='no-referrer'>
                             <svg
                               xmlns='http://www.w3.org/2000/svg'
                               fill='none'
