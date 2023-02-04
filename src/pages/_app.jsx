@@ -4,6 +4,7 @@ import Header from '@/config'
 // import Layout from '@/components/dom/Layout'
 import '@/styles/index.css'
 import { useRouter } from 'next/router'
+import { Hydration } from '@/backend/aws'
 
 {
   /* The canvas can either be in front of the dom or behind. If it is in front it can overlay contents.
@@ -25,6 +26,7 @@ export default function App({ Component, pageProps = { title: 'index' } }) {
   // const ref = useRef()
   return (
     <>
+      <Hydration></Hydration>
       <Header title={pageProps.title} />
       <Component {...pageProps} />
       <Loading></Loading>
@@ -69,7 +71,7 @@ function Loading() {
   )
 }
 
-function Triangle() {
+export function Triangle() {
   return (
     <div
       className='absolute top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-30 backdrop-blur-md'

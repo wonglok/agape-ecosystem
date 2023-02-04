@@ -1,6 +1,6 @@
-import { Landing } from '@/components/html/Landing/Landing'
+import { Admin } from '@/components/html/Admin/Admin'
 
-export default Landing
+export default Admin
 
 export async function getStaticProps() {
   return { props: { title: 'Agape Ecosystem' } }
