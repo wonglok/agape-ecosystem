@@ -41,10 +41,6 @@ export function PageArtStudio() {
             .map((it) => {
               return <OneProject key={it.oid} data={it}></OneProject>
             })}
-          {/* <OneProject></OneProject>
-          <OneProject></OneProject>
-          <OneProject></OneProject>
-          <OneProject></OneProject> */}
         </div>
       </AdminLayout>
     </Gate>
