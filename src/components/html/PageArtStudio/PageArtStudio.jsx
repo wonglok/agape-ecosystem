@@ -6,9 +6,19 @@ import { AdminLayout } from '../AdminLayout/AdminLayout'
 export function PageArtStudio() {
   return (
     <Gate>
-      <AdminLayout>PageArtStudio</AdminLayout>
+      <AdminLayout>
+        <div>PageArtStudio</div>
+        <div>PageArtStudio</div>
+        <div>PageArtStudio</div>
+      </AdminLayout>
     </Gate>
   )
 }
+
+//
+
+//
+
+//
 
 //
