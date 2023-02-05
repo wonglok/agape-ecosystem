@@ -221,4 +221,36 @@ export class OClass {
         // this.state.items.push(result)
       })
   }
+
+  update({ object, updateState = false }) {
+    //
+    return fetch(`${getBackendURL().rest}${this.baseURL}`, {
+      method: 'post',
+      mode: 'cors',
+      body: JSON.stringify({
+        action: 'update',
+        jwt: AWSData.jwt,
+        payload: object,
+      }),
+    })
+      .then(async (r) => {
+        let data = await r.json()
+
+        if (r.ok) {
+          return data
+        } else {
+          throw data
+        }
+      })
+      .then(({ result }) => {
+        console.log('update', result)
+
+        if (updateState) {
+          let idx = this.state.items.findIndex((r) => r.oid === object.oid)
+          this.state.items[idx] = result
+          this.state.items = [...this.state.items]
+        }
+        // this.state.items.push(result)
+      })
+  }
 }
