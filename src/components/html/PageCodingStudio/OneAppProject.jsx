@@ -143,7 +143,7 @@ export function OneAppProject({ data }) {
         </div>
       </div>
       {viewDetail && (
-        <div className='px-3'>
+        <div className='px-3  border-t border-gray-500 '>
           <div className=''>
             <CreateAppVersion app={data}></CreateAppVersion>
 

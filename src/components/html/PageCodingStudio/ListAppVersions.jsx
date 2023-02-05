@@ -25,7 +25,7 @@ export function ListAppVersions({ app }) {
         .filter((v) => v.appID === app.oid)
         .map((it) => {
           return (
-            <div className='inline-block w-full' key={it.oid}>
+            <div className='block mr-5' key={it.oid}>
               <OneAppVersion app={app} version={it}></OneAppVersion>
             </div>
           )

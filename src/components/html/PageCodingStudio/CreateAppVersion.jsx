@@ -6,7 +6,7 @@ export function CreateAppVersion({ app }) {
   let nameRef = useRef()
 
   return (
-    <div className='flex items-center justify-center w-full my-3'>
+    <div className='flex items-center justify-start w-full my-3'>
       <div className='form-control'>
         {/* <label className='label'>
           <span className='label-text'>Create New Version</span>
