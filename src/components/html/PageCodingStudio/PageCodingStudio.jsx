@@ -6,9 +6,24 @@ import { CreateAppProject } from './CreateAppProject'
 import { OneAppProject } from './OneAppProject'
 import { useSnapshot } from 'valtio'
 import { AppProject } from '@/backend/aws-app-project'
+import nProgress from 'nprogress'
+import { useEffect } from 'react'
 
 export function PageCodingStudio() {
   let app = useSnapshot(AppProject.state)
+
+  useEffect(() => {
+    //
+    nProgress.start()
+    AppProject.listAll({})
+      .then((response) => {
+        AppProject.state.items = response.result
+      })
+      .finally(() => {
+        nProgress.done()
+      })
+  }, [])
+
   return (
     <Gate>
       <AdminLayout>

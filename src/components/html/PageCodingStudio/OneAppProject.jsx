@@ -1,9 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 import { AppProject } from '@/backend/aws-app-project'
 import nProgress from 'nprogress'
 import { useEffect, useRef } from 'react'
 
 export function OneAppProject({ data }) {
-  let timerName = useRef(0)
+  let timerDebounce = useRef(0)
 
   useEffect(() => {
     let h = (ev) => {
@@ -20,56 +21,62 @@ export function OneAppProject({ data }) {
     }
   })
   return (
-    <div className='inline-block mb-5 mr-5 shadow-xl w-72 card bg-base-100'>
-      <figure className='h-52'>
-        <img src='/img/user-image/yo/punk.jpg' alt='Shoes' />
-      </figure>
-      <div className='p-4'>
-        <h2 className='card-title'>
-          <textarea
-            defaultValue={data.name}
-            className='w-full p-2 mb-3 resize-none textarea textarea-bordered'
-            rows={1}
-            onChange={(ev) => {
-              nProgress.start()
-              clearTimeout(timerName.current)
-              timerName.current = setTimeout(() => {
-                let found = AppProject.state.items.find((e) => e.oid === data.oid)
-                found.name = found.name || ''
-                found.description = found.description || ''
+    <div className='inline-block mb-5 mr-5 border border-gray-500 shadow-xl rounded-box'>
+      <div className='inline-flex items-stretch border-b border-gray-500 rounded-t-xl' style={{ height: `16.5rem` }}>
+        <figure className='h-full'>
+          <div class='h-full cursor-pointer indicator group'>
+            <img src='/img/user-image/yo/punk.jpg' className='rounded-tl-xl' alt='Punk' />
+            <span class=' invisible group-hover:visible indicator-item indicator-center indicator-middle translate-y-24 badge badge-accent'>
+              Change Image (todo)
+            </span>
+          </div>
+        </figure>
+        <div className='h-full px-3 pt-3 w-72'>
+          <h2 className=''>
+            <textarea
+              defaultValue={data.name}
+              className='w-full p-2 mb-3 resize-none textarea textarea-bordered'
+              rows={1}
+              onChange={(ev) => {
+                nProgress.start()
+                clearTimeout(timerDebounce.current)
+                timerDebounce.current = setTimeout(() => {
+                  let found = AppProject.state.items.find((e) => e.oid === data.oid)
+                  found.name = found.name || ''
+                  found.description = found.description || ''
 
-                found.name = ev.target.value
-                AppProject.update({ object: JSON.parse(JSON.stringify(found)), updateState: false }).finally(() => {
-                  nProgress.done()
-                })
-              }, 500)
-              // timerName.current
-            }}
-            placeholder='Project Name'></textarea>
-        </h2>
-        <div>
-          <textarea
-            defaultValue={data.description}
-            className='w-full p-2 mb-3 resize-none textarea textarea-bordered'
-            rows={3}
-            onChange={(ev) => {
-              nProgress.start()
-              clearTimeout(timerName.current)
-              timerName.current = setTimeout(() => {
-                let found = AppProject.state.items.find((e) => e.oid === data.oid)
-                found.name = found.name || ''
-                found.description = found.description || ''
+                  found.name = ev.target.value
+                  AppProject.update({ object: JSON.parse(JSON.stringify(found)), updateState: false }).finally(() => {
+                    nProgress.done()
+                  })
+                }, 500)
+                // timerDebounce.current
+              }}
+              placeholder='Project Name'></textarea>
+          </h2>
+          <div>
+            <textarea
+              defaultValue={data.description}
+              className='w-full p-2 mb-3 resize-none textarea textarea-bordered'
+              rows={3}
+              onChange={(ev) => {
+                nProgress.start()
+                clearTimeout(timerDebounce.current)
+                timerDebounce.current = setTimeout(() => {
+                  let found = AppProject.state.items.find((e) => e.oid === data.oid)
+                  found.name = found.name || ''
+                  found.description = found.description || ''
 
-                found.description = ev.target.value
-                AppProject.update({ object: JSON.parse(JSON.stringify(found)), updateState: false }).finally(() => {
-                  nProgress.done()
-                })
-              }, 500)
-              // timerName.current
-            }}
-            placeholder='description'></textarea>
-        </div>
-        {/* <div>
+                  found.description = ev.target.value
+                  AppProject.update({ object: JSON.parse(JSON.stringify(found)), updateState: false }).finally(() => {
+                    nProgress.done()
+                  })
+                }, 500)
+                // timerDebounce.current
+              }}
+              placeholder='description'></textarea>
+          </div>
+          {/* <div>
           <div className='w-full form-control'>
             <label className='cursor-pointer label'>
               <span className='label-text'>Safety Lock</span>
@@ -77,49 +84,56 @@ export function OneAppProject({ data }) {
             </label>
           </div>
         </div> */}
-        {/*  */}
-        <div className='justify-end card-actions'>
-          <label htmlFor={'my-modal-remove-item' + data.oid} className='btn btn-error'>
-            Remove
-          </label>
 
-          <input type='checkbox' id={'my-modal-remove-item' + data.oid} className='modal-toggle' />
-          <div className='modal rounded-box'>
-            <div className='modal-box'>
-              <h3 className='text-lg font-bold'>
-                Remove Project {`"`}
-                {data.name}
-                {`"`}?
-              </h3>
-              <div className='modal-action'>
-                <label htmlFor={'my-modal-remove-item' + data.oid} className='text-xs btn btn-neutral'>
-                  Cancel
-                </label>
-                <label
-                  onClick={(ev) => {
-                    nProgress.start()
-                    ev.target.classList.toggle('loading')
-                    AppProject.remove({ oid: data.oid })
-                      .then(() => {
-                        return AppProject.listAll({}).then((response) => {
-                          AppProject.state.items = response.result
+          <div className='inline-flex justify-end w-full'>
+            <label htmlFor={'my-modal-remove-item' + data.oid} className='mr-2 btn btn-error'>
+              Remove
+            </label>
+
+            <input type='checkbox' id={'my-modal-remove-item' + data.oid} className='modal-toggle' />
+            <div className='modal rounded-box'>
+              <div className='modal-box'>
+                <h3 className='text-lg font-bold'>
+                  Remove Project {`"`}
+                  {data.name}
+                  {`"`}?
+                </h3>
+                <div className='modal-action'>
+                  <label htmlFor={'my-modal-remove-item' + data.oid} className='text-xs btn btn-neutral'>
+                    Cancel
+                  </label>
+                  <label
+                    onClick={(ev) => {
+                      nProgress.start()
+                      ev.target.classList.toggle('loading')
+                      AppProject.remove({ oid: data.oid })
+                        .then(() => {
+                          return AppProject.listAll({}).then((response) => {
+                            AppProject.state.items = response.result
+                          })
                         })
-                      })
-                      .finally(() => {
-                        ev.target.classList.toggle('loading')
-                        nProgress.done()
-                      })
-                  }}
-                  htmlFor={'my-modal-remove-item' + data.oid}
-                  className='text-xs btn btn-error'>
-                  Confirm Remove
-                </label>
+                        .finally(() => {
+                          ev.target.classList.toggle('loading')
+                          nProgress.done()
+                        })
+                    }}
+                    htmlFor={'my-modal-remove-item' + data.oid}
+                    className='text-xs btn btn-error'>
+                    Confirm Remove
+                  </label>
+                </div>
               </div>
             </div>
-          </div>
 
-          <button className='text-xs btn btn-primary'>Edit</button>
+            <button className='text-xs btn btn-primary'>Edit</button>
+          </div>
         </div>
+      </div>
+      <div className='px-3'>
+        <div className='text-xl'>App Versions</div>
+        <div className='text-sm'>Snapshot Versions</div>
+
+        <div className=''></div>
       </div>
     </div>
   )

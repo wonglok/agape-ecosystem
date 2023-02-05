@@ -82,8 +82,8 @@
   box-sizing: border-box;
 
   border: solid 3px transparent;
-  border-top-color: hotpink;
-  border-left-color: hotpink;
+  border-top-color: lime;
+  border-left-color: lime;
   border-radius: 50%;
 
   -webkit-animation: nprogress-spinner 400ms linear infinite;

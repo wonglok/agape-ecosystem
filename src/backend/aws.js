@@ -144,8 +144,11 @@ export const processResponse = async (r) => {
 export class OClass {
   constructor({ baseURL = '/art-project' }) {
     this.baseURL = baseURL
-    this.state = {}
+    this.state = proxy({ items: [], currentID: '' })
     this.reset()
+  }
+  getStateOID({ oid }) {
+    return this.state.items.find((e) => e.oid === oid)
   }
   reset() {
     this.state = proxy({ items: [], currentID: '' })

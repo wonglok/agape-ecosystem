@@ -1,9 +1,10 @@
 import { AppProject } from '@/backend/aws-app-project'
 import nProgress from 'nprogress'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 export function CreateAppProject() {
   let nameRef = useRef()
+
   return (
     <div className='mb-3'>
       <div className='form-control'>
