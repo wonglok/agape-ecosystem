@@ -14,8 +14,21 @@
     height: 100%;
     margin: 0;
     padding: 0;
-    /* overflow: hidden; */
+    overflow: hidden;
+    /* font-family: daysregular; */
   }
+}
+
+@font-face {
+  font-family: 'daysregular';
+  src: url('/font/days_regular_macroman/Days-webfont.eot');
+  src: url('/font/days_regular_macroman/Days-webfont.eot?#iefix') format('embedded-opentype'),
+    url('/font/days_regular_macroman/Days-webfont.woff2') format('woff2'),
+    url('/font/days_regular_macroman/Days-webfont.woff') format('woff'),
+    url('/font/days_regular_macroman/Days-webfont.ttf') format('truetype'),
+    url('/font/days_regular_macroman/Days-webfont.svg#daysregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
 }
 
 /* Make clicks pass-through */
