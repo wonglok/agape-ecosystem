@@ -132,11 +132,93 @@ export const logout = () => {
 }
 
 export class OClass {
-  constructor() {
-    //
+  constructor({ baseURL = '/art-project' }) {
+    this.baseURL = baseURL
+    this.state = {}
+    this.reset()
+  }
+  reset() {
     this.state = proxy({ items: [], currentID: '' })
   }
-  create() {
+  listAll({}) {
+    return fetch(`${getBackendURL().rest}${this.baseURL}`, {
+      method: 'post',
+      mode: 'cors',
+      body: JSON.stringify({
+        action: 'listAll',
+        jwt: AWSData.jwt,
+        payload: {},
+      }),
+    })
+      .then(async (r) => {
+        let data = await r.json()
+
+        if (r.ok) {
+          return data
+        } else {
+          throw data
+        }
+      })
+      .then(({ result }) => {
+        console.log('list-all-replace', result)
+
+        this.state.items = result
+      })
+  }
+  create({ object }) {
     //
+    return fetch(`${getBackendURL().rest}${this.baseURL}`, {
+      method: 'post',
+      mode: 'cors',
+      body: JSON.stringify({
+        action: 'create',
+        jwt: AWSData.jwt,
+        payload: object,
+      }),
+    })
+      .then(async (r) => {
+        let data = await r.json()
+
+        if (r.ok) {
+          return data
+        } else {
+          throw data
+        }
+      })
+      .then(({ result }) => {
+        console.log('create', result)
+
+        this.state.items.push(result)
+      })
+  }
+  remove({ oid }) {
+    //
+    return fetch(`${getBackendURL().rest}${this.baseURL}`, {
+      method: 'post',
+      mode: 'cors',
+      body: JSON.stringify({
+        action: 'remove',
+        jwt: AWSData.jwt,
+        payload: { oid },
+      }),
+    })
+      .then(async (r) => {
+        let data = await r.json()
+
+        if (r.ok) {
+          return data
+        } else {
+          throw data
+        }
+      })
+      .then(({ result }) => {
+        console.log('remove', result)
+        this.state.items.splice(
+          this.state.items.findIndex((r) => r.oid === oid),
+          1,
+        )
+
+        // this.state.items.push(result)
+      })
   }
 }

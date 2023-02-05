@@ -4,8 +4,18 @@ import { Gate } from '@/backend/Gate'
 import { AdminLayout } from '../AdminLayout/AdminLayout'
 import { CreateProject } from './CreateProject'
 import { OneProject } from './OneProject'
+import { useEffect } from 'react'
+import { ArtProject } from '@/backend/aws-art-project'
+import { useSnapshot } from 'valtio'
 
 export function PageArtStudio() {
+  useEffect(() => {
+    //!SECTION
+
+    ArtProject.listAll({})
+  }, [])
+
+  let artp = useSnapshot(ArtProject.state)
   return (
     <Gate>
       <AdminLayout>
@@ -16,11 +26,17 @@ export function PageArtStudio() {
         <CreateProject></CreateProject>
 
         <div className='pt-3'>
+          {artp.items
+            .slice()
+            .reverse()
+            .map((it) => {
+              //
+              return <OneProject key={it.oid} data={it}></OneProject>
+            })}
+          {/* <OneProject></OneProject>
           <OneProject></OneProject>
           <OneProject></OneProject>
-          <OneProject></OneProject>
-          <OneProject></OneProject>
-          <OneProject></OneProject>
+          <OneProject></OneProject> */}
         </div>
       </AdminLayout>
     </Gate>
