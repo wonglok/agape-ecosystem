@@ -2,6 +2,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { Gate } from '@/backend/Gate'
 import { LogoutButton } from '@/backend/LogoutButton'
+import { Menu } from '../Menu/Menu'
 
 export function Admin() {
   return (
@@ -83,14 +84,10 @@ export function Admin() {
                       <div tabIndex='0' className='py-2 dropdown-content'>
                         <div className='shadow-xl card compact bg-neutral-focus text-neutral-content rounded-box w-72'>
                           <div className='card-body'>
-                            <h2 className='font-extrabold capitalize card-title'>text input component</h2>
-                            <p className='text-sm text-neutral-content text-opacity-80'>
-                              Text input comes in various sizes and styles
-                            </p>
+                            <h2 className='font-extrabold capitalize card-title'>Search Result</h2>
+                            <p className='text-sm text-neutral-content text-opacity-80'>...</p>
                             <div className='flex justify-end mt-4'>
-                              <a href='/components/input' className='btn btn-primary btn-sm xl:btn-md'>
-                                See component
-                              </a>
+                              <a className='btn btn-primary btn-sm xl:btn-md'>View More</a>
                             </div>
                           </div>
                         </div>
@@ -159,7 +156,7 @@ export function Admin() {
                       </div>
                     </button>
                   </div>
-                  <div tabIndex='0' className='py-2 dropdown-content  -translate-y-2 -translate-x-2'>
+                  <div tabIndex='0' className='py-2 dropdown-content translate-y-12 translate-x-12'>
                     <div className='shadow-xl card compact bg-neutral-focus text-neutral-content rounded-box w-72'>
                       <div className='card-body'>
                         <h2 className='font-extrabold capitalize card-title daysfont'> See you around... 🥺 👋🏻</h2>
@@ -174,71 +171,11 @@ export function Admin() {
               <div className='h-full px-6 pt-2 pb-8'>
                 <div className='flex h-full'>
                   <div className='' style={{ width: `17rem` }}>
-                    <ul className='w-full px-2 pt-2 shadow-xl first-letter:p-2 menu bg-base-100 rounded-box'>
-                      <li className='flex items-center py-3 mb-2 text-3xl text-center bg-gray-200 rounded-lg daysfont'>
-                        AGAPE
-                      </li>
-                      <li className='mb-2 text-black bg-teal-300 rounded-xl'>
-                        <a>
-                          <svg
-                            xmlns='http://www.w3.org/2000/svg'
-                            className='w-5 h-5'
-                            fill='none'
-                            viewBox='0 0 24 24'
-                            stroke='currentColor'>
-                            <path
-                              strokeLinecap='round'
-                              strokeLinejoin='round'
-                              strokeWidth='2'
-                              d='M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6'
-                            />
-                          </svg>
-                          My Pages
-                        </a>
-                      </li>
-                      <li className='mb-2 text-black bg-white rounded-xl'>
-                        <a>
-                          <svg
-                            xmlns='http://www.w3.org/2000/svg'
-                            className='w-5 h-5'
-                            fill='none'
-                            viewBox='0 0 24 24'
-                            stroke='currentColor'>
-                            <path
-                              strokeLinecap='round'
-                              strokeLinejoin='round'
-                              strokeWidth='2'
-                              d='M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
-                            />
-                          </svg>
-                          Coding Studio
-                        </a>
-                      </li>
-                      <li className='mb-2 text-black bg-white rounded-xl'>
-                        <a>
-                          <svg
-                            xmlns='http://www.w3.org/2000/svg'
-                            className='w-5 h-5'
-                            fill='none'
-                            viewBox='0 0 24 24'
-                            stroke='currentColor'>
-                            <path
-                              strokeLinecap='round'
-                              strokeLinejoin='round'
-                              strokeWidth='2'
-                              d='M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
-                            />
-                          </svg>
-                          3D ART Studio
-                        </a>
-                      </li>
-                    </ul>
+                    <Menu></Menu>
                   </div>
                   <div className='h-full ml-5' style={{ width: `calc(100% - 17rem)` }}>
                     <div className='h-full p-4 overflow-auto bg-white shadow-xl rounded-2xl'>
-                      <div className=''>
-                        <div className='justify-center flex-1 pr-2 mx-2 md:flex md:justify-start'></div>
-                      </div>
+                      <div className='h-screen'>Content 123</div>
                       <div className='h-screen'>Content 123</div>
                     </div>
                   </div>

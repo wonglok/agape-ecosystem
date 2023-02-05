@@ -16,9 +16,10 @@ export function WholePage() {
           <>
             <div className='px-2 pt-2' style={{ height: '4.5rem' }}>
               <div className='navbar text-primary-content rounded-box space-x-1'>
-                <div className='justify-center flex-1 pr-2 mx-2 md:flex md:justify-start'>
+                <div className='flex-1 ml-3 text-2xl'>
+                  {/* <div className='' style={{ width: `18rem` }}></div> */}
                   <div className='flex items-center px-5 mr-5 text-black bg-gray-100 rounded-2xl'>
-                    <div className='flex text-lg shadow-xl breadcrumbs daysfont'>
+                    <div className='flex text-base shadow-xl breadcrumbs'>
                       <ul>
                         <li className=''>
                           <a href='/' target={'_blank'} referrerPolicy='no-referrer'>
@@ -33,7 +34,7 @@ export function WholePage() {
                                 strokeWidth='2'
                                 d='M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z'></path>
                             </svg>
-                            3D Website
+                            Public View
                           </a>
                         </li>
                         <li>
@@ -70,8 +71,7 @@ export function WholePage() {
                     </div>
                   </div>
                 </div>
-
-                {/* <div className='flex-1 hidden md:flex md:flex-none'>
+                <div className='flex-1 hidden md:flex md:flex-none'>
                   <div className='form-control'>
                     <div className='dropdown'>
                       <div tabIndex='0'>
@@ -98,41 +98,22 @@ export function WholePage() {
                     </div>
                   </div>
                 </div>
-                <div className='dropdown dropdown-left'>
-                  <div tabIndex='0'>
-                    <button
-                      aria-label='button component'
-                      className='hidden border-none btn btn-ghost mask mask-squircle btn-square focus:bg-base-content focus:bg-opacity-50 md:flex'>
-                      <svg
-                        xmlns='http://www.w3.org/2000/svg'
-                        fill='none'
-                        viewBox='0 0 24 24'
-                        className='inline-block w-6 h-6 stroke-current'>
-                        <path
-                          strokeLinecap='round'
-                          strokeLinejoin='round'
-                          strokeWidth='2'
-                          d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
-                      </svg>
-                    </button>
-                  </div>
-                  <div tabIndex='0' className='py-2 dropdown-content'>
-                    <div className='shadow-xl card compact bg-neutral-focus text-neutral-content rounded-box w-72'>
-                      <div className='card-body'>
-                        <h2 className='font-extrabold capitalize card-title'>navbar component</h2>
-                        <p className='text-sm text-neutral-content text-opacity-80'>
-                          You'll need a navbar on top of your page
-                        </p>
-                        <div className='flex justify-end mt-4'>
-                          <a href='/components/navbar' className='btn btn-primary btn-sm xl:btn-md'>
-                            See component
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div> */}
-                {/* <div className='dropdown dropdown-left'>
+                <button
+                  aria-label='button component'
+                  className='hidden border-none btn btn-ghost mask mask-squircle btn-square focus:bg-base-content focus:bg-opacity-50 md:flex'>
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    fill='none'
+                    viewBox='0 0 24 24'
+                    className='inline-block w-6 h-6 stroke-current'>
+                    <path
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth='2'
+                      d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
+                  </svg>
+                </button>
+                <div className='dropdown dropdown-left '>
                   <div tabIndex='0'>
                     <button
                       aria-label='button component'
@@ -150,11 +131,11 @@ export function WholePage() {
                       </svg>
                     </button>
                   </div>
-                  <div tabIndex='0' className='py-2 dropdown-content'>
-                    <div className='shadow-xl card compact bg-neutral-focus text-neutral-content rounded-box w-72'>
+                  <div tabIndex='0' className='py-2 dropdown-content translate-y-12 translate-x-12'>
+                    <div className='text-black bg-gray-300 shadow card compact rounded-box w-72'>
                       <div className='card-body'>
-                        <h2 className='font-extrabold capitalize card-title'>navbar component</h2>
-                        <p className='text-sm text-neutral-content text-opacity-80'>
+                        <h2 className='font-extrabold capitalize card-title'>Notifications</h2>
+                        <p className='text-sm text-black text-opacity-80'>
                           {`You'll need a navbar on top of your page`}
                         </p>
                         <div className='flex justify-end mt-4'>
@@ -165,7 +146,7 @@ export function WholePage() {
                       </div>
                     </div>
                   </div>
-                </div> */}
+                </div>
                 <div className='dropdown dropdown-left'>
                   <div tabIndex='0'>
                     <button
@@ -178,7 +159,7 @@ export function WholePage() {
                       </div>
                     </button>
                   </div>
-                  <div tabIndex='0' className='py-2 dropdown-content '>
+                  <div tabIndex='0' className='py-2 dropdown-content  -translate-y-2 -translate-x-2'>
                     <div className='shadow-xl card compact bg-neutral-focus text-neutral-content rounded-box w-72'>
                       <div className='card-body'>
                         <h2 className='font-extrabold capitalize card-title daysfont'> See you around... 🥺 👋🏻</h2>
@@ -195,7 +176,7 @@ export function WholePage() {
                   <div className='' style={{ width: `17rem` }}>
                     <ul className='w-full px-2 pt-2 shadow-xl first-letter:p-2 menu bg-base-100 rounded-box'>
                       <li className='flex items-center py-3 mb-2 text-3xl text-center bg-gray-200 rounded-lg daysfont'>
-                        AGAPPE
+                        AGAPE
                       </li>
                       <li className='mb-2 text-black bg-teal-300 rounded-xl'>
                         <a>
@@ -255,7 +236,9 @@ export function WholePage() {
                   </div>
                   <div className='h-full ml-5' style={{ width: `calc(100% - 17rem)` }}>
                     <div className='h-full p-4 overflow-auto bg-white shadow-xl rounded-2xl'>
-                      <div className=''>Content 123</div>
+                      <div className=''>
+                        <div className='justify-center flex-1 pr-2 mx-2 md:flex md:justify-start'></div>
+                      </div>
                       <div className='h-screen'>Content 123</div>
                     </div>
                   </div>
