@@ -46,9 +46,9 @@ function Loading() {
       }
     }
     const handleComplete = (url) => {
-      if (url === router.asPath) {
+      setTimeout(() => {
         setLoading(false)
-      }
+      }, 300)
     }
 
     router.events.on('routeChangeStart', handleStart)

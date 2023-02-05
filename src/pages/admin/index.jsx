@@ -1,6 +1,6 @@
-import { Admin } from '@/components/html/Admin/Admin'
+import { PageAdmin } from '@/components/html/PageAdmin/PageAdmin'
 
-export default Admin
+export default PageAdmin
 
 export async function getStaticProps() {
   return { props: { title: 'Agape Ecosystem' } }
