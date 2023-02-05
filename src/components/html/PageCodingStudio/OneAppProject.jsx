@@ -1,13 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 import { AppProject } from '@/backend/aws-app-project'
 import nProgress from 'nprogress'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { CreateAppVersion } from './CreateAppVersion'
 import { ListAppVersions } from './ListAppVersions'
 
 export function OneAppProject({ data }) {
   let timerDebounce = useRef(0)
-
+  let [viewDetail, setViewDetail] = useState(false)
   useEffect(() => {
     let h = (ev) => {
       let dom = document.querySelector('#' + 'my-modal-remove-item' + data.oid)
@@ -17,6 +17,9 @@ export function OneAppProject({ data }) {
         }
       }
     }
+
+    //
+    //
     window.addEventListener('keydown', h)
     return () => {
       window.removeEventListener('keydown', h)
@@ -25,7 +28,7 @@ export function OneAppProject({ data }) {
   return (
     <div className='inline-block mb-8 mr-8 border border-gray-500 shadow-xl rounded-box'>
       <div
-        className='inline-flex items-stretch p-4 border-b border-gray-500 rounded-t-xl'
+        className='inline-flex items-stretch p-4 border-b-0 border-gray-500 rounded-t-xl'
         style={{ height: `16.5rem` }}>
         <figure className='h-full mr-3'>
           <div class='h-full cursor-pointer indicator group'>
@@ -129,11 +132,17 @@ export function OneAppProject({ data }) {
               </div>
             </div>
 
-            <button className='text-xs btn btn-primary'>Edit</button>
+            <button
+              className='text-xs btn btn-primary'
+              onClick={() => {
+                setViewDetail((s) => !s)
+              }}>
+              Open
+            </button>
           </div>
         </div>
       </div>
-      {
+      {viewDetail && (
         <div className='px-3'>
           <div className=''>
             <CreateAppVersion app={data}></CreateAppVersion>
@@ -141,7 +150,7 @@ export function OneAppProject({ data }) {
             <ListAppVersions app={data}></ListAppVersions>
           </div>
         </div>
-      }
+      )}
     </div>
   )
 }
