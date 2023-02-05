@@ -16,61 +16,7 @@ export function Admin() {
           <>
             <div className='px-2 pt-2' style={{ height: '4.5rem' }}>
               <div className='navbar text-primary-content rounded-box space-x-1'>
-                <div className='justify-center flex-1 pr-2 mx-2 md:flex md:justify-start'>
-                  <div className='flex items-center px-5 mr-5 text-black bg-gray-100 rounded-2xl'>
-                    <div className='flex text-lg shadow-xl breadcrumbs daysfont'>
-                      <ul>
-                        <li className=''>
-                          <a href='/' target={'_blank'} referrerPolicy='no-referrer'>
-                            <svg
-                              xmlns='http://www.w3.org/2000/svg'
-                              fill='none'
-                              viewBox='0 0 24 24'
-                              className='w-4 h-4 mr-2 stroke-current'>
-                              <path
-                                strokeLinecap='round'
-                                strokeLinejoin='round'
-                                strokeWidth='2'
-                                d='M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z'></path>
-                            </svg>
-                            3D Website
-                          </a>
-                        </li>
-                        <li>
-                          <a href='/admin'>
-                            <svg
-                              xmlns='http://www.w3.org/2000/svg'
-                              fill='none'
-                              viewBox='0 0 24 24'
-                              className='w-4 h-4 mr-2 stroke-current'>
-                              <path
-                                strokeLinecap='round'
-                                strokeLinejoin='round'
-                                strokeWidth='2'
-                                d='M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z'></path>
-                            </svg>
-                            Dashboard
-                          </a>
-                        </li>
-                        <li>
-                          <svg
-                            xmlns='http://www.w3.org/2000/svg'
-                            fill='none'
-                            viewBox='0 0 24 24'
-                            className='w-4 h-4 mr-2 stroke-current'>
-                            <path
-                              strokeLinecap='round'
-                              strokeLinejoin='round'
-                              strokeWidth='2'
-                              d='M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'></path>
-                          </svg>
-                          My Pages
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
+                <div className='flex-1 ml-3 text-2xl font-bold text-white daysfont'></div>
                 <div className='flex-1 hidden md:flex md:flex-none'>
                   <div className='form-control'>
                     <div className='dropdown'>
@@ -176,7 +122,7 @@ export function Admin() {
                   <div className='' style={{ width: `17rem` }}>
                     <ul className='w-full px-2 pt-2 shadow-xl first-letter:p-2 menu bg-base-100 rounded-box'>
                       <li className='flex items-center py-3 mb-2 text-3xl text-center bg-gray-200 rounded-lg daysfont'>
-                        AGAPPE
+                        AGAPE
                       </li>
                       <li className='mb-2 text-black bg-teal-300 rounded-xl'>
                         <a>
@@ -236,7 +182,62 @@ export function Admin() {
                   </div>
                   <div className='h-full ml-5' style={{ width: `calc(100% - 17rem)` }}>
                     <div className='h-full p-4 overflow-auto bg-white shadow-xl rounded-2xl'>
-                      <div className=''>Content 123</div>
+                      <div className=''>
+                        <div className='justify-center flex-1 pr-2 mx-2 md:flex md:justify-start'>
+                          <div className='flex items-center px-5 mr-5 text-black bg-gray-100 rounded-2xl'>
+                            <div className='flex text-lg shadow-xl breadcrumbs'>
+                              <ul>
+                                <li className=''>
+                                  <a href='/' target={'_blank'} referrerPolicy='no-referrer'>
+                                    <svg
+                                      xmlns='http://www.w3.org/2000/svg'
+                                      fill='none'
+                                      viewBox='0 0 24 24'
+                                      className='w-4 h-4 mr-2 stroke-current'>
+                                      <path
+                                        strokeLinecap='round'
+                                        strokeLinejoin='round'
+                                        strokeWidth='2'
+                                        d='M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z'></path>
+                                    </svg>
+                                    3D Website
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href='/admin'>
+                                    <svg
+                                      xmlns='http://www.w3.org/2000/svg'
+                                      fill='none'
+                                      viewBox='0 0 24 24'
+                                      className='w-4 h-4 mr-2 stroke-current'>
+                                      <path
+                                        strokeLinecap='round'
+                                        strokeLinejoin='round'
+                                        strokeWidth='2'
+                                        d='M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z'></path>
+                                    </svg>
+                                    Dashboard
+                                  </a>
+                                </li>
+                                <li>
+                                  <svg
+                                    xmlns='http://www.w3.org/2000/svg'
+                                    fill='none'
+                                    viewBox='0 0 24 24'
+                                    className='w-4 h-4 mr-2 stroke-current'>
+                                    <path
+                                      strokeLinecap='round'
+                                      strokeLinejoin='round'
+                                      strokeWidth='2'
+                                      d='M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'></path>
+                                  </svg>
+                                  My Pages
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                       <div className='h-screen'>Content 123</div>
                     </div>
                   </div>
