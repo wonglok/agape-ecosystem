@@ -33,7 +33,7 @@ export function PageCodingStudio() {
 
         <CreateAppProject></CreateAppProject>
 
-        <div className='pt-3'>
+        <div className='flex flex-wrap items-start w-full pt-3'>
           {JSON.parse(JSON.stringify(app.items))
             .sort((a, b) => {
               if (a.createdAt < b.createdAt) {

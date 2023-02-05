@@ -2,6 +2,8 @@
 import { AppProject } from '@/backend/aws-app-project'
 import nProgress from 'nprogress'
 import { useEffect, useRef } from 'react'
+import { CreateAppVersion } from './CreateAppVersion'
+import { ListAppVersions } from './ListAppVersions'
 
 export function OneAppProject({ data }) {
   let timerDebounce = useRef(0)
@@ -21,17 +23,19 @@ export function OneAppProject({ data }) {
     }
   })
   return (
-    <div className='inline-block mb-5 mr-5 border border-gray-500 shadow-xl rounded-box'>
-      <div className='inline-flex items-stretch border-b border-gray-500 rounded-t-xl' style={{ height: `16.5rem` }}>
-        <figure className='h-full'>
+    <div className='inline-block mb-8 mr-8 border border-gray-500 shadow-xl rounded-box'>
+      <div
+        className='inline-flex items-stretch p-4 border-b border-gray-500 rounded-t-xl'
+        style={{ height: `16.5rem` }}>
+        <figure className='h-full mr-3'>
           <div class='h-full cursor-pointer indicator group'>
-            <img src='/img/user-image/yo/punk.jpg' className='rounded-tl-xl' alt='Punk' />
-            <span class=' invisible group-hover:visible indicator-item indicator-center indicator-middle translate-y-24 badge badge-accent'>
+            <img src='/img/user-image/yo/punk.jpg' className='rounded-xl' alt='Punk' />
+            <span class=' invisible group-hover:visible indicator-item indicator-center indicator-middle translate-y-20 badge badge-accent'>
               Change Image (todo)
             </span>
           </div>
         </figure>
-        <div className='h-full px-3 pt-3 w-72'>
+        <div className='h-full w-72'>
           <h2 className=''>
             <textarea
               defaultValue={data.name}
@@ -129,12 +133,15 @@ export function OneAppProject({ data }) {
           </div>
         </div>
       </div>
-      <div className='px-3'>
-        <div className='text-xl'>App Versions</div>
-        <div className='text-sm'>Snapshot Versions</div>
+      {
+        <div className='px-3'>
+          <div className=''>
+            <CreateAppVersion app={data}></CreateAppVersion>
 
-        <div className=''></div>
-      </div>
+            <ListAppVersions app={data}></ListAppVersions>
+          </div>
+        </div>
+      }
     </div>
   )
 }
