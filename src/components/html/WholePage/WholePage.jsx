@@ -3,7 +3,7 @@
 import { Gate } from '@/backend/Gate'
 import { LogoutButton } from '@/backend/LogoutButton'
 
-export function Admin() {
+export function WholePage() {
   return (
     <Gate>
       {/*  */}
@@ -71,7 +71,7 @@ export function Admin() {
                   </div>
                 </div>
 
-                <div className='flex-1 hidden md:flex md:flex-none'>
+                {/* <div className='flex-1 hidden md:flex md:flex-none'>
                   <div className='form-control'>
                     <div className='dropdown'>
                       <div tabIndex='0'>
@@ -98,22 +98,41 @@ export function Admin() {
                     </div>
                   </div>
                 </div>
-                <button
-                  aria-label='button component'
-                  className='hidden border-none btn btn-ghost mask mask-squircle btn-square focus:bg-base-content focus:bg-opacity-50 md:flex'>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    fill='none'
-                    viewBox='0 0 24 24'
-                    className='inline-block w-6 h-6 stroke-current'>
-                    <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      strokeWidth='2'
-                      d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
-                  </svg>
-                </button>
-                <div className='dropdown dropdown-left '>
+                <div className='dropdown dropdown-left'>
+                  <div tabIndex='0'>
+                    <button
+                      aria-label='button component'
+                      className='hidden border-none btn btn-ghost mask mask-squircle btn-square focus:bg-base-content focus:bg-opacity-50 md:flex'>
+                      <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        fill='none'
+                        viewBox='0 0 24 24'
+                        className='inline-block w-6 h-6 stroke-current'>
+                        <path
+                          strokeLinecap='round'
+                          strokeLinejoin='round'
+                          strokeWidth='2'
+                          d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
+                      </svg>
+                    </button>
+                  </div>
+                  <div tabIndex='0' className='py-2 dropdown-content'>
+                    <div className='shadow-xl card compact bg-neutral-focus text-neutral-content rounded-box w-72'>
+                      <div className='card-body'>
+                        <h2 className='font-extrabold capitalize card-title'>navbar component</h2>
+                        <p className='text-sm text-neutral-content text-opacity-80'>
+                          You'll need a navbar on top of your page
+                        </p>
+                        <div className='flex justify-end mt-4'>
+                          <a href='/components/navbar' className='btn btn-primary btn-sm xl:btn-md'>
+                            See component
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div> */}
+                {/* <div className='dropdown dropdown-left'>
                   <div tabIndex='0'>
                     <button
                       aria-label='button component'
@@ -131,7 +150,7 @@ export function Admin() {
                       </svg>
                     </button>
                   </div>
-                  <div tabIndex='0' className='py-2 dropdown-content -translate-y-2 -translate-x-2'>
+                  <div tabIndex='0' className='py-2 dropdown-content'>
                     <div className='shadow-xl card compact bg-neutral-focus text-neutral-content rounded-box w-72'>
                       <div className='card-body'>
                         <h2 className='font-extrabold capitalize card-title'>navbar component</h2>
@@ -146,7 +165,7 @@ export function Admin() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <div className='dropdown dropdown-left'>
                   <div tabIndex='0'>
                     <button
@@ -159,7 +178,7 @@ export function Admin() {
                       </div>
                     </button>
                   </div>
-                  <div tabIndex='0' className='py-2 dropdown-content  -translate-y-2 -translate-x-2'>
+                  <div tabIndex='0' className='py-2 dropdown-content '>
                     <div className='shadow-xl card compact bg-neutral-focus text-neutral-content rounded-box w-72'>
                       <div className='card-body'>
                         <h2 className='font-extrabold capitalize card-title daysfont'> See you around... 🥺 👋🏻</h2>
