@@ -55,5 +55,3 @@ export function PageCodingStudio() {
     </Gate>
   )
 }
-
-//
