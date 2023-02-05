@@ -26,7 +26,7 @@ export function OneProject({ data }) {
               }, 500)
               // timerName.current
             }}
-            placeholder='Name'></textarea>
+            placeholder='Project Name'></textarea>
         </h2>
         <div>
           <textarea
@@ -41,7 +41,7 @@ export function OneProject({ data }) {
               }, 500)
               // timerName.current
             }}
-            placeholder='Name'></textarea>
+            placeholder='description'></textarea>
         </div>
         {/* <div>
           <div className='w-full form-control'>
@@ -51,6 +51,7 @@ export function OneProject({ data }) {
             </label>
           </div>
         </div> */}
+        {/*  */}
         <div className='justify-end card-actions'>
           <label htmlFor='my-modal-remove-item' className='btn btn-error'>
             Remove
