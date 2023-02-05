@@ -18,7 +18,7 @@ export function Admin() {
               <div className='navbar text-primary-content rounded-box space-x-1'>
                 <div className='justify-center flex-1 pr-2 mx-2 md:flex md:justify-start'>
                   <div className='flex items-center px-5 mr-5 text-black bg-gray-100 rounded-2xl'>
-                    <div className='text-lg shadow-xl breadcrumbs'>
+                    <div className='flex text-lg shadow-xl breadcrumbs daysfont'>
                       <ul>
                         <li className=''>
                           <a href='/' target={'_blank'} referrerPolicy='no-referrer'>
@@ -37,7 +37,7 @@ export function Admin() {
                           </a>
                         </li>
                         <li>
-                          <a>
+                          <a href='/admin'>
                             <svg
                               xmlns='http://www.w3.org/2000/svg'
                               fill='none'
@@ -181,7 +181,7 @@ export function Admin() {
                   <div tabIndex='0' className='py-2 dropdown-content '>
                     <div className='shadow-xl card compact bg-neutral-focus text-neutral-content rounded-box w-72'>
                       <div className='card-body'>
-                        <h2 className='font-extrabold capitalize card-title'> See you around... 🥺 👋🏻</h2>
+                        <h2 className='font-extrabold capitalize card-title daysfont'> See you around... 🥺 👋🏻</h2>
                         <LogoutButton></LogoutButton>
                       </div>
                     </div>
