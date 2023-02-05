@@ -39,9 +39,13 @@ export function OneAppVersion({ app, version }) {
                 found.name = ev.target.value
 
                 //
-                AppVersion.update({ object: JSON.parse(JSON.stringify(found)), updateState: false }).finally(() => {
-                  nProgress.done()
-                })
+                AppVersion.update({ object: JSON.parse(JSON.stringify(found)), updateState: false })
+                  .catch((r) => {
+                    console.error(r)
+                  })
+                  .finally(() => {
+                    nProgress.done()
+                  })
                 //
               }, 500)
               // timerName.current
@@ -85,6 +89,7 @@ export function OneAppVersion({ app, version }) {
                           AppVersion.state.items = response.result
                         })
                       })
+                      .catch((r) => console.log(r))
                       .finally(() => {
                         ev.target.classList.toggle('loading')
                         nProgress.done()

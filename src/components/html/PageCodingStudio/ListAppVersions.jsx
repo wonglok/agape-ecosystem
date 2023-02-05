@@ -15,7 +15,7 @@ export function ListAppVersions({ app }) {
         AppVersion.state.items = response.result
       })
       .catch((r) => {
-        console.log(r)
+        console.error(r)
       })
       .finally(() => {
         nProgress.done()

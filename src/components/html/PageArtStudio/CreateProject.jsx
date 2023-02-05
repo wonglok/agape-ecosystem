@@ -34,6 +34,9 @@ export function CreateProject() {
                 .then((response) => {
                   ArtProject.state.items = response.result
                 })
+                .catch((r) => {
+                  console.error(r)
+                })
                 .finally(() => {
                   nProgress.done()
                 })

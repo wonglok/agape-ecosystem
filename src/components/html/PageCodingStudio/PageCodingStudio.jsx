@@ -19,6 +19,9 @@ export function PageCodingStudio() {
       .then((response) => {
         AppProject.state.items = response.result
       })
+      .catch((r) => {
+        console.error(r)
+      })
       .finally(() => {
         nProgress.done()
       })

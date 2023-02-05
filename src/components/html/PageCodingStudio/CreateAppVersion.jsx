@@ -33,9 +33,14 @@ export function CreateAppVersion({ app }) {
                 },
               })
 
+              //
+
               AppVersion.listAll({})
                 .then((response) => {
                   AppVersion.state.items = response.result
+                })
+                .catch((r) => {
+                  console.error(r)
                 })
                 .finally(() => {
                   nProgress.done()

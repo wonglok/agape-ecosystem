@@ -39,9 +39,13 @@ export function OneProject({ data }) {
                 found.description = found.description || ''
 
                 found.name = ev.target.value
-                ArtProject.update({ object: JSON.parse(JSON.stringify(found)), updateState: false }).finally(() => {
-                  nProgress.done()
-                })
+                ArtProject.update({ object: JSON.parse(JSON.stringify(found)), updateState: false })
+                  .catch((r) => {
+                    console.error(r)
+                  })
+                  .finally(() => {
+                    nProgress.done()
+                  })
               }, 500)
               // timerName.current
             }}
@@ -61,9 +65,13 @@ export function OneProject({ data }) {
                 found.description = found.description || ''
 
                 found.description = ev.target.value
-                ArtProject.update({ object: JSON.parse(JSON.stringify(found)), updateState: false }).finally(() => {
-                  nProgress.done()
-                })
+                ArtProject.update({ object: JSON.parse(JSON.stringify(found)), updateState: false })
+                  .catch((r) => {
+                    console.error(r)
+                  })
+                  .finally(() => {
+                    nProgress.done()
+                  })
               }, 500)
               // timerName.current
             }}
@@ -104,6 +112,9 @@ export function OneProject({ data }) {
                         return ArtProject.listAll({}).then((response) => {
                           ArtProject.state.items = response.result
                         })
+                      })
+                      .catch((r) => {
+                        console.error(r)
                       })
                       .finally(() => {
                         ev.target.classList.toggle('loading')
