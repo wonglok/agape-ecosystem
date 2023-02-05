@@ -53,9 +53,13 @@ export function OneAppProject({ data }) {
                   found.description = found.description || ''
 
                   found.name = ev.target.value
-                  AppProject.update({ object: JSON.parse(JSON.stringify(found)), updateState: false }).finally(() => {
-                    nProgress.done()
-                  })
+                  AppProject.update({ object: JSON.parse(JSON.stringify(found)), updateState: false })
+                    .catch((r) => {
+                      console.error(r)
+                    })
+                    .finally(() => {
+                      nProgress.done()
+                    })
                 }, 500)
                 // timerDebounce.current
               }}
@@ -75,9 +79,13 @@ export function OneAppProject({ data }) {
                   found.description = found.description || ''
 
                   found.description = ev.target.value
-                  AppProject.update({ object: JSON.parse(JSON.stringify(found)), updateState: false }).finally(() => {
-                    nProgress.done()
-                  })
+                  AppProject.update({ object: JSON.parse(JSON.stringify(found)), updateState: false })
+                    .catch((r) => {
+                      console.error(r)
+                    })
+                    .finally(() => {
+                      nProgress.done()
+                    })
                 }, 500)
                 // timerDebounce.current
               }}
@@ -119,8 +127,13 @@ export function OneAppProject({ data }) {
                             AppProject.state.items = response.result
                           })
                         })
-                        .finally(() => {
+                        .then(() => {
                           ev.target.classList.toggle('loading')
+                        })
+                        .catch((r) => {
+                          console.error(r)
+                        })
+                        .finally(() => {
                           nProgress.done()
                         })
                     }}
