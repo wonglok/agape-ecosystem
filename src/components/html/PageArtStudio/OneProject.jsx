@@ -15,7 +15,6 @@ export function OneProject({ data }) {
       }
     }
     window.addEventListener('keydown', h)
-
     return () => {
       window.removeEventListener('keydown', h)
     }
