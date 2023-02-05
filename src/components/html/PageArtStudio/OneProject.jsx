@@ -1,6 +1,6 @@
 export function OneProject() {
   return (
-    <div className='inline-block shadow-xl mb-7 mr-7 w-72 card bg-base-100'>
+    <div className='inline-block mb-5 mr-5 shadow-xl w-72 card bg-base-100'>
       <figure className='h-48'>
         <img src='/img/user-image/yo/punk.jpg' alt='Shoes' />
       </figure>

@@ -1,6 +1,6 @@
 export function CreateProject() {
   return (
-    <div className=''>
+    <div className='mb-3'>
       <div className='form-control'>
         <label className='label'>
           <span className='label-text'>Create your new project</span>

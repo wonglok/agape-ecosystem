@@ -10,7 +10,7 @@ export function PageArtStudio() {
     <Gate>
       <AdminLayout>
         <div className='navbar bg-base-200 rounded-box'>
-          <a className='text-xl normal-case btn btn-ghost'>My ART Projects</a>
+          <a className='text-xl normal-case btn btn-ghost'>My 3D Art Projects</a>
         </div>
 
         <CreateProject></CreateProject>
