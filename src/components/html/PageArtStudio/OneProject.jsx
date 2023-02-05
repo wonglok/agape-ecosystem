@@ -1,10 +1,25 @@
 import { ArtProject } from '@/backend/aws-art-project'
 import nProgress from 'nprogress'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 export function OneProject({ data }) {
   let timerName = useRef(0)
 
+  useEffect(() => {
+    let h = (ev) => {
+      let dom = document.querySelector('#' + 'my-modal-remove-item' + data.oid)
+      if (ev.key === 'Escape') {
+        if (dom) {
+          dom.checked = false
+        }
+      }
+    }
+    window.addEventListener('keydown', h)
+
+    return () => {
+      window.removeEventListener('keydown', h)
+    }
+  })
   return (
     <div className='inline-block mb-5 mr-5 shadow-xl w-72 card bg-base-100'>
       <figure className='h-52'>
