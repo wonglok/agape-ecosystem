@@ -168,9 +168,7 @@ export class OClass {
         jwt: AWSData.jwt,
         payload: {},
       }),
-    })
-      .then(processResponse)
-      .catch(handleError)
+    }).then(processResponse)
   }
   create({ object }) {
     //
@@ -182,9 +180,7 @@ export class OClass {
         jwt: AWSData.jwt,
         payload: object,
       }),
-    })
-      .then(processResponse)
-      .catch(handleError)
+    }).then(processResponse)
   }
   remove({ oid }) {
     //
@@ -196,9 +192,7 @@ export class OClass {
         jwt: AWSData.jwt,
         payload: { oid },
       }),
-    })
-      .then(processResponse)
-      .catch(handleError)
+    }).then(processResponse)
   }
 
   get({ oid }) {
@@ -211,9 +205,7 @@ export class OClass {
         jwt: AWSData.jwt,
         payload: { oid },
       }),
-    })
-      .then(processResponse)
-      .catch(handleError)
+    }).then(processResponse)
   }
 
   update({ object, updateState = false }) {
@@ -226,8 +218,6 @@ export class OClass {
         jwt: AWSData.jwt,
         payload: object,
       }),
-    })
-      .then(processResponse)
-      .catch(handleError)
+    }).then(processResponse)
   }
 }
