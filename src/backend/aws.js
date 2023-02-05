@@ -50,6 +50,8 @@ export const getMD5ID = () => {
   return '_' + md5(v4() + '') + ''
 }
 
+export const getID = getMD5ID
+
 export function checkIsAddressCorrect(address) {
   try {
     return Boolean(utils.getAddress(address))

@@ -83,7 +83,6 @@ export function Menu() {
       ),
     },
   ]
-  // console.log(router.pathname) //router.pathname
   return (
     <ul className='w-full px-2 pt-2 shadow-xl first-letter:p-2 menu bg-base-100 rounded-box'>
       <li className='flex items-center py-3 mb-2 text-3xl text-center bg-gray-200 rounded-lg daysfont'>AGAPE</li>
