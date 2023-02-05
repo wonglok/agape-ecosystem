@@ -142,6 +142,11 @@ export const processResponse = async (r) => {
   }
 }
 
+export const handleError = async (r) => {
+  console.error(r)
+  return r
+}
+
 export class OClass {
   constructor({ baseURL = '/art-project' }) {
     this.baseURL = baseURL
@@ -163,7 +168,9 @@ export class OClass {
         jwt: AWSData.jwt,
         payload: {},
       }),
-    }).then(processResponse)
+    })
+      .then(processResponse)
+      .catch(handleError)
   }
   create({ object }) {
     //
@@ -175,7 +182,9 @@ export class OClass {
         jwt: AWSData.jwt,
         payload: object,
       }),
-    }).then(processResponse)
+    })
+      .then(processResponse)
+      .catch(handleError)
   }
   remove({ oid }) {
     //
@@ -187,7 +196,9 @@ export class OClass {
         jwt: AWSData.jwt,
         payload: { oid },
       }),
-    }).then(processResponse)
+    })
+      .then(processResponse)
+      .catch(handleError)
   }
 
   get({ oid }) {
@@ -200,7 +211,9 @@ export class OClass {
         jwt: AWSData.jwt,
         payload: { oid },
       }),
-    }).then(processResponse)
+    })
+      .then(processResponse)
+      .catch(handleError)
   }
 
   update({ object, updateState = false }) {
@@ -213,6 +226,8 @@ export class OClass {
         jwt: AWSData.jwt,
         payload: object,
       }),
-    }).then(processResponse)
+    })
+      .then(processResponse)
+      .catch(handleError)
   }
 }

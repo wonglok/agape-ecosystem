@@ -31,9 +31,9 @@ export function OneAppProject({ data }) {
         className='inline-flex items-stretch p-4 border-b-0 border-gray-500 rounded-t-xl'
         style={{ height: `16.5rem` }}>
         <figure className='h-full mr-3'>
-          <div class='h-full cursor-pointer indicator group'>
+          <div className='h-full cursor-pointer indicator group'>
             <img src='/img/user-image/yo/punk.jpg' className='rounded-xl' alt='Punk' />
-            <span class=' invisible group-hover:visible indicator-item indicator-center indicator-middle translate-y-20 badge badge-accent'>
+            <span className=' invisible group-hover:visible indicator-item indicator-center indicator-middle translate-y-20 badge badge-accent'>
               Change Image (todo)
             </span>
           </div>
