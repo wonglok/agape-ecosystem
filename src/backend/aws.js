@@ -130,3 +130,13 @@ export const logout = () => {
   AWSData.jwt = false
   AWSData.userIDFromServer = false
 }
+
+export class OClass {
+  constructor() {
+    //
+    this.state = proxy({ items: [], currentID: '' })
+  }
+  create() {
+    //
+  }
+}
