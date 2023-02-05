@@ -1,4 +1,5 @@
 import { ArtProject } from '@/backend/aws-art-project'
+import nProgress from 'nprogress'
 import { useRef } from 'react'
 
 export function CreateProject() {
@@ -19,9 +20,10 @@ export function CreateProject() {
           />
           <span
             className='text-white bg-blue-500 cursor-pointer'
-            onClick={() => {
+            onClick={async () => {
               //
-              ArtProject.create({
+              nProgress.start()
+              await ArtProject.create({
                 object: {
                   //
                   name: nameRef.current.value,
@@ -29,6 +31,12 @@ export function CreateProject() {
               })
 
               ArtProject.listAll({})
+                .then((response) => {
+                  ArtProject.state.items = response.result
+                })
+                .finally(() => {
+                  nProgress.done()
+                })
             }}>
             Create
           </span>

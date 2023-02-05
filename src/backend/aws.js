@@ -131,6 +131,16 @@ export const logout = () => {
   AWSData.userIDFromServer = false
 }
 
+export const processResponse = async (r) => {
+  let data = await r.json()
+
+  if (r.ok) {
+    return data
+  } else {
+    throw data
+  }
+}
+
 export class OClass {
   constructor({ baseURL = '/art-project' }) {
     this.baseURL = baseURL
@@ -149,21 +159,7 @@ export class OClass {
         jwt: AWSData.jwt,
         payload: {},
       }),
-    })
-      .then(async (r) => {
-        let data = await r.json()
-
-        if (r.ok) {
-          return data
-        } else {
-          throw data
-        }
-      })
-      .then(({ result }) => {
-        console.log('list-all-replace', result)
-
-        this.state.items = result
-      })
+    }).then(processResponse)
   }
   create({ object }) {
     //
@@ -175,21 +171,7 @@ export class OClass {
         jwt: AWSData.jwt,
         payload: object,
       }),
-    })
-      .then(async (r) => {
-        let data = await r.json()
-
-        if (r.ok) {
-          return data
-        } else {
-          throw data
-        }
-      })
-      .then(({ result }) => {
-        console.log('create', result)
-
-        this.state.items.push(result)
-      })
+    }).then(processResponse)
   }
   remove({ oid }) {
     //
@@ -201,25 +183,20 @@ export class OClass {
         jwt: AWSData.jwt,
         payload: { oid },
       }),
-    })
-      .then(async (r) => {
-        let data = await r.json()
+    }).then(processResponse)
+  }
 
-        if (r.ok) {
-          return data
-        } else {
-          throw data
-        }
-      })
-      .then(({ result }) => {
-        console.log('remove', result)
-        this.state.items.splice(
-          this.state.items.findIndex((r) => r.oid === oid),
-          1,
-        )
-
-        // this.state.items.push(result)
-      })
+  get({ oid }) {
+    //
+    return fetch(`${getBackendURL().rest}${this.baseURL}`, {
+      method: 'post',
+      mode: 'cors',
+      body: JSON.stringify({
+        action: 'get',
+        jwt: AWSData.jwt,
+        payload: { oid },
+      }),
+    }).then(processResponse)
   }
 
   update({ object, updateState = false }) {
@@ -232,25 +209,6 @@ export class OClass {
         jwt: AWSData.jwt,
         payload: object,
       }),
-    })
-      .then(async (r) => {
-        let data = await r.json()
-
-        if (r.ok) {
-          return data
-        } else {
-          throw data
-        }
-      })
-      .then(({ result }) => {
-        console.log('update', result)
-
-        if (updateState) {
-          let idx = this.state.items.findIndex((r) => r.oid === object.oid)
-          this.state.items[idx] = result
-          this.state.items = [...this.state.items]
-        }
-        // this.state.items.push(result)
-      })
+    }).then(processResponse)
   }
 }

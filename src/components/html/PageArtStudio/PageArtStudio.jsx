@@ -12,10 +12,12 @@ export function PageArtStudio() {
   useEffect(() => {
     //!SECTION
 
-    ArtProject.listAll({})
+    ArtProject.listAll({}).then((response) => {
+      ArtProject.state.items = response.result
+    })
   }, [])
 
-  let artp = useSnapshot(ArtProject.state)
+  let arp = useSnapshot(ArtProject.state)
   return (
     <Gate>
       <AdminLayout>
@@ -26,11 +28,17 @@ export function PageArtStudio() {
         <CreateProject></CreateProject>
 
         <div className='pt-3'>
-          {artp.items
-            .slice()
-            .reverse()
+          {JSON.parse(JSON.stringify(arp.items))
+            .sort((a, b) => {
+              if (a.createdAt < b.createdAt) {
+                return 1
+              }
+              if (a.createdAt > b.createdAt) {
+                return -1
+              }
+              return 0
+            })
             .map((it) => {
-              //
               return <OneProject key={it.oid} data={it}></OneProject>
             })}
           {/* <OneProject></OneProject>
