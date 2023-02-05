@@ -31,6 +31,10 @@
   font-style: normal;
 }
 
+.daysfont {
+  font-family: 'daysregular', 'Helvetica Neue', 'Helvetica', Arial, sans-serif;
+}
+
 /* Make clicks pass-through */
 #nprogress {
   pointer-events: none;

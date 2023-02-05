@@ -9,7 +9,7 @@ export function Admin() {
       {/*  */}
       {/*  */}
 
-      <div className='w-full h-full p-5 pb-5  from-green-200 to-teal-900 bg-gradient-to-t'>
+      <div className='w-full h-full p-5 pb-5  from-green-200 to-cyan-900 bg-gradient-to-t'>
         <div
           style={{ maxWidth: '1920px' }}
           className='w-full h-full mx-auto shadow-lg text-base-content glass rounded-box bg-opacity-60 backdrop-blur-lg'>
@@ -20,7 +20,7 @@ export function Admin() {
                   <div className='flex items-center px-5 mr-5 text-black bg-gray-100 rounded-2xl'>
                     <div className='text-lg shadow-xl breadcrumbs'>
                       <ul>
-                        <li>
+                        <li className=''>
                           <a href='/' target={'_blank'} referrerPolicy='no-referrer'>
                             <svg
                               xmlns='http://www.w3.org/2000/svg'
@@ -194,6 +194,9 @@ export function Admin() {
                 <div className='flex h-full'>
                   <div className='' style={{ width: `17rem` }}>
                     <ul className='w-full px-2 pt-2 shadow-xl first-letter:p-2 menu bg-base-100 rounded-box'>
+                      <li className='flex items-center py-3 mb-2 text-3xl text-center bg-gray-200 rounded-lg daysfont'>
+                        AGAPPE
+                      </li>
                       <li className='mb-2 text-black bg-teal-300 rounded-xl'>
                         <a>
                           <svg
