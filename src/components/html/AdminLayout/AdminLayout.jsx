@@ -1,7 +1,11 @@
 import { LogoutButton } from '@/backend/LogoutButton'
 import { Menu } from '../Menu/Menu'
+import { MenuItems } from '../Menu/MenuItems'
+import { useRouter } from 'next/router'
 
 export function AdminLayout({ children }) {
+  let router = useRouter()
+  let route = router.asPath
   return (
     <div className='w-full h-full p-5 pb-5  from-green-200 to-cyan-900 bg-gradient-to-t'>
       <div
@@ -46,7 +50,7 @@ export function AdminLayout({ children }) {
                         Admin Portal
                       </li>
                       <li>
-                        <svg
+                        {/* <svg
                           xmlns='http://www.w3.org/2000/svg'
                           fill='none'
                           viewBox='0 0 24 24'
@@ -56,8 +60,8 @@ export function AdminLayout({ children }) {
                             strokeLinejoin='round'
                             strokeWidth='2'
                             d='M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'></path>
-                        </svg>
-                        My Pages
+                        </svg> */}
+                        {MenuItems.find((r) => r.link === route)?.content}
                       </li>
                     </ul>
                   </div>

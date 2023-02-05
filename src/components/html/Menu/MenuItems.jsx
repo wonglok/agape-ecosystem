@@ -8,7 +8,7 @@ export const MenuItems = [
       <>
         <svg
           xmlns='http://www.w3.org/2000/svg'
-          className='w-5 h-5'
+          className='w-4 h-4 mr-1'
           fill='none'
           viewBox='0 0 24 24'
           stroke='currentColor'>
@@ -31,7 +31,7 @@ export const MenuItems = [
       <>
         <svg
           xmlns='http://www.w3.org/2000/svg'
-          className='w-5 h-5'
+          className='w-4 h-4 mr-1'
           fill='none'
           viewBox='0 0 24 24'
           stroke='currentColor'>
@@ -54,7 +54,7 @@ export const MenuItems = [
       <>
         <svg
           xmlns='http://www.w3.org/2000/svg'
-          className='w-5 h-5'
+          className='w-4 h-4 mr-1'
           fill='none'
           viewBox='0 0 24 24'
           stroke='currentColor'>

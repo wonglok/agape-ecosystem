@@ -80,6 +80,7 @@ export const loginMetamask = async () => {
   let signer = provider?.getSigner()
 
   const providerAddress = await signer.getAddress()
+
   let dataObject = {
     userID: providerAddress,
     uri: `${window.location.origin}`,
@@ -147,7 +148,7 @@ export class OClass {
     this.state = proxy({ items: [], currentID: '' })
     this.reset()
   }
-  getStateOID({ oid }) {
+  getByOID({ oid }) {
     return this.state.items.find((e) => e.oid === oid)
   }
   reset() {
