@@ -1,9 +1,11 @@
 import { AppVersion } from '@/backend/aws-app-version'
+import { useRouter } from 'next/router'
 import nProgress from 'nprogress'
 import { useEffect, useRef } from 'react'
 
 export function OneAppVersion({ app, version }) {
   let data = version
+  let router = useRouter()
   let timerName = useRef(0)
 
   useEffect(() => {
@@ -103,7 +105,16 @@ export function OneAppVersion({ app, version }) {
             </div>
           </div>
 
-          <button className='text-xs btn btn-primary'>Edit</button>
+          <button
+            className='text-xs btn btn-primary'
+            onClick={() => {
+              //
+              //
+
+              router.push(`/admin/app/${version.oid}/editor`)
+            }}>
+            Edit
+          </button>
         </div>
       </div>
 
@@ -133,4 +144,5 @@ export function OneAppVersion({ app, version }) {
   )
 }
 
+//
 //

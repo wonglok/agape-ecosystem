@@ -1,3 +1,7 @@
-export default function AppEditor() {
-  return <div>AppEditor</div>
-}
+// export default function AppEditor() {
+//   return <></>
+// }
+
+import { CodeEditor } from '@/components/html/PageCodeEditor/CodeEditor'
+
+export default CodeEditor
