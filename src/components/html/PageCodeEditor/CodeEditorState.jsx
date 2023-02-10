@@ -1,7 +1,7 @@
 import { proxy, useSnapshot } from 'valtio'
 
 export const CEState = proxy({
-  tabAt: 'codePage',
+  tabAt: 'shaders',
 })
 
 let noop = () => {}
