@@ -12,8 +12,8 @@ function AppIcon({
   name = 'code',
 }) {
   let st = useCEStore()
-  // let { tabAt } = useSnapshot(CEState)
 
+  //
   return (
     <div
       className={
