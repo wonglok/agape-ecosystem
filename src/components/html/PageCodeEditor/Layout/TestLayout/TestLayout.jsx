@@ -32,8 +32,8 @@ export function TestLayout() {
     <div>
       <div
         onClick={() => {
-          let item = content.reduce((r, val) => {
-            r += val + 1
+          let item = content.reduce((r, val, key) => {
+            r += 1 + key
             return r
           }, 0)
           contentYA.push([item])
@@ -41,7 +41,7 @@ export function TestLayout() {
         push
       </div>
 
-      <pre>{JSON.stringify(content.slice().reverse(), null, '  ')}</pre>
+      <pre className='overflow-auto h-96'>{JSON.stringify(content.slice().reverse(), null, '  ')}</pre>
     </div>
   )
 }
