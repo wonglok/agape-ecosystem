@@ -1,9 +1,13 @@
+import path from 'path'
+
 export const NodeTypes = {}
 
 function importAll(r) {
   r.keys().forEach((key) => {
-    NodeTypes[key] = r(key)
-    console.log(r(key))
+    let file = r(key)
+    let nodeName = path.basename(key).replace('.jsx', '')
+
+    NodeTypes[nodeName] = file.default
   })
 }
 

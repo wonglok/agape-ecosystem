@@ -1,16 +1,14 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactFlow from 'reactflow'
 import { shallow } from 'zustand/shallow'
 
 import 'reactflow/dist/style.css'
 
-import useStore from './store'
-import ColorChooserNode from './Nodes/ColorChooserNode'
+import useFlowStore from './store'
 import { NodeTypes } from './NodeTypes'
-// import { DemoNodes } from './nodes'
-// import { DemoEdges } from './edges'
-
-const nodeTypes = NodeTypes //{ colorChooser: ColorChooserNode }
+import { DemoNodes } from './nodes'
+import { DemoEdges } from './edges'
+import { useRealtime } from '../Realtime/useRealtime'
 
 const selector = (state) => ({
   nodes: state.nodes,
@@ -21,35 +19,75 @@ const selector = (state) => ({
 })
 
 function Flow() {
-  const { nodes, edges, onNodesChange, onEdgesChange, onConnect } = useStore(selector, shallow)
+  let provideFile = useRealtime((r) => r.provideFile)
+  let load = useFlowStore((s) => s.load)
+  let [yAPI, setAPI] = useState(false)
+
+  useEffect(() => {
+    let api = provideFile({ roomName: 'mytestshader', documentName: 'myDoc' })
+
+    setAPI(api)
+    let nodesY = api.doc.getArray('nodes')
+    let connectionsY = api.doc.getArray('connections')
+
+    let onNodes = () => {
+      //
+      load({
+        nodes: nodesY.toArray(),
+        edges: connectionsY.toArray(),
+      })
+    }
+
+    let onConnections = () => {
+      //
+      load({
+        nodes: nodesY.toArray(),
+        edges: connectionsY.toArray(),
+      })
+    }
+
+    nodesY.observe(onNodes)
+    connectionsY.observe(onConnections)
+    return () => {
+      nodesY.unobserve(onNodes)
+      connectionsY.unobserve(onConnections)
+
+      api.clean()
+    }
+  }, [load, provideFile])
+
+  const { nodes, edges, onNodesChange, onEdgesChange, onConnect } = useFlowStore(selector, shallow)
 
   return (
-    <ReactFlow
-      nodes={nodes}
-      edges={edges}
-      onNodesChange={onNodesChange}
-      onEdgesChange={onEdgesChange}
-      onConnect={onConnect}
-      nodeTypes={nodeTypes}
-      fitView
-    />
+    <>
+      {/* <button
+        onClick={() => {
+          yAPI.doc.getArray('nodes').push([...DemoNodes])
+          yAPI.doc.getArray('edges').push([...DemoEdges])
+          // load({ nodes: DemoNodes, edges: DemoEdges })
+        }}>
+        load
+      </button> */}
+
+      <ReactFlow
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        onConnect={onConnect}
+        nodeTypes={NodeTypes}
+        fitView></ReactFlow>
+    </>
   )
 }
 
 export default function Page() {
   //
-  let load = useStore((s) => s.load)
-
   return (
     <div className='w-full h-full'>
-      {/* <button
-        onClick={() => {
-          //
-          load({ nodes: DemoNodes, edges: DemoEdges })
-        }}>
-        123
-      </button> */}
       <Flow className='w-full h-full'></Flow>
     </div>
   )
 }
+
+//

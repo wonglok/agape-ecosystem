@@ -29,8 +29,8 @@ export type RFState = {
   updateNodeColor: (nodeId: string, color: string) => void
 }
 
-// this is our useStore hook that we can use in our components to get parts of the store and call actions
-const useStore = create<RFState>((set, get) => ({
+// this is our useFlowStore hook that we can use in our components to get parts of the store and call actions
+const useFlowStore = create<RFState>((set, get) => ({
   nodes: initialNodes,
   edges: initialEdges,
   onNodesChange: (changes: NodeChange[]) => {
@@ -69,4 +69,4 @@ const useStore = create<RFState>((set, get) => ({
   },
 }))
 
-export default useStore
+export default useFlowStore

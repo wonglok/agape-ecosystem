@@ -19,8 +19,9 @@ function AppIcon({
   //
   return (
     <div
+      style={{ minWidth: '55px' }}
       className={
-        'inline-flex flex-col items-center justify-center p-2 px-3 mr-2 transition-all duration-500 ' +
+        'inline-flex flex-col items-center justify-center pt-2 pb-1 px-2 mr-1 transition-all duration-500 ' +
         (st.tabAt === name
           ? ' bg-white border border-gray-300 rounded-lg shadow-inner'
           : ' rounded-lg border border-transparent')
@@ -34,18 +35,19 @@ function AppIcon({
       <div className=''>
         {st.tabAt === name ? (
           <div
-            className='mt-1'
             style={{
-              width: `20px`,
+              marginTop: '2px',
+              width: `16px`,
               height: `1px`,
+              borderRadius: `3px`,
               backgroundColor: 'lime',
-              boxShadow: `0px 0px 5px 0px green`,
+              boxShadow: `0px 0px 5px 0px cyan`,
             }}></div>
         ) : (
           <div
-            className='mt-1'
             style={{
-              width: `20px`,
+              marginTop: '2px',
+              width: `16px`,
               height: `1px`,
             }}></div>
         )}
