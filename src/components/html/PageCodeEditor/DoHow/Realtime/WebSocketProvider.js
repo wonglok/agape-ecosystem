@@ -84,7 +84,7 @@ const readMessage = (provider, buf, emitSynced) => {
 const setupWS = (provider) => {
   if (provider.shouldConnect && provider.ws === null) {
     const websocket = new provider._WS(provider.url)
-    // websocket.binaryType = 'arraybuffer'
+    websocket.binaryType = 'arraybuffer'
     provider.ws = websocket
     provider.wsconnecting = true
     provider.wsconnected = false
@@ -93,10 +93,10 @@ const setupWS = (provider) => {
     websocket.onmessage = (event) => {
       provider.wsLastMessageReceived = time.getUnixTime()
 
-      if (typeof event?.data?.message !== 'string') return
+      if (typeof event?.data !== 'string') return
 
       try {
-        const encoder = readMessage(provider, new Uint8Array(fromBase64(event.data.message)), true)
+        const encoder = readMessage(provider, new Uint8Array(fromBase64(JSON.parse(event.data))), true)
         if (encoding.length(encoder) > 1) {
           websocket.send(toBase64(encoding.toUint8Array(encoder)))
         }

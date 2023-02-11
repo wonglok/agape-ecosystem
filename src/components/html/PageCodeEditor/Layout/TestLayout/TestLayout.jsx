@@ -32,17 +32,16 @@ export function TestLayout() {
     <div>
       <div
         onClick={() => {
-          contentYA.push([
-            content.reduce((r, val) => {
-              r += val
-              return r
-            }, 0),
-          ])
+          let item = content.reduce((r, val) => {
+            r += val + 1
+            return r
+          }, 0)
+          contentYA.push([item])
         }}>
         push
       </div>
 
-      {JSON.stringify(content)}
+      <pre>{JSON.stringify(content.slice().reverse(), null, '  ')}</pre>
     </div>
   )
 }

@@ -10,12 +10,14 @@ export const useRealtime = create((set, get) => {
     contentYA: false,
     openDoc: () => {
       let doc = new Y.Doc()
-      let docuemntName = 'defaultDoc'
-      let clientName = getID()
+      let documentName = 'defaultDoc'
+      let roomName = 'roomNameDefault'
 
       const contentYA = doc.getArray('content')
 
-      let socket = new WebsocketProvider(`ws://localhost:3333`, docuemntName, doc, { params: { name: clientName } })
+      let socket = new WebsocketProvider(`ws://localhost:3333`, `${roomName}`, doc, {
+        params: { documentName: documentName },
+      })
 
       // setInterval(() => {
       //   contentYA.push([{ yo: 1123 }])
@@ -29,6 +31,7 @@ export const useRealtime = create((set, get) => {
 
       return () => {
         socket.disconnect()
+        set({ socket: false })
       }
     },
   }
