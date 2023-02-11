@@ -1,60 +1,27 @@
-import React, { useCallback } from 'react'
-import ReactFlow, { useNodesState, useEdgesState, addEdge, MiniMap, Controls, Background } from 'reactflow'
+import React from 'react'
+import ReactFlow from 'reactflow'
+import { shallow } from 'zustand/shallow'
 
-import 'reactflow/dist/base.css'
+import 'reactflow/dist/style.css'
 
-import CustomNode from './BoxNode'
+import useStore from './store'
+import ColorChooserNode from './Nodes/ColorChooserNode'
+import { NodeTypes } from './NodeTypes'
+// import { DemoNodes } from './nodes'
+// import { DemoEdges } from './edges'
 
-const nodeTypes = {
-  custom: CustomNode,
-}
+const nodeTypes = NodeTypes //{ colorChooser: ColorChooserNode }
 
-const initNodes = [
-  {
-    id: '1',
-    type: 'custom',
-    data: { name: 'Jane Doe', job: 'CEO', emoji: '😎' },
-    position: { x: 0, y: 50 },
-  },
-  {
-    id: '2',
-    type: 'custom',
-    data: { name: 'Tyler Weary', job: 'Designer', emoji: '🤓' },
+const selector = (state) => ({
+  nodes: state.nodes,
+  edges: state.edges,
+  onNodesChange: state.onNodesChange,
+  onEdgesChange: state.onEdgesChange,
+  onConnect: state.onConnect,
+})
 
-    position: { x: -200, y: 200 },
-  },
-  {
-    id: '3',
-    type: 'custom',
-    data: { name: 'Kristi Price', job: 'Developer', emoji: '🤩' },
-    position: { x: 200, y: 200 },
-  },
-  {
-    id: '5',
-    type: 'custom',
-    data: { name: '5 Price', job: 'Developer', emoji: '🤩' },
-    position: { x: 300, y: 300 },
-  },
-]
-
-const initEdges = [
-  {
-    id: 'e1-2',
-    source: '1',
-    target: '2',
-  },
-  {
-    id: 'e1-3',
-    source: '1',
-    target: '3',
-  },
-]
-
-const NodeFlow = () => {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initNodes)
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initEdges)
-
-  const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges])
+function Flow() {
+  const { nodes, edges, onNodesChange, onEdgesChange, onConnect } = useStore(selector, shallow)
 
   return (
     <ReactFlow
@@ -64,13 +31,25 @@ const NodeFlow = () => {
       onEdgesChange={onEdgesChange}
       onConnect={onConnect}
       nodeTypes={nodeTypes}
-      fitView={true}
-      className='bg-white'>
-      <MiniMap />
-      <Controls />
-      <Background variant='lines' />
-    </ReactFlow>
+      fitView
+    />
   )
 }
 
-export default NodeFlow
+export default function Page() {
+  //
+  let load = useStore((s) => s.load)
+
+  return (
+    <div className='w-full h-full'>
+      {/* <button
+        onClick={() => {
+          //
+          load({ nodes: DemoNodes, edges: DemoEdges })
+        }}>
+        123
+      </button> */}
+      <Flow className='w-full h-full'></Flow>
+    </div>
+  )
+}

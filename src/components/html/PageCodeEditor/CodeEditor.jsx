@@ -3,6 +3,7 @@ import { useCEStore } from './CodeEditorState'
 import { CodeEditorLayout } from './Layout/CodeEditorLayout/CodeEditorLayout'
 import { ShaderEditorLayout } from './Layout/ShaderEditorLayout/ShaderEditorLayout'
 import { ModuleStoreLayout } from './Layout/ModuleStoreLayout/ModuleStoreLayout'
+import { TestLayout } from './Layout/TestLayout/TestLayout'
 
 function AppIcon({
   title,
@@ -75,7 +76,15 @@ export function CodeEditor() {
           name='shaders'
           title={'Shaders'}
           icon={
-            <svg width='24' height='24' xmlns='http://www.w3.org/2000/svg' fill-rule='evenodd' clip-rule='evenodd'>
+            <svg width='24' height='24' xmlns='http://www.w3.org/2000/svg' fillRule='evenodd' clipRule='evenodd'>
+              <path d='M13 9h9l-14 15 3-9h-9l14-15-3 9zm-8.699 5h8.086l-1.987 5.963 9.299-9.963h-8.086l1.987-5.963-9.299 9.963z' />
+            </svg>
+          }></AppIcon>
+        <AppIcon
+          name='test'
+          title={'Test'}
+          icon={
+            <svg width='24' height='24' xmlns='http://www.w3.org/2000/svg' fillRule='evenodd' clipRule='evenodd'>
               <path d='M13 9h9l-14 15 3-9h-9l14-15-3 9zm-8.699 5h8.086l-1.987 5.963 9.299-9.963h-8.086l1.987-5.963-9.299 9.963z' />
             </svg>
           }></AppIcon>
@@ -84,6 +93,7 @@ export function CodeEditor() {
         {tabAt === 'codePage' && <CodeEditorLayout></CodeEditorLayout>}
         {tabAt === 'modulePage' && <ModuleStoreLayout></ModuleStoreLayout>}
         {tabAt === 'shaders' && <ShaderEditorLayout></ShaderEditorLayout>}
+        {tabAt === 'test' && <TestLayout></TestLayout>}
       </div>
     </div>
   )
