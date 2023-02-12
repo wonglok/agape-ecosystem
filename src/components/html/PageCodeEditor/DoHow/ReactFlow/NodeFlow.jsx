@@ -49,22 +49,26 @@ function Flow() {
     let cleans = []
 
     let autoUpload = (attrName) => {
-      let ttt = 0
+      let tt = 0
 
       cleans.push(
         useFlowStore.subscribe((state, before) => {
-          clearInterval(ttt)
-          ttt = setInterval(() => {
-            if (state.uploadSignal !== before.uploadSignal) {
-              let array = useFlowStore.getState()[attrName]
+          if (state.uploadSignal !== before.uploadSignal) {
+            let array = useFlowStore.getState()[attrName]
 
-              let mapObject = api.doc.getMap(attrName)
+            let mapObject = api.doc.getMap(attrName)
 
+            clearTimeout(tt)
+            tt = setTimeout(() => {
               array.forEach((it) => {
-                mapObject.set(it.id, it)
+                let jsonFromCloud = JSON.stringify(mapObject.get(it.id))
+                let jsonLatest = JSON.stringify(it)
+                if (jsonFromCloud !== jsonLatest) {
+                  mapObject.set(it.id, it)
+                }
               })
-            }
-          }, 100)
+            }, 25)
+          }
         }),
       )
     }
