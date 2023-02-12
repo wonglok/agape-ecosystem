@@ -1,6 +1,7 @@
 import React from 'react'
 import { Handle, Position } from 'reactflow'
 import { useFlowStore } from '../useFlowStore'
+import { getID } from '@/backend/aws'
 
 function ColorChooserNode({ id, data }) {
   const updateNodeColor = useFlowStore((state) => state.updateNodeColor)
@@ -22,7 +23,12 @@ function ColorChooserNode({ id, data }) {
 }
 
 export const createItem = () => {
-  return {}
+  return {
+    id: getID(),
+    type: 'ColorChooserNode',
+    data: { color: '#4FD1C5' },
+    position: { x: 250, y: 25 },
+  }
 }
 
 export default ColorChooserNode

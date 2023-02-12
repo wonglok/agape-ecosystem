@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import ReactFlow, { Background, Controls, MiniMap } from 'reactflow'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import ReactFlow, { Background, Controls, MiniMap, ReactFlowProvider, useReactFlow } from 'reactflow'
 import { shallow } from 'zustand/shallow'
 
 import 'reactflow/dist/style.css'
 
 import { NodeTypes } from './NodeTypes'
 import { useFlowStore } from './useFlowStore'
-import { AWSData } from '@/backend/aws'
+import { AWSData, getID } from '@/backend/aws'
 import { useRealtime } from '../Realtime/useRealtime'
 
 const selector = (state) => ({
@@ -92,9 +92,52 @@ function Flow() {
   const minimapStyle = {
     height: 120,
   }
+  const connectingNodeId = useRef(null)
+  const { project } = useReactFlow()
+
+  const fitViewOptions = {
+    padding: 1,
+  }
+
+  let reactFlowWrapper = useRef()
+
+  // const onConnect2 = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [])
+
+  const onConnectStart = useCallback((_, { nodeId }) => {
+    connectingNodeId.current = nodeId
+  }, [])
+
+  const onConnectEnd = useCallback(
+    (event) => {
+      const targetIsPane = event.target.classList.contains('react-flow__pane')
+
+      if (targetIsPane) {
+        // we need to remove the wrapper bounds, in order to get the correct position
+        const { top, left } = reactFlowWrapper.current.getBoundingClientRect()
+        const id = getID()
+
+        //
+        const newNode = {
+          id,
+          // we are removing the half of the node width (75) to center the new node
+          position: project({ x: event.clientX - left - 75, y: event.clientY - top }),
+          data: { label: `Node ${id}` },
+        }
+
+        api.doc.getMap('nodes').set(newNode.id, newNode)
+
+        let newEdge = { id: getID(), source: connectingNodeId.current, target: id }
+        api.doc.getMap('edges').set(newEdge.id, newEdge)
+
+        // setNodes((nds) => nds.concat(newNode))
+        // setEdges((eds) => eds.concat())
+      }
+    },
+    [api.doc, project],
+  )
 
   return (
-    <>
+    <div className='w-full h-full' ref={reactFlowWrapper}>
       {
         <ReactFlow
           nodes={nodes}
@@ -102,8 +145,12 @@ function Flow() {
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
+          onConnectStart={onConnectStart}
+          onConnectEnd={onConnectEnd}
+          fitView
+          fitViewOptions={fitViewOptions}
           nodeTypes={NodeTypes}
-          fitView>
+          snapToGrid>
           <MiniMap style={minimapStyle} zoomable pannable />
           <Controls />
           <Background color='#aaa' gap={10} />
@@ -151,15 +198,17 @@ function Flow() {
           reset default
         </button>
       </div>
-    </>
+    </div>
   )
 }
 
 export default function Page() {
   //
   return (
-    <div className='relative w-full h-full'>
-      <Flow></Flow>
-    </div>
+    <ReactFlowProvider>
+      <div className='relative w-full h-full'>
+        <Flow></Flow>
+      </div>
+    </ReactFlowProvider>
   )
 }
