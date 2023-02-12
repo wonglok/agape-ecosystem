@@ -53,6 +53,7 @@ function Flow() {
 
       cleans.push(
         useFlowStore.subscribe((state, before) => {
+          //prevent over compute
           if (state.uploadSignal !== before.uploadSignal) {
             let array = useFlowStore.getState()[attrName]
             let mapObject = api.doc.getMap(attrName)
