@@ -228,9 +228,22 @@ export class WebsocketProvider extends Observable {
     while (serverUrl[serverUrl.length - 1] === '/') {
       serverUrl = serverUrl.slice(0, serverUrl.length - 1)
     }
+
+    // for (let kn in params) {
+    //   if (!params[kn]) {
+    //     delete params[kn]
+    //   }
+    //   params[kn] = encodeURIComponent(params[kn])
+    // }
+
     const encodedParams = url.encodeQueryParams(params)
-    this.bcChannel = serverUrl + '/' + roomname
-    this.url = serverUrl + '/' + roomname + (encodedParams.length === 0 ? '' : '?' + encodedParams)
+    // this.bcChannel = serverUrl + '/' + roomname
+    // this.url = serverUrl + '/' + roomname + (encodedParams.length === 0 ? '' : '?' + encodedParams)
+
+    this.bcChannel = serverUrl
+    this.url = serverUrl + (encodedParams.length === 0 ? '' : '?' + encodedParams)
+
+    console.log(this.url)
     this.roomname = roomname
     this.doc = doc
     this._WS = WebSocketPolyfill || window.WebSocket
