@@ -26,59 +26,62 @@ function Flow() {
 
   const { nodes, edges, onNodesChange, onEdgesChange, onConnect } = useFlowStore(selector, shallow)
   useEffect(() => {
-    //
-    let api = provideAPI({ token: AWSData.jwt, rooomName: 'room', documentName: 'doc3' })
-    setAPI(api)
+    try {
+      let api = provideAPI({ token: AWSData.jwt, rooomName: 'room', documentName: 'doc3' })
+      setAPI(api)
 
-    let syncAttr = (attrName = 'nodes') => {
-      let mapObject = api.doc.getMap(attrName)
-      mapObject.observe(() => {
-        //
-        let arr = []
-        for (let item of mapObject.values()) {
-          arr.push({ ...item })
-        }
-
-        useFlowStore.setState({ [attrName]: arr })
-      })
-    }
-
-    syncAttr('nodes')
-    syncAttr('edges')
-
-    let cleans = []
-
-    let autoUpload = (attrName) => {
-      let tt = 0
-
-      cleans.push(
-        useFlowStore.subscribe((state, before) => {
-          //prevent over compute
-          if (state.uploadSignal !== before.uploadSignal) {
-            let array = useFlowStore.getState()[attrName]
-            let mapObject = api.doc.getMap(attrName)
-
-            clearTimeout(tt)
-            tt = setTimeout(() => {
-              array.forEach((it) => {
-                let jsonFromCloud = JSON.stringify(mapObject.get(it.id))
-                let jsonLatest = JSON.stringify(it)
-                if (jsonFromCloud !== jsonLatest) {
-                  mapObject.set(it.id, it)
-                }
-              })
-            }, 30)
+      let syncAttr = (attrName = 'nodes') => {
+        let mapObject = api.doc.getMap(attrName)
+        mapObject.observe(() => {
+          //
+          let arr = []
+          for (let item of mapObject.values()) {
+            arr.push({ ...item })
           }
-        }),
-      )
-    }
 
-    autoUpload('nodes')
-    autoUpload('edges')
+          useFlowStore.setState({ [attrName]: arr })
+        })
+      }
 
-    return () => {
-      api.clean()
-      cleans.forEach((r) => r())
+      syncAttr('nodes')
+      syncAttr('edges')
+
+      let cleans = []
+
+      let autoUpload = (attrName) => {
+        let tt = 0
+
+        cleans.push(
+          useFlowStore.subscribe((state, before) => {
+            //prevent over compute
+            if (state.uploadSignal !== before.uploadSignal) {
+              let array = useFlowStore.getState()[attrName]
+              let mapObject = api.doc.getMap(attrName)
+
+              clearTimeout(tt)
+              tt = setTimeout(() => {
+                array.forEach((it) => {
+                  let jsonFromCloud = JSON.stringify(mapObject.get(it.id))
+                  let jsonLatest = JSON.stringify(it)
+                  if (jsonFromCloud !== jsonLatest) {
+                    mapObject.set(it.id, it)
+                  }
+                })
+              }, 30)
+            }
+          }),
+        )
+      }
+
+      autoUpload('nodes')
+      autoUpload('edges')
+
+      return () => {
+        api.clean()
+        cleans.forEach((r) => r())
+      }
+    } catch (e) {
+      console.error(e)
     }
   }, [provideAPI])
   return (
