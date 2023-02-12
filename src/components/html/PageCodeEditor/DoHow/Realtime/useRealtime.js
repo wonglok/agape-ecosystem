@@ -6,7 +6,7 @@ import { AWSBackend } from 'aws.config'
 
 export const createNewDocument = () => new Y.Doc()
 
-export const crerateSocket = ({ token = '', roomName, doc, documentName }) => {
+export const crerateSocket = ({ token = '', roomName = '', doc, documentName }) => {
   let backendInfo = AWSBackend[process.env.NODE_ENV]
   let socket = new WebsocketProvider(`${backendInfo.ws}`, `${roomName}`, doc, {
     params: {
