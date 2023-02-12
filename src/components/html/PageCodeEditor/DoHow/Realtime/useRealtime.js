@@ -31,7 +31,7 @@ export const useRealtime = create((set, get) => {
         return defaultValue
       }
     },
-    provideFile: ({ token = AWSData.jwt, roomName, documentName }) => {
+    provideAPI: ({ token = AWSData.jwt, roomName, documentName }) => {
       let self = get()
       let docKey = `_${roomName}_${documentName}_doc`
       let socketKey = `_${roomName}_${documentName}_socket`
@@ -58,9 +58,20 @@ export const useRealtime = create((set, get) => {
             [docKey]: false,
             [socketKey]: false,
           })
+          doc.destroy()
           socket.disconnect()
         },
       }
     },
   }
 })
+
+export let getYArrayIndex = (yArray, item) => {
+  let idx = -1
+  yArray.forEach((it, idxx) => {
+    if (it.id === item.id) {
+      idx = idxx
+    }
+  })
+  return idx
+}

@@ -4,10 +4,11 @@ import { shallow } from 'zustand/shallow'
 
 import 'reactflow/dist/style.css'
 
-import useFlowStore from './store'
 import { NodeTypes } from './NodeTypes'
 import { DemoNodes } from './nodes'
 import { DemoEdges } from './edges'
+import { useFlowStore } from './useFlowStore'
+import { AWSData } from '@/backend/aws'
 import { useRealtime } from '../Realtime/useRealtime'
 
 const selector = (state) => ({
@@ -19,64 +20,91 @@ const selector = (state) => ({
 })
 
 function Flow() {
-  let provideFile = useRealtime((r) => r.provideFile)
-  let load = useFlowStore((s) => s.load)
-  let [yAPI, setAPI] = useState(false)
+  let provideAPI = useRealtime((s) => s.provideAPI)
 
-  useEffect(() => {
-    let api = provideFile({ roomName: 'mytestshader', documentName: 'myDoc' })
-
-    setAPI(api)
-    let nodesY = api.doc.getArray('nodes')
-    let connectionsY = api.doc.getArray('connections')
-
-    let onNodes = () => {
-      //
-      load({
-        nodes: nodesY.toArray(),
-        edges: connectionsY.toArray(),
-      })
-    }
-
-    let onConnections = () => {
-      //
-      load({
-        nodes: nodesY.toArray(),
-        edges: connectionsY.toArray(),
-      })
-    }
-
-    nodesY.observe(onNodes)
-    connectionsY.observe(onConnections)
-    return () => {
-      nodesY.unobserve(onNodes)
-      connectionsY.unobserve(onConnections)
-
-      api.clean()
-    }
-  }, [load, provideFile])
+  let [api, setAPI] = useState(false)
 
   const { nodes, edges, onNodesChange, onEdgesChange, onConnect } = useFlowStore(selector, shallow)
+  useEffect(() => {
+    //
+    let api = provideAPI({ token: AWSData.jwt, rooomName: 'room', documentName: 'doc3' })
+    setAPI(api)
 
+    let syncAttr = (attrName = 'nodes') => {
+      let mapObject = api.doc.getMap(attrName)
+      mapObject.observe(() => {
+        //
+        let arr = []
+        for (let item of mapObject.values()) {
+          arr.push(item)
+        }
+
+        useFlowStore.setState({ [attrName]: arr })
+      })
+    }
+
+    syncAttr('nodes')
+    syncAttr('edges')
+
+    let cleans = []
+
+    let autoUpload = (attrName) => {
+      let ttt = 0
+
+      cleans.push(
+        useFlowStore.subscribe((state, before) => {
+          clearInterval(ttt)
+          ttt = setInterval(() => {
+            if (state.uploadSignal !== before.uploadSignal) {
+              let array = useFlowStore.getState()[attrName]
+
+              let mapObject = api.doc.getMap(attrName)
+
+              array.forEach((it) => {
+                mapObject.set(it.id, it)
+              })
+            }
+          }, 100)
+        }),
+      )
+    }
+
+    autoUpload('nodes')
+    autoUpload('edges')
+
+    return () => {
+      api.clean()
+      cleans.forEach((r) => r())
+    }
+  }, [provideAPI])
   return (
     <>
-      {/* <button
+      <button
         onClick={() => {
-          yAPI.doc.getArray('nodes').push([...DemoNodes])
-          yAPI.doc.getArray('edges').push([...DemoEdges])
-          // load({ nodes: DemoNodes, edges: DemoEdges })
-        }}>
-        load
-      </button> */}
+          DemoNodes.forEach((it) => {
+            api.doc.getMap('nodes').set(it.id, it)
+          })
+          DemoEdges.forEach((it) => {
+            api.doc.getMap('edges').set(it.id, it)
+          })
 
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
-        nodeTypes={NodeTypes}
-        fitView></ReactFlow>
+          //
+          // api.doc.getMap('nodes').push([...DemoNodes])
+          // api.doc.getMap('edges').push([...DemoEdges])
+        }}>
+        add
+      </button>
+
+      {
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onConnect={onConnect}
+          nodeTypes={NodeTypes}
+          fitView></ReactFlow>
+      }
     </>
   )
 }
@@ -89,5 +117,3 @@ export default function Page() {
     </div>
   )
 }
-
-//

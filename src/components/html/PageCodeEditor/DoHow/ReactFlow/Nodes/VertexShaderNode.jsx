@@ -1,10 +1,10 @@
 import React from 'react'
 import { Handle, Position } from 'reactflow'
 
-import useStore from '../store'
+import { useFlowStore } from '../useFlowStore'
 
 function VertexShaderNode({ id, data }) {
-  const updateNodeColor = useStore((state) => state.updateNodeColor)
+  const updateNodeColor = useFlowStore((state) => state.updateNodeColor)
 
   return (
     <div style={{ backgroundColor: data.color, borderRadius: 10 }}>
