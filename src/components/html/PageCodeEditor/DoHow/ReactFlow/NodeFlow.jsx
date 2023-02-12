@@ -67,7 +67,7 @@ function Flow() {
                     mapObject.set(it.id, it)
                   }
                 })
-              }, 30)
+              }, 50)
             }
           }),
         )
