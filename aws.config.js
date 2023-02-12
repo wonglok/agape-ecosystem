@@ -10,6 +10,6 @@ export const AWSBackend = {
   },
   production: {
     rest: 'https://su4w18efdb.execute-api.us-west-2.amazonaws.com',
-    ws: '',
+    ws: '	wss://3qiix3wdki.execute-api.us-west-2.amazonaws.com/production',
   },
 }

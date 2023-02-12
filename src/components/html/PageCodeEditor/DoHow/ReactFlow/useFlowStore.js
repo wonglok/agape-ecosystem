@@ -8,7 +8,6 @@ const useFlowStore = create((set, get) => {
     edges: [],
 
     onNodesChange: (changes) => {
-      //
       let latest = applyNodeChanges(changes, get().nodes)
 
       set({
