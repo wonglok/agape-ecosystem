@@ -114,9 +114,11 @@ function Flow() {
       if (targetIsPane) {
         // we need to remove the wrapper bounds, in order to get the correct position
         const { top, left } = reactFlowWrapper.current.getBoundingClientRect()
+        const id = getID()
+
         //
         const newNode = {
-          id: getID(),
+          id,
           // we are removing the half of the node width (75) to center the new node
           position: project({ x: event.clientX - left - 75, y: event.clientY - top }),
           data: { label: `Node ${id}` },
