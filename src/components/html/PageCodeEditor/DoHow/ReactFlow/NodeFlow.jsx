@@ -27,7 +27,7 @@ function Flow() {
   const { nodes, edges, onNodesChange, onEdgesChange, onConnect } = useFlowStore(selector, shallow)
   useEffect(() => {
     try {
-      let api = provideAPI({ token: AWSData.jwt, rooomName: 'room', documentName: 'doc3' })
+      let api = provideAPI({ token: AWSData.jwt || '', rooomName: 'room', documentName: 'doc3' })
       setAPI(api)
 
       let syncAttr = (attrName = 'nodes') => {
