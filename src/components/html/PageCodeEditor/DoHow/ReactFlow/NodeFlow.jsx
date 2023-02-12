@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import ReactFlow from 'reactflow'
+import ReactFlow, { Background, Controls, MiniMap } from 'reactflow'
 import { shallow } from 'zustand/shallow'
 
 import 'reactflow/dist/style.css'
 
 import { NodeTypes } from './NodeTypes'
-import { DemoNodes } from './nodes'
-import { DemoEdges } from './edges'
 import { useFlowStore } from './useFlowStore'
 import { AWSData } from '@/backend/aws'
 import { useRealtime } from '../Realtime/useRealtime'
@@ -67,6 +65,12 @@ function Flow() {
                     mapObject.set(it.id, it)
                   }
                 })
+
+                array.forEach((it) => {
+                  if (!mapObject.has(it.id)) {
+                    mapObject.delete(it.id)
+                  }
+                })
               }, 50)
             }
           }),
@@ -84,24 +88,13 @@ function Flow() {
       console.error(e)
     }
   }, [provideAPI])
+
+  const minimapStyle = {
+    height: 120,
+  }
+
   return (
     <>
-      <button
-        onClick={() => {
-          DemoNodes.forEach((it) => {
-            api.doc.getMap('nodes').set(it.id, it)
-          })
-          DemoEdges.forEach((it) => {
-            api.doc.getMap('edges').set(it.id, it)
-          })
-
-          //
-          // api.doc.getMap('nodes').push([...DemoNodes])
-          // api.doc.getMap('edges').push([...DemoEdges])
-        }}>
-        add
-      </button>
-
       {
         <ReactFlow
           nodes={nodes}
@@ -110,8 +103,54 @@ function Flow() {
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
           nodeTypes={NodeTypes}
-          fitView></ReactFlow>
+          fitView>
+          <MiniMap style={minimapStyle} zoomable pannable />
+          <Controls />
+          <Background color='#aaa' gap={10} />
+        </ReactFlow>
       }
+      <div className=' absolute top-0 left-0 z-20 p-2'>
+        <button
+          onClick={() => {
+            const DemoEdges = [
+              { id: 'e1-2', source: '1', target: '2' },
+              { id: 'e2-3', source: '2', target: '3' },
+            ]
+
+            const DemoNodes = [
+              {
+                id: '1',
+                type: 'ColorChooserNode',
+                data: { color: '#4FD1C5' },
+                position: { x: 250, y: 25 },
+              },
+
+              {
+                id: '2',
+                type: 'ColorChooserNode',
+                data: { color: '#F6E05E' },
+                position: { x: 100, y: 125 },
+              },
+              {
+                id: '3',
+                type: 'ColorChooserNode',
+                data: { color: '#B794F4' },
+                position: { x: 250, y: 250 },
+              },
+            ]
+
+            api.doc.getMap('nodes').clear()
+            api.doc.getMap('edges').clear()
+            DemoNodes.forEach((it) => {
+              api.doc.getMap('nodes').set(it.id, it)
+            })
+            DemoEdges.forEach((it) => {
+              api.doc.getMap('edges').set(it.id, it)
+            })
+          }}>
+          reset default
+        </button>
+      </div>
     </>
   )
 }
@@ -119,8 +158,8 @@ function Flow() {
 export default function Page() {
   //
   return (
-    <div className='w-full h-full'>
-      <Flow className='w-full h-full'></Flow>
+    <div className='relative w-full h-full'>
+      <Flow></Flow>
     </div>
   )
 }

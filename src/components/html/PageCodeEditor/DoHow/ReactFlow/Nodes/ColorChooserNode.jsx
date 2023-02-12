@@ -7,7 +7,7 @@ function ColorChooserNode({ id, data }) {
 
   return (
     <div style={{ backgroundColor: data.color, borderRadius: 10 }}>
-      <Handle type='target' position={Position.Top} />
+      <Handle type='target' position={Position.Left} />
       <div style={{ padding: 20 }}>
         <input
           type='color'
@@ -16,9 +16,13 @@ function ColorChooserNode({ id, data }) {
           className='nodrag'
         />
       </div>
-      <Handle type='source' position={Position.Bottom} />
+      <Handle type='source' position={Position.Right} />
     </div>
   )
+}
+
+export const createItem = () => {
+  return {}
 }
 
 export default ColorChooserNode
