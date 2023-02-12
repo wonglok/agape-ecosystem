@@ -10,6 +10,7 @@ export const crerateSocket = ({ token = '', roomName = '', doc, documentName }) 
   let backendInfo = AWSBackend[process.env.NODE_ENV]
   let socket = new WebsocketProvider(`${backendInfo.ws}`, `${roomName}`, doc, {
     params: {
+      roomName: encodeURIComponent(roomName),
       token: encodeURIComponent(token),
       documentName: encodeURIComponent(documentName),
     },

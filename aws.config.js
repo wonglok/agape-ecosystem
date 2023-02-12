@@ -6,7 +6,7 @@ export const AWSBackend = {
   },
   staging: {
     rest: 'https://1fyh57enbl.execute-api.us-west-2.amazonaws.com',
-    ws: '',
+    ws: 'wss://npux174kt1.execute-api.us-west-2.amazonaws.com/staging',
   },
   production: {
     rest: 'https://su4w18efdb.execute-api.us-west-2.amazonaws.com',
