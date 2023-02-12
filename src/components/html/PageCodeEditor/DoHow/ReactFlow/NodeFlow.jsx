@@ -36,7 +36,7 @@ function Flow() {
         //
         let arr = []
         for (let item of mapObject.values()) {
-          arr.push(item)
+          arr.push({ ...item })
         }
 
         useFlowStore.setState({ [attrName]: arr })
@@ -55,7 +55,6 @@ function Flow() {
         useFlowStore.subscribe((state, before) => {
           if (state.uploadSignal !== before.uploadSignal) {
             let array = useFlowStore.getState()[attrName]
-
             let mapObject = api.doc.getMap(attrName)
 
             clearTimeout(tt)
@@ -67,7 +66,7 @@ function Flow() {
                   mapObject.set(it.id, it)
                 }
               })
-            }, 17)
+            }, 16.7)
           }
         }),
       )
