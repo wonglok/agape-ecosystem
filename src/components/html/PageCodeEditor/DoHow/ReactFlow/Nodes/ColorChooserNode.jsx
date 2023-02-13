@@ -16,7 +16,9 @@ function ColorChooserNode({ id, data }) {
           onChange={(evt) => updateNodeColor(id, evt.target.value)}
           className='nodrag'
         />
+        {data.color}
       </div>
+      <div className='p-3'>{data.label}</div>
       <Handle type='source' position={Position.Right} />
     </div>
   )
@@ -26,9 +28,11 @@ export const createItem = () => {
   return {
     id: getID(),
     type: 'ColorChooserNode',
-    data: { color: '#4FD1C5' },
+    data: { label: 'new node', color: '#4FD1C5' },
     position: { x: 250, y: 25 },
   }
 }
+
+export const displayName = 'ColorPickerNode'
 
 export default ColorChooserNode

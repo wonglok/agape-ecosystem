@@ -8,6 +8,7 @@ import { NodeTypes } from './NodeTypes'
 import { useFlowStore } from './useFlowStore'
 import { AWSData, getID } from '@/backend/aws'
 import { useRealtime } from '../Realtime/useRealtime'
+import { PopChooser } from './PopChooser/PopChooser'
 
 const selector = (state) => ({
   nodes: state.nodes,
@@ -100,6 +101,7 @@ function Flow() {
   }
 
   let reactFlowWrapper = useRef()
+  let mousePopChooser = useRef()
 
   // const onConnect2 = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [])
 
@@ -114,24 +116,34 @@ function Flow() {
       if (targetIsPane) {
         // we need to remove the wrapper bounds, in order to get the correct position
         const { top, left } = reactFlowWrapper.current.getBoundingClientRect()
-        const id = getID()
 
-        //
-        const newNode = {
-          id,
-          type: 'ColorChooserNode',
-          // we are removing the half of the node width (75) to center the new node
-          position: project({ x: event.clientX - left - 75, y: event.clientY - top }),
-          data: { label: `Node ${id}`, color: '#ff0000' },
+        mousePopChooser.current.style.top = `${event.clientY - top}px`
+        mousePopChooser.current.style.left = `${event.clientX - left}px`
+        mousePopChooser.current.style.display = 'block'
+
+        let newEdgeID = getID()
+        mousePopChooser.current.onConnectNode = (payload) => {
+          let newEdge = { id: newEdgeID, source: connectingNodeId.current, target: payload.id }
+
+          api.doc.getMap('edges').set(newEdge.id, newEdge)
+
+          mousePopChooser.current.style.display = 'none'
         }
+        mousePopChooser.current.onAddNode = (payload) => {
+          //
+          const id = getID()
 
-        api.doc.getMap('nodes').set(newNode.id, newNode)
+          const newNode = payload
+          newNode.id = id
+          newNode.position = project({ x: event.clientX - left, y: event.clientY - top - 10 })
 
-        let newEdge = { id: getID(), source: connectingNodeId.current, target: id }
-        api.doc.getMap('edges').set(newEdge.id, newEdge)
+          api.doc.getMap('nodes').set(newNode.id, newNode)
 
-        // setNodes((nds) => nds.concat(newNode))
-        // setEdges((eds) => eds.concat())
+          let newEdge = { id: getID(), source: connectingNodeId.current, target: id }
+          api.doc.getMap('edges').set(newEdge.id, newEdge)
+
+          mousePopChooser.current.style.display = 'none'
+        }
       }
     },
     [api.doc, project],
@@ -141,6 +153,7 @@ function Flow() {
     <div className='w-full h-full' ref={reactFlowWrapper}>
       {/*  */}
       {/*  */}
+
       {
         <ReactFlow
           nodes={nodes}
@@ -159,6 +172,10 @@ function Flow() {
           <Background color='#aaaaaa' gap={10} />
         </ReactFlow>
       }
+      <div style={{ position: 'absolute', top: `0px`, left: `0px`, display: 'none' }} ref={mousePopChooser}>
+        <PopChooser nodes={nodes} mousePopChooser={mousePopChooser}></PopChooser>
+      </div>
+
       {/*  */}
       {/*  */}
       <div className=' absolute top-0 left-0 z-20 p-2'>
@@ -173,20 +190,20 @@ function Flow() {
               {
                 id: '1',
                 type: 'ColorChooserNode',
-                data: { color: '#4FD1C5' },
+                data: { label: 'node1', color: '#4FD1C5' },
                 position: { x: 250, y: 25 },
               },
 
               {
                 id: '2',
                 type: 'ColorChooserNode',
-                data: { color: '#F6E05E' },
+                data: { label: 'node2', color: '#F6E05E' },
                 position: { x: 100, y: 125 },
               },
               {
                 id: '3',
                 type: 'ColorChooserNode',
-                data: { color: '#B794F4' },
+                data: { label: 'node3', color: '#B794F4' },
                 position: { x: 250, y: 250 },
               },
             ]
