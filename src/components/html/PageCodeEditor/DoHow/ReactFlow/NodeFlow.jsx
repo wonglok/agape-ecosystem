@@ -104,8 +104,6 @@ function Flow() {
       )}
 
       {/*  */}
-      {/*  */}
-      {/*  */}
       <div
         style={{ position: 'absolute', top: `${toolTop}`, left: `${toolLeft}`, display: showTool ? 'block' : 'none' }}
         ref={mousePopChooser}>
