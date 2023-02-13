@@ -99,7 +99,7 @@ export const useRealtime = create((set, get) => {
               yesArray.delete(0, yesArray.length)
               yesArray.push(array)
             }
-          }, 250)
+          }, 100)
 
           cleans.push(() => {
             clearInterval(tt)
