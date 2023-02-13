@@ -73,7 +73,6 @@ const getOptions = ({ nodes }) => {
 
 export const PopChooser = ({ nodes, mousePopChooser }) => {
   let [config, setConfig] = useState({ type: '', payload: false })
-  console.log(config)
 
   return (
     <>

@@ -6,11 +6,11 @@ export function ShaderEditorLayout() {
   return (
     <div className='w-full h-full'>
       <HorizontalParent>
-        <HorizontalChildren width='calc(100% - 500px)'>
+        <HorizontalChildren width='calc(100% - 100px)'>
           <NodeFlow></NodeFlow>
         </HorizontalChildren>
-        <HorizontalChildren className={'border-l border-gray-500'} width='calc(500px)'>
-          4566
+        <HorizontalChildren className={'border-l border-gray-500'} width='calc(100px)'>
+          Test
         </HorizontalChildren>
       </HorizontalParent>
     </div>
