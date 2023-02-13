@@ -99,7 +99,7 @@ function Flow() {
           <OnSpace nodes={nodes} edges={edges}></OnSpace>
           <MiniMap style={minimapStyle} zoomable pannable />
           <Controls />
-          <Background color='#aaaaaa' gap={10} />
+          <Background color='#222222' gap={25} />
         </ReactFlow>
       )}
 
