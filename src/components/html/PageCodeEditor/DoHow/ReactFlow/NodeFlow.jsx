@@ -38,9 +38,11 @@ function Flow() {
       return
     }
     try {
+      let cleans = []
+
       let syncAttr = (attrName = 'nodes') => {
         let mapObject = api.doc.getMap(attrName)
-        mapObject.observe(() => {
+        let hh = () => {
           //
           let arr = []
           for (let item of mapObject.values()) {
@@ -48,13 +50,15 @@ function Flow() {
           }
 
           useFlowStore.setState({ [attrName]: arr })
+        }
+        mapObject.observe(hh)
+        cleans.push(() => {
+          mapObject.unobserve(hh)
         })
       }
 
       syncAttr('nodes')
       syncAttr('edges')
-
-      let cleans = []
 
       let autoUpload = (attrName) => {
         let tt = 0
