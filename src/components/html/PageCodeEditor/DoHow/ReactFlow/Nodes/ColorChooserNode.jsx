@@ -3,12 +3,19 @@ import { Handle, Position } from 'reactflow'
 import { useFlowStore } from '../useFlowStore'
 import { getID } from '@/backend/aws'
 
-function ColorChooserNode({ id, data }) {
+function ColorChooserNode({ id, selected, data }) {
   const updateNodeColor = useFlowStore((state) => state.updateNodeColor)
   const updateNodeLabel = useFlowStore((state) => state.updateNodeLabel)
 
   return (
-    <div className='p-3' style={{ backgroundColor: data.color, borderRadius: 10 }}>
+    <div
+      className='p-3'
+      style={{
+        backgroundColor: data.color,
+        border: 'black solid 2px',
+        borderColor: selected ? 'black' : 'transparent',
+        borderRadius: 10,
+      }}>
       <Handle type='target' position={Position.Top} />
       <div style={{}}>
         <input

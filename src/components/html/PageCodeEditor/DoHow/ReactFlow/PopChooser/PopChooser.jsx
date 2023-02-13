@@ -1,6 +1,8 @@
 import { Cascader } from 'antd'
-import { useState } from 'react'
-import { NodeOptions } from '../NodeTypes'
+import { useEffect, useState } from 'react'
+import { NodeOptions, NodeTypes } from '../NodeTypes'
+import { useKeyPress, useOnSelectionChange, useReactFlow } from 'reactflow'
+import { getID } from '@/backend/aws'
 const getOptions = ({ nodes }) => {
   //!SECTION
 
@@ -71,26 +73,98 @@ const getOptions = ({ nodes }) => {
   ]
 }
 
-export const PopChooser = ({ nodes, mousePopChooser }) => {
+export const PopChooser = ({ api, nodes, guiRef }) => {
   let [config, setConfig] = useState({ type: '', payload: false })
 
+  let [selNode, setSelNode] = useState(false)
+  useOnSelectionChange({
+    onChange: ({ nodes, edges }) => {
+      console.log('changed selection', nodes, edges)
+      let sel = nodes[0]
+      setSelNode(sel)
+    },
+  })
+
+  let down = useKeyPress('Space')
+  const { project } = useReactFlow()
+
+  useEffect(() => {
+    console.log(selNode)
+    if (down && selNode) {
+      // const id = getID()
+      // const newNode = config.payload
+      // newNode.id = id
+      // newNode.position.x = selNode.position.x + 75
+      // newNode.position.y = selNode.position.y
+
+      // api.doc.getMap('nodes').set(newNode.id, newNode)
+
+      // let newEdge = { id: getID(), source: connectingNodeId.current, target: id }
+      // api.doc.getMap('edges').set(newEdge.id, newEdge)
+
+      guiRef.current.style.display = 'block'
+      guiRef.current.style.top = `50%`
+      guiRef.current.style.left = `calc(50% - 100px)`
+
+      let newEdgeID = getID()
+      guiRef.current.onConnectNode = (payload) => {
+        let newEdge = { id: newEdgeID, source: selNode.id, target: payload.id }
+
+        api.doc.getMap('edges').set(newEdge.id, newEdge)
+
+        guiRef.current.style.display = 'none'
+      }
+      guiRef.current.onAddNode = (payload) => {
+        //
+        const id = getID()
+
+        const newNode = payload
+        newNode.id = id
+        newNode.position = project({ x: window.innerWidth / 2 - 100, y: window.innerHeight / 2 - 75 })
+
+        api.doc.getMap('nodes').set(newNode.id, newNode)
+
+        let newEdge = { id: getID(), source: selNode.id, target: id }
+        api.doc.getMap('edges').set(newEdge.id, newEdge)
+
+        guiRef.current.style.display = 'none'
+      }
+    }
+  }, [api.doc, down, guiRef, project, selNode])
+
   return (
-    <>
+    <div className='p-3 bg-white border-2 border-gray-500 shadow-2xl rounded-2xl '>
       <Cascader
-        className='w-96'
+        className='mb-3 w-96'
         options={getOptions({ nodes })}
         onChange={(ev) => {
           if (ev[0] === 'connect') {
             let nodeID = ev[ev.length - 1]
-            setConfig({
-              type: ev[0],
-              payload: nodes.find((n) => n.id === nodeID),
-            })
+            let node = nodes.find((n) => n.id === nodeID)
+
+            if (node) {
+              setConfig({
+                type: ev[0],
+                payload: node,
+              })
+            } else {
+              setConfig({
+                type: ev[0],
+                payload: false,
+              })
+            }
           } else if (ev[0] === 'create') {
-            setConfig({
-              type: ev[0],
-              payload: ev[ev.length - 1],
-            })
+            if (ev[0] && ev[1] && ev[1]?.id) {
+              setConfig({
+                type: ev[0],
+                payload: ev[1],
+              })
+            } else {
+              setConfig({
+                type: ev[0],
+                payload: false,
+              })
+            }
           }
 
           return null
@@ -103,31 +177,33 @@ export const PopChooser = ({ nodes, mousePopChooser }) => {
         <div className='flex'>
           {config.type === 'create' && (
             <button
-              className='px-3 py-2 text-xs text-white bg-blue-500 rounded-xl'
+              className='px-3 py-2 text-xs text-white bg-blue-500 rounded-xl  disabled:opacity-50'
               onClick={() => {
-                mousePopChooser.current.onAddNode(config.payload)
-              }}>
+                guiRef.current.onAddNode(config.payload)
+              }}
+              disabled={!config.payload}>
               <>Create</>
             </button>
           )}
           {config.type === 'connect' && (
             <button
-              className='px-3 py-2 text-xs text-white bg-blue-500 rounded-xl'
+              className='px-3 py-2 text-xs text-white bg-blue-500 rounded-xl disabled:opacity-50'
               onClick={() => {
-                mousePopChooser.current.onConnectNode(config.payload)
-              }}>
+                guiRef.current.onConnectNode(config.payload)
+              }}
+              disabled={!config.payload}>
               <>Connect</>
             </button>
           )}
           <button
-            className='px-3 py-2 text-xs text-white bg-gray-500 rounded-xl'
+            className='px-3 py-2 ml-2 text-xs text-white bg-gray-500 rounded-xl'
             onClick={() => {
-              mousePopChooser.current.style.display = 'none'
+              guiRef.current.style.display = 'none'
             }}>
             <>Cancel</>
           </button>
         </div>
       }
-    </>
+    </div>
   )
 }

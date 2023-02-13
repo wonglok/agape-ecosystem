@@ -22,7 +22,6 @@ export function CreateAppVersion({ app }) {
           <span
             className='text-white bg-blue-500 cursor-pointer'
             onClick={async () => {
-              //
               nProgress.start()
 
               await AppVersion.create({

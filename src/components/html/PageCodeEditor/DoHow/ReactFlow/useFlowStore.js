@@ -6,12 +6,12 @@ const useFlowStore = create((set, get) => {
   return {
     nodes: [],
     edges: [],
-
+    api: false,
     onNodesChange: (changes) => {
       let latest = applyNodeChanges(changes, get().nodes)
 
       set({
-        nodes: latest,
+        nodes: [...latest],
         uploadSignal: Math.random(),
       })
     },

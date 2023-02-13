@@ -1,14 +1,13 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import ReactFlow, { Background, Controls, MiniMap, ReactFlowProvider, useReactFlow } from 'reactflow'
 import { shallow } from 'zustand/shallow'
-
 import 'reactflow/dist/style.css'
-
 import { NodeTypes } from './NodeTypes'
 import { useFlowStore } from './useFlowStore'
 import { AWSData, getID } from '@/backend/aws'
 import { useRealtime } from '../Realtime/useRealtime'
 import { PopChooser } from './PopChooser/PopChooser'
+import { OnSpace } from './Keyboard/OnSpace'
 
 const selector = (state) => ({
   nodes: state.nodes,
@@ -22,7 +21,7 @@ function Flow() {
   let provideAPI = useRealtime((s) => s.provideAPI)
 
   let [api, setAPI] = useState(false)
-
+  let [ready, setReady] = useState(false)
   const { nodes, edges, onNodesChange, onEdgesChange, onConnect } = useFlowStore(selector, shallow)
   useEffect(() => {
     try {
@@ -38,7 +37,15 @@ function Flow() {
             arr.push({ ...item })
           }
 
-          useFlowStore.setState({ [attrName]: arr })
+          useFlowStore.setState({ [attrName]: arr, uploadSignal: Math.random() })
+
+          setReady((r) => {
+            if (!r) {
+              return !r
+            } else {
+              return r
+            }
+          })
         })
       }
 
@@ -54,11 +61,11 @@ function Flow() {
           useFlowStore.subscribe((state, before) => {
             //prevent over compute
             if (state.uploadSignal !== before.uploadSignal) {
-              let array = useFlowStore.getState()[attrName]
-              let mapObject = api.doc.getMap(attrName)
-
               clearTimeout(tt)
               tt = setTimeout(() => {
+                let array = useFlowStore.getState()[attrName]
+                let mapObject = api.doc.getMap(attrName)
+
                 array.forEach((it) => {
                   let jsonFromCloud = JSON.stringify(mapObject.get(it.id))
                   let jsonLatest = JSON.stringify(it)
@@ -154,7 +161,7 @@ function Flow() {
       {/*  */}
       {/*  */}
 
-      {
+      {api && ready && (
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -167,13 +174,19 @@ function Flow() {
           fitViewOptions={fitViewOptions}
           nodeTypes={NodeTypes}
           snapToGrid>
+          <OnSpace nodes={nodes} edges={edges}></OnSpace>
           <MiniMap style={minimapStyle} zoomable pannable />
           <Controls />
           <Background color='#aaaaaa' gap={10} />
         </ReactFlow>
-      }
+      )}
+
+      {!ready && <div className='flex items-center justify-center w-full h-full'>Loading....</div>}
+      {/*  */}
+      {/*  */}
+      {/*  */}
       <div style={{ position: 'absolute', top: `0px`, left: `0px`, display: 'none' }} ref={mousePopChooser}>
-        <PopChooser nodes={nodes} mousePopChooser={mousePopChooser}></PopChooser>
+        {api && <PopChooser api={api} nodes={nodes} guiRef={mousePopChooser}></PopChooser>}
       </div>
 
       {/*  */}
