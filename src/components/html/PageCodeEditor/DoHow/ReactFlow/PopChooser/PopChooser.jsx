@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { NodeOptions, NodeTypes } from '../NodeTypes'
 import { useKeyPress, useOnSelectionChange, useReactFlow } from 'reactflow'
 import { getID } from '@/backend/aws'
+import { useRealtime } from '../../Realtime/useRealtime'
 const getOptions = ({ nodes }) => {
   //!SECTION
 
@@ -18,9 +19,6 @@ const getOptions = ({ nodes }) => {
     typesOfNodes.push(val)
   }
 
-  // console.log(typesOfNodes)
-
-  //
   return [
     {
       value: 'create',
@@ -32,16 +30,6 @@ const getOptions = ({ nodes }) => {
             value: r.value,
           }
         }),
-        // {
-        //   value: 'hangzhou',
-        //   label: 'Hanzhou',
-        //   children: [
-        //     {
-        //       value: 'xihu',
-        //       label: 'West Lake',
-        //     },
-        //   ],
-        // },
       ],
     },
     {
@@ -62,26 +50,19 @@ const getOptions = ({ nodes }) => {
               }),
           }
         }),
-        // ...nodes.map((r) => {
-        //   return {
-        //     value: r.id,
-        //     label: r.color,
-        //   }
-        // }),
       ],
     },
   ]
 }
 
-export const PopChooser = ({ api, nodes, guiRef }) => {
+export const PopChooser = ({ nodes, guiRef }) => {
   let [config, setConfig] = useState({ type: '', payload: false })
 
   let [chosenNode, setSelectedNodes] = useState(false)
   let [chosenEdge, setSelectedEdges] = useState(false)
-
+  let currentAPI = useRealtime((s) => s.currentAPI)
   useOnSelectionChange({
     onChange: ({ nodes, edges }) => {
-      // console.log('changed selection', nodes, edges)
       let sel = nodes[0]
       setSelectedNodes(sel)
     },
@@ -92,46 +73,15 @@ export const PopChooser = ({ api, nodes, guiRef }) => {
 
   useEffect(() => {
     if (down && chosenNode) {
-      // const id = getID()
-      // const newNode = config.payload
-      // newNode.id = id
-      // newNode.position.x = chosenNode.position.x + 75
-      // newNode.position.y = chosenNode.position.y
-
-      // api.doc.getMap('nodes').set(newNode.id, newNode)
-
-      // let newEdge = { id: getID(), source: connectingNodeId.current, target: id }
-      // api.doc.getMap('edges').set(newEdge.id, newEdge)
-
-      guiRef.current.style.display = 'block'
-      guiRef.current.style.top = `50%`
-      guiRef.current.style.left = `calc(50% - 100px)`
-
-      let newEdgeID = getID()
-      guiRef.current.onConnectNode = (payload) => {
-        let newEdge = { id: newEdgeID, source: chosenNode.id, target: payload.id }
-
-        api.doc.getMap('edges').set(newEdge.id, newEdge)
-
-        guiRef.current.style.display = 'none'
-      }
-      guiRef.current.onAddNode = (payload) => {
-        //
-        const id = getID()
-
-        const newNode = payload
-        newNode.id = id
-        newNode.position = project({ x: window.innerWidth / 2 - 100, y: window.innerHeight / 2 - 75 })
-
-        api.doc.getMap('nodes').set(newNode.id, newNode)
-
-        let newEdge = { id: getID(), source: chosenNode.id, target: id }
-        api.doc.getMap('edges').set(newEdge.id, newEdge)
-
-        guiRef.current.style.display = 'none'
-      }
+      useRealtime.setState({
+        showTool: true,
+        toolTop: `50%`,
+        toolLeft: `calc(50% - 100px)`,
+        newNodePos: project({ x: window.innerWidth / 2 - 100, y: window.innerHeight / 2 - 75 }),
+        connectingNodeId: chosenNode.id,
+      })
     }
-  }, [api.doc, down, guiRef, project, chosenNode])
+  }, [currentAPI, down, guiRef, project, chosenNode])
 
   return (
     <div className='p-3 bg-white border-2 border-gray-500 shadow-2xl rounded-2xl '>
@@ -180,7 +130,7 @@ export const PopChooser = ({ api, nodes, guiRef }) => {
             <button
               className='px-3 py-2 text-xs text-white bg-blue-500 rounded-xl  disabled:opacity-50'
               onClick={() => {
-                guiRef.current.onAddNode(config.payload)
+                useRealtime.getState().onAddNode(config.payload)
               }}
               disabled={!config.payload}>
               <>Create</>
@@ -190,7 +140,7 @@ export const PopChooser = ({ api, nodes, guiRef }) => {
             <button
               className='px-3 py-2 text-xs text-white bg-blue-500 rounded-xl disabled:opacity-50'
               onClick={() => {
-                guiRef.current.onConnectNode(config.payload)
+                useRealtime.getState().onConnectNode(config.payload)
               }}
               disabled={!config.payload}>
               <>Connect</>
@@ -199,7 +149,7 @@ export const PopChooser = ({ api, nodes, guiRef }) => {
           <button
             className='px-3 py-2 ml-2 text-xs text-white bg-gray-500 rounded-xl'
             onClick={() => {
-              guiRef.current.style.display = 'none'
+              useRealtime.setState({ showTool: false })
             }}>
             <>Cancel</>
           </button>
