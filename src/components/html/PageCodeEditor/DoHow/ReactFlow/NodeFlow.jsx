@@ -33,7 +33,6 @@ function Flow() {
     })
   }, [provideAPI])
 
-  let tt = useRef(0)
   useEffect(() => {
     if (!api) {
       return
@@ -43,6 +42,7 @@ function Flow() {
 
       let syncAttr = (attrName = 'nodes') => {
         let mapObject = api.doc.getMap(attrName)
+
         let hh = () => {
           //
           let arr = []
@@ -62,12 +62,14 @@ function Flow() {
       syncAttr('edges')
 
       let autoUpload = (attrName) => {
+        let tt = 0
+
         cleans.push(
           useFlowStore.subscribe((state, before) => {
             //prevent over compute
             if (state.uploadSignal !== before.uploadSignal) {
-              clearTimeout(tt.current)
-              tt.current = setTimeout(() => {
+              clearTimeout(tt)
+              tt = setTimeout(() => {
                 let array = useFlowStore.getState()[attrName]
                 let mapObject = api.doc.getMap(attrName)
 
