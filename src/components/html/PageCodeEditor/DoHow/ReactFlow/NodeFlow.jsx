@@ -21,13 +21,23 @@ function Flow() {
   let provideAPI = useRealtime((s) => s.provideAPI)
 
   let [api, setAPI] = useState(false)
-  let [ready, setReady] = useState(false)
   const { nodes, edges, onNodesChange, onEdgesChange, onConnect } = useFlowStore(selector, shallow)
   useEffect(() => {
-    try {
-      let api = provideAPI({ token: AWSData.jwt || '__', roomName: 'room', documentName: 'doc6' })
-      setAPI(api)
+    let api = provideAPI({ token: AWSData.jwt || '__', roomName: 'room', documentName: 'doc8' })
+    setAPI((s) => {
+      if (!s) {
+        return api
+      } else {
+        return s
+      }
+    })
+  }, [provideAPI])
 
+  useEffect(() => {
+    if (!api) {
+      return
+    }
+    try {
       let syncAttr = (attrName = 'nodes') => {
         let mapObject = api.doc.getMap(attrName)
         mapObject.observe(() => {
@@ -37,15 +47,7 @@ function Flow() {
             arr.push({ ...item })
           }
 
-          useFlowStore.setState({ [attrName]: arr, uploadSignal: Math.random() })
-
-          setReady((r) => {
-            if (!r) {
-              return !r
-            } else {
-              return r
-            }
-          })
+          useFlowStore.setState({ [attrName]: arr })
         })
       }
 
@@ -66,18 +68,17 @@ function Flow() {
                 let array = useFlowStore.getState()[attrName]
                 let mapObject = api.doc.getMap(attrName)
 
-                array.forEach((it) => {
-                  let jsonFromCloud = JSON.stringify(mapObject.get(it.id))
-                  let jsonLatest = JSON.stringify(it)
-                  if (jsonFromCloud !== jsonLatest) {
-                    mapObject.set(it.id, it)
-                  }
-                })
+                // array.forEach((it) => {
+                //   let jsonFromCloud = JSON.stringify(mapObject.get(it.id))
+                //   let jsonLatest = JSON.stringify(it)
+                //   if (jsonFromCloud !== jsonLatest) {
+                //     mapObject.set(it.id, it)
+                //   }
+                // })
 
+                mapObject.clear()
                 array.forEach((it) => {
-                  if (!mapObject.has(it.id)) {
-                    mapObject.delete(it.id)
-                  }
+                  mapObject.set(it.id, it)
                 })
               }, 50)
             }
@@ -95,7 +96,7 @@ function Flow() {
     } catch (e) {
       console.error(e)
     }
-  }, [provideAPI])
+  }, [api])
 
   const minimapStyle = {
     height: 120,
@@ -161,7 +162,7 @@ function Flow() {
       {/*  */}
       {/*  */}
 
-      {api && ready && (
+      {api && (
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -181,7 +182,6 @@ function Flow() {
         </ReactFlow>
       )}
 
-      {!ready && <div className='flex items-center justify-center w-full h-full'>Loading....</div>}
       {/*  */}
       {/*  */}
       {/*  */}
