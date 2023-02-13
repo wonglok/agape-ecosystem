@@ -81,30 +81,29 @@ export const useRealtime = create((set, get) => {
         syncAttr('edges')
 
         let autoUpload = (attrName) => {
-          let tt = 0
+          let tt = setInterval(() => {
+            //prevent over compute
+            if (useFlowStore.getState().uploadSignal !== 0) {
+              useFlowStore.getState().uploadSignal = 0
+              let array = useFlowStore.getState()[attrName]
+              let yesArray = api.doc.getArray(attrName)
 
-          cleans.push(
-            useFlowStore.subscribe((state, before) => {
-              //prevent over compute
-              if (state.uploadSignal !== before.uploadSignal) {
-                clearTimeout(tt)
-                tt = setTimeout(() => {
-                  let array = useFlowStore.getState()[attrName]
-                  let yesArray = api.doc.getArray(attrName)
+              // array.forEach((it) => {
+              //   let jsonFromCloud = JSON.stringify(yesArray.get(it.id))
+              //   let jsonLatest = JSON.stringify(it)
+              //   if (jsonFromCloud !== jsonLatest) {
+              //     yesArray.set(it.id, it)
+              //   }
+              // })
 
-                  // array.forEach((it) => {
-                  //   let jsonFromCloud = JSON.stringify(yesArray.get(it.id))
-                  //   let jsonLatest = JSON.stringify(it)
-                  //   if (jsonFromCloud !== jsonLatest) {
-                  //     yesArray.set(it.id, it)
-                  //   }
-                  // })
-                  yesArray.delete(0, yesArray.length)
-                  yesArray.push(array)
-                }, 50)
-              }
-            }),
-          )
+              yesArray.delete(0, yesArray.length)
+              yesArray.push(array)
+            }
+          }, 250)
+
+          cleans.push(() => {
+            clearInterval(tt)
+          })
         }
 
         autoUpload('nodes')
