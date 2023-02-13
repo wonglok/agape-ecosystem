@@ -23,7 +23,7 @@ function Flow() {
 
   const { nodes, edges, onNodesChange, onEdgesChange, onConnect } = useFlowStore(selector, shallow)
   useEffect(() => {
-    return makeCurrent({ roomName: 'room', documentName: 'doc92' })
+    return makeCurrent({ roomName: 'room', documentName: 'doc93' })
   }, [makeCurrent])
 
   const minimapStyle = {
