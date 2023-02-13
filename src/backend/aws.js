@@ -64,7 +64,36 @@ export const getBackendURL = () => {
   let env = process.env.NODE_ENV
   return AWSBackend[env]
 }
+export const loginWithPW = async ({ userID, password }) => {
+  return fetch(`${getBackendURL().rest}/auth-center`, {
+    method: 'post',
+    mode: 'cors',
+    body: JSON.stringify({
+      action: 'getAdminJWT',
+      payload: {
+        userID: userID,
+        password: password,
+      },
+    }),
+  })
+    .then(async (r) => {
+      let data = await r.json()
 
+      if (r.ok) {
+        return data
+      } else {
+        throw data
+      }
+    })
+    .then((data) => {
+      console.log(data)
+      localStorage.setItem('jwt', data.jwt)
+      AWSData.jwt = data.jwt
+    })
+    .catch((data) => {
+      console.error(data)
+    })
+}
 export const loginMetamask = async () => {
   let ethers = await import('@ethersproject/providers').then((r) => r)
 
