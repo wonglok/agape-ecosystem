@@ -76,12 +76,14 @@ const getOptions = ({ nodes }) => {
 export const PopChooser = ({ api, nodes, guiRef }) => {
   let [config, setConfig] = useState({ type: '', payload: false })
 
-  let [selNode, setSelNode] = useState(false)
+  let [chosenNode, setSelectedNodes] = useState(false)
+  let [chosenEdge, setSelectedEdges] = useState(false)
+
   useOnSelectionChange({
     onChange: ({ nodes, edges }) => {
-      console.log('changed selection', nodes, edges)
+      // console.log('changed selection', nodes, edges)
       let sel = nodes[0]
-      setSelNode(sel)
+      setSelectedNodes(sel)
     },
   })
 
@@ -89,13 +91,12 @@ export const PopChooser = ({ api, nodes, guiRef }) => {
   const { project } = useReactFlow()
 
   useEffect(() => {
-    console.log(selNode)
-    if (down && selNode) {
+    if (down && chosenNode) {
       // const id = getID()
       // const newNode = config.payload
       // newNode.id = id
-      // newNode.position.x = selNode.position.x + 75
-      // newNode.position.y = selNode.position.y
+      // newNode.position.x = chosenNode.position.x + 75
+      // newNode.position.y = chosenNode.position.y
 
       // api.doc.getMap('nodes').set(newNode.id, newNode)
 
@@ -108,7 +109,7 @@ export const PopChooser = ({ api, nodes, guiRef }) => {
 
       let newEdgeID = getID()
       guiRef.current.onConnectNode = (payload) => {
-        let newEdge = { id: newEdgeID, source: selNode.id, target: payload.id }
+        let newEdge = { id: newEdgeID, source: chosenNode.id, target: payload.id }
 
         api.doc.getMap('edges').set(newEdge.id, newEdge)
 
@@ -124,13 +125,13 @@ export const PopChooser = ({ api, nodes, guiRef }) => {
 
         api.doc.getMap('nodes').set(newNode.id, newNode)
 
-        let newEdge = { id: getID(), source: selNode.id, target: id }
+        let newEdge = { id: getID(), source: chosenNode.id, target: id }
         api.doc.getMap('edges').set(newEdge.id, newEdge)
 
         guiRef.current.style.display = 'none'
       }
     }
-  }, [api.doc, down, guiRef, project, selNode])
+  }, [api.doc, down, guiRef, project, chosenNode])
 
   return (
     <div className='p-3 bg-white border-2 border-gray-500 shadow-2xl rounded-2xl '>
