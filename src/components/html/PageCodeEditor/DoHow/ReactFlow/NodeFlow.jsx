@@ -119,9 +119,10 @@ function Flow() {
         //
         const newNode = {
           id,
+          type: 'ColorChooserNode',
           // we are removing the half of the node width (75) to center the new node
           position: project({ x: event.clientX - left - 75, y: event.clientY - top }),
-          data: { label: `Node ${id}` },
+          data: { label: `Node ${id}`, color: '#ff0000' },
         }
 
         api.doc.getMap('nodes').set(newNode.id, newNode)
@@ -138,6 +139,8 @@ function Flow() {
 
   return (
     <div className='w-full h-full' ref={reactFlowWrapper}>
+      {/*  */}
+      {/*  */}
       {
         <ReactFlow
           nodes={nodes}
@@ -153,9 +156,11 @@ function Flow() {
           snapToGrid>
           <MiniMap style={minimapStyle} zoomable pannable />
           <Controls />
-          <Background color='#aaa' gap={10} />
+          <Background color='#aaaaaa' gap={10} />
         </ReactFlow>
       }
+      {/*  */}
+      {/*  */}
       <div className=' absolute top-0 left-0 z-20 p-2'>
         <button
           onClick={() => {
