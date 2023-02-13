@@ -55,12 +55,13 @@ export const useRealtime = create((set, get) => {
         doc,
         socket,
         clean: () => {
+          socket.disconnect()
+          doc.destroy()
+
           set({
             [docKey]: false,
             [socketKey]: false,
           })
-          doc.destroy()
-          socket.disconnect()
         },
       }
     },
