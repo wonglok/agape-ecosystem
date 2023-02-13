@@ -5,11 +5,12 @@ import { getID } from '@/backend/aws'
 
 function ColorChooserNode({ id, data }) {
   const updateNodeColor = useFlowStore((state) => state.updateNodeColor)
+  const updateNodeLabel = useFlowStore((state) => state.updateNodeLabel)
 
   return (
-    <div style={{ backgroundColor: data.color, borderRadius: 10 }}>
-      <Handle type='target' position={Position.Left} />
-      <div style={{ padding: 20 }}>
+    <div className='p-3' style={{ backgroundColor: data.color, borderRadius: 10 }}>
+      <Handle type='target' position={Position.Top} />
+      <div style={{}}>
         <input
           type='color'
           defaultValue={data.color}
@@ -18,8 +19,15 @@ function ColorChooserNode({ id, data }) {
         />
         {data.color}
       </div>
-      <div className='p-3'>{data.label}</div>
-      <Handle type='source' position={Position.Right} />
+      <div style={{}}>
+        <input
+          type='text'
+          defaultValue={data.label}
+          onChange={(evt) => updateNodeLabel(id, evt.target.value)}
+          className='nodrag'
+        />
+      </div>
+      <Handle type='source' position={Position.Bottom} />
     </div>
   )
 }

@@ -28,6 +28,22 @@ const useFlowStore = create((set, get) => {
         uploadSignal: Math.random(),
       })
     },
+    //
+    updateNodeLabel: (nodeId, label) => {
+      set({
+        nodes: get().nodes.map((node) => {
+          if (node.id === nodeId) {
+            //
+            // it's important to create a new object here, to inform React Flow about the cahnges
+            node.data = { ...node.data, label }
+          }
+
+          return node
+        }),
+
+        uploadSignal: Math.random(),
+      })
+    },
     updateNodeColor: (nodeId, color) => {
       set({
         nodes: get().nodes.map((node) => {
