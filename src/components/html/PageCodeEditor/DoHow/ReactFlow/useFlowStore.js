@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { addEdge, applyNodeChanges, applyEdgeChanges } from 'reactflow'
+import { useRealtime } from '../Realtime/useRealtime'
 
 // this is our useFlowStore hook that we can use in our components to get parts of the store and call actions
 const useFlowStore = create((set, get) => {
@@ -7,26 +8,30 @@ const useFlowStore = create((set, get) => {
     nodes: [],
     edges: [],
     api: false,
+    isSelf: 0,
     onNodesChange: (changes) => {
       let latest = applyNodeChanges(changes, get().nodes)
 
       set({
         nodes: [...latest],
-        uploadSignal: Math.random(),
       })
+
+      useRealtime.getState().applyFlow('nodes', [...latest])
     },
     onEdgesChange: (changes) => {
+      edges = get().edges
+      edges = applyEdgeChanges(changes, edges)
       set({
-        edges: applyEdgeChanges(changes, get().edges),
-        uploadSignal: Math.random(),
+        edges: [...edges],
       })
-      //
+      useRealtime.getState().applyFlow('edges', [...edges])
     },
     onConnect: (connection) => {
+      let edges = addEdge(connection, get().edges)
       set({
-        edges: addEdge(connection, get().edges),
-        uploadSignal: Math.random(),
+        edges: [...edges],
       })
+      useRealtime.getState().applyFlow('edges', [...edges])
     },
     //
     updateNodeLabel: (nodeId, label) => {
@@ -40,8 +45,6 @@ const useFlowStore = create((set, get) => {
 
           return node
         }),
-
-        uploadSignal: Math.random(),
       })
     },
     updateNodeColor: (nodeId, color) => {
@@ -55,8 +58,6 @@ const useFlowStore = create((set, get) => {
 
           return node
         }),
-
-        uploadSignal: Math.random(),
       })
     },
   }

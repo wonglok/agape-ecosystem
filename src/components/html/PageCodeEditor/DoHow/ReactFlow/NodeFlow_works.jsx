@@ -60,7 +60,7 @@ function Flow() {
         cleans.push(
           useFlowStore.subscribe((state, before) => {
             //prevent over compute
-            if (state.uploadSignal !== before.uploadSignal) {
+            if (state.isSelf !== before.isSelf) {
               clearTimeout(tt)
               tt = setTimeout(() => {
                 let array = useFlowStore.getState()[attrName]

@@ -23,13 +23,13 @@ function Flow() {
 
   const { nodes, edges, onNodesChange, onEdgesChange, onConnect } = useFlowStore(selector, shallow)
   useEffect(() => {
-    return makeCurrent({ roomName: 'room', documentName: 'doc93' })
+    return makeCurrent({ roomName: 'room', documentName: 'v102' })
   }, [makeCurrent])
 
   const minimapStyle = {
     height: 120,
   }
-  const connectingNodeId = useRef(null)
+  // const connectingNodeId = useRef(null)
   const { project } = useReactFlow()
 
   const fitViewOptions = {
@@ -142,11 +142,15 @@ function Flow() {
               },
             ]
 
-            currentAPI.doc.getArray('nodes').delete(0, currentAPI.doc.getArray('nodes').length)
-            currentAPI.doc.getArray('edges').delete(0, currentAPI.doc.getArray('edges').length)
+            currentAPI.doc.getMap('nodes').clear()
+            currentAPI.doc.getMap('edges').clear()
 
-            currentAPI.doc.getArray('nodes').push(DemoNodes)
-            currentAPI.doc.getArray('edges').push(DemoEdges)
+            DemoNodes.map((it) => {
+              currentAPI.doc.getMap('nodes').set(it.id, it)
+            })
+            DemoEdges.map((it) => {
+              currentAPI.doc.getMap('edges').set(it.id, it)
+            })
           }}>
           reset default
         </button>

@@ -7,8 +7,9 @@ import { useFlowStore } from '../ReactFlow/useFlowStore'
 
 export const createNewDocument = () => new Y.Doc()
 
-export const crerateSocket = ({ token = '', roomName = '', doc, documentName }) => {
+export const crerateSocket = ({ token = '', roomName = '', documentName }) => {
   let backendInfo = AWSBackend[process.env.NODE_ENV]
+  let doc = createNewDocument()
   let socket = new WebsocketProvider(`${backendInfo.ws}`, `${roomName}`, doc, {
     params: {
       roomName: roomName,
@@ -17,7 +18,10 @@ export const crerateSocket = ({ token = '', roomName = '', doc, documentName }) 
     },
   })
 
-  return socket
+  return {
+    socket,
+    doc,
+  }
 }
 
 export const useRealtime = create((set, get) => {
@@ -36,12 +40,12 @@ export const useRealtime = create((set, get) => {
       newNode.position = get().newNodePos
 
       let api = get().currentAPI
-      let nodesRaw = api.doc.getArray('nodes')
-      nodesRaw.push([newNode])
+      let nodesRaw = api.doc.getMap('nodes')
+      nodesRaw.set(newNode.id, newNode)
 
-      let edgesRaw = api.doc.getArray('edges')
+      let edgesRaw = api.doc.getMap('edges')
       let newEdge = { id: getID(), source: get().connectingNodeId, target: id }
-      edgesRaw.push([newEdge])
+      edgesRaw.set(newEdge.id, newEdge)
 
       // get().currentAPI.doc.getMap('nodes').set(newNode.id, newNode)
       // get().currentAPI.doc.getMap('edges').set(newEdge.id, newEdge)
@@ -53,7 +57,7 @@ export const useRealtime = create((set, get) => {
       let newEdgeID = getID()
       let newEdge = { id: newEdgeID, source: get().connectingNodeId, target: payload.id }
 
-      get().currentAPI.doc.getArray('edges').push([newEdge])
+      get().currentAPI.doc.getMap('edges').set(newEdge.id, newEdge)
 
       set({ showTool: false })
     },
@@ -66,48 +70,25 @@ export const useRealtime = create((set, get) => {
       let cleans = []
       try {
         let syncAttr = (attrName = 'nodes') => {
-          let yesArray = api.doc.getArray(attrName)
+          let yesMap = api.doc.getMap(attrName)
 
           let hh = () => {
-            useFlowStore.setState({ [attrName]: yesArray.toArray() })
+            let myArr = []
+            yesMap.forEach((it) => {
+              myArr.push(it)
+            })
+
+            useFlowStore.setState({ [attrName]: myArr })
           }
-          yesArray.observe(hh)
+
+          yesMap.observe(hh)
           cleans.push(() => {
-            yesArray.unobserve(hh)
+            yesMap.unobserve(hh)
           })
         }
 
         syncAttr('nodes')
         syncAttr('edges')
-
-        let autoUpload = (attrName) => {
-          let tt = setInterval(() => {
-            //prevent over compute
-            if (useFlowStore.getState().uploadSignal !== 0) {
-              useFlowStore.getState().uploadSignal = 0
-              let array = useFlowStore.getState()[attrName]
-              let yesArray = api.doc.getArray(attrName)
-
-              // array.forEach((it) => {
-              //   let jsonFromCloud = JSON.stringify(yesArray.get(it.id))
-              //   let jsonLatest = JSON.stringify(it)
-              //   if (jsonFromCloud !== jsonLatest) {
-              //     yesArray.set(it.id, it)
-              //   }
-              // })
-
-              yesArray.delete(0, yesArray.length)
-              yesArray.push(array)
-            }
-          }, 100)
-
-          cleans.push(() => {
-            clearInterval(tt)
-          })
-        }
-
-        autoUpload('nodes')
-        autoUpload('edges')
       } catch (e) {
         console.error(e)
       }
@@ -128,22 +109,32 @@ export const useRealtime = create((set, get) => {
         return defaultValue
       }
     },
-    provideAPI: ({ token = AWSData.jwt, roomName, documentName }) => {
-      let self = get()
-      let docKey = `_${roomName}_${documentName}_doc`
-      let socketKey = `_${roomName}_${documentName}_socket`
+    applyFlow: (name = 'nodes', array = []) => {
+      let yesMap = get().currentAPI.doc.getMap(name)
 
-      let doc = self.provide({
-        key: docKey,
-        onCreate: () => {
-          return createNewDocument()
-        },
+      array.forEach((it) => {
+        let jsonFromCloud = JSON.stringify(yesMap.get(it.id))
+        let jsonLatest = JSON.stringify(it)
+
+        if (jsonFromCloud !== jsonLatest) {
+          yesMap.set(it.id, { ...it })
+        }
       })
 
-      let socket = self.provide({
-        key: socketKey,
+      array.forEach((it) => {
+        if (!yesMap.has(it.id)) {
+          yesMap.delete(it.id)
+        }
+      })
+    },
+    provideAPI: ({ token = AWSData.jwt, roomName, documentName }) => {
+      let self = get()
+      let caceKey = `${roomName}${documentName}`
+
+      let { doc, socket } = self.provide({
+        key: caceKey,
         onCreate: () => {
-          return crerateSocket({ token: token, roomName, documentName, doc })
+          return crerateSocket({ token: token, roomName, documentName })
         },
       })
 
@@ -155,8 +146,7 @@ export const useRealtime = create((set, get) => {
           doc.destroy()
 
           set({
-            [docKey]: false,
-            [socketKey]: false,
+            [caceKey]: false,
           })
         },
       }
