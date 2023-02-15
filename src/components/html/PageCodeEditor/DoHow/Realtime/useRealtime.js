@@ -318,17 +318,17 @@ export const useRealtime = create((set, get) => {
         }
       })
 
-      yesMap.forEach((it) => {
-        if (!array.some((r) => r.id === it)) {
-          yesMap.delete(it.id)
-        }
-      })
-
-      // array.forEach((it) => {
-      //   if (!yesMap.has(it.id)) {
+      // yesMap.forEach((it) => {
+      //   if (!array.some((r) => r.id === it)) {
       //     yesMap.delete(it.id)
       //   }
       // })
+
+      array.forEach((it) => {
+        if (!yesMap.has(it.id)) {
+          yesMap.delete(it.id)
+        }
+      })
     },
   }
 })
