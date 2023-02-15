@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { WebsocketProvider } from './WebSocketProvider'
+// import { WebsocketProvider } from './WebSocketProvider'
 import { AWSData, getID } from '@/backend/aws'
 import * as Y from 'yjs'
 import { AWSBackend } from 'aws.config'
@@ -8,32 +8,106 @@ import { Object3D } from 'three'
 import { proxy } from 'valtio'
 import { bind } from 'valtio-yjs'
 import { v4 } from 'uuid'
+import { Observable } from 'lib0/observable'
+import { fromUint8Array, toUint8Array } from 'js-base64'
+
+class ArcProvider extends Observable {
+  /**
+   * @param {Y.Doc} ydoc
+   */
+  constructor(ydoc, ws, documentName) {
+    super()
+    this.id = getID()
+
+    this.socket = new WebSocket(`${ws}?docName=${encodeURIComponent(documentName)}`)
+
+    this.socket.onmessage = (ev) => {
+      let info = JSON.parse(ev.data)
+
+      if ((info.update64 && info.actionType === 'initDown') || info.actionType === 'sync') {
+        let updateBin = toUint8Array(info.update64)
+        Y.applyUpdate(ydoc, updateBin, info.origin || null)
+      }
+    }
+
+    this.socket.onerror = (ev) => {
+      console.error(ev)
+    }
+
+    this.socket.ensureSend = (object) => {
+      let tt = setInterval(() => {
+        if (this.socket.readyState === this.socket.OPEN) {
+          clearInterval(tt)
+          this.socket.send(JSON.stringify(object))
+        }
+      })
+    }
+
+    ydoc.on('update', (update, origin) => {
+      // console.log(update, origin)
+
+      if (origin !== this.id) {
+        // this update was produced either locally or by another provider.
+        this.emit('update', [update])
+      }
+
+      // this.socket.ensureSend(update)
+
+      // if (origin === this.id) {
+      //   // this.ws.ensureSend(update)
+      // } else if (origin !== this.id) {
+      //   this.ws.ensureSend(update)
+      //
+      //   //
+      // }
+    })
+    // listen to an event that fires when a remote update is received
+    this.on('update', (update) => {
+      this.socket.ensureSend({
+        actionType: 'sync',
+        docName: documentName,
+        update64: fromUint8Array(update),
+        origin: this.id,
+      })
+
+      Y.applyUpdate(ydoc, update, this.id) // the third parameter sets the transaction-origin
+    })
+
+    this.socket.ensureSend({
+      actionType: 'init',
+      docName: documentName,
+      origin: this.id,
+    })
+  }
+  disconnect() {
+    this.off('update')
+  }
+}
 
 export const createNewDocument = () => new Y.Doc()
 
-export const createRealTime = ({ token = '', roomName = '', documentName }) => {
-  let backendInfo = AWSBackend[process.env.NODE_ENV]
-  let ydoc = new Y.Doc()
-  let socket = new WebsocketProvider(`${backendInfo.ws}`, `${roomName}`, ydoc, {
-    params: {
-      roomName: roomName,
-      token: token,
-      documentName: documentName,
-    },
-  })
+// export const createRealTime = ({ token = '', roomName = '', documentName }) => {
+//   let backendInfo = AWSBackend[process.env.NODE_ENV]
+//   let ydoc = new Y.Doc()
+//   let socket = new WebsocketProvider(`${backendInfo.ws}`, `${roomName}`, ydoc, {
+//     params: {
+//       roomName: roomName,
+//       token: token,
+//       documentName: documentName,
+//     },
+//   })
 
-  return {
-    roomName,
-    documentName,
-    socket,
-    doc: ydoc,
-  }
-}
+//   return {
+//     roomName,
+//     documentName,
+//     socket,
+//     doc: ydoc,
+//   }
+// }
 
 export const useRealtime = create((set, get) => {
   return {
     doc: false,
-    socket: false,
     nodes: [],
     edges: [],
     nodesAPI: [],
@@ -41,13 +115,15 @@ export const useRealtime = create((set, get) => {
     onOpen: ({ roomName, documentName }) => {
       let backendInfo = AWSBackend[process.env.NODE_ENV]
       let doc = new Y.Doc()
-      let socket = new WebsocketProvider(`${backendInfo.ws}`, `${roomName}`, doc, {
-        params: {
-          roomName: roomName,
-          token: AWSData.jwt || `_${v4()}`,
-          documentName: documentName,
-        },
-      })
+
+      let provider = new ArcProvider(doc, `${backendInfo.ws}`, `${documentName}`)
+      // let socket = new WebsocketProvider(`${backendInfo.ws}`, `${roomName}`, doc, {
+      //   params: {
+      //     roomName: roomName,
+      //     token: AWSData.jwt || `_${v4()}`,
+      //     documentName: documentName,
+      //   },
+      // })
 
       let nodesAPI = doc.getMap('nodes')
       let edgesAPI = doc.getMap('edges')
@@ -70,7 +146,6 @@ export const useRealtime = create((set, get) => {
       set({
         //
         doc: doc,
-        socket,
         nodesAPI,
         edgesAPI,
       })
@@ -78,8 +153,9 @@ export const useRealtime = create((set, get) => {
         nodesAPI.unobserveDeep(nodesHH)
         edgesAPI.unobserveDeep(edgesHH)
 
-        socket.disconnect()
-        socket.disconnectBc()
+        provider.disconnect()
+        // socket.disconnect()
+        // socket.disconnectBc()
       }
     },
 

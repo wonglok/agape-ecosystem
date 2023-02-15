@@ -11,7 +11,7 @@ import ReactFlow, {
 } from 'reactflow'
 import 'reactflow/dist/style.css'
 import { NodeTypes } from './NodeTypes'
-import { AWSData, getID } from '@/backend/aws'
+// import { AWSData, getID } from '@/backend/aws'
 import { createRealTime, getYArrayIndex, useRealtime } from '../Realtime/useRealtime'
 import { PopChooser } from './PopChooser/PopChooser'
 import { OnSpace } from './Keyboard/OnSpace'
@@ -64,7 +64,7 @@ function CoreImple({}) {
   let onConnect = useRealtime((r) => r.onConnect)
 
   useEffect(() => {
-    return useRealtime.getState().onOpen({ roomName: 'r1', documentName: 'd8' })
+    return useRealtime.getState().onOpen({ roomName: 'r1', documentName: 'd10' })
   }, [])
 
   useEffect(() => {}, [])
