@@ -16,7 +16,7 @@ import { createRealTime, getYArrayIndex, useRealtime } from '../Realtime/useReal
 import { PopChooser } from './PopChooser/PopChooser'
 import { OnSpace } from './Keyboard/OnSpace'
 import * as Y from 'yjs'
-import { useFrame } from '@react-three/fiber'
+// import { useFrame } from '@react-three/fiber'
 // import { useYArray, useYDoc } from 'zustand-yjs'
 
 // const selector = (state) => ({
