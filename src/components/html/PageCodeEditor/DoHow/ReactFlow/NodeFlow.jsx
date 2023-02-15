@@ -106,6 +106,10 @@ function CoreImple({}) {
           toolLeft: `${event.clientX - left}px`,
           newNodePos: project({ x: event.clientX - left, y: event.clientY - top - 10 }),
         })
+      } else {
+        useRealtime.setState({
+          showTool: false,
+        })
       }
     },
     [project],
