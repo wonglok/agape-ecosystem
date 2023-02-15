@@ -1,11 +1,11 @@
 import React from 'react'
 import { Handle, Position } from 'reactflow'
-import { useFlowStore } from '../useFlowStore'
+import { useRealtime } from '../../Realtime/useRealtime'
 import { getID } from '@/backend/aws'
 
 function ColorChooserNode({ id, selected, data }) {
-  const updateNodeColor = useFlowStore((state) => state.updateNodeColor)
-  const updateNodeLabel = useFlowStore((state) => state.updateNodeLabel)
+  const updateNodeColor = useRealtime((state) => state.updateNodeColor)
+  const updateNodeLabel = useRealtime((state) => state.updateNodeLabel)
 
   return (
     <div

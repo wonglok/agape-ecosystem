@@ -2187,6 +2187,13 @@
   resolved "https://registry.npmjs.org/@types/prop-types/-/prop-types-15.7.5.tgz#5f19d2b85a98e9558036f6a3cacc8819420f05cf"
   integrity sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==
 
+"@types/react-dom@^17.0.9":
+  version "17.0.19"
+  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-17.0.19.tgz#36feef3aa35d045cacd5ed60fe0eef5272f19492"
+  integrity sha512-PiYG40pnQRdPHnlf7tZnp0aQ6q9tspYr72vD61saO6zFCybLfMqwUCN0va1/P+86DXn18ZWeW30Bk7xlC5eEAQ==
+  dependencies:
+    "@types/react" "^17"
+
 "@types/react-reconciler@^0.26.7":
   version "0.26.7"
   resolved "https://registry.npmjs.org/@types/react-reconciler/-/react-reconciler-0.26.7.tgz#0c4643f30821ae057e401b0d9037e03e8e9b2a36"
@@ -2205,6 +2212,15 @@
   version "18.0.27"
   resolved "https://registry.npmjs.org/@types/react/-/react-18.0.27.tgz#d9425abe187a00f8a5ec182b010d4fd9da703b71"
   integrity sha512-3vtRKHgVxu3Jp9t718R9BuzoD4NcQ8YJ5XRzsSKxNDiDonD2MXIT1TmSkenxuCycZJoQT5d2vE8LwWJxBC1gmA==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
+
+"@types/react@^17", "@types/react@^17.0.30":
+  version "17.0.53"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.53.tgz#10d4d5999b8af3d6bc6a9369d7eb953da82442ab"
+  integrity sha512-1yIpQR2zdYu1Z/dc1OxC+MA6GR240u3gcnP4l6mvj/PJiVaqHsQPmWttsvHsfnhfPbU2FuGmo0wSITPygjBmsw==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -5692,10 +5708,10 @@ prop-types@^15.6.0, prop-types@^15.8.1:
     object-assign "^4.1.1"
     react-is "^16.13.1"
 
-proxy-compare@2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/proxy-compare/-/proxy-compare-2.4.0.tgz#90f6abffe734ef86d8e37428c5026268606a9c1b"
-  integrity sha512-FD8KmQUQD6Mfpd0hywCOzcon/dbkFP8XBd9F1ycbKtvVsfv6TsFUKJ2eC0Iz2y+KzlkdT1Z8SY6ZSgm07zOyqg==
+proxy-compare@2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/proxy-compare/-/proxy-compare-2.5.0.tgz#0387c5e4d283ba9b1c0353bb20def4449b06bbd2"
+  integrity sha512-f1us0OsVAJ3tdIMXGQx2lmseYS4YXe4W+sKF5g5ww/jV+5ogMadPt+sIZ+88Ga9kvMJsrRNWzCrKPpr6pMWYbA==
 
 punycode@^2.1.0:
   version "2.3.0"
@@ -7187,12 +7203,19 @@ uuid@^9.0.0:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-9.0.0.tgz#592f550650024a38ceb0c562f2f6aa435761efb5"
   integrity sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==
 
-valtio@^1.10.0:
-  version "1.10.0"
-  resolved "https://registry.yarnpkg.com/valtio/-/valtio-1.10.0.tgz#c62bea113b9ff9a7437fde2ff0a27f98bd7d1bb0"
-  integrity sha512-weL/kg2394gghZWo1iKasGg4otnEl42Hqp0/wJ09cV1HieZelPh3du4qyctFzaAwOMoeyZgmSGXxD3aFKQ9J3w==
+valtio-yjs@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/valtio-yjs/-/valtio-yjs-0.5.0.tgz#2e1b952860da4c3f428307b3b31a922e862889f4"
+  integrity sha512-sGd/rJchW92n8LqEQ46SkekP1ZdLgfTiKqKVGgvgKk47w0Mp5r62j3tB3wceqQNR+ZtlIz7HQEZ2vUzGKQD5Dw==
   dependencies:
-    proxy-compare "2.4.0"
+    fast-deep-equal "^3.1.3"
+
+valtio@^1.10.2:
+  version "1.10.2"
+  resolved "https://registry.yarnpkg.com/valtio/-/valtio-1.10.2.tgz#df9d7c983c4cef4819adeca1e27c061483268bf9"
+  integrity sha512-NG9FUB44VQKzEqs6qGke6XEuAYWoEeCADiS6/Hkgy2bYALOdztoCwJUNl79lEae2wGhqZ6Lv+K9wPUIiS8VLxw==
+  dependencies:
+    proxy-compare "2.5.0"
     use-sync-external-store "1.2.0"
 
 webgl-constants@^1.1.1:
@@ -7524,10 +7547,10 @@ yaml@^1.10.0, yaml@^1.10.2:
   resolved "https://registry.npmjs.org/yaml/-/yaml-1.10.2.tgz#2301c5ffbf12b467de8da2333a459e29e7920e4b"
   integrity sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==
 
-yjs@^13.5.45:
-  version "13.5.45"
-  resolved "https://registry.yarnpkg.com/yjs/-/yjs-13.5.45.tgz#fd30e41371abbc83c07e5c042296f52e041d22fe"
-  integrity sha512-9VUNDvb9oJHdYSMdzIpdM/agVm+EEFKRN+843CFqQuq5bo/BP3EAaxofRG9jQut3sqtGQT4A9YdQvOeeAjU6aA==
+yjs@^13.5.46:
+  version "13.5.46"
+  resolved "https://registry.yarnpkg.com/yjs/-/yjs-13.5.46.tgz#b58de4e34f1525d463f4b1fda26ff30b9928b5b3"
+  integrity sha512-KIY4BEWYCm79Sr4JTDvgirXmz3lVZ5n7h6nKlsBYu97f/HDQo+XSoq92RqBiybejF9E/L5Iz+56zZrSfBKZ5DQ==
   dependencies:
     lib0 "^0.2.49"
 
@@ -7540,6 +7563,14 @@ zstddec@^0.0.2:
   version "0.0.2"
   resolved "https://registry.npmjs.org/zstddec/-/zstddec-0.0.2.tgz#57e2f28dd1ff56b750e07d158a43f0611ad9eeb4"
   integrity sha512-DCo0oxvcvOTGP/f5FA6tz2Z6wF+FIcEApSTu0zV5sQgn9hoT5lZ9YRAKUraxt9oP7l4e8TnNdi8IZTCX6WCkwA==
+
+zustand-yjs@^0.0.14:
+  version "0.0.14"
+  resolved "https://registry.yarnpkg.com/zustand-yjs/-/zustand-yjs-0.0.14.tgz#087b922fcaea26260abe6708e97965fb9af4e245"
+  integrity sha512-KCi8i9j/T2Px3IHBRkcZVIKEdN75SJyMivUAyX42hlC7bi9A+HB06Vspq6aSZinpM2tR+yOKm4WflYhwMeGOPg==
+  dependencies:
+    "@types/react" "^17.0.30"
+    "@types/react-dom" "^17.0.9"
 
 zustand@^3.5.13, zustand@^3.7.1:
   version "3.7.2"

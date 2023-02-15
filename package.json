@@ -44,9 +44,11 @@
     "three": "^0.149.0",
     "three-stdlib": "^2.21.6",
     "uuid": "^9.0.0",
-    "valtio": "^1.10.0",
+    "valtio": "^1.10.2",
+    "valtio-yjs": "^0.5.0",
     "y-protocols": "^1.0.5",
-    "yjs": "^13.5.45"
+    "yjs": "^13.5.46",
+    "zustand-yjs": "^0.0.14"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^13.1.6",

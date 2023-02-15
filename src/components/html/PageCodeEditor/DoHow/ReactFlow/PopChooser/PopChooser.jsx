@@ -2,7 +2,6 @@ import { Cascader } from 'antd'
 import { useEffect, useState } from 'react'
 import { NodeOptions, NodeTypes } from '../NodeTypes'
 import { useKeyPress, useOnSelectionChange, useReactFlow } from 'reactflow'
-import { getID } from '@/backend/aws'
 import { useRealtime } from '../../Realtime/useRealtime'
 const getOptions = ({ nodes }) => {
   //!SECTION
@@ -60,7 +59,7 @@ export const PopChooser = ({ nodes, guiRef }) => {
 
   let [chosenNode, setSelectedNodes] = useState(false)
   let [chosenEdge, setSelectedEdges] = useState(false)
-  let currentAPI = useRealtime((s) => s.currentAPI)
+  // let currentAPI = useRealtime((s) => s.currentAPI)
   useOnSelectionChange({
     onChange: ({ nodes, edges }) => {
       let sel = nodes[0]
@@ -81,7 +80,7 @@ export const PopChooser = ({ nodes, guiRef }) => {
         connectingNodeId: chosenNode.id,
       })
     }
-  }, [currentAPI, down, guiRef, project, chosenNode])
+  }, [down, guiRef, project, chosenNode])
 
   return (
     <div className='p-3 bg-white border-2 border-gray-500 shadow-2xl rounded-2xl '>
