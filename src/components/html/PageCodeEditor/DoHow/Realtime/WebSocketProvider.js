@@ -98,7 +98,7 @@ const setupWS = (provider) => {
       try {
         const encoder = readMessage(provider, new Uint8Array(fromBase64(JSON.parse(event.data))), true)
         if (encoding.length(encoder) > 1) {
-          websocket.send(toBase64(encoding.toUint8Array(encoder)))
+          websocket.send(JSON.stringify({ action: 'sync', update: toBase64(encoding.toUint8Array(encoder)) }))
         }
       } catch (ex) {
         console.log('Malformed web-server response')
@@ -149,7 +149,7 @@ const setupWS = (provider) => {
       const encoder = encoding.createEncoder()
       encoding.writeVarUint(encoder, messageSync)
       syncProtocol.writeSyncStep1(encoder, provider.doc)
-      websocket.send(toBase64(encoding.toUint8Array(encoder)))
+      websocket.send(JSON.stringify({ action: 'sync', update: toBase64(encoding.toUint8Array(encoder)) }))
       // broadcast local awareness state
       if (provider.awareness.getLocalState() !== null) {
         const encoderAwarenessState = encoding.createEncoder()
@@ -158,7 +158,9 @@ const setupWS = (provider) => {
           encoderAwarenessState,
           awarenessProtocol.encodeAwarenessUpdate(provider.awareness, [provider.doc.clientID]),
         )
-        websocket.send(toBase64(encoding.toUint8Array(encoderAwarenessState)))
+        websocket.send(
+          JSON.stringify({ action: 'sync', update: toBase64(encoding.toUint8Array(encoderAwarenessState)) }),
+        )
       }
     }
 
@@ -177,7 +179,7 @@ const setupWS = (provider) => {
 const broadcastMessage = (provider, buf) => {
   if (provider.wsconnected) {
     // @ts-ignore We know that wsconnected = true
-    provider.ws.send(toBase64(buf))
+    provider.ws.send(JSON.stringify({ action: 'sync', update: toBase64(buf) }))
   }
   if (provider.bcconnected) {
     provider.mux(() => {
@@ -279,7 +281,7 @@ export class WebsocketProvider extends Observable {
           const encoder = encoding.createEncoder()
           encoding.writeVarUint(encoder, messageSync)
           syncProtocol.writeSyncStep1(encoder, doc)
-          this.ws.send(toBase64(encoding.toUint8Array(encoder)))
+          this.ws.send(JSON.stringify({ action: 'sync', update: toBase64(encoding.toUint8Array(encoder)) }))
         }
       }, resyncInterval)
     }

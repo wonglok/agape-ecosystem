@@ -10,6 +10,7 @@ import { bind } from 'valtio-yjs'
 import { v4 } from 'uuid'
 import { Observable } from 'lib0/observable'
 import { fromUint8Array, toUint8Array } from 'js-base64'
+import { WebsocketProvider } from './WebSocketProvider'
 
 class ArcProvider extends Observable {
   /**
@@ -116,7 +117,11 @@ export const useRealtime = create((set, get) => {
       let backendInfo = AWSBackend[process.env.NODE_ENV]
       let doc = new Y.Doc()
 
-      let provider = new ArcProvider(doc, `${backendInfo.ws}`, `${documentName}`)
+      let provider = new WebsocketProvider(`${backendInfo.ws}`, `${documentName}`, doc, {
+        params: {
+          documentName: documentName,
+        },
+      })
       // let socket = new WebsocketProvider(`${backendInfo.ws}`, `${roomName}`, doc, {
       //   params: {
       //     roomName: roomName,
