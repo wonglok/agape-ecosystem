@@ -165,11 +165,11 @@ export const useRealtime = create((set, get) => {
         }
       })
 
-      // yMapData.forEach((it) => {
-      //   if (!newArray.some((la) => la.id === it.id)) {
-      //     yMapData.delete(it.id)
-      //   }
-      // })
+      yMapData.forEach((it) => {
+        if (!newArray.some((la) => la.id === it.id)) {
+          yMapData.delete(it.id)
+        }
+      })
     },
     onNodesChange: (changes) => {
       let newNodes = applyNodeChanges(changes, get().nodes)
