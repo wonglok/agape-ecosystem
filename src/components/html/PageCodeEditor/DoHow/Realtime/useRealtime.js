@@ -125,58 +125,84 @@ export const useRealtime = create((set, get) => {
       //   },
       // })
 
-      let nodesAPI = doc.getMap('nodes')
-      let edgesAPI = doc.getMap('edges')
-      let nodesHH = () => {
-        let nodes = []
-        for (let item of nodesAPI.values()) {
-          nodes.push(item)
-        }
-        set({ nodes })
-      }
-      let edgesHH = () => {
-        let edges = []
-        for (let item of edgesAPI.values()) {
-          edges.push(item)
-        }
-        set({ edges })
-      }
-      nodesAPI.observeDeep(nodesHH)
-      edgesAPI.observeDeep(edgesHH)
+      doc.on('update', () => {
+        //
+        set({
+          nodes: get().mapToArray('nodes'),
+          edges: get().mapToArray('edges'),
+        })
+      })
+
       set({
         //
         doc: doc,
-        nodesAPI,
-        edgesAPI,
       })
       return () => {
-        nodesAPI.unobserveDeep(nodesHH)
-        edgesAPI.unobserveDeep(edgesHH)
-
-        provider.disconnect()
+        provider.destroy()
         // socket.disconnect()
         // socket.disconnectBc()
       }
     },
+    mapToArray: (name) => {
+      let yesMap = get().doc.getMap(name)
+      let myArr = []
+      yesMap.forEach((it) => {
+        myArr.push(it)
+      })
+      return myArr
+    },
 
+    pulseToServer: (yMapData, newArray) => {
+      newArray.forEach((it) => {
+        if (yMapData.has(it.id)) {
+          let item = yMapData.get(it.id)
+
+          if (JSON.stringify(item) !== JSON.stringify(it)) {
+            yMapData.set(it.id, it)
+          }
+        } else {
+          yMapData.set(it.id, it)
+        }
+      })
+
+      // yMapData.forEach((it) => {
+      //   if (!newArray.some((la) => la.id === it.id)) {
+      //     yMapData.delete(it.id)
+      //   }
+      // })
+    },
     onNodesChange: (changes) => {
-      let latest = applyNodeChanges(changes, get().nodes)
+      let newNodes = applyNodeChanges(changes, get().nodes)
 
-      set({ nodes: latest })
-      get().applyMapToServer('nodes', latest)
+      let newArray = newNodes
+      let yMapData = get().doc.getMap('nodes')
+      get().pulseToServer(yMapData, newArray)
+
+      // let oldNodes = get().mapToArray('nodes')
+      // const results = newNodes.filter(({ id: id1 }) => !oldNodes.some(({ id: id2 }) => id2 === id1))
+
+      // set({ nodes: latest })
+      // get().applyMapToServer('nodes', latest)
     },
 
     onEdgesChange: (changes) => {
       let latest = applyEdgeChanges(changes, get().edges)
 
-      set({ edges: latest })
-      get().applyMapToServer('edges', latest)
+      let newArray = latest
+      let yMapData = get().doc.getMap('edges')
+      get().pulseToServer(yMapData, newArray)
+
+      // get().applyMapToServer('edges', latest)
     },
 
     onConnect: (connection) => {
       let latest = addEdge(connection, get().edges)
-      set({ edges: latest })
-      get().applyMapToServer('edges', latest)
+
+      let newArray = latest
+      let yMapData = get().doc.getMap('edges')
+      get().pulseToServer(yMapData, newArray)
+
+      // get().applyMapToServer('edges', latest)
     },
 
     updateNodeLabel: (nodeId, label) => {
@@ -189,8 +215,9 @@ export const useRealtime = create((set, get) => {
         return node
       })
 
-      set({ nodes: latest })
-      get().applyMapToServer('nodes', latest)
+      let newArray = newNodes
+      let yMapData = get().doc.getMap('nodes')
+      get().pulseToServer(yMapData, newArray)
     },
     updateNodeColor: (nodeId, color) => {
       let latest = get().nodes.map((node) => {
@@ -202,8 +229,9 @@ export const useRealtime = create((set, get) => {
         return node
       })
 
-      set({ nodes: latest })
-      get().applyMapToServer('nodes', latest)
+      let newArray = newNodes
+      let yMapData = get().doc.getMap('nodes')
+      get().pulseToServer(yMapData, newArray)
     }, ///!SECTION
 
     // doc: false,
@@ -302,33 +330,53 @@ export const useRealtime = create((set, get) => {
     // },
     applyTimer: 0,
     applyMapToServer: (name = 'nodes', array = []) => {
-      let yesMap = get().doc.getMap(name)
-
-      array.forEach((it) => {
-        if (!yesMap.has(it.id)) {
-          yesMap.set(it.id, { ...it })
-        } else {
-          let jsonFromCloud = JSON.stringify(yesMap.get(it.id))
-          let jsonLatest = JSON.stringify(it)
-          if (jsonFromCloud !== jsonLatest) {
-            yesMap.set(it.id, { ...it })
-          } else {
-            console.log('exiting')
-          }
-        }
-      })
-
-      // yesMap.forEach((it) => {
-      //   if (!array.some((r) => r.id === it)) {
+      // let oldDoc = get().doc
+      // let newDoc = new Y.Doc()
+      // oldDoc.getMap('nodes').forEach((it) => {
+      //   newDoc.getMap('nodes').set(it.id, it)
+      // })
+      // oldDoc.getMap('edges').forEach((it) => {
+      //   newDoc.getMap('edges').set(it.id, it)
+      // })
+      // array.forEach((it) => {
+      //   newDoc.getMap(name).set(it.id, it)
+      // })
+      // const stateVector1 = Y.encodeStateVector(newDoc)
+      // const stateVector2 = Y.encodeStateVector(oldDoc)
+      // const diff1 = Y.encodeStateAsUpdate(newDoc, stateVector2)
+      // const diff2 = Y.encodeStateAsUpdate(oldDoc, stateVector1)
+      // Y.applyUpdate(newDoc, diff2)
+      // Y.applyUpdate(oldDoc, diff1)
+      //
+      //
+      // array.forEach(it=>{
+      // })
+      // newDoc.getMap(name)
+      // console.log(newDoc)
+      // let yesMap = get().doc.getMap(name)
+      // array.forEach((it) => {
+      //   if (!yesMap.has(it.id)) {
+      //     yesMap.set(it.id, { ...it })
+      //   } else {
+      //     let jsonFromCloud = JSON.stringify(yesMap.get(it.id))
+      //     let jsonLatest = JSON.stringify(it)
+      //     if (jsonFromCloud !== jsonLatest) {
+      //       yesMap.set(it.id, { ...it })
+      //     } else {
+      //       console.log('same no neeed update')
+      //     }
+      //   }
+      // })
+      // // yesMap.forEach((it) => {
+      // //   if (!array.some((r) => r.id === it)) {
+      // //     yesMap.delete(it.id)
+      // //   }
+      // // })
+      // array.forEach((it) => {
+      //   if (!yesMap.has(it.id)) {
       //     yesMap.delete(it.id)
       //   }
       // })
-
-      array.forEach((it) => {
-        if (!yesMap.has(it.id)) {
-          yesMap.delete(it.id)
-        }
-      })
     },
   }
 })

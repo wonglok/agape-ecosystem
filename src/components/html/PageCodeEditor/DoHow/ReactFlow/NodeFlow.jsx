@@ -147,8 +147,13 @@ function CoreImple({}) {
               },
             ]
 
-            useRealtime.getState().applyMapToServer('nodes', DemoNodes)
-            useRealtime.getState().applyMapToServer('edges', DemoEdges)
+            useRealtime.getState().pulseToServer(useRealtime.getState().doc.getMap('nodes'), DemoNodes)
+            useRealtime.getState().pulseToServer(useRealtime.getState().doc.getMap('edges'), DemoEdges)
+
+            // useRealtime.setState({ edges: DemoEdges, nodes: DemoNodes })
+
+            // useRealtime.getState().applyMapToServer('nodes', DemoNodes)
+            // useRealtime.getState().applyMapToServer('edges', DemoEdges)
 
             // latest.forEach((it) => {
             //   core.rootState.nodes.push({ ...it })
