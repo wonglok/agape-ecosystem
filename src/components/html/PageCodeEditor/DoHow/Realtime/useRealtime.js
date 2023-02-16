@@ -24,7 +24,7 @@ class ArcProvider extends Observable {
     this.socket.onmessage = (ev) => {
       let info = JSON.parse(ev.data)
 
-      if ((info.update64 && info.actionType === 'initDown') || info.actionType === 'sync') {
+      if (info.update64 && (info.actionType === 'init' || info.actionType === 'sync')) {
         let updateBin = toUint8Array(info.update64)
         Y.applyUpdate(ydoc, updateBin, info.origin || null)
       }
@@ -152,11 +152,10 @@ export const useRealtime = create((set, get) => {
       return myArr
     },
 
-    pulseToServer: (yMapData, newArray) => {
+    updateMapToServer: (yMapData, newArray) => {
       newArray.forEach((it) => {
         if (yMapData.has(it.id)) {
           let item = yMapData.get(it.id)
-
           if (JSON.stringify(item) !== JSON.stringify(it)) {
             yMapData.set(it.id, it)
           }
@@ -176,7 +175,7 @@ export const useRealtime = create((set, get) => {
 
       let newArray = newNodes
       let yMapData = get().doc.getMap('nodes')
-      get().pulseToServer(yMapData, newArray)
+      get().updateMapToServer(yMapData, newArray)
 
       // let oldNodes = get().mapToArray('nodes')
       // const results = newNodes.filter(({ id: id1 }) => !oldNodes.some(({ id: id2 }) => id2 === id1))
@@ -190,7 +189,7 @@ export const useRealtime = create((set, get) => {
 
       let newArray = latest
       let yMapData = get().doc.getMap('edges')
-      get().pulseToServer(yMapData, newArray)
+      get().updateMapToServer(yMapData, newArray)
 
       // get().applyMapToServer('edges', latest)
     },
@@ -200,7 +199,7 @@ export const useRealtime = create((set, get) => {
 
       let newArray = latest
       let yMapData = get().doc.getMap('edges')
-      get().pulseToServer(yMapData, newArray)
+      get().updateMapToServer(yMapData, newArray)
 
       // get().applyMapToServer('edges', latest)
     },
@@ -215,9 +214,9 @@ export const useRealtime = create((set, get) => {
         return node
       })
 
-      let newArray = newNodes
+      let newArray = latest
       let yMapData = get().doc.getMap('nodes')
-      get().pulseToServer(yMapData, newArray)
+      get().updateMapToServer(yMapData, newArray)
     },
     updateNodeColor: (nodeId, color) => {
       let latest = get().nodes.map((node) => {
@@ -229,9 +228,9 @@ export const useRealtime = create((set, get) => {
         return node
       })
 
-      let newArray = newNodes
+      let newArray = latest
       let yMapData = get().doc.getMap('nodes')
-      get().pulseToServer(yMapData, newArray)
+      get().updateMapToServer(yMapData, newArray)
     }, ///!SECTION
 
     // doc: false,
