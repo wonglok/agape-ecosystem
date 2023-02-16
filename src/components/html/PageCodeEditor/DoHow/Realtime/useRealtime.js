@@ -194,6 +194,7 @@ export const useRealtime = create((set, get) => {
 
       let newArray = latest
       let yMapData = get().doc.getMap('edges')
+
       get().updateMapToServer(yMapData, newArray)
 
       // get().applyMapToServer('edges', latest)

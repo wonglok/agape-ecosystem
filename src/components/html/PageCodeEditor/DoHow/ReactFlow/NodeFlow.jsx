@@ -64,7 +64,7 @@ function CoreImple({}) {
   let onConnect = useRealtime((r) => r.onConnect)
 
   useEffect(() => {
-    return useRealtime.getState().onOpen({ roomName: 'r1', documentName: 'd10' })
+    return useRealtime.getState().onOpen({ roomName: 'r1', documentName: 'd11' })
   }, [])
 
   useEffect(() => {}, [])

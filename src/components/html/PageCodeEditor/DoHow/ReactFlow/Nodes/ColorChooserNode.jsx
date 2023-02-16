@@ -20,7 +20,7 @@ function ColorChooserNode({ id, selected, data }) {
       <div style={{}}>
         <input
           type='color'
-          value={data.color}
+          defaultValue={data.color}
           onChange={(evt) => updateNodeColor(id, evt.target.value)}
           className='nodrag'
         />
@@ -29,7 +29,7 @@ function ColorChooserNode({ id, selected, data }) {
       <div style={{}}>
         <input
           type='text'
-          value={data.label}
+          defaultValue={data.label}
           onChange={(evt) => updateNodeLabel(id, evt.target.value)}
           className='nodrag'
         />
