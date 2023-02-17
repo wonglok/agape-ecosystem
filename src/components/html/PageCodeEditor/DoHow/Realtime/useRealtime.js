@@ -1,87 +1,82 @@
 import { create } from 'zustand'
-// import { WebsocketProvider } from './WebSocketProvider'
-import { AWSData, getID } from '@/backend/aws'
 import * as Y from 'yjs'
 import { AWSBackend } from 'aws.config'
 import { addEdge, applyNodeChanges, applyEdgeChanges } from 'reactflow'
-import { Object3D } from 'three'
-import { proxy } from 'valtio'
-import { bind } from 'valtio-yjs'
-import { v4 } from 'uuid'
-import { Observable } from 'lib0/observable'
-import { fromUint8Array, toUint8Array } from 'js-base64'
-import { WebsocketProvider } from './WebSocketProvider'
+// import { Object3D } from 'three'
+// import { proxy } from 'valtio'
+// import { bind } from 'valtio-yjs'
+// import { v4 } from 'uuid'
+// import { Observable } from 'lib0/observable'
+// import { fromUint8Array, toUint8Array } from 'js-base64'
+import { toBase64, fromBase64 } from 'lib0/buffer'
 
-class ArcProvider extends Observable {
-  /**
-   * @param {Y.Doc} ydoc
-   */
-  constructor(ydoc, ws, documentName) {
-    super()
-    this.id = getID()
-
-    this.socket = new WebSocket(`${ws}?docName=${encodeURIComponent(documentName)}`)
-
-    this.socket.onmessage = (ev) => {
-      let info = JSON.parse(ev.data)
-
-      if (info.update64 && (info.actionType === 'init' || info.actionType === 'sync')) {
-        let updateBin = toUint8Array(info.update64)
-        Y.applyUpdate(ydoc, updateBin, info.origin || null)
+export class Send {
+  constructor({ doc, url, docName }) {
+    this.url = url
+    this.docName = docName
+    this.doc = doc
+    // this.set = set
+    // this.get = get
+    this.open({ doc, url, docName })
+  }
+  ensureSend(object) {
+    let tt = setInterval(() => {
+      if (this?.socket?.readyState === this?.socket?.OPEN && this.socket) {
+        clearInterval(tt)
+        this?.socket?.send(JSON.stringify(object))
       }
-    }
-
-    this.socket.onerror = (ev) => {
-      console.error(ev)
-    }
-
-    this.socket.ensureSend = (object) => {
-      let tt = setInterval(() => {
-        if (this.socket.readyState === this.socket.OPEN) {
-          clearInterval(tt)
-          this.socket.send(JSON.stringify(object))
-        }
-      })
-    }
-
-    ydoc.on('update', (update, origin) => {
-      // console.log(update, origin)
-
-      if (origin !== this.id) {
-        // this update was produced either locally or by another provider.
-        this.emit('update', [update])
-      }
-
-      // this.socket.ensureSend(update)
-
-      // if (origin === this.id) {
-      //   // this.ws.ensureSend(update)
-      // } else if (origin !== this.id) {
-      //   this.ws.ensureSend(update)
-      //
-      //   //
-      // }
-    })
-    // listen to an event that fires when a remote update is received
-    this.on('update', (update) => {
-      this.socket.ensureSend({
-        actionType: 'sync',
-        docName: documentName,
-        update64: fromUint8Array(update),
-        origin: this.id,
-      })
-
-      Y.applyUpdate(ydoc, update, this.id) // the third parameter sets the transaction-origin
-    })
-
-    this.socket.ensureSend({
-      actionType: 'init',
-      docName: documentName,
-      origin: this.id,
     })
   }
-  disconnect() {
-    this.off('update')
+  async open({}) {
+    if (this.socket) {
+      this.socket.onerror = () => {}
+      this.socket.onopen = () => {}
+      this.socket.onclose = () => {}
+      this.socket.onmessage = () => {}
+      this.socket.close()
+    }
+    this.socket = new WebSocket(this.url)
+    this.socket.onmessage = (ev) => {
+      let bodyData = JSON.parse(ev.data)
+      let action = bodyData.action
+
+      if (action === 'init') {
+        this.socket.connectionId = bodyData.connectionId
+        Y.applyUpdate(this.doc, fromBase64(bodyData.update), 'init')
+      }
+
+      if (action === 'operation') {
+        Y.applyUpdate(this.doc, fromBase64(bodyData.update), 'operation')
+      }
+
+      // if (action === 'init') {
+      //   this.socket.connectionId = bodyData.connectionId
+      //   Y.applyUpdate(this.doc, fromBase64(bodyData.update), 'init')
+      // }
+
+      // if (operation === 'init') {
+      //   this.socket.connectionId = bodyData.connectionId
+      //   console.log('init apply update')
+      //   Y.applyUpdate(this.doc, fromBase64(bodyData.update), 'init')
+      // }
+    }
+
+    this.doc.on('update', (update, origin) => {
+      if (origin === null) {
+        console.log('operation')
+        this.ensureSend({ action: 'operation', docName: this.docName, update: toBase64(update) })
+      }
+    })
+
+    this.ensureSend({ action: 'init', docName: this.docName })
+  }
+  close() {
+    this.socket.onerror = () => {}
+    this.socket.onopen = () => {}
+    this.socket.onclose = () => {}
+    this.socket.onmessage = () => {}
+    this.socket.close()
+    this.socket = false
   }
 }
 
@@ -113,22 +108,17 @@ export const useRealtime = create((set, get) => {
     edges: [],
     nodesAPI: [],
     edgesAPI: [],
-    onOpen: ({ roomName, documentName }) => {
-      let backendInfo = AWSBackend[process.env.NODE_ENV]
+    onOpen: ({ roomName, docName }) => {
       let doc = new Y.Doc()
 
-      let provider = new WebsocketProvider(`${backendInfo.ws}`, `${documentName}`, doc, {
-        params: {
-          documentName: documentName,
-        },
+      set({
+        //
+        doc: doc,
       })
-      // let socket = new WebsocketProvider(`${backendInfo.ws}`, `${roomName}`, doc, {
-      //   params: {
-      //     roomName: roomName,
-      //     token: AWSData.jwt || `_${v4()}`,
-      //     documentName: documentName,
-      //   },
-      // })
+
+      let url = `${AWSBackend[process.env.NODE_ENV].ws}?docName=${encodeURIComponent(docName)}`
+
+      let sender = new Send({ doc, url: url, docName })
 
       doc.on('update', () => {
         //
@@ -136,14 +126,17 @@ export const useRealtime = create((set, get) => {
           nodes: get().mapToArray('nodes'),
           edges: get().mapToArray('edges'),
         })
-      })
-
-      set({
         //
-        doc: doc,
       })
+      // let provider = new WebsocketProvider(`${backendInfo.ws}`, `${documentName}`, doc, {
+      //   params: {
+      //     documentName: documentName,
+      //   },
+      // })
+
       return () => {
-        provider.destroy()
+        sender.close()
+        // provider.destroy()
         // socket.disconnect()
         // socket.disconnectBc()
       }
@@ -157,22 +150,26 @@ export const useRealtime = create((set, get) => {
       return myArr
     },
 
+    works: [],
+
     updateMapToServer: (yMapData, newArray) => {
-      newArray.forEach((it) => {
-        if (yMapData.has(it.id)) {
-          let item = yMapData.get(it.id)
-          if (JSON.stringify(item) !== JSON.stringify(it)) {
+      get().doc.transact(() => {
+        newArray.forEach((it) => {
+          if (yMapData.has(it.id)) {
+            let item = yMapData.get(it.id)
+            if (JSON.stringify(item) !== JSON.stringify(it)) {
+              yMapData.set(it.id, it)
+            }
+          } else {
             yMapData.set(it.id, it)
           }
-        } else {
-          yMapData.set(it.id, it)
-        }
-      })
+        })
 
-      yMapData.forEach((it) => {
-        if (!newArray.some((la) => la.id === it.id)) {
-          yMapData.delete(it.id)
-        }
+        yMapData.forEach((it) => {
+          if (!newArray.some((la) => la.id === it.id)) {
+            yMapData.delete(it.id)
+          }
+        })
       })
     },
     onNodesChange: (changes) => {
@@ -182,6 +179,7 @@ export const useRealtime = create((set, get) => {
       let yMapData = get().doc.getMap('nodes')
       get().updateMapToServer(yMapData, newArray)
 
+      // set({ nodes: newNodes })
       // let oldNodes = get().mapToArray('nodes')
       // const results = newNodes.filter(({ id: id1 }) => !oldNodes.some(({ id: id2 }) => id2 === id1))
 
@@ -195,6 +193,8 @@ export const useRealtime = create((set, get) => {
       let newArray = latest
       let yMapData = get().doc.getMap('edges')
 
+      // set({ edges: latest })
+
       get().updateMapToServer(yMapData, newArray)
 
       // get().applyMapToServer('edges', latest)
@@ -206,6 +206,8 @@ export const useRealtime = create((set, get) => {
       let newArray = latest
       let yMapData = get().doc.getMap('edges')
       get().updateMapToServer(yMapData, newArray)
+
+      // set({ edges: latest })
 
       // get().applyMapToServer('edges', latest)
     },
@@ -223,6 +225,8 @@ export const useRealtime = create((set, get) => {
       let newArray = latest
       let yMapData = get().doc.getMap('nodes')
       get().updateMapToServer(yMapData, newArray)
+
+      // set({ nodes: latest })
     },
     updateNodeColor: (nodeId, color) => {
       let latest = get().nodes.map((node) => {
@@ -237,6 +241,8 @@ export const useRealtime = create((set, get) => {
       let newArray = latest
       let yMapData = get().doc.getMap('nodes')
       get().updateMapToServer(yMapData, newArray)
+
+      // set({ nodes: latest })
     }, ///!SECTION
 
     // doc: false,
