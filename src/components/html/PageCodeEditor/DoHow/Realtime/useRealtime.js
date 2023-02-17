@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import * as Y from 'yjs'
 import { addEdge, applyNodeChanges, applyEdgeChanges } from 'reactflow'
 import { getID } from '@/backend/aws'
+import { IndexeddbPersistence } from 'y-indexeddb'
 // import { Object3D } from 'three'
 // import { proxy } from 'valtio'
 // import { bind } from 'valtio-yjs'
@@ -46,7 +47,14 @@ export const useRealtime = create((set, get) => {
         set({ edges, nodes })
       })
 
+      const provider = new IndexeddbPersistence(docName, doc)
+
+      provider.on('synced', () => {
+        console.log('content from the database is loaded')
+      })
+
       return () => {
+        provider.destroy()
         window.removeEventListener('keydown', hh)
       }
     },
