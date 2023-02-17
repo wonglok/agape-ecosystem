@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import * as Y from 'yjs'
 import { addEdge, applyNodeChanges, applyEdgeChanges } from 'reactflow'
+import { getID } from '@/backend/aws'
 // import { Object3D } from 'three'
 // import { proxy } from 'valtio'
 // import { bind } from 'valtio-yjs'
@@ -125,7 +126,7 @@ export const useRealtime = create((set, get) => {
       let edges = get().edges
       edges.push(newEdge)
       let nodes = get().nodes
-      nodes.push(nodes)
+      nodes.push(newNode)
       set({ edges: [...edges], nodes: [...nodes] })
       set({ showTool: false })
     },
