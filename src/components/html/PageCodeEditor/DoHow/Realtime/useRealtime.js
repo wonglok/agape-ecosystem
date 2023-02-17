@@ -154,22 +154,26 @@ export const useRealtime = create((set, get) => {
 
     updateMapToServer: (yMapData, newArray) => {
       get().doc.transact(() => {
+        yMapData.clear()
         newArray.forEach((it) => {
-          if (yMapData.has(it.id)) {
-            let item = yMapData.get(it.id)
-            if (JSON.stringify(item) !== JSON.stringify(it)) {
-              yMapData.set(it.id, it)
-            }
-          } else {
-            yMapData.set(it.id, it)
-          }
+          yMapData.set(it.id, it)
         })
+        // newArray.forEach((it) => {
+        //   if (yMapData.has(it.id)) {
+        //     let item = yMapData.get(it.id)
+        //     if (JSON.stringify(item) !== JSON.stringify(it)) {
+        //       yMapData.set(it.id, it)
+        //     }
+        //   } else {
+        //     yMapData.set(it.id, it)
+        //   }
+        // })
 
-        yMapData.forEach((it) => {
-          if (!newArray.some((la) => la.id === it.id)) {
-            yMapData.delete(it.id)
-          }
-        })
+        // yMapData.forEach((it) => {
+        //   if (!newArray.some((la) => la.id === it.id)) {
+        //     yMapData.delete(it.id)
+        //   }
+        // })
       })
     },
     onNodesChange: (changes) => {
