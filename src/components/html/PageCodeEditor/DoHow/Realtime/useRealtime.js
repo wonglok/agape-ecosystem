@@ -61,6 +61,18 @@ export class Send {
       // }
     }
 
+    this.socket.onerror = () => {
+      setTimeout(() => {
+        this.open({})
+      }, 1000 * 30)
+    }
+
+    this.socket.onclose = () => {
+      setTimeout(() => {
+        this.open({})
+      }, 1000 * 30)
+    }
+
     this.doc.on('update', (update, origin) => {
       if (origin === null) {
         this.ensureSend({ action: 'operation', docName: this.docName, update: toBase64(update) })
