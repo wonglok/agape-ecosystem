@@ -149,8 +149,6 @@ export const useRealtime = create((set, get) => {
       return myArr
     },
 
-    works: [],
-
     updateMapToServer: (yMapData, newArray) => {
       get().doc.transact(() => {
         yMapData.clear()
