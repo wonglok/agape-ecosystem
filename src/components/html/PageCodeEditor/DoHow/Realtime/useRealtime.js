@@ -63,7 +63,6 @@ export class Send {
 
     this.doc.on('update', (update, origin) => {
       if (origin === null) {
-        console.log('operation')
         this.ensureSend({ action: 'operation', docName: this.docName, update: toBase64(update) })
       }
     })
@@ -226,7 +225,7 @@ export const useRealtime = create((set, get) => {
         return node
       })
 
-      let newArray = latest
+      let newArray = [...latest]
       let yMapData = get().doc.getMap('nodes')
       get().updateMapToServer(yMapData, newArray)
 
@@ -242,7 +241,7 @@ export const useRealtime = create((set, get) => {
         return node
       })
 
-      let newArray = latest
+      let newArray = [...latest]
       let yMapData = get().doc.getMap('nodes')
       get().updateMapToServer(yMapData, newArray)
 
