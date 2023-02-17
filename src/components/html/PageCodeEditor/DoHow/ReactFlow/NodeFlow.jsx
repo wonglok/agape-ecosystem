@@ -147,8 +147,7 @@ function CoreImple({}) {
               },
             ]
 
-            useRealtime.getState().updateMapToServer(useRealtime.getState().doc.getMap('nodes'), DemoNodes)
-            useRealtime.getState().updateMapToServer(useRealtime.getState().doc.getMap('edges'), DemoEdges)
+            useRealtime.setState({ nodes: DemoNodes, edges: DemoEdges })
 
             // useRealtime.setState({ edges: DemoEdges, nodes: DemoNodes })
 
@@ -173,6 +172,9 @@ function CoreImple({}) {
           onConnect={onConnect}
           onConnectStart={onConnectStart}
           onConnectEnd={onConnectEnd}
+          onDragEnd={() => {
+            useRealtime.getState().saveRedo()
+          }}
           fitView
           fitViewOptions={fitViewOptions}
           nodeTypes={NodeTypes}
