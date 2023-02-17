@@ -36,9 +36,6 @@ export class Send {
       this.socket.close()
     }
     this.socket = new WebSocket(this.url)
-
-    this.socket.stack = []
-    this.socket.canSync = false
     this.socket.onmessage = (ev) => {
       let bodyData = JSON.parse(ev.data)
       let action = bodyData.action
@@ -66,6 +63,7 @@ export class Send {
 
     this.doc.on('update', (update, origin) => {
       if (origin === null) {
+        console.log('operation')
         this.ensureSend({ action: 'operation', docName: this.docName, update: toBase64(update) })
       }
     })
