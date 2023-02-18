@@ -12,41 +12,47 @@ import { IndexeddbPersistence } from 'y-indexeddb'
 
 export const createNewDocument = () => new Y.Doc()
 
+function toArray(map) {
+  let arr = []
+  for (let item of map.values()) {
+    arr.push(item)
+  }
+  return arr
+}
+
 export const useRealtime = create((set, get) => {
   return {
     doc: false,
+    rootManager: false,
     nodes: [],
     edges: [],
-    nodesAPI: [],
-    edgesAPI: [],
     onOpen: ({ roomName, docName }) => {
       let doc = new Y.Doc()
 
-      const forNode = new Y.UndoManager(doc.getArray('nodes'))
-      const forEdges = new Y.UndoManager(doc.getArray('edges'))
+      const rootManager = new Y.UndoManager([doc.getMap('nodes'), doc.getMap('edges')])
 
       let hh = (ev) => {
         if (ev.metaKey && ev.shiftKey && ev.key === 'z') {
-          forNode.redo()
-          forEdges.redo()
+          rootManager.redo()
         } else if (ev.metaKey && ev.key === 'z') {
-          forNode.undo()
-          forEdges.undo()
+          rootManager.undo()
         }
       }
       window.addEventListener('keydown', hh)
+
       set({
-        forNode,
-        forEdges,
+        rootManager,
         doc: doc,
       })
 
       const provider = new IndexeddbPersistence(docName, doc)
 
       provider.on('synced', () => {
-        let nodes = doc.getArray('nodes').toArray()
-        let edges = doc.getArray('edges').toArray()
-        set({ edges, nodes })
+        set({
+          //
+          edges: toArray(doc.getMap('nodes')),
+          nodes: toArray(doc.getMap('edges')),
+        })
       })
 
       return () => {
@@ -54,29 +60,26 @@ export const useRealtime = create((set, get) => {
         window.removeEventListener('keydown', hh)
       }
     },
-    mapToArray: (name) => {
-      let yesMap = get().doc.getMap(name)
-      let myArr = []
-      yesMap.forEach((it) => {
-        myArr.push(it)
-      })
-      return myArr
-    },
 
     saveRedo: () => {
       get().doc.transact(() => {
-        get().doc.getArray('nodes').delete(0, get().doc.getArray('nodes').length)
-        get().doc.getArray('nodes').insert(0, get().nodes)
+        let nodesMap = get().doc.getMap('nodes')
+        let edgesMap = get().doc.getMap('edges')
+        nodesMap.clear()
+        edgesMap.clear()
 
-        get().doc.getArray('edges').delete(0, get().doc.getArray('edges').length)
-        get().doc.getArray('edges').insert(0, get().edges)
+        get().nodes.forEach((it) => {
+          nodesMap.set(it.id, it)
+        })
+        get().edges.forEach((it) => {
+          edgesMap.set(it.id, it)
+        })
       })
     },
     onNodesChange: (changes) => {
       let newNodes = applyNodeChanges(changes, get().nodes)
 
       set({ nodes: newNodes })
-
       get().saveRedo()
     },
 
@@ -84,7 +87,6 @@ export const useRealtime = create((set, get) => {
       let latest = applyEdgeChanges(changes, get().edges)
 
       set({ edges: latest })
-
       get().saveRedo()
     },
 
@@ -93,7 +95,9 @@ export const useRealtime = create((set, get) => {
 
       set({ edges: latest })
       get().saveRedo()
-      set({ showTool: false })
+      setTimeout(() => {
+        set({ showTool: false })
+      })
     },
 
     updateNodeLabel: (nodeId, label) => {

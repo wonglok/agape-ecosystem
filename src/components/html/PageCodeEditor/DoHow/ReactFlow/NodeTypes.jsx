@@ -10,12 +10,12 @@ function importAll(r) {
 
     NodeTypes[nodeName] = moduleObject.default
 
-    if (!NodeOptions.some((r) => r.label === nodeName) && moduleObject.createItem) {
-      NodeOptions.push({
-        label: nodeName,
-        value: moduleObject.createItem(),
-      })
-    }
+    // if (!NodeOptions.some((r) => r.label === nodeName) && moduleObject.createItem) {
+    //   NodeOptions.push({
+    //     label: nodeName,
+    //     value: moduleObject.createItem(),
+    //   })
+    // }
   })
 }
 

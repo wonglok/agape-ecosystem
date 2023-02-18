@@ -3,7 +3,7 @@ import { Handle, Position } from 'reactflow'
 import { useRealtime } from '../../Realtime/useRealtime'
 import { getID } from '@/backend/aws'
 
-function ColorChooserNode({ id, selected, data }) {
+function ColorPickerNode({ id, selected, data }) {
   const updateNodeColor = useRealtime((state) => state.updateNodeColor)
   const updateNodeLabel = useRealtime((state) => state.updateNodeLabel)
 
@@ -18,13 +18,13 @@ function ColorChooserNode({ id, selected, data }) {
       }}>
       <Handle
         type='target'
-        id='in0'
+        id='target0'
         style={{ top: 'calc(15px + 20px * 0.0)', width: `10px`, height: `10px` }}
         position={Position.Left}
       />
       <Handle
         type='target'
-        id='in1'
+        id='target1'
         style={{ top: 'calc(15px + 20px * 1.0)', width: `10px`, height: `10px` }}
         position={Position.Left}
       />
@@ -61,19 +61,21 @@ function ColorChooserNode({ id, selected, data }) {
   )
 }
 
-export const source = [
+export const handles = [
   {
     id: 'source0',
+    type: 'source',
   },
   {
     id: 'source1',
+    type: 'source',
   },
 ]
 
 export const createItem = () => {
   return {
     id: getID(),
-    type: 'ColorChooserNode',
+    type: 'ColorPickerNode',
     data: { label: 'new node', color: '#4FD1C5' },
     position: { x: 250, y: 25 },
   }
@@ -81,4 +83,4 @@ export const createItem = () => {
 
 export const displayName = 'ColorPickerNode'
 
-export default ColorChooserNode
+export default ColorPickerNode

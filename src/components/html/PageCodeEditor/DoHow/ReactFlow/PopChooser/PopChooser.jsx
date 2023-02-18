@@ -87,35 +87,36 @@ export const PopChooser = ({ nodes, guiRef }) => {
       <Cascader
         className='mb-3 w-96'
         options={getOptions({ nodes })}
-        onChange={(ev) => {
-          if (ev[0] === 'connect') {
-            let nodeID = ev[ev.length - 1]
-            let node = nodes.find((n) => n.id === nodeID)
+        onChange={(segs) => {
+          console.log(segs)
+          // if (ev[0] === 'connect') {
+          //   let nodeID = ev[ev.length - 1]
+          //   let node = nodes.find((n) => n.id === nodeID)
 
-            if (node) {
-              setConfig({
-                type: ev[0],
-                payload: node,
-              })
-            } else {
-              setConfig({
-                type: ev[0],
-                payload: false,
-              })
-            }
-          } else if (ev[0] === 'create') {
-            if (ev[0] && ev[1] && ev[1]?.id) {
-              setConfig({
-                type: ev[0],
-                payload: ev[1],
-              })
-            } else {
-              setConfig({
-                type: ev[0],
-                payload: false,
-              })
-            }
-          }
+          //   if (node) {
+          //     setConfig({
+          //       type: ev[0],
+          //       payload: node,
+          //     })
+          //   } else {
+          //     setConfig({
+          //       type: ev[0],
+          //       payload: false,
+          //     })
+          //   }
+          // } else if (ev[0] === 'create') {
+          //   if (ev[0] && ev[1] && ev[1]?.id) {
+          //     setConfig({
+          //       type: ev[0],
+          //       payload: ev[1],
+          //     })
+          //   } else {
+          //     setConfig({
+          //       type: ev[0],
+          //       payload: false,
+          //     })
+          //   }
+          // }
 
           return null
         }}

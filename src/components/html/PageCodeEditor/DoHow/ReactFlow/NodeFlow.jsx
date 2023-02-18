@@ -108,7 +108,7 @@ function CoreImple({}) {
       <div
         style={{ position: 'absolute', top: `${toolTop}`, left: `${toolLeft}`, display: showTool ? 'block' : 'none' }}
         ref={mousePopChooser}>
-        {<PopChooser nodes={nodes} guiRef={mousePopChooser}></PopChooser>}
+        {/* {<PopChooser nodes={nodes} guiRef={mousePopChooser}></PopChooser>} */}
       </div>
     </>
   )
@@ -124,27 +124,27 @@ export default function Page() {
           <button
             onClick={() => {
               const DemoEdges = [
-                { id: getID(), source: '1', sourceHandle: 'source0', targetHandle: 'in0', target: '2' },
-                { id: getID(), source: '2', sourceHandle: 'source1', targetHandle: 'in1', target: '3' },
+                { id: getID(), source: '1', sourceHandle: 'source0', targetHandle: 'target0', target: '2' },
+                { id: getID(), source: '2', sourceHandle: 'source1', targetHandle: 'target1', target: '3' },
               ]
 
               const DemoNodes = [
                 {
                   id: '1',
-                  type: 'ColorChooserNode',
+                  type: 'ColorPickerNode',
                   data: { label: 'node1', color: '#4FD1C5' },
                   position: { x: 250, y: 25 },
                 },
 
                 {
                   id: '2',
-                  type: 'ColorChooserNode',
+                  type: 'ColorPickerNode',
                   data: { label: 'node2', color: '#F6E05E' },
                   position: { x: 100, y: 125 },
                 },
                 {
                   id: '3',
-                  type: 'ColorChooserNode',
+                  type: 'ColorPickerNode',
                   data: { label: 'node3', color: '#B794F4' },
                   position: { x: 250, y: 250 },
                 },
