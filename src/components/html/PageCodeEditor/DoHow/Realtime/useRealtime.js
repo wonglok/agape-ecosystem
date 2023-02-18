@@ -41,16 +41,12 @@ export const useRealtime = create((set, get) => {
         doc: doc,
       })
 
-      doc.on('update', () => {
-        let nodes = doc.getArray('nodes').toArray()
-        let edges = doc.getArray('edges').toArray()
-        set({ edges, nodes })
-      })
-
       const provider = new IndexeddbPersistence(docName, doc)
 
       provider.on('synced', () => {
-        console.log('content from the database is loaded')
+        let nodes = doc.getArray('nodes').toArray()
+        let edges = doc.getArray('edges').toArray()
+        set({ edges, nodes })
       })
 
       return () => {
@@ -70,9 +66,10 @@ export const useRealtime = create((set, get) => {
     saveRedo: () => {
       get().doc.transact(() => {
         get().doc.getArray('nodes').delete(0, get().doc.getArray('nodes').length)
-        get().doc.getArray('nodes').push(get().nodes)
+        get().doc.getArray('nodes').insert(0, get().nodes)
+
         get().doc.getArray('edges').delete(0, get().doc.getArray('edges').length)
-        get().doc.getArray('edges').push(get().edges)
+        get().doc.getArray('edges').insert(0, get().edges)
       })
     },
     onNodesChange: (changes) => {
@@ -95,6 +92,8 @@ export const useRealtime = create((set, get) => {
       let latest = addEdge(connection, get().edges)
 
       set({ edges: latest })
+      get().saveRedo()
+      set({ showTool: false })
     },
 
     updateNodeLabel: (nodeId, label) => {
@@ -106,6 +105,7 @@ export const useRealtime = create((set, get) => {
       })
 
       set({ nodes: latest })
+      get().saveRedo()
     },
     updateNodeColor: (nodeId, color) => {
       let latest = get().nodes.map((node) => {
@@ -116,20 +116,27 @@ export const useRealtime = create((set, get) => {
       })
 
       set({ nodes: latest })
+      get().saveRedo()
     },
 
     showTool: false,
     toolTop: '0px',
     toolLeft: '0px',
     newNodePos: { x: 0, y: 0 },
-    connectingNodeId: '',
+    hand: { nodeId: '', handleType: '', handleId: '' },
     onAddNode: (payload) => {
       // //
       const id = getID()
       const newNode = payload
       newNode.id = id
       newNode.position = get().newNodePos
-      let newEdge = { id: getID(), source: get().connectingNodeId, target: id }
+      let newEdge = {
+        id: getID(),
+        source: get().hand?.nodeId,
+        sourceHandle: 'out0',
+        targetHandle: 'in1',
+        target: id,
+      }
 
       let edges = get().edges
       edges.push(newEdge)
@@ -140,7 +147,13 @@ export const useRealtime = create((set, get) => {
     },
     onConnectNode: (payload) => {
       let newEdgeID = getID()
-      let newEdge = { id: newEdgeID, source: get().connectingNodeId, target: payload.id }
+      let newEdge = {
+        id: newEdgeID,
+        source: get().hand?.nodeId,
+        sourceHandle: 'out0',
+        targetHandle: 'in1',
+        target: payload.id,
+      }
       let edges = get().edges
       edges.push(newEdge)
       set({ edges: [...edges] })

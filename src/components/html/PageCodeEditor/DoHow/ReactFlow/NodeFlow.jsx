@@ -7,6 +7,7 @@ import { useRealtime } from '../Realtime/useRealtime'
 import { PopChooser } from './PopChooser/PopChooser'
 import { OnSpace } from './Keyboard/OnSpace'
 import * as Y from 'yjs'
+import { getID } from '@/backend/aws'
 
 function Flow() {
   return <div className='w-full h-full'>{<CoreImple></CoreImple>}</div>
@@ -19,20 +20,14 @@ function CoreImple({}) {
   let edges = useRealtime((s) => {
     return s.edges
   })
-  let doc = useRealtime((s) => {
-    return s.doc
-  })
 
   let onNodesChange = useRealtime((r) => r.onNodesChange)
   let onEdgesChange = useRealtime((r) => r.onEdgesChange)
   let onConnect = useRealtime((r) => r.onConnect)
 
   useEffect(() => {
-    return useRealtime.getState().onOpen({ roomName: 'r1', docName: 'd17' })
+    return useRealtime.getState().onOpen({ roomName: 'r1', docName: 'd19' })
   }, [])
-
-  useEffect(() => {}, [])
-  /** @type {Y.Doc} */
 
   let minimapStyle = {}
 
@@ -51,9 +46,18 @@ function CoreImple({}) {
   let reactFlowWrapper = useRef()
   let mousePopChooser = useRef()
 
-  const onConnectStart = useCallback((_, { nodeId }) => {
+  const onConnectStart = useCallback((_, info) => {
     // connectingNodeId.current = nodeId
-    useRealtime.setState({ connectingNodeId: nodeId })
+
+    console.log(_, info)
+    useRealtime.setState({
+      hand: {
+        //
+        nodeId: info.nodeId,
+        handleType: info.handleType,
+        handleId: info.handleId,
+      },
+    })
   }, [])
 
   const onConnectEnd = useCallback(
@@ -85,8 +89,8 @@ function CoreImple({}) {
         <button
           onClick={() => {
             const DemoEdges = [
-              { id: 'e1-2', source: '1', target: '2' },
-              { id: 'e2-3', source: '2', target: '3' },
+              { id: getID(), source: '1', sourceHandle: 'out0', targetHandle: 'in0', target: '2' },
+              { id: getID(), source: '2', sourceHandle: 'out1', targetHandle: 'in1', target: '3' },
             ]
 
             const DemoNodes = [
@@ -111,7 +115,10 @@ function CoreImple({}) {
               },
             ]
 
-            useRealtime.setState({ nodes: DemoNodes, edges: DemoEdges })
+            useRealtime.setState({
+              nodes: JSON.parse(JSON.stringify(DemoNodes)),
+              edges: JSON.parse(JSON.stringify(DemoEdges)),
+            })
           }}>
           reset default
         </button>
@@ -137,6 +144,7 @@ function CoreImple({}) {
           <MiniMap style={minimapStyle} zoomable pannable />
           <Controls />
           <Background color='#222222' gap={25} />
+          <Controls />
         </ReactFlow>
       </div>
       <div
