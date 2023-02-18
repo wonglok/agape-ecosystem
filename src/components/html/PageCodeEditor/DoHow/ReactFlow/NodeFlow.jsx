@@ -1,52 +1,16 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
-import ReactFlow, {
-  Background,
-  Controls,
-  MiniMap,
-  ReactFlowProvider,
-  addEdge,
-  applyEdgeChanges,
-  applyNodeChanges,
-  useReactFlow,
-} from 'reactflow'
+import React, { useCallback, useEffect, useRef } from 'react'
+import ReactFlow, { Background, Controls, MiniMap, ReactFlowProvider, useReactFlow } from 'reactflow'
 import 'reactflow/dist/style.css'
 import { NodeTypes } from './NodeTypes'
 // import { AWSData, getID } from '@/backend/aws'
-import { createRealTime, getYArrayIndex, useRealtime } from '../Realtime/useRealtime'
+import { useRealtime } from '../Realtime/useRealtime'
 import { PopChooser } from './PopChooser/PopChooser'
 import { OnSpace } from './Keyboard/OnSpace'
 import * as Y from 'yjs'
-// import { useFrame } from '@react-three/fiber'
-// import { useYArray, useYDoc } from 'zustand-yjs'
-
-// const selector = (state) => ({
-//   nodes: state.nodes,
-//   edges: state.edges,
-//   onNodesChange: state.onNodesChange,
-//   onEdgesChange: state.onEdgesChange,
-//   onConnect: state.onConnect,
-// })
 
 function Flow() {
   return <div className='w-full h-full'>{<CoreImple></CoreImple>}</div>
 }
-
-// let useYArray = (doc, name) => {
-//   let [data, setDataAPI] = useState([])
-
-//   useEffect(() => {
-//     let yArray = doc.getArray(name)
-//     let hh = () => {
-//       setDataAPI(yArray.toArray())
-//     }
-//     yArray.observe(hh)
-//     return () => {
-//       yArray.unobserve(hh)
-//     }
-//   }, [doc, name])
-
-//   return data
-// }
 
 function CoreImple({}) {
   let nodes = useRealtime((s) => {
@@ -148,16 +112,6 @@ function CoreImple({}) {
             ]
 
             useRealtime.setState({ nodes: DemoNodes, edges: DemoEdges })
-
-            // useRealtime.setState({ edges: DemoEdges, nodes: DemoNodes })
-
-            // useRealtime.getState().applyMapToServer('nodes', DemoNodes)
-            // useRealtime.getState().applyMapToServer('edges', DemoEdges)
-
-            // latest.forEach((it) => {
-            //   core.rootState.nodes.push({ ...it })
-            // })
-            // core.rootState.edges = JSON.parse(JSON.stringify(DemoEdges))
           }}>
           reset default
         </button>
