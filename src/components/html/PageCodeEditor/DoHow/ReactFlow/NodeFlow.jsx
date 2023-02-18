@@ -47,9 +47,6 @@ function CoreImple({}) {
   let mousePopChooser = useRef()
 
   const onConnectStart = useCallback((_, info) => {
-    // connectingNodeId.current = nodeId
-
-    console.log(_, info)
     useRealtime.setState({
       hand: {
         //
@@ -85,45 +82,6 @@ function CoreImple({}) {
 
   return (
     <>
-      <div className=' absolute top-0 left-0 z-20 p-2'>
-        <button
-          onClick={() => {
-            const DemoEdges = [
-              { id: getID(), source: '1', sourceHandle: 'out0', targetHandle: 'in0', target: '2' },
-              { id: getID(), source: '2', sourceHandle: 'out1', targetHandle: 'in1', target: '3' },
-            ]
-
-            const DemoNodes = [
-              {
-                id: '1',
-                type: 'ColorChooserNode',
-                data: { label: 'node1', color: '#4FD1C5' },
-                position: { x: 250, y: 25 },
-              },
-
-              {
-                id: '2',
-                type: 'ColorChooserNode',
-                data: { label: 'node2', color: '#F6E05E' },
-                position: { x: 100, y: 125 },
-              },
-              {
-                id: '3',
-                type: 'ColorChooserNode',
-                data: { label: 'node3', color: '#B794F4' },
-                position: { x: 250, y: 250 },
-              },
-            ]
-
-            useRealtime.setState({
-              nodes: JSON.parse(JSON.stringify(DemoNodes)),
-              edges: JSON.parse(JSON.stringify(DemoEdges)),
-            })
-          }}>
-          reset default
-        </button>
-      </div>
-
       <div className='w-full h-full' ref={reactFlowWrapper}>
         <ReactFlow
           nodes={nodes}
@@ -162,6 +120,44 @@ export default function Page() {
     <ReactFlowProvider>
       <div className='relative w-full h-full'>
         <Flow></Flow>
+        <div className=' absolute top-0 left-0 z-20 p-2'>
+          <button
+            onClick={() => {
+              const DemoEdges = [
+                { id: getID(), source: '1', sourceHandle: 'source0', targetHandle: 'in0', target: '2' },
+                { id: getID(), source: '2', sourceHandle: 'source1', targetHandle: 'in1', target: '3' },
+              ]
+
+              const DemoNodes = [
+                {
+                  id: '1',
+                  type: 'ColorChooserNode',
+                  data: { label: 'node1', color: '#4FD1C5' },
+                  position: { x: 250, y: 25 },
+                },
+
+                {
+                  id: '2',
+                  type: 'ColorChooserNode',
+                  data: { label: 'node2', color: '#F6E05E' },
+                  position: { x: 100, y: 125 },
+                },
+                {
+                  id: '3',
+                  type: 'ColorChooserNode',
+                  data: { label: 'node3', color: '#B794F4' },
+                  position: { x: 250, y: 250 },
+                },
+              ]
+
+              useRealtime.setState({
+                nodes: JSON.parse(JSON.stringify(DemoNodes)),
+                edges: JSON.parse(JSON.stringify(DemoEdges)),
+              })
+            }}>
+            reset default
+          </button>
+        </div>
       </div>
     </ReactFlowProvider>
   )

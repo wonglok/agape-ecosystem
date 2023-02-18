@@ -47,19 +47,28 @@ function ColorChooserNode({ id, selected, data }) {
       </div>
       <Handle
         type='source'
-        id='out0'
+        id='source0'
         style={{ top: 'calc(15px + 20px * 0.0)', width: `10px`, height: `10px` }}
         position={Position.Right}
       />
       <Handle
         type='source'
-        id='out1'
+        id='source1'
         style={{ top: 'calc(15px + 20px * 1.0)', width: `10px`, height: `10px` }}
         position={Position.Right}
       />
     </div>
   )
 }
+
+export const source = [
+  {
+    id: 'source0',
+  },
+  {
+    id: 'source1',
+  },
+]
 
 export const createItem = () => {
   return {
