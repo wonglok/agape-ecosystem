@@ -24,7 +24,7 @@ export default function GUI({ id, data }) {
   const updateNodeColor = useFlow((s) => s.updateNodeColor)
 
   return (
-    <div className='flex flex-col text-sm'>
+    <div className='text-sm'>
       {handles
         .filter((r) => r.type === 'target')
         .map((r, i) => {
@@ -69,6 +69,7 @@ export default function GUI({ id, data }) {
       <div className='flex items-center'>
         <div className='h-full ml-2'>Color</div>
       </div>
+
       {handles
         .filter((r) => r.type === 'source')
         .map((r, i) => {
