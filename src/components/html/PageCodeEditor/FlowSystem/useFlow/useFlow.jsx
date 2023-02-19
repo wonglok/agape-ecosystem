@@ -5,6 +5,7 @@ import { create } from 'zustand'
 import { getID } from '@/backend/aws'
 import { nodeTypeList } from './nodeTypes'
 import Worker from 'worker-loader!./Worker.js'
+import nProgress from 'nprogress'
 
 function toArray(map) {
   let arr = []
@@ -46,8 +47,10 @@ export const useFlow = create((set, get) => {
             nodes: ev.data.nodes,
             edges: ev.data.edges,
           })
+          nProgress.done()
         }
       })
+      nProgress.start()
       worker.postMessage({ type: 'load', docName })
 
       set({
