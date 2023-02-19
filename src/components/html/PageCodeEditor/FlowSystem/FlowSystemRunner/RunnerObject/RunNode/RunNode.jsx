@@ -11,6 +11,7 @@ export function RunNode({ globals, node, edges }) {
   }, [node.type])
 
   let core = useCore()
+
   let { on, send } = useMemo(() => {
     let on = (name, fnc) => {
       useFlow
@@ -21,7 +22,7 @@ export function RunNode({ globals, node, edges }) {
         .map((edge) => {
           let hh = (ev) => {
             if (
-              useFlow.getState().edges.some((edge) => {
+              edges.some((edge) => {
                 return edge.target === node.id && edge.targetHandle === name
               })
             ) {
@@ -43,7 +44,7 @@ export function RunNode({ globals, node, edges }) {
         })
         .map((edge) => {
           if (
-            useFlow.getState().edges.some((edge) => {
+            edges.some((edge) => {
               return edge.source === node.id && edge.sourceHandle === name
             })
           ) {
@@ -56,7 +57,7 @@ export function RunNode({ globals, node, edges }) {
       send,
       on,
     }
-  }, [node.id, core])
+  }, [node.id, edges, core])
 
   let get = useThree((s) => s.get)
 
