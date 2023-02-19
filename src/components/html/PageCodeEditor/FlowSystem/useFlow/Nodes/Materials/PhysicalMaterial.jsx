@@ -57,14 +57,14 @@ export default function GUI({ id, data }) {
           type='text'
           defaultValue={data.label}
           onChange={(evt) => updateNodeLabel(id, evt.target.value)}
-          className='w-full h-10 pl-2 text-xs appearance-none nodrag'
+          className='w-full h-10 pl-2 text-xs appearance-none nodrag rounded-tr-xl'
         />
-        <input
+        {/* <input
           type='color'
           defaultValue={data.color}
           onChange={(evt) => updateNodeColor(id, evt.target.value)}
           className='inline-block h-10 text-xs opacity-0 appearance-none cursor-grabbing y-0'
-        />
+        /> */}
       </div>
       <div className='flex items-center w-full text-xs bg-white '>
         <div className='py-1 ml-2 '>Color</div>
