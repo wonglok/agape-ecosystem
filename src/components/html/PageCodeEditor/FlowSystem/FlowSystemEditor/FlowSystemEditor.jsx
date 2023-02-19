@@ -57,7 +57,9 @@ export function FlowSystemEditorCore() {
         onConnect={onConnect}
         onConnectEnd={onConnectEnd({ reactFlowWrapper, project })}
         onConnectStart={onConnectStart}
-        fitView>
+        fitView
+        snapToGrid
+        snapGrid={[10, 10]}>
         <Background />
         <Controls />
       </ReactFlow>
