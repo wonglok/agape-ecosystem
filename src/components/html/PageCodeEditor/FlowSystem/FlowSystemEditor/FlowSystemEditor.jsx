@@ -5,6 +5,7 @@ import { useFlow } from '../useFlow/useFlow'
 import { nodeTypes } from '../useFlow/nodeTypes'
 import { useEffect, useRef } from 'react'
 import { ConnectionHelper } from './ConnectionHelper/ConnectionHelper'
+import { edgeTypes } from '../useFlow/edgeTypes'
 
 export function FlowSystemEditor() {
   return (
@@ -51,6 +52,7 @@ export function FlowSystemEditorCore() {
       <ReactFlow
         nodes={nodes}
         edges={edges}
+        edgeTypes={edgeTypes}
         nodeTypes={nodeTypes}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}

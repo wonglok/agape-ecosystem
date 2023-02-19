@@ -82,6 +82,7 @@ export const useFlow = create((set, get) => {
       })
     },
     onConnect: (connection) => {
+      connection.type = 'CloseEdge'
       set({
         edges: addEdge(connection, get().edges),
       })
@@ -242,6 +243,7 @@ export const useFlow = create((set, get) => {
           sourceHandle: nodeHandle,
           target: get().connectModuleID,
           targetHandle: get().remoteHandleName,
+          type: 'CloseEdge',
         }
 
         let edges = get().edges
@@ -254,6 +256,7 @@ export const useFlow = create((set, get) => {
           targetHandle: nodeHandle,
           source: get().connectModuleID,
           sourceHandle: get().remoteHandleName,
+          type: 'CloseEdge',
         }
 
         let edges = get().edges
