@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from 'react'
 import { nodeTypeList } from '../../../useFlow/nodeTypes'
 import { useCore } from '../useCore/useCore'
+import { useFlow } from '../../../useFlow/useFlow'
 
 export function RunNode({ globals, node, edges }) {
   let nodeTemplate = useMemo(() => {
@@ -9,55 +10,55 @@ export function RunNode({ globals, node, edges }) {
 
   let core = useCore()
 
-  let { on } = useMemo(() => {
-    let map = new Map()
-    edges
-      .filter((r) => r.target === node.id)
-      .forEach((edge) => {
-        let bc = new BroadcastChannel(`${edge.target}${edge.targetHandle}`)
-        map.set(edge.targetHandle, bc)
-        core.onClean(() => {
-          bc.close()
-        })
-      })
-
+  let { on, send } = useMemo(() => {
     let on = (name, fnc) => {
-      let bc = map.get(`${node.id}${name}`)
-      let hh = (ev) => {
-        fnc(ev.data)
-      }
-      bc.addEventListener('message', hh)
-      core.onClean(() => {
-        bc.removeEventListener('message', hh)
-      })
-    }
-
-    edges
-      .filter((r) => r.source === node.id)
-      .forEach((edge) => {
-        let bc = new BroadcastChannel(`${edge.source}${edge.sourceHandle}`)
-        map.set(edge.sourceHandle, bc)
-        core.onClean(() => {
-          bc.close()
+      edges
+        .filter((edge) => {
+          return edge.target === node.id && edge.targetHandle === name
         })
-      })
+        .map((edge) => {
+          let hh = (ev) => {
+            fnc(ev.detail)
+          }
+          window.addEventListener(edge.id, hh)
+          globals.onClean(() => {
+            window.removeEventListener(edge.id, hh)
+          })
+        })
+
+      //
+    }
 
     let send = (name, data) => {
-      let bc = map.get(`${node.id}${name}`)
-      bc.postMessage(data)
+      edges
+        .filter((edge) => {
+          return edge.source === node.id && edge.sourceHandle === name
+        })
+        .map((edge) => {
+          window.dispatchEvent(new CustomEvent(`${edge.id}`, { detail: data }))
+        })
     }
+
     return {
       send,
       on,
     }
-  }, [core, node, edges])
+  }, [edges, globals, node.id])
 
   useEffect(() => {
-    let run = nodeTemplate.run
+    let run = nodeTemplate?.run
     if (run) {
-      run({ core, globals, on })
+      run({
+        core,
+        globals,
+        getNode() {
+          return useFlow.getState().nodes.find((n) => n.id === node.id)
+        },
+        on,
+        send,
+      })
     }
-  }, [core, nodeTemplate, globals, on])
+  }, [core, nodeTemplate, node, globals, on, send])
 
   return (
     <>

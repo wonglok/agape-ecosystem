@@ -2,7 +2,7 @@ import React from 'react'
 import { Handle, Position } from 'reactflow'
 import { useFlow } from '../../useFlow'
 import { getTemplateByNodeInstance } from '../../nodeTypes'
-import { Mesh } from 'three'
+import { BoxGeometry, Mesh, MeshPhysicalMaterial } from 'three'
 
 export const handles = [
   //
@@ -93,11 +93,25 @@ export default function GUI({ id, data }) {
   )
 }
 
-export const run = async ({ core, globals }) => {
-  //
-
+export const run = async ({ core, globals, nodeData, on, send }) => {
   core.onReady(() => {
-    let mesh = new Mesh()
+    let box = new BoxGeometry(1, 1, 1)
+    let physical = new MeshPhysicalMaterial({ color: 0xff0000 })
+    let mesh = new Mesh(box, physical)
     core.now.scene.add(mesh)
+
+    on('geometry', (data) => {
+      // console.log('geometry', data)
+
+      mesh.geometry = data
+    })
+    on('material', (data) => {
+      // console.log('material', data)
+      mesh.material = data
+    })
+
+    core.onClean(() => {
+      mesh.removeFromParent()
+    })
   })
 }

@@ -2,6 +2,7 @@ import React from 'react'
 import { Handle, Position } from 'reactflow'
 import { useFlow } from '../../useFlow'
 import { getTemplateByNodeInstance } from '../../nodeTypes'
+import { Color, MeshPhysicalMaterial } from 'three'
 
 export const handles = [
   //
@@ -98,6 +99,31 @@ export default function GUI({ id, data }) {
   )
 }
 
-export const run = async ({ core }) => {
+export const run = async ({ core, globals, getNode, on, send }) => {
   //
+  core.onReady(() => {
+    let physical = new MeshPhysicalMaterial({ color: 0x0000ff })
+    let color = new Color(getNode().data.color)
+    let last = ''
+    let tt = setInterval(() => {
+      let node = getNode()
+      let now = JSON.stringify(node)
+      if (last !== now) {
+        last = now
+        color.set(node.data.color)
+        physical.color = color
+        send('material', physical)
+      }
+    })
+
+    core.onClean(() => {
+      console.log(tt, 'clean')
+    })
+
+    send('material', physical)
+
+    core.onClean(() => {
+      physical.dispose()
+    })
+  })
 }
