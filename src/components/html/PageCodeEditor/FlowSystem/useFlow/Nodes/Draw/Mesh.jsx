@@ -2,6 +2,7 @@ import React from 'react'
 import { Handle, Position } from 'reactflow'
 import { useFlow } from '../../useFlow'
 import { getTemplateByNodeInstance } from '../../nodeTypes'
+import { Mesh } from 'three'
 
 export const handles = [
   //
@@ -92,6 +93,11 @@ export default function GUI({ id, data }) {
   )
 }
 
-export const run = async ({ onClean, onLoop, send, on, env }) => {
+export const run = async ({ core, globals }) => {
   //
+
+  core.onReady(() => {
+    let mesh = new Mesh()
+    core.now.scene.add(mesh)
+  })
 }

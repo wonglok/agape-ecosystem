@@ -97,3 +97,7 @@ export default function GUI({ id, data }) {
     </div>
   )
 }
+
+export const run = async ({ core }) => {
+  //
+}

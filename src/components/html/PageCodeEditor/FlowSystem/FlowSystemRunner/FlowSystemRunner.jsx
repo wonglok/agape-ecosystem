@@ -1,6 +1,8 @@
 import { Environment, MeshTransmissionMaterial, OrbitControls, Select, Stars } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import { Suspense } from 'react'
+import { RunnerObject } from './RunnerObject/RunnerObject'
+import { useFlow } from '../useFlow/useFlow'
 
 export function FlowSystemRunner() {
   return (
@@ -15,8 +17,14 @@ export function FlowSystemRunner() {
 }
 
 function Content() {
+  let nodes = useFlow((s) => s.nodes)
+  let edges = useFlow((s) => s.edges)
   return (
     <>
+      <RunnerObject nodes={nodes} edges={edges}></RunnerObject>
+
+      {/*  */}
+
       <mesh scale={[1, 1, 1]}>
         <torusBufferGeometry args={[2.5, 1, 64, 64]}></torusBufferGeometry>
         <meshPhysicalMaterial roughness={0.0} transmission={1} thickness={1.5}></meshPhysicalMaterial>
