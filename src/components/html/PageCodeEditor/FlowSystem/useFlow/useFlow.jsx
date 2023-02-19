@@ -86,6 +86,7 @@ export const useFlow = create((set, get) => {
     onConnect: (connection) => {
       set({
         edges: addEdge(connection, get().edges),
+        showTool: false,
       })
       get().saveToDB()
     },

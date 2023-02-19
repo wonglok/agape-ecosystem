@@ -1,6 +1,7 @@
 import React from 'react'
 import { Handle, Position } from 'reactflow'
 import { useFlow } from '../../useFlow'
+import { getTemplateByNodeInstance } from '../../nodeTypes'
 
 export const handles = [
   //
@@ -30,6 +31,13 @@ export default function GUI({ id, data }) {
         .map((r, i) => {
           return (
             <Handle
+              isValidConnection={(connection) => {
+                // console.log(connection)
+                let oppositeNode = useFlow.getState().nodes.find((n) => n.id === connection.source)
+                let template = getTemplateByNodeInstance(oppositeNode)
+                let removeHandle = template.handles.find((h) => h.id === connection.sourceHandle)
+                return removeHandle?.dataType === r.dataType
+              }}
               type={r.type}
               id={r.id}
               key={r.id}
@@ -47,6 +55,7 @@ export default function GUI({ id, data }) {
           onChange={(evt) => updateNodeLabel(id, evt.target.value)}
           className='m-1 text-xs nodrag'
         />
+        {/*  */}
         <input
           type='color'
           defaultValue={data.color}
@@ -60,6 +69,12 @@ export default function GUI({ id, data }) {
         .map((r, i) => {
           return (
             <Handle
+              isValidConnection={(connection) => {
+                let oppositeNode = useFlow.getState().nodes.find((n) => n.id === connection.target)
+                let template = getTemplateByNodeInstance(oppositeNode)
+                let removeHandle = template.handles.find((h) => h.id === connection.targetHandle)
+                return removeHandle?.dataType === r.dataType
+              }}
               type={r.type}
               id={r.id}
               key={r.id}

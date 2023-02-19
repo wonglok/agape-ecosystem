@@ -56,8 +56,6 @@ export function ConnectionHelper() {
         className='mb-3 w-96'
         options={options}
         onChange={(segs) => {
-          console.log(segs)
-
           if (segs[0] === 'create') {
             useFlow.setState({ connHelperAction: segs[0], createModuleName: segs[1], autoConnectName: segs[2] })
           }
