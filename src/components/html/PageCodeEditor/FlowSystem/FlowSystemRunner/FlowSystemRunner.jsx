@@ -31,7 +31,7 @@ function Content() {
       <Environment preset='sunset' background></Environment>
       <OrbitControls dampingFactor={1} enableDamping object-position={[0.0, 2.5, 8]}></OrbitControls>
 
-      <gridHelper args={[100, 100, 0xffffff, 0xffffff]}></gridHelper>
+      {/* <gridHelper args={[100, 100, 0xffffff, 0xffffff]}></gridHelper> */}
     </>
   )
 }

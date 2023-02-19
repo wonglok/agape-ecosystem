@@ -1,22 +1,20 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { nodeTypeList } from '../../../useFlow/nodeTypes'
 import { useCore } from '../useCore/useCore'
 import { useFlow } from '../../../useFlow/useFlow'
 import { useThree } from '@react-three/fiber'
-import { Clock } from 'three'
 
 export function RunNode({ globals, node, edges }) {
   let nodeTemplate = useMemo(() => {
     return nodeTypeList.find((r) => r.type === node.type)
   }, [node.type])
 
-  let core = useCore()
+  let core = useCore(node.type)
 
   let { on, send } = useMemo(() => {
     let on = (name, fnc) => {
-      useFlow
-        .getState()
-        .edges.filter((edge) => {
+      edges
+        .filter((edge) => {
           return edge.target === node.id && edge.targetHandle === name
         })
         .map((edge) => {
@@ -37,9 +35,8 @@ export function RunNode({ globals, node, edges }) {
     }
 
     let send = (name, data) => {
-      useFlow
-        .getState()
-        .edges.filter((edge) => {
+      edges
+        .filter((edge) => {
           return edge.source === node.id && edge.sourceHandle === name
         })
         .map((edge) => {
@@ -59,6 +56,10 @@ export function RunNode({ globals, node, edges }) {
     }
   }, [node.id, edges, core])
 
+  let api = useRef({ on, send })
+  api.current.on = on
+  api.current.send = send
+
   let get = useThree((s) => s.get)
 
   useEffect(() => {
@@ -70,11 +71,25 @@ export function RunNode({ globals, node, edges }) {
         getNode() {
           return useFlow.getState().nodes.find((n) => n.id === node.id)
         },
-        on,
-        send,
+        on: (name, fnc) => {
+          api.current.on(name, fnc)
+        },
+        send: (name, data) => {
+          api.current.send(name, data)
+        },
       })
+
+      console.log('Preload::', node.type)
+      Promise.all(core.preloads.map((r) => r()))
+        .then(() => {
+          console.log('Load::', node.type)
+          return Promise.all(core.readys.map((r) => r()))
+        })
+        .then(() => {
+          console.log('Done::', node.type)
+        })
     }
-  }, [core, get, nodeTemplate, node, globals, on, send])
+  }, [core, get, nodeTemplate, node.id, globals, api, node.type])
 
   return (
     <>

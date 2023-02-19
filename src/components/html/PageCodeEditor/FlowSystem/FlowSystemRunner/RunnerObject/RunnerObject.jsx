@@ -2,7 +2,6 @@ import { RunNode } from './RunNode/RunNode'
 import { useCore } from './useCore/useCore'
 
 export function RunnerObject({ nodes, edges }) {
-  //
   let globals = useCore()
   return (
     <>

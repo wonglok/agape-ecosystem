@@ -1,9 +1,10 @@
 import { addEdge, applyEdgeChanges, applyNodeChanges } from 'reactflow'
 import { create } from 'zustand'
-import * as Y from 'yjs'
-import { IndexeddbPersistence } from 'y-indexeddb'
+// import * as Y from 'yjs'
+// import { IndexeddbPersistence } from 'y-indexeddb'
 import { getID } from '@/backend/aws'
 import { nodeTypeList } from './nodeTypes'
+import Worker from 'worker-loader!./Worker.js'
 
 function toArray(map) {
   let arr = []
@@ -19,58 +20,48 @@ export const useFlow = create((set, get) => {
     ready: null,
     nodes: [],
     edges: [],
-    doc: false,
     openFile: ({ docName }) => {
-      let doc = new Y.Doc()
-      set({ doc })
-      const rootManager = new Y.UndoManager([doc.getMap('nodes'), doc.getMap('edges')])
-
       let hh = (ev) => {
         if (ev.metaKey && ev.shiftKey && ev.key === 'z') {
-          rootManager.redo()
+          worker.postMessage({ type: 'redo' })
         } else if (ev.metaKey && ev.key === 'z') {
-          rootManager.undo()
+          worker.postMessage({ type: 'undo' })
         }
       }
       window.addEventListener('keydown', hh)
 
-      const provider = new IndexeddbPersistence(docName, doc)
-
-      let sync = () => {
+      let sync = ({ nodes, edges }) => {
         set({
           //
-          nodes: toArray(doc.getMap('nodes')),
-          edges: toArray(doc.getMap('edges')),
+          nodes: nodes,
+          edges: edges,
         })
       }
-      provider.whenSynced.then(() => {
-        sync()
-      })
-      rootManager.on('stack-item-popped', sync)
 
+      let worker = new Worker()
+
+      worker.addEventListener('message', (ev) => {
+        if (ev.data.type === 'sync') {
+          sync({
+            nodes: ev.data.nodes,
+            edges: ev.data.edges,
+          })
+        }
+      })
+      worker.postMessage({ type: 'load', docName })
+
+      set({
+        saveToDB: () => {
+          worker.postMessage({ type: 'saveDB', nodes: get().nodes, edges: get().edges })
+        },
+      })
       return () => {
-        rootManager.off('stack-item-popped', sync)
-        provider.destroy()
         window.removeEventListener('keydown', hh)
+        worker.terminate()
+        set({ saveToDB: () => {} })
       }
     },
-    saveToDB: () => {
-      setTimeout(() => {
-        get().doc.transact(() => {
-          let nodesMap = get().doc.getMap('nodes')
-          let edgesMap = get().doc.getMap('edges')
-          nodesMap.clear()
-          edgesMap.clear()
-
-          get().nodes.forEach((it) => {
-            nodesMap.set(it.id, it)
-          })
-          get().edges.forEach((it) => {
-            edgesMap.set(it.id, it)
-          })
-        })
-      })
-    },
+    saveToDB: () => {},
     onNodesChange: (changes) => {
       set({
         nodes: applyNodeChanges(changes, get().nodes),

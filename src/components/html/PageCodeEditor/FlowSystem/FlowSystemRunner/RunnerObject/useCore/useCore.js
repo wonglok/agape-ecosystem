@@ -1,7 +1,7 @@
 import { useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useMemo } from 'react'
 
-export let useCore = () => {
+export let useCore = (name = 'core') => {
   let core = useMemo(() => {
     let api = {
       loops: [],
@@ -48,13 +48,7 @@ export let useCore = () => {
   })
 
   useEffect(() => {
-    console.log('preloading...')
-    Promise.all(core.preloads.map(async (r) => r())).then(() => {
-      console.log('running...')
-      return core.readys.forEach((r) => r())
-    })
     return () => {
-      console.log('cleaning...')
       core.clean()
     }
   }, [core])
