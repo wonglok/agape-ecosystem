@@ -3,7 +3,7 @@ import { Background, Controls } from 'reactflow'
 import { shallow } from 'zustand/shallow'
 import { useFlow } from '../useFlow/useFlow'
 import { nodeTypes } from '../useFlow/nodeTypes'
-import { useEffect, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { ConnectionHelper } from './ConnectionHelper/ConnectionHelper'
 import { edgeTypes } from '../useFlow/edgeTypes'
 
@@ -47,13 +47,15 @@ export function FlowSystemEditorCore() {
     })
   }, [fitView, setViewport])
 
+  let nodeTypes2 = useMemo(() => nodeTypes, [])
+  let edgeTypes2 = useMemo(() => edgeTypes, [])
   return (
     <div className='relative w-full h-full' ref={reactFlowWrapper}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
-        edgeTypes={edgeTypes}
-        nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes2}
+        nodeTypes={nodeTypes2}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}

@@ -112,7 +112,6 @@ export const run = async ({ core, globals, getNode, on, send }) => {
   //
   core.onReady(() => {
     let physical = new MeshPhysicalMaterial({ color: 0x0000ff })
-    send('material', physical)
 
     on('color', (color) => {
       physical.color = physical.color || new Color('#ffffff')
@@ -120,6 +119,14 @@ export const run = async ({ core, globals, getNode, on, send }) => {
 
       send('material', physical)
     })
+
+    on('transmission', (transmission) => {
+      physical.transmission = transmission
+
+      send('material', physical)
+    })
+
+    send('material', physical)
 
     globals.onClean(() => {
       physical.dispose()

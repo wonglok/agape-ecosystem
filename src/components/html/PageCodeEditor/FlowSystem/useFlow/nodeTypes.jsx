@@ -1,4 +1,4 @@
-import { useFlow } from './useFlow'
+// import { useFlow } from './useFlow'
 
 export const nodeTypes = {}
 export const nodeTypeList = []
@@ -16,6 +16,8 @@ function importAll(r) {
         gui: moduleObject.default,
       })
     }
+
+    // console.log(nodeTypeList)
   })
 }
 
