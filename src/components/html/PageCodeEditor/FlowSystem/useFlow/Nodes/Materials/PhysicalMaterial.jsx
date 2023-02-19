@@ -15,7 +15,7 @@ export const name = 'PhysicalMaterial'
 export const createData = () => {
   return {
     type: name,
-    data: { label: 'materialPhysical1', color: '#bababa' },
+    data: { label: 'materialPhysical1', color: '#a0a0a0' },
     position: { x: 250, y: 25 },
   }
 }

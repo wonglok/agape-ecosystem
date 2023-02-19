@@ -16,7 +16,7 @@ export const name = 'Mesh'
 export const createData = () => {
   return {
     type: name,
-    data: { label: 'meshItem1', color: '#ffffff' },
+    data: { label: 'meshItem1', color: '#a0a0a0' },
     position: { x: 250, y: 25 },
   }
 }
@@ -96,7 +96,7 @@ export default function GUI({ id, data }) {
 export const run = async ({ core, globals, nodeData, on, send }) => {
   core.onReady(() => {
     let box = new BoxGeometry(1, 1, 1)
-    let physical = new MeshPhysicalMaterial({ color: 0xff0000 })
+    let physical = new MeshPhysicalMaterial({ color: '#a0a0a0' })
     let mesh = new Mesh(box, physical)
     core.now.scene.add(mesh)
 

@@ -15,7 +15,7 @@ export const name = 'SphereBufferGeometry'
 export const createData = () => {
   return {
     type: name,
-    data: { label: 'sphereGeometry1', color: '#bababa' },
+    data: { label: 'sphereGeometry1', color: '#a0a0a0' },
     position: { x: 250, y: 25 },
   }
 }
