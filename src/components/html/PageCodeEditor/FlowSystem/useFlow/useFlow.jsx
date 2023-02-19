@@ -75,16 +75,19 @@ export const useFlow = create((set, get) => {
       set({
         nodes: applyNodeChanges(changes, get().nodes),
       })
+      get().saveToDB()
     },
     onEdgesChange: (changes) => {
       set({
         edges: applyEdgeChanges(changes, get().edges),
       })
+      get().saveToDB()
     },
     onConnect: (connection) => {
       set({
         edges: addEdge(connection, get().edges),
       })
+      get().saveToDB()
     },
 
     selectedNodes: [],
@@ -217,6 +220,7 @@ export const useFlow = create((set, get) => {
             handleId: '',
           },
         })
+        set({ connHelperAction: '', createModuleName: '', autoConnectName: '' })
       })
     },
 
