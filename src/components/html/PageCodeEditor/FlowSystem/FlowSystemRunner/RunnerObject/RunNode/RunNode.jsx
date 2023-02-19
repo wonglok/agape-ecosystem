@@ -2,6 +2,8 @@ import { useEffect, useMemo } from 'react'
 import { nodeTypeList } from '../../../useFlow/nodeTypes'
 import { useCore } from '../useCore/useCore'
 import { useFlow } from '../../../useFlow/useFlow'
+import { useThree } from '@react-three/fiber'
+import { Clock } from 'three'
 
 export function RunNode({ globals, node, edges }) {
   let nodeTemplate = useMemo(() => {
@@ -9,7 +11,6 @@ export function RunNode({ globals, node, edges }) {
   }, [node.type])
 
   let core = useCore()
-
   let { on, send } = useMemo(() => {
     let on = (name, fnc) => {
       edges
@@ -21,7 +22,7 @@ export function RunNode({ globals, node, edges }) {
             fnc(ev.detail)
           }
           window.addEventListener(edge.id, hh)
-          globals.onClean(() => {
+          core.onClean(() => {
             window.removeEventListener(edge.id, hh)
           })
         })
@@ -43,13 +44,15 @@ export function RunNode({ globals, node, edges }) {
       send,
       on,
     }
-  }, [edges, globals, node.id])
+  }, [edges, node.id, core])
+
+  let get = useThree((s) => s.get)
 
   useEffect(() => {
     let run = nodeTemplate?.run
     if (run) {
       run({
-        core,
+        core: globals,
         globals,
         getNode() {
           return useFlow.getState().nodes.find((n) => n.id === node.id)
@@ -58,7 +61,7 @@ export function RunNode({ globals, node, edges }) {
         send,
       })
     }
-  }, [core, nodeTemplate, node, globals, on, send])
+  }, [core, get, nodeTemplate, node, globals, on, send])
 
   return (
     <>

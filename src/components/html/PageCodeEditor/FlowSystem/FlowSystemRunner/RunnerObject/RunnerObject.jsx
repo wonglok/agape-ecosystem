@@ -9,7 +9,7 @@ export function RunnerObject({ nodes, edges }) {
     <>
       {nodes &&
         nodes.map((n) => {
-          return <RunNode globals={globals} edges={edges} node={n} key={n.id}></RunNode>
+          return <RunNode globals={globals} nodes={nodes} edges={edges} node={n} key={n.id}></RunNode>
         })}
 
       {/* {edges &&

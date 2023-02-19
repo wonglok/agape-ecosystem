@@ -103,26 +103,16 @@ export const run = async ({ core, globals, getNode, on, send }) => {
   //
   core.onReady(() => {
     let physical = new MeshPhysicalMaterial({ color: 0x0000ff })
-    let color = new Color(getNode().data.color)
-    let last = ''
-    let tt = setInterval(() => {
-      let node = getNode()
-      let now = JSON.stringify(node)
-      if (last !== now) {
-        last = now
-        color.set(node.data.color)
-        physical.color = color
-        send('material', physical)
-      }
-    })
-
-    core.onClean(() => {
-      console.log(tt, 'clean')
-    })
-
     send('material', physical)
 
-    core.onClean(() => {
+    on('color', (color) => {
+      physical.color = physical.color || new Color('#ffffff')
+      physical.color.set(color)
+
+      send('material', physical)
+    })
+
+    globals.onClean(() => {
       physical.dispose()
     })
   })

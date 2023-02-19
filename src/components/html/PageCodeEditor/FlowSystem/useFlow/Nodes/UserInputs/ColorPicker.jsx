@@ -2,6 +2,7 @@ import React from 'react'
 import { Handle, Position } from 'reactflow'
 import { useFlow } from '../../useFlow'
 import { getTemplateByNodeInstance } from '../../nodeTypes'
+import { Color } from 'three'
 
 export const handles = [
   //
@@ -90,9 +91,24 @@ export default function GUI({ id, data }) {
   )
 }
 
-export const run = async ({ core }) => {
+export const run = async ({ core, globals, getNode, send }) => {
   //
   core.onPreload(() => {})
-  core.onReady(() => {})
-  core.onClean(() => {})
+  core.onReady(() => {
+    let color = new Color(getNode().data.color)
+    let last = ''
+    let tt = setInterval(() => {
+      let node = getNode()
+      let now = JSON.stringify(node)
+      if (last !== now) {
+        last = now
+        color.set(node.data.color)
+        send('color', color)
+      }
+    })
+    globals.onClean(() => {
+      //
+      clearInterval(tt)
+    })
+  })
 }
