@@ -74,17 +74,6 @@ export let getCreateItems = ({ handTemplate, nodes, hand }) => {
 }
 
 let getConnectItems = ({ handTemplate, nodes, hand }) => {
-  //
-  // let dataTypes = getDataTypesFromTemplate(handTemplate)
-
-  // let templates = nodeTypeList.filter((template) => {
-  //   return checkSupportDataTypes(template, dataTypes)
-  // })
-
-  // templates.filter((it) => {
-  //   return filterConnectionSockets(it).length > 0
-  // })
-
   let dataTypes = getDataTypesFromTemplate(handTemplate)
 
   let templates = nodeTypeList.filter((template) => {
