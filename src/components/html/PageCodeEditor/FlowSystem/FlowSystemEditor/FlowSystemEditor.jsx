@@ -3,7 +3,7 @@ import { Background, Controls } from 'reactflow'
 import { shallow } from 'zustand/shallow'
 import { useFlow } from '../useFlow/useFlow'
 import { nodeTypes } from '../useFlow/nodeTypes'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { ConnectionHelper } from './ConnectionHelper/ConnectionHelper'
 
 export function FlowSystemEditor() {
@@ -36,7 +36,15 @@ export function FlowSystemEditorCore() {
     showTool: r.showTool,
   }))
 
-  const { project } = useReactFlow()
+  const { project, setViewport, fitView } = useReactFlow()
+
+  useEffect(() => {
+    useFlow.setState({
+      fitToView: () => {
+        setViewport(fitView({ padding: 0.1 }), { duration: 800 })
+      },
+    })
+  }, [fitView, setViewport])
 
   return (
     <div className='relative w-full h-full' ref={reactFlowWrapper}>

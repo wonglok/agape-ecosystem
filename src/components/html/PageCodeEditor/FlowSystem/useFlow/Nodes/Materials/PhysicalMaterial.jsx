@@ -20,7 +20,7 @@ export const createData = () => {
   }
 }
 
-export default function GUI({ id, data }) {
+export default function GUI({ id, data, selected }) {
   const updateNodeLabel = useFlow((s) => s.updateNodeLabel)
   const updateNodeColor = useFlow((s) => s.updateNodeColor)
 
@@ -48,10 +48,13 @@ export default function GUI({ id, data }) {
         })}
       <div className='flex items-center justify-center rounded-t-xl'>
         <div
-          style={{ backgroundColor: '#949494' }}
-          className='flex items-center justify-center w-12 h-10 bg-transparent invert rounded-tl-xl '>
+          style={{ backgroundColor: selected ? '#7298ff' : '#a0a0a0' }}
+          className='flex items-center justify-center w-12 h-10 bg-transparent  rounded-tl-xl '>
           <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'>
-            <path d='M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-6.373 16.199c3.809.315 2.446-3.73 5.97-3.769l1.526 1.274c.381 4.6-5.244 5.626-7.496 2.495zm8.293-3.396l-1.549-1.293c.457-2.18 1.854-4.188 3.267-5.51l3.362 2.804c-1.041 1.636-3.023 3.154-5.08 3.999z' />
+            <path
+              fill='white'
+              d='M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-6.373 16.199c3.809.315 2.446-3.73 5.97-3.769l1.526 1.274c.381 4.6-5.244 5.626-7.496 2.495zm8.293-3.396l-1.549-1.293c.457-2.18 1.854-4.188 3.267-5.51l3.362 2.804c-1.041 1.636-3.023 3.154-5.08 3.999z'
+            />
           </svg>
         </div>
 

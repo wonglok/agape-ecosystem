@@ -61,7 +61,6 @@ export const useFlow = create((set, get) => {
       return () => {
         window.removeEventListener('keydown', hh)
         worker.terminate()
-        set({ saveToDB: () => {} })
       }
     },
     saveToDB: () => {},
@@ -76,13 +75,22 @@ export const useFlow = create((set, get) => {
         edges: applyEdgeChanges(changes, get().edges),
       })
       get().saveToDB()
+      setTimeout(() => {
+        set({
+          showTool: false,
+        })
+      })
     },
     onConnect: (connection) => {
       set({
         edges: addEdge(connection, get().edges),
-        showTool: false,
       })
       get().saveToDB()
+      setTimeout(() => {
+        set({
+          showTool: false,
+        })
+      })
     },
 
     selectedNodes: [],
@@ -125,7 +133,7 @@ export const useFlow = create((set, get) => {
             showTool: false,
           })
         }
-
+        get().fitToView()
         get().saveToDB()
       },
     onConnectStart: (_, info) => {
@@ -143,6 +151,7 @@ export const useFlow = create((set, get) => {
           handleId: info.handleId,
         },
       })
+
       get().saveToDB()
     },
     updateNodeColor: (nodeId, color) => {

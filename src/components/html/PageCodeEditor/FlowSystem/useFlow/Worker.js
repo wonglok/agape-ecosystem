@@ -11,8 +11,6 @@ function toArray(map) {
 
 let doc = new Y.Doc()
 
-const rootManager = new Y.UndoManager([doc.getMap('nodes'), doc.getMap('edges')])
-
 let sync = () => {
   self.postMessage({
     type: 'sync',
@@ -20,14 +18,13 @@ let sync = () => {
     edges: toArray(doc.getMap('edges')),
   })
 }
-
+const rootManager = new Y.UndoManager([doc.getMap('nodes'), doc.getMap('edges')])
 rootManager.on('stack-item-popped', sync)
 rootManager.off('stack-item-popped', sync)
 
-let provider = false
 self.onmessage = (ev) => {
   if (ev.data.type === 'load') {
-    provider = new IndexeddbPersistence(ev.data.docName, doc)
+    let provider = new IndexeddbPersistence(ev.data.docName, doc)
     provider.whenSynced.then(() => {
       sync()
     })
@@ -38,16 +35,8 @@ self.onmessage = (ev) => {
       let nodesMap = doc.getMap('nodes')
       let edgesMap = doc.getMap('edges')
 
-      for (let node of nodesMap) {
-        if (!nodes.some((r) => r.id === node.id)) {
-          nodesMap.delete(node.id)
-        }
-      }
-      for (let edge of edgesMap) {
-        if (!edges.some((r) => r.id === edge.id)) {
-          edgesMap.delete(edge.id)
-        }
-      }
+      nodesMap.clear()
+      edgesMap.clear()
 
       nodes.forEach((it) => {
         let store = JSON.stringify(nodesMap.get(it.id))
@@ -66,8 +55,10 @@ self.onmessage = (ev) => {
     })
   } else if (ev.data.type === 'undo') {
     rootManager.undo()
+    sync()
   } else if (ev.data.type === 'undo') {
     rootManager.redo()
+    sync()
   }
   //
 }
