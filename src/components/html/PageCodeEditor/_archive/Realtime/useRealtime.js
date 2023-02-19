@@ -50,8 +50,8 @@ export const useRealtime = create((set, get) => {
       provider.on('synced', () => {
         set({
           //
-          edges: toArray(doc.getMap('nodes')),
-          nodes: toArray(doc.getMap('edges')),
+          nodes: toArray(doc.getMap('nodes')),
+          edges: toArray(doc.getMap('edges')),
         })
       })
 
@@ -128,6 +128,8 @@ export const useRealtime = create((set, get) => {
     toolLeft: '0px',
     newNodePos: { x: 0, y: 0 },
     hand: { nodeId: '', handleType: '', handleId: '' },
+    createModule: '',
+    autoConnect: '',
     onAddNode: (payload) => {
       // //
       const id = getID()

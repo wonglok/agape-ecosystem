@@ -19,13 +19,19 @@ export function ShaderEditorLayout() {
     <div className='w-full h-full'>
       <HorizontalParent>
         <HorizontalChildren className={'relative'} width='calc(100% - 50%)'>
-          <FlowSystemRunner></FlowSystemRunner>
-          <>{<Loading ready={ready} />}</>
+          <FlowSystemEditor></FlowSystemEditor>
+
+          <button
+            className='absolute top-0 left-0'
+            onClick={() => {
+              useFlow.getState().resetDemo()
+            }}>
+            Button
+          </button>
         </HorizontalChildren>
         {/* border-l border-gray-500 */}
         <HorizontalChildren className={'relative'} width='calc(50%)'>
-          <FlowSystemEditor></FlowSystemEditor>
-          <>{<Loading ready={ready} />}</>
+          <FlowSystemRunner></FlowSystemRunner>
         </HorizontalChildren>
       </HorizontalParent>
     </div>

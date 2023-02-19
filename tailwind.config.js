@@ -1,6 +1,7 @@
 // https://daisyui.com/theme-generator/
 
 module.exports = {
+  important: true,
   mode: 'jit',
   content: [
     //
