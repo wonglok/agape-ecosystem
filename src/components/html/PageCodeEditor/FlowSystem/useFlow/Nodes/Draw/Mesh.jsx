@@ -91,7 +91,7 @@ export default function GUI({ id, data }) {
 export const run = async () => {
   //
 
-  return () => {
+  return async () => {
     //
   }
 }
