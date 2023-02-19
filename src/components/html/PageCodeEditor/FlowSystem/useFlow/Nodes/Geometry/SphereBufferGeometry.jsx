@@ -4,17 +4,16 @@ import { useFlow } from '../../useFlow'
 
 export const handles = [
   //
-  { type: 'target', dataType: 'material', id: 'material', displayName: 'Material' },
-  { type: 'target', dataType: 'geometry', id: 'geometry', displayName: 'Geometry' },
-  { type: 'source', dataType: 'object3d', id: 'object3d', displayName: 'Object3D' },
+  // { type: 'target', dataType: 'args', id: 'args', displayName: 'Color' },
+  { type: 'source', dataType: 'geometry', id: 'geometry', displayName: 'Geomtry' },
 ]
 
-export const name = 'Mesh'
+export const name = 'SphereBufferGeometry'
 
 export const createData = () => {
   return {
     type: name,
-    data: { label: 'meshItem1', color: '#ffffff' },
+    data: { label: 'sphereGeometry1', color: '#ffffff' },
     position: { x: 250, y: 25 },
   }
 }
@@ -40,6 +39,7 @@ export default function GUI({ id, data }) {
           )
         })}
 
+      {/* <Handle type='target' id='color' position={Position.Left} /> */}
       <div className='flex flex-col items-center justify-center'>
         <input
           type='text'
@@ -71,12 +71,4 @@ export default function GUI({ id, data }) {
         })}
     </div>
   )
-}
-
-export const run = async () => {
-  //
-
-  return () => {
-    //
-  }
 }

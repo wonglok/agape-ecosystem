@@ -128,7 +128,6 @@ export const useFlow = create((set, get) => {
           })
         }
 
-        //
         get().saveToDB()
       },
     onConnectStart: (_, info) => {
@@ -176,6 +175,7 @@ export const useFlow = create((set, get) => {
       const newNode = nodeTypeList?.find((r) => r.type === get()?.createModuleName)?.createData()
       newNode.id = id
       newNode.position = get().newNodePos
+
       if (get()?.hand?.handleType === 'source') {
         let newEdge = {
           id: getID(),
@@ -197,14 +197,27 @@ export const useFlow = create((set, get) => {
           targetHandle: get().hand.handleId,
           target: get().hand?.nodeId,
         }
+
         let edges = get().edges
         edges.push(newEdge)
         let nodes = get().nodes
         nodes.push(newNode)
         set({ edges: [...edges], nodes: [...nodes] })
       }
-      set({ showTool: false })
+
       get().saveToDB()
+      setTimeout(() => {
+        set({
+          showTool: false,
+          hand: {
+            node: false,
+            nodeType: '',
+            nodeId: '',
+            handleType: '',
+            handleId: '',
+          },
+        })
+      })
     },
 
     resetDemo: () => {

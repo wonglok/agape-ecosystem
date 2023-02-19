@@ -24,7 +24,20 @@ export default function GUI({ id, data }) {
 
   return (
     <div className='flex items-center justify-center text-sm' style={{ backgroundColor: data.color }}>
-      <Handle type='target' id='color' position={Position.Left} />
+      {handles
+        .filter((r) => r.type === 'target')
+        .map((r, i) => {
+          return (
+            <Handle
+              type={r.type}
+              id={r.id}
+              key={r.id}
+              className=''
+              style={{ left: `calc(10px + 20px * ${i})` }}
+              position={Position.Top}
+            />
+          )
+        })}
       <div className='flex flex-col items-center justify-center'>
         <input
           type='text'
@@ -39,7 +52,20 @@ export default function GUI({ id, data }) {
           className='m-1'
         />
       </div>
-      <Handle type='source' id='material' position={Position.Bottom} />
+      {handles
+        .filter((r) => r.type === 'source')
+        .map((r, i) => {
+          return (
+            <Handle
+              type={r.type}
+              id={r.id}
+              key={r.id}
+              className=''
+              style={{ left: `calc(10px + 20px * ${i})` }}
+              position={Position.Bottom}
+            />
+          )
+        })}
     </div>
   )
 }

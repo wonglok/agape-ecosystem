@@ -26,6 +26,7 @@ export let checkSupportDataTypes = (template, arr = []) => {
 export let getTemplateByNodeInstance = (node) => {
   return nodeTypeList.find((t) => t.type === node?.type)
 }
+
 export let getDataTypesFromTemplate = (template) => {
   return (template?.handles || []).map((r) => r.dataType)
 }
@@ -38,34 +39,29 @@ export let getCreateItems = ({ handTemplate, nodes, hand }) => {
     return checkSupportDataTypes(template, dataTypes)
   })
 
-  return templates
-    .filter((tp) => {
-      // console.log()
-      return true
-    })
-    .map((it) => {
-      return {
-        label: it.name,
-        value: it.name,
-        children: it.handles
-          .filter((h) => {
-            if (hand.handleType === 'target') {
-              return h.type === 'source'
-            } else {
-              return h.type === 'target'
-            }
-          })
-          .filter((t) => {
-            return hand.handleId === t.id
-          })
-          .map((t) => {
-            return {
-              label: `${t.displayName} ${t.type}`,
-              value: t.id,
-            }
-          }),
-      }
-    })
+  return templates.map((it) => {
+    return {
+      label: it.name,
+      value: it.name,
+      children: it.handles
+        .filter((h) => {
+          if (hand.handleType === 'target') {
+            return h.type === 'source'
+          } else {
+            return h.type === 'target'
+          }
+        })
+        .filter((t) => {
+          return hand.handleId === t.id
+        })
+        .map((t) => {
+          return {
+            label: `${t.displayName} ${t.type}`,
+            value: t.id,
+          }
+        }),
+    }
+  })
 }
 
 export const getOptions = ({ nodes, hand }) => {
