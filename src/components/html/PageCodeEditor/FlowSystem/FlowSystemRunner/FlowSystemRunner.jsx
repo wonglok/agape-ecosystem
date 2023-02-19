@@ -21,9 +21,7 @@ function Content() {
   let edges = useFlow((s) => s.edges)
   return (
     <>
-      <RunnerObject nodes={nodes} edges={edges}></RunnerObject>
-
-      {/*  */}
+      <RunnerObject key={edges.map((r) => r.id).join('_')} nodes={nodes} edges={edges}></RunnerObject>
 
       <mesh scale={[1, 1, 1]}>
         <torusBufferGeometry args={[2.5, 1, 64, 64]}></torusBufferGeometry>
