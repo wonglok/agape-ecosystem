@@ -2,6 +2,7 @@ import React from 'react'
 import { Handle, Position } from 'reactflow'
 import { useFlow } from '../../useFlow'
 import { getTemplateByNodeInstance } from '../../nodeTypes'
+import { SphereGeometry } from 'three'
 
 export const handles = [
   //
@@ -92,6 +93,11 @@ export default function GUI({ id, data }) {
   )
 }
 
-export const run = async ({ core }) => {
+export const run = async ({ core, globals, nodeData, on, send }) => {
   //
+  core.onReady(() => {
+    let box = new SphereGeometry(1, 32, 32)
+
+    send('geometry', box)
+  })
 }
