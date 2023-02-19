@@ -13,13 +13,20 @@ export function RunNode({ globals, node, edges }) {
   let core = useCore()
   let { on, send } = useMemo(() => {
     let on = (name, fnc) => {
-      edges
-        .filter((edge) => {
+      useFlow
+        .getState()
+        .edges.filter((edge) => {
           return edge.target === node.id && edge.targetHandle === name
         })
         .map((edge) => {
           let hh = (ev) => {
-            fnc(ev.detail)
+            if (
+              useFlow.getState().edges.some((edge) => {
+                return edge.target === node.id && edge.targetHandle === name
+              })
+            ) {
+              fnc(ev.detail)
+            }
           }
           window.addEventListener(edge.id, hh)
           core.onClean(() => {
@@ -31,8 +38,9 @@ export function RunNode({ globals, node, edges }) {
     }
 
     let send = (name, data) => {
-      edges
-        .filter((edge) => {
+      useFlow
+        .getState()
+        .edges.filter((edge) => {
           return edge.source === node.id && edge.sourceHandle === name
         })
         .map((edge) => {
@@ -52,7 +60,7 @@ export function RunNode({ globals, node, edges }) {
     let run = nodeTemplate?.run
     if (run) {
       run({
-        core: globals,
+        core: core,
         globals,
         getNode() {
           return useFlow.getState().nodes.find((n) => n.id === node.id)
