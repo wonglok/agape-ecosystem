@@ -2,8 +2,8 @@ import { addEdge, applyEdgeChanges, applyNodeChanges } from 'reactflow'
 import { create } from 'zustand'
 import * as Y from 'yjs'
 import { IndexeddbPersistence } from 'y-indexeddb'
-import { nodeTemplateList } from './nodeTypes'
 import { getID } from '@/backend/aws'
+import { nodeTypeList } from './nodeTypes'
 
 function toArray(map) {
   let arr = []
@@ -172,24 +172,20 @@ export const useFlow = create((set, get) => {
     },
 
     onAddNode: () => {
-      // //
       const id = getID()
-      const newNode = nodeTemplateList?.find((r) => r.type === get()?.createModuleName)?.module?.createData()
+      const newNode = nodeTypeList?.find((r) => r.type === get()?.createModuleName)?.createData()
       newNode.id = id
       newNode.position = get().newNodePos
-
       if (get()?.hand?.handleType === 'source') {
         let newEdge = {
           id: getID(),
           source: get().hand?.nodeId,
           sourceHandle: get().hand.handleId,
-          targetHandle: get().autoConnect,
+          targetHandle: get().autoConnectName,
           target: id,
         }
-
         let edges = get().edges
         edges.push(newEdge)
-
         let nodes = get().nodes
         nodes.push(newNode)
         set({ edges: [...edges], nodes: [...nodes] })
@@ -197,19 +193,16 @@ export const useFlow = create((set, get) => {
         let newEdge = {
           id: getID(),
           source: id,
-          sourceHandle: get().autoConnect,
+          sourceHandle: get().autoConnectName,
           targetHandle: get().hand.handleId,
           target: get().hand?.nodeId,
         }
-
         let edges = get().edges
         edges.push(newEdge)
-
         let nodes = get().nodes
         nodes.push(newNode)
         set({ edges: [...edges], nodes: [...nodes] })
       }
-
       set({ showTool: false })
       get().saveToDB()
     },

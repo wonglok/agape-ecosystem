@@ -1,27 +1,56 @@
 import { useOnSelectionChange } from 'reactflow'
 import { useFlow } from '../../useFlow/useFlow'
 import { Cascader } from 'antd'
-import { nodeHandlesByNodeTypes, nodeTemplateList } from '../../useFlow/nodeTypes'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
+import { getOptions, getTemplateByNodeInstance } from '../../useFlow/nodeTypes'
 
 export function ConnectionHelper() {
   useOnSelectionChange({
     onChange: ({ nodes = [], edges = [] }) => {
-      useFlow.setState({ selectedNodes: nodes, selectedEdges: edges })
+      useFlow.setState({
+        selectedFirstNode: nodes[0],
+        selectedFirstEdge: edges[0],
+        selectedNodes: nodes,
+        selectedEdges: edges,
+      })
     },
   })
+  let selectedFirstNode = useFlow((s) => s.selectedFirstNode)
+
+  useEffect(() => {
+    if (selectedFirstNode) {
+      let template = getTemplateByNodeInstance(selectedFirstNode)
+
+      let handleType = (template?.handles || []).some((h) => h.type === 'source') ? 'source' : 'target'
+
+      let handleId = (template?.handles || []).find((h) => h.type === handleType)
+
+      useFlow.setState({
+        hand: {
+          node: selectedFirstNode,
+          nodeType: selectedFirstNode.type || '',
+          nodeId: selectedFirstNode.id,
+          handleType,
+          handleId,
+        },
+      })
+      //selectedFirstNode
+    }
+  }, [selectedFirstNode])
 
   let nodes = useFlow((s) => s.nodes)
-
-  let options = useMemo(() => {
-    return getOptions({ nodes })
-  }, [nodes])
-
   let connHelperAction = useFlow((s) => s.connHelperAction)
   let autoConnectName = useFlow((s) => s.autoConnectName)
   let createModuleName = useFlow((s) => s.createModuleName)
   let connectModuleName = useFlow((s) => s.connectModuleName)
   let onAddNode = useFlow((s) => s.onAddNode)
+
+  let hand = useFlow((s) => s.hand)
+
+  let options = useMemo(() => {
+    return getOptions({ nodes, hand })
+  }, [hand, nodes])
+
   return (
     <div className='p-3 bg-gray-300 border rounded-lg bg-opacity-40  backdrop-blur-lg '>
       <Cascader
@@ -80,104 +109,4 @@ export function ConnectionHelper() {
       {/*  */}
     </div>
   )
-}
-
-const getOptions = ({ nodes }) => {
-  //!SECTION
-
-  let set = new Set()
-  let typesOfNodes = []
-  nodes.forEach((it) => {
-    if (!set.has(it.type)) {
-      set.add(it.type)
-    }
-  })
-
-  for (let val of set.values()) {
-    typesOfNodes.push(val)
-  }
-
-  return [
-    {
-      value: 'create',
-      label: 'Create',
-      children: [
-        ...nodeTemplateList.map((r) => {
-          return {
-            label: r.type,
-            value: r.type,
-            children: (r?.module?.handles || [])
-              .filter((h) => {
-                if (useFlow.getState()?.hand?.handleType === 'source') {
-                  if (h.type === 'target') {
-                    return true
-                  }
-                } else if (useFlow.getState()?.hand?.handleType === 'target') {
-                  if (h.type === 'source') {
-                    return true
-                  }
-                }
-
-                return false
-              })
-              .map((handle) => {
-                return {
-                  label: `${handle.displayName} (AutoConnect, ${handle.type === 'source' ? 'output' : 'input'})`,
-                  value: handle.id,
-                }
-              }),
-          }
-        }),
-      ],
-    },
-    {
-      value: 'connect',
-      label: 'Connect',
-      children: [
-        ...nodes
-          .filter((node) => node.id !== useFlow?.getState()?.hand?.node?.id)
-
-          .map((n) => {
-            let children = []
-
-            let handles = getHandlesFromType(n.type)
-
-            children = handles
-              .filter((h) => {
-                if (useFlow.getState()?.hand?.handleType === 'source') {
-                  if (h.type === 'target') {
-                    return true
-                  }
-                } else if (useFlow.getState()?.hand?.handleType === 'target') {
-                  if (h.type === 'source') {
-                    return true
-                  }
-                }
-
-                return false
-              })
-              .map((h) => {
-                return {
-                  label: `${h.displayName} (AutoConnect, ${h.type === 'source' ? 'output' : 'input'})`,
-                  value: `${h.id}`,
-                }
-              })
-
-            return {
-              label: `${n.data.label} (${n.type})`,
-              value: n.id,
-              children,
-            }
-          }),
-      ],
-    },
-  ]
-}
-
-let getHandlesFromType = (type) => {
-  let oneNode = nodeTemplateList.find((nt) => nt.type === type)
-
-  let mod = oneNode?.module || { handles: [] }
-
-  return mod?.handles
 }
