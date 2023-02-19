@@ -39,10 +39,11 @@ export function ConnectionHelper() {
 
   let nodes = useFlow((s) => s.nodes)
   let connHelperAction = useFlow((s) => s.connHelperAction)
-  let autoConnectName = useFlow((s) => s.autoConnectName)
+  let remoteHandleName = useFlow((s) => s.remoteHandleName)
   let createModuleName = useFlow((s) => s.createModuleName)
-  let connectModuleName = useFlow((s) => s.connectModuleName)
+  let connectModuleID = useFlow((s) => s.connectModuleID)
   let onAddNode = useFlow((s) => s.onAddNode)
+  let onAddEdge = useFlow((s) => s.onAddEdge)
 
   let hand = useFlow((s) => s.hand)
 
@@ -56,11 +57,12 @@ export function ConnectionHelper() {
         className='mb-3 w-96'
         options={options}
         onChange={(segs) => {
+          console.log(segs)
           if (segs[0] === 'create') {
-            useFlow.setState({ connHelperAction: segs[0], createModuleName: segs[1], autoConnectName: segs[2] })
+            useFlow.setState({ connHelperAction: segs[0], createModuleName: segs[1], remoteHandleName: segs[2] })
           }
           if (segs[0] === 'connect') {
-            useFlow.setState({ connHelperAction: segs[0], connectModuleName: segs[1], autoConnectName: segs[2] })
+            useFlow.setState({ connHelperAction: segs[0], connectModuleID: segs[1], remoteHandleName: segs[2] })
           }
 
           return null
@@ -78,7 +80,7 @@ export function ConnectionHelper() {
               //
               onAddNode()
             }}
-            disabled={!(connHelperAction && createModuleName && autoConnectName)}>
+            disabled={!(connHelperAction && createModuleName && remoteHandleName)}>
             <>Create</>
           </button>
         )}
@@ -87,8 +89,9 @@ export function ConnectionHelper() {
             className='px-3 py-2 mr-2 text-xs text-white bg-blue-500 rounded-xl disabled:opacity-50'
             onClick={() => {
               //
+              onAddEdge()
             }}
-            disabled={!(connHelperAction && connectModuleName && autoConnectName)}>
+            disabled={!(connHelperAction && connectModuleID && remoteHandleName)}>
             <>Connect</>
           </button>
         )}

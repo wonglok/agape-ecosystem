@@ -1,6 +1,7 @@
 import React from 'react'
 import { Handle, Position } from 'reactflow'
 import { useFlow } from '../../useFlow'
+import { getTemplateByNodeInstance } from '../../nodeTypes'
 
 export const handles = [
   //

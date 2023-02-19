@@ -108,7 +108,7 @@ export const useFlow = create((set, get) => {
     //!SECTION
     connHelperAction: '',
     createModuleName: '',
-    autoConnectName: '',
+    remoteHandleName: '',
     connectModuleName: '',
     ///
     onConnectEnd:
@@ -185,7 +185,7 @@ export const useFlow = create((set, get) => {
           id: getID(),
           source: get().hand?.nodeId,
           sourceHandle: get().hand.handleId,
-          targetHandle: get().autoConnectName,
+          targetHandle: get().remoteHandleName,
           target: id,
         }
         let edges = get().edges
@@ -197,7 +197,7 @@ export const useFlow = create((set, get) => {
         let newEdge = {
           id: getID(),
           source: id,
-          sourceHandle: get().autoConnectName,
+          sourceHandle: get().remoteHandleName,
           targetHandle: get().hand.handleId,
           target: get().hand?.nodeId,
         }
@@ -221,7 +221,46 @@ export const useFlow = create((set, get) => {
             handleId: '',
           },
         })
-        set({ connHelperAction: '', createModuleName: '', autoConnectName: '' })
+        set({ connHelperAction: '', createModuleName: '', remoteHandleName: '' })
+      })
+    },
+
+    onAddEdge: () => {
+      //
+
+      let nodeId = get().hand.nodeId
+      let nodeHandle = get().hand.handleId
+      let handleType = get().hand.handleType
+
+      if (handleType === 'source') {
+        let newEdge = {
+          id: getID(),
+          source: nodeId,
+          sourceHandle: nodeHandle,
+          target: get().connectModuleID,
+          targetHandle: get().remoteHandleName,
+        }
+
+        console.log(newEdge)
+
+        let edges = get().edges
+        edges.push(newEdge)
+        set({ edges: [...edges] })
+      }
+
+      get().saveToDB()
+      setTimeout(() => {
+        set({
+          showTool: false,
+          hand: {
+            node: false,
+            nodeType: '',
+            nodeId: '',
+            handleType: '',
+            handleId: '',
+          },
+        })
+        set({ connHelperAction: '', connectModuleID: '', remoteHandleName: '' })
       })
     },
 
