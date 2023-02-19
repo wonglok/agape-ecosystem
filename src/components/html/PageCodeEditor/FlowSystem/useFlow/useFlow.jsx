@@ -241,7 +241,17 @@ export const useFlow = create((set, get) => {
           targetHandle: get().remoteHandleName,
         }
 
-        console.log(newEdge)
+        let edges = get().edges
+        edges.push(newEdge)
+        set({ edges: [...edges] })
+      } else {
+        let newEdge = {
+          id: getID(),
+          target: nodeId,
+          targetHandle: nodeHandle,
+          source: get().connectModuleID,
+          sourceHandle: get().remoteHandleName,
+        }
 
         let edges = get().edges
         edges.push(newEdge)
