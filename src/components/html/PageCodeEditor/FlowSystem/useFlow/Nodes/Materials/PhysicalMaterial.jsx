@@ -62,11 +62,11 @@ export default function GUI({ id, data }) {
           type='color'
           defaultValue={data.color}
           onChange={(evt) => updateNodeColor(id, evt.target.value)}
-          className='inline-block w-10 h-10 p-0 text-xs opacity-0 appearance-none y-0'
+          className='inline-block h-10 text-xs opacity-0 appearance-none cursor-grabbing y-0'
         />
       </div>
       <div className='flex items-center w-full text-xs bg-white '>
-        <div className='py-1 ml-2'>Color</div>
+        <div className='py-1 ml-2 '>Color</div>
       </div>
       <div className='flex items-center w-full text-xs bg-white rounded-b-xl '>
         <div className='py-1 ml-2'></div>

@@ -23,7 +23,7 @@ export default function GUI({ id, data }) {
   const updateNodeLabel = useFlow((s) => s.updateNodeLabel)
 
   return (
-    <div className='flex items-center justify-center text-sm' style={{ backgroundColor: data.color }}>
+    <div className='flex items-center justify-center text-sm rounded-xl' style={{ backgroundColor: data.color }}>
       {handles
         .filter((r) => r.type === 'target')
         .map((r, i) => {
