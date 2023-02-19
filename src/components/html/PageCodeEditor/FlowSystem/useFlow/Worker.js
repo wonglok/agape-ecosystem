@@ -37,8 +37,17 @@ self.onmessage = (ev) => {
     doc.transact(() => {
       let nodesMap = doc.getMap('nodes')
       let edgesMap = doc.getMap('edges')
-      nodesMap.clear()
-      edgesMap.clear()
+      for (let node of nodesMap) {
+        if (!nodes.some((r) => r.id === node.id)) {
+          nodesMap.delete(node.id)
+        }
+      }
+
+      for (let edge of edgesMap) {
+        if (!edges.some((r) => r.id === edge.id)) {
+          edgesMap.delete(edge.id)
+        }
+      }
 
       nodes.forEach((it) => {
         nodesMap.set(it.id, it)
