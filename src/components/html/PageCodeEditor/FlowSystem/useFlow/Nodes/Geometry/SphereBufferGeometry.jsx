@@ -24,7 +24,7 @@ export default function GUI({ id, data }) {
   const updateNodeColor = useFlow((s) => s.updateNodeColor)
 
   return (
-    <div className='flex items-center justify-center w-full text-sm' style={{ backgroundColor: data.color }}>
+    <div className='flex items-center justify-center w-full text-sm rounded-xl' style={{ backgroundColor: data.color }}>
       {handles
         .filter((r) => r.type === 'target')
         .map((r, i) => {
@@ -82,8 +82,8 @@ export default function GUI({ id, data }) {
               type={r.type}
               id={r.id}
               key={r.id}
-              className='w-2 h-2 rounded-full'
-              style={{ left: `calc(34px + 20px * ${i})` }}
+              className='w-4 h-2 bg-gray-400 rounded-full'
+              style={{ left: `calc(50% - 1rem / 2 + 25px * ${i})` }}
               position={Position.Bottom}
             />
           )

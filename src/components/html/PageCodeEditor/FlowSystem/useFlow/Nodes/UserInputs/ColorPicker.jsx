@@ -39,7 +39,7 @@ export default function GUI({ id, data }) {
               type={r.type}
               id={r.id}
               key={r.id}
-              className=''
+              className='w-2 h-4 bg-gray-400 rounded-full'
               style={{ top: `calc(10px + 20px * ${i})` }}
               position={Position.Left}
             />
@@ -80,7 +80,7 @@ export default function GUI({ id, data }) {
               type={r.type}
               id={r.id}
               key={r.id}
-              className=''
+              className='w-2 h-4 bg-gray-400 rounded-full'
               style={{ top: `calc(20px + 20px * ${i})` }}
               position={Position.Right}
             />

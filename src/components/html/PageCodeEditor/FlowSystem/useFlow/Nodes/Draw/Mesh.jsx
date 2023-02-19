@@ -25,10 +25,10 @@ export default function GUI({ id, data }) {
   const updateNodeColor = useFlow((s) => s.updateNodeColor)
 
   return (
-    <div className='flex items-center justify-center text-sm' style={{ backgroundColor: data.color }}>
+    <div className='flex items-center justify-center text-sm rounded-xl' style={{ backgroundColor: data.color }}>
       {handles
         .filter((r) => r.type === 'target')
-        .map((r, i) => {
+        .map((r, i, a) => {
           return (
             <Handle
               isValidConnection={(connection) => {
@@ -41,8 +41,8 @@ export default function GUI({ id, data }) {
               type={r.type}
               id={r.id}
               key={r.id}
-              className=''
-              style={{ left: `calc(10px + 20px * ${i})` }}
+              className='w-4 h-2 bg-gray-400 rounded-full'
+              style={{ left: `calc(50% - 1rem / 2 + 25px * ${i - 0.5})` }}
               position={Position.Top}
             />
           )
@@ -82,8 +82,8 @@ export default function GUI({ id, data }) {
               type={r.type}
               id={r.id}
               key={r.id}
-              className=''
-              style={{ left: `calc(10px + 20px * ${i})` }}
+              className='w-4 h-2 bg-gray-400 rounded-full'
+              style={{ left: `calc(50% - 1rem / 2 + 25px * ${i})` }}
               position={Position.Bottom}
             />
           )
