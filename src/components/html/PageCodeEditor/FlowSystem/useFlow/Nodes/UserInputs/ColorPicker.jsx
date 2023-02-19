@@ -42,13 +42,13 @@ export default function GUI({ id, data }) {
           type='text'
           defaultValue={data.label}
           onChange={(evt) => updateNodeLabel(id, evt.target.value)}
-          className='m-1 nodrag'
+          className='m-1 text-xs nodrag'
         />
         <input
           type='color'
           defaultValue={data.color}
           onChange={(evt) => updateNodeColor(id, evt.target.value)}
-          className='m-1'
+          className='m-1 text-xs'
         />
       </div>
       {handles
