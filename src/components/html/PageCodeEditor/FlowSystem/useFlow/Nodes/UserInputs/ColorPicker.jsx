@@ -33,8 +33,8 @@ export default function GUI({ id, data }) {
                 // console.log(connection)
                 let oppositeNode = useFlow.getState().nodes.find((n) => n.id === connection.source)
                 let template = getTemplateByNodeInstance(oppositeNode)
-                let removeHandle = template.handles.find((h) => h.id === connection.sourceHandle)
-                return removeHandle?.dataType === r.dataType
+                let remoteHandle = template.handles.find((h) => h.id === connection.sourceHandle)
+                return remoteHandle?.dataType === r.dataType
               }}
               type={r.type}
               id={r.id}
@@ -68,8 +68,8 @@ export default function GUI({ id, data }) {
                 // console.log(connection)
                 let oppositeNode = useFlow.getState().nodes.find((n) => n.id === connection.target)
                 let template = getTemplateByNodeInstance(oppositeNode)
-                let removeHandle = template.handles.find((h) => h.id === connection.targetHandle)
-                return removeHandle?.dataType === r.dataType
+                let remoteHandle = template.handles.find((h) => h.id === connection.targetHandle)
+                return remoteHandle?.dataType === r.dataType
               }}
               type={r.type}
               id={r.id}
