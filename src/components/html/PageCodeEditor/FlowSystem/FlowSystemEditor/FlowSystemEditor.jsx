@@ -36,12 +36,12 @@ export function FlowSystemEditorCore() {
     showTool: r.showTool,
   }))
 
-  const { project, setViewport, fitView } = useReactFlow()
+  const { project, setViewport, fitView, getViewport } = useReactFlow()
 
   useEffect(() => {
     useFlow.setState({
       fitToView: () => {
-        setViewport(fitView({ padding: 0.1 }), { duration: 800 })
+        fitView({ padding: 0.1 })
       },
     })
   }, [fitView, setViewport])
