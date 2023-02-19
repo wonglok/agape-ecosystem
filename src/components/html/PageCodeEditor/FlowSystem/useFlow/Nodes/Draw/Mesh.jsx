@@ -53,7 +53,16 @@ export default function GUI({ id, data }) {
           className='m-1'
         />
       </div>
+
       <Handle type='source' id='object3d' position={Position.Bottom} />
     </div>
   )
+}
+
+export const run = async () => {
+  //
+
+  return () => {
+    //
+  }
 }

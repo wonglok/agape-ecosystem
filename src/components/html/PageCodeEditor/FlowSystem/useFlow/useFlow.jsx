@@ -35,13 +35,7 @@ export const useFlow = create((set, get) => {
       window.addEventListener('keydown', hh)
 
       const provider = new IndexeddbPersistence(docName, doc)
-      provider.whenSynced.then(() => {
-        set({
-          //
-          nodes: toArray(doc.getMap('nodes')),
-          edges: toArray(doc.getMap('edges')),
-        })
-      })
+
       let sync = () => {
         set({
           //
@@ -49,6 +43,9 @@ export const useFlow = create((set, get) => {
           edges: toArray(doc.getMap('edges')),
         })
       }
+      provider.whenSynced.then(() => {
+        sync()
+      })
       rootManager.on('stack-item-popped', sync)
 
       return () => {
@@ -93,6 +90,8 @@ export const useFlow = create((set, get) => {
     selectedNodes: [],
     selectedEdges: [],
     hand: {
+      node: false,
+      nodeType: '',
       nodeId: '',
       handleType: '',
       handleId: '',
@@ -130,16 +129,24 @@ export const useFlow = create((set, get) => {
         }
 
         //
+        get().saveToDB()
       },
     onConnectStart: (_, info) => {
       set({
         hand: {
-          //
+          node: get().nodes.find((n) => {
+            return n.id === info.nodeId
+          }),
+          nodeType:
+            get().nodes.find((n) => {
+              return n.id === info.nodeId
+            })?.type || '',
           nodeId: info.nodeId,
           handleType: info.handleType,
           handleId: info.handleId,
         },
       })
+      get().saveToDB()
     },
     updateNodeColor: (nodeId, color) => {
       set({
@@ -150,6 +157,7 @@ export const useFlow = create((set, get) => {
           return node
         }),
       })
+      get().saveToDB()
     },
     updateNodeLabel: (nodeId, label) => {
       set({
@@ -160,16 +168,17 @@ export const useFlow = create((set, get) => {
           return node
         }),
       })
+      get().saveToDB()
     },
 
     onAddNode: () => {
       // //
       const id = getID()
-      const newNode = nodeTemplateList.find((r) => r.type === get().createModuleName).module.createData()
+      const newNode = nodeTemplateList?.find((r) => r.type === get()?.createModuleName)?.module?.createData()
       newNode.id = id
       newNode.position = get().newNodePos
 
-      if (get().hand.handleType === 'source') {
+      if (get()?.hand?.handleType === 'source') {
         let newEdge = {
           id: getID(),
           source: get().hand?.nodeId,
@@ -177,13 +186,14 @@ export const useFlow = create((set, get) => {
           targetHandle: get().autoConnect,
           target: id,
         }
+
         let edges = get().edges
         edges.push(newEdge)
 
         let nodes = get().nodes
         nodes.push(newNode)
         set({ edges: [...edges], nodes: [...nodes] })
-      } else if (get().hand.handleType === 'target') {
+      } else if (get()?.hand?.handleType === 'target') {
         let newEdge = {
           id: getID(),
           source: id,
@@ -199,8 +209,8 @@ export const useFlow = create((set, get) => {
         nodes.push(newNode)
         set({ edges: [...edges], nodes: [...nodes] })
       }
-      set({ showTool: false })
 
+      set({ showTool: false })
       get().saveToDB()
     },
 

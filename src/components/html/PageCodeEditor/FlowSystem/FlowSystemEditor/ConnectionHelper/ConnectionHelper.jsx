@@ -135,20 +135,33 @@ const getOptions = ({ nodes }) => {
       label: 'Connect',
       children: [
         ...nodes
-          .filter((r) => r.id !== useFlow.getState().hand.nodeId)
+          .filter((node) => node.id !== useFlow?.getState()?.hand?.node?.id)
+
           .map((n) => {
             let children = []
 
-            let thisNode = nodeTemplateList.find((nt) => n.type === nt.type)
+            let handles = getHandlesFromType(n.type)
 
-            let mod = thisNode?.module || {}
+            children = handles
+              .filter((h) => {
+                if (useFlow.getState()?.hand?.handleType === 'source') {
+                  if (h.type === 'target') {
+                    return true
+                  }
+                } else if (useFlow.getState()?.hand?.handleType === 'target') {
+                  if (h.type === 'source') {
+                    return true
+                  }
+                }
 
-            children = mod.handles.map((h) => {
-              return {
-                label: `${h.displayName} (AutoConnect, ${h.type === 'source' ? 'output' : 'input'})`,
-                value: `${h.id}`,
-              }
-            })
+                return false
+              })
+              .map((h) => {
+                return {
+                  label: `${h.displayName} (AutoConnect, ${h.type === 'source' ? 'output' : 'input'})`,
+                  value: `${h.id}`,
+                }
+              })
 
             return {
               label: `${n.data.label} (${n.type})`,
@@ -159,4 +172,12 @@ const getOptions = ({ nodes }) => {
       ],
     },
   ]
+}
+
+let getHandlesFromType = (type) => {
+  let oneNode = nodeTemplateList.find((nt) => nt.type === type)
+
+  let mod = oneNode?.module || { handles: [] }
+
+  return mod?.handles
 }
