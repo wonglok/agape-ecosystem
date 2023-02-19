@@ -11,8 +11,6 @@ function toArray(map) {
 
 let doc = new Y.Doc()
 
-let provider = false
-
 const rootManager = new Y.UndoManager([doc.getMap('nodes'), doc.getMap('edges')])
 
 let sync = () => {
@@ -26,6 +24,7 @@ let sync = () => {
 rootManager.on('stack-item-popped', sync)
 rootManager.off('stack-item-popped', sync)
 
+let provider = false
 self.onmessage = (ev) => {
   if (ev.data.type === 'load') {
     provider = new IndexeddbPersistence(ev.data.docName, doc)
