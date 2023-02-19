@@ -7,6 +7,7 @@ import { Color, MeshPhysicalMaterial } from 'three'
 export const handles = [
   //
   { type: 'target', dataType: 'color', id: 'color', displayName: 'Color' },
+  { type: 'target', dataType: 'number', id: 'transmission', displayName: 'Transmission' },
   { type: 'source', dataType: 'material', id: 'material', displayName: 'Material' },
 ]
 
@@ -41,7 +42,7 @@ export default function GUI({ id, data, selected }) {
               id={r.id}
               key={r.id}
               className='w-2 h-4 bg-gray-400 rounded-full'
-              style={{ top: `calc(52px + 50px * ${i})` }}
+              style={{ top: `calc(52px + 25px * ${i})` }}
               position={Position.Left}
             />
           )
@@ -73,6 +74,9 @@ export default function GUI({ id, data, selected }) {
       </div>
       <div className='flex items-center w-full text-xs bg-white '>
         <div className='py-1 ml-2 '>Color</div>
+      </div>
+      <div className='flex items-center w-full text-xs bg-white '>
+        <div className='py-1 ml-2 '>Transmission</div>
       </div>
       <div className='flex items-center w-full text-xs bg-white rounded-b-xl '>
         <div className='py-1 ml-2'></div>
