@@ -37,12 +37,12 @@ self.onmessage = (ev) => {
     doc.transact(() => {
       let nodesMap = doc.getMap('nodes')
       let edgesMap = doc.getMap('edges')
+
       for (let node of nodesMap) {
         if (!nodes.some((r) => r.id === node.id)) {
           nodesMap.delete(node.id)
         }
       }
-
       for (let edge of edgesMap) {
         if (!edges.some((r) => r.id === edge.id)) {
           edgesMap.delete(edge.id)
@@ -50,10 +50,18 @@ self.onmessage = (ev) => {
       }
 
       nodes.forEach((it) => {
-        nodesMap.set(it.id, it)
+        let store = JSON.stringify(nodesMap.get(it.id))
+        let now = JSON.stringify(it)
+        if (store !== now) {
+          nodesMap.set(it.id, it)
+        }
       })
       edges.forEach((it) => {
-        edgesMap.set(it.id, it)
+        let store = JSON.stringify(edgesMap.get(it.id))
+        let now = JSON.stringify(it)
+        if (store !== now) {
+          edgesMap.set(it.id, it)
+        }
       })
     })
   } else if (ev.data.type === 'undo') {
