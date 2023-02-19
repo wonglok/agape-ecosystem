@@ -33,7 +33,6 @@ export const useFlow = create((set, get) => {
 
       let sync = ({ nodes, edges }) => {
         set({
-          //
           nodes: nodes,
           edges: edges,
         })
