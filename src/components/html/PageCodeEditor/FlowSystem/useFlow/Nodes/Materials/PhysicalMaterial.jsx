@@ -33,8 +33,8 @@ export default function GUI({ id, data }) {
               id={r.id}
               key={r.id}
               className=''
-              style={{ left: `calc(10px + 20px * ${i})` }}
-              position={Position.Top}
+              style={{ top: `calc(10px + 20px * ${i})` }}
+              position={Position.Left}
             />
           )
         })}
