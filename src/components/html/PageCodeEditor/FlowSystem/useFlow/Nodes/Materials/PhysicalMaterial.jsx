@@ -13,14 +13,14 @@ export const name = 'PhysicalMaterial'
 export const createData = () => {
   return {
     type: name,
-    data: { label: 'newPhysicalMaterial', color: '#4FD1C5' },
+    data: { label: 'materialPhysical1', color: '#ffffff' },
     position: { x: 250, y: 25 },
   }
 }
 
 export default function GUI({ id, data }) {
-  const updateNodeColor = useFlow((s) => s.updateNodeColor)
   const updateNodeLabel = useFlow((s) => s.updateNodeLabel)
+  const updateNodeColor = useFlow((s) => s.updateNodeColor)
 
   return (
     <div className='flex items-center justify-center text-sm' style={{ backgroundColor: data.color }}>

@@ -137,9 +137,23 @@ const getOptions = ({ nodes }) => {
         ...nodes
           .filter((r) => r.id !== useFlow.getState().hand.nodeId)
           .map((n) => {
+            let children = []
+
+            let thisNode = nodeTemplateList.find((nt) => n.type === nt.type)
+
+            let mod = thisNode?.module || {}
+
+            children = mod.handles.map((h) => {
+              return {
+                label: `${h.displayName} (AutoConnect, ${h.type === 'source' ? 'output' : 'input'})`,
+                value: `${h.id}`,
+              }
+            })
+
             return {
               label: `${n.data.label} (${n.type})`,
               value: n.id,
+              children,
             }
           }),
       ],

@@ -22,7 +22,7 @@ export const useFlow = create((set, get) => {
     doc: false,
     openFile: ({ docName }) => {
       let doc = new Y.Doc()
-
+      set({ doc })
       const rootManager = new Y.UndoManager([doc.getMap('nodes'), doc.getMap('edges')])
 
       let hh = (ev) => {
@@ -35,44 +35,42 @@ export const useFlow = create((set, get) => {
       window.addEventListener('keydown', hh)
 
       const provider = new IndexeddbPersistence(docName, doc)
-
-      provider.on('synced', () => {
+      provider.whenSynced.then(() => {
         set({
           //
           nodes: toArray(doc.getMap('nodes')),
           edges: toArray(doc.getMap('edges')),
-          ready: true,
-          doc: doc,
         })
       })
-
-      let cancelFlow = useFlow.subscribe((st, b4) => {
-        if (st.edges !== b4.edges) {
-          get().saveToDB()
-        }
-        if (st.nodes !== b4.nodes) {
-          get().saveToDB()
-        }
-      })
+      let sync = () => {
+        set({
+          //
+          nodes: toArray(doc.getMap('nodes')),
+          edges: toArray(doc.getMap('edges')),
+        })
+      }
+      rootManager.on('stack-item-popped', sync)
 
       return () => {
-        cancelFlow()
+        rootManager.off('stack-item-popped', sync)
         provider.destroy()
         window.removeEventListener('keydown', hh)
       }
     },
     saveToDB: () => {
-      get().doc.transact(() => {
-        let nodesMap = get().doc.getMap('nodes')
-        let edgesMap = get().doc.getMap('edges')
-        nodesMap.clear()
-        edgesMap.clear()
+      setTimeout(() => {
+        get().doc.transact(() => {
+          let nodesMap = get().doc.getMap('nodes')
+          let edgesMap = get().doc.getMap('edges')
+          nodesMap.clear()
+          edgesMap.clear()
 
-        get().nodes.forEach((it) => {
-          nodesMap.set(it.id, it)
-        })
-        get().edges.forEach((it) => {
-          edgesMap.set(it.id, it)
+          get().nodes.forEach((it) => {
+            nodesMap.set(it.id, it)
+          })
+          get().edges.forEach((it) => {
+            edgesMap.set(it.id, it)
+          })
         })
       })
     },
@@ -202,6 +200,8 @@ export const useFlow = create((set, get) => {
         set({ edges: [...edges], nodes: [...nodes] })
       }
       set({ showTool: false })
+
+      get().saveToDB()
     },
 
     resetDemo: () => {
@@ -215,6 +215,7 @@ export const useFlow = create((set, get) => {
           },
         ],
       })
+      get().saveToDB()
     },
   }
 })
