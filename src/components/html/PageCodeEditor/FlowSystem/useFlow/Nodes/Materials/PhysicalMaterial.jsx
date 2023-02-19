@@ -41,7 +41,7 @@ export default function GUI({ id, data }) {
               id={r.id}
               key={r.id}
               className=''
-              style={{ top: `calc(10px + 20px * ${i})` }}
+              style={{ top: `calc(60px + 50px * ${i})` }}
               position={Position.Left}
             />
           )
@@ -66,31 +66,36 @@ export default function GUI({ id, data }) {
           className='inline-block w-10 h-10 text-xs'
         />
       </div>
-      <div className='flex items-center'>
-        <div className='h-full ml-2'>Color</div>
+      <div className='flex items-center w-full bg-white'>
+        <div className='w-10'></div>
+        <div className='flex-grow h-full py-2'>Color</div>
       </div>
 
-      {handles
-        .filter((r) => r.type === 'source')
-        .map((r, i) => {
-          return (
-            <Handle
-              isValidConnection={(connection) => {
-                // console.log(connection)
-                let oppositeNode = useFlow.getState().nodes.find((n) => n.id === connection.target)
-                let template = getTemplateByNodeInstance(oppositeNode)
-                let remoteHandle = template.handles.find((h) => h.id === connection.targetHandle)
-                return remoteHandle?.dataType === r.dataType
-              }}
-              type={r.type}
-              id={r.id}
-              key={r.id}
-              className=''
-              style={{ left: `calc(10px + 20px * ${i})` }}
-              position={Position.Left}
-            />
-          )
-        })}
+      <div className='flex items-center w-full  h-px text-white bg-gray-500'></div>
+
+      <div>
+        {handles
+          .filter((r) => r.type === 'source')
+          .map((r, i) => {
+            return (
+              <Handle
+                isValidConnection={(connection) => {
+                  // console.log(connection)
+                  let oppositeNode = useFlow.getState().nodes.find((n) => n.id === connection.target)
+                  let template = getTemplateByNodeInstance(oppositeNode)
+                  let remoteHandle = template.handles.find((h) => h.id === connection.targetHandle)
+                  return remoteHandle?.dataType === r.dataType
+                }}
+                type={r.type}
+                id={r.id}
+                key={r.id}
+                className='w-2 h-2 rounded-full'
+                style={{ left: `calc(50% + 25px * ${i})` }}
+                position={Position.Bottom}
+              />
+            )
+          })}
+      </div>
     </div>
   )
 }
