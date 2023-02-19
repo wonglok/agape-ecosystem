@@ -33,8 +33,6 @@ export function RunNode({ globals, node, edges }) {
             window.removeEventListener(edge.id, hh)
           })
         })
-
-      //
     }
 
     let send = (name, data) => {
@@ -44,7 +42,13 @@ export function RunNode({ globals, node, edges }) {
           return edge.source === node.id && edge.sourceHandle === name
         })
         .map((edge) => {
-          window.dispatchEvent(new CustomEvent(`${edge.id}`, { detail: data }))
+          if (
+            useFlow.getState().edges.some((edge) => {
+              return edge.source === node.id && edge.sourceHandle === name
+            })
+          ) {
+            window.dispatchEvent(new CustomEvent(`${edge.id}`, { detail: data }))
+          }
         })
     }
 
@@ -52,7 +56,7 @@ export function RunNode({ globals, node, edges }) {
       send,
       on,
     }
-  }, [edges, node.id, core])
+  }, [node.id, core])
 
   let get = useThree((s) => s.get)
 
