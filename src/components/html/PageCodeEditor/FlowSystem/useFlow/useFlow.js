@@ -21,6 +21,7 @@ export const useFlow = create((set, get) => {
     ready: null,
     nodes: [],
     edges: [],
+    fitView: () => {},
     openFile: ({ docName }) => {
       let hh = (ev) => {
         if (ev.metaKey && ev.shiftKey && ev.key === 'z') {

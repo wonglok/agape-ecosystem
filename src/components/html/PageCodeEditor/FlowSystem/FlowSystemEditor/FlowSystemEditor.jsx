@@ -1,4 +1,4 @@
-import ReactFlow, { ReactFlowProvider, useReactFlow } from 'reactflow'
+import ReactFlow, { ReactFlowProvider, useReactFlow, useViewport } from 'reactflow'
 import { Background, Controls } from 'reactflow'
 import { shallow } from 'zustand/shallow'
 import { useFlow } from '../useFlow/useFlow'
