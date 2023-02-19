@@ -14,7 +14,7 @@ export const name = 'SphereBufferGeometry'
 export const createData = () => {
   return {
     type: name,
-    data: { label: 'sphereGeometry1', color: '#ffffff' },
+    data: { label: 'sphereGeometry1', color: '#bababa' },
     position: { x: 250, y: 25 },
   }
 }
@@ -24,7 +24,7 @@ export default function GUI({ id, data }) {
   const updateNodeColor = useFlow((s) => s.updateNodeColor)
 
   return (
-    <div className='flex items-center justify-center text-sm' style={{ backgroundColor: data.color }}>
+    <div className='flex items-center justify-center w-full text-sm' style={{ backgroundColor: data.color }}>
       {handles
         .filter((r) => r.type === 'target')
         .map((r, i) => {
@@ -48,12 +48,12 @@ export default function GUI({ id, data }) {
         })}
 
       {/* <Handle type='target' id='color' position={Position.Left} /> */}
-      <div className='flex flex-col items-center justify-center'>
+      <div className='flex items-center justify-center h-full'>
         <input
           type='text'
           defaultValue={data.label}
           onChange={(evt) => updateNodeLabel(id, evt.target.value)}
-          className='m-1 text-xs nodrag'
+          className='h-full text-xs nodrag'
         />
         <input
           type='color'

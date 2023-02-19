@@ -88,10 +88,6 @@ export default function GUI({ id, data }) {
   )
 }
 
-export const run = async () => {
+export const run = async ({ onClean, onLoop, send, on, env }) => {
   //
-
-  return async () => {
-    //
-  }
 }
