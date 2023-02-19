@@ -82,10 +82,10 @@ export function RunNode({ globals, node, edges }) {
       console.log('Preload::', node.type)
       Promise.all(core.preloads.map((r) => r()))
         .then(() => {
-          console.log('Load::', node.type)
+          console.log('Setup::', node.type)
           return Promise.all(core.readys.map((r) => r()))
         })
-        .then(() => {
+        .finally(() => {
           console.log('Done::', node.type)
         })
     }
