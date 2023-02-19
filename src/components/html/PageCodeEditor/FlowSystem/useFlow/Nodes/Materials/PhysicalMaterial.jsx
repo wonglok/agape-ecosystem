@@ -2,7 +2,23 @@ import React from 'react'
 import { Handle, Position } from 'reactflow'
 import { useFlow } from '../../useFlow'
 
-function PhysicalMaterial({ id, data }) {
+export const handles = [
+  //
+  { type: 'target', dataType: 'color', id: 'color', displayName: 'Color' },
+  { type: 'source', dataType: 'material', id: 'material', displayName: 'Material' },
+]
+
+export const name = 'PhysicalMaterial'
+
+export const createData = () => {
+  return {
+    type: name,
+    data: { label: 'newPhysicalMaterial', color: '#4FD1C5' },
+    position: { x: 250, y: 25 },
+  }
+}
+
+export default function GUI({ id, data }) {
   const updateNodeColor = useFlow((s) => s.updateNodeColor)
   const updateNodeLabel = useFlow((s) => s.updateNodeLabel)
 
@@ -27,11 +43,3 @@ function PhysicalMaterial({ id, data }) {
     </div>
   )
 }
-
-export const handles = [
-  //
-  { type: 'target', dataType: 'color', id: 'color', displayName: 'Color' },
-  { type: 'source', dataType: 'material', id: 'material', displayName: 'Material' },
-]
-
-export default PhysicalMaterial

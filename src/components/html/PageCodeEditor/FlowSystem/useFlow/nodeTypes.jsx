@@ -1,11 +1,10 @@
-import path from 'path'
 const nodeTypes = {}
 const nodeTemplateList = []
 const nodeHandlesByNodeTypes = []
 function importAll(r) {
   r.keys().forEach((key) => {
     let moduleObject = r(key)
-    let nodeName = path.basename(key).replace('.jsx', '')
+    let nodeName = moduleObject.name
 
     nodeTypes[nodeName] = moduleObject.default
 

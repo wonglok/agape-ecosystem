@@ -2,7 +2,22 @@ import React from 'react'
 import { Handle, Position } from 'reactflow'
 import { useFlow } from '../../useFlow'
 
-function ColorPicker({ id, data }) {
+export const handles = [
+  //
+  { type: 'source', dataType: 'color', id: 'color', displayName: 'Color' },
+]
+
+export const name = 'ColorPicker'
+
+export const createData = () => {
+  return {
+    type: name,
+    data: { label: 'newColorPicker', color: '#4FD1C5' },
+    position: { x: 250, y: 25 },
+  }
+}
+
+export default function GUI({ id, data }) {
   const updateNodeColor = useFlow((s) => s.updateNodeColor)
   const updateNodeLabel = useFlow((s) => s.updateNodeLabel)
 
@@ -26,10 +41,3 @@ function ColorPicker({ id, data }) {
     </div>
   )
 }
-
-export const handles = [
-  //
-  { type: 'source', dataType: 'color', id: 'color', displayName: 'Color' },
-]
-
-export default ColorPicker

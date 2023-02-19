@@ -18,8 +18,10 @@ export function ConnectionHelper() {
   }, [nodes])
 
   let connHelperAction = useFlow((s) => s.connHelperAction)
-  let autoConnect = useFlow((s) => s.autoConnect)
-  let createModule = useFlow((s) => s.createModule)
+  let autoConnectName = useFlow((s) => s.autoConnectName)
+  let createModuleName = useFlow((s) => s.createModuleName)
+  let connectModuleName = useFlow((s) => s.connectModuleName)
+  let onAddNode = useFlow((s) => s.onAddNode)
   return (
     <div className='p-3 bg-gray-300 border rounded-lg bg-opacity-40  backdrop-blur-lg '>
       <Cascader
@@ -29,10 +31,10 @@ export function ConnectionHelper() {
           console.log(segs)
 
           if (segs[0] === 'create') {
-            useFlow.setState({ connHelperAction: segs[0], createModule: segs[1], autoConnect: segs[2] })
+            useFlow.setState({ connHelperAction: segs[0], createModuleName: segs[1], autoConnectName: segs[2] })
           }
           if (segs[0] === 'connect') {
-            useFlow.setState({ connHelperAction: segs[0], toBeConnected: segs[1] })
+            useFlow.setState({ connHelperAction: segs[0], connectModuleName: segs[1], autoConnectName: segs[2] })
           }
 
           return null
@@ -48,8 +50,9 @@ export function ConnectionHelper() {
             className='px-3 py-2 mr-2 text-xs text-white bg-blue-500 rounded-xl disabled:opacity-50'
             onClick={() => {
               //
+              onAddNode()
             }}
-            disabled={!(connHelperAction && createModule && autoConnect)}>
+            disabled={!(connHelperAction && createModuleName && autoConnectName)}>
             <>Create</>
           </button>
         )}
@@ -58,7 +61,8 @@ export function ConnectionHelper() {
             className='px-3 py-2 mr-2 text-xs text-white bg-blue-500 rounded-xl disabled:opacity-50'
             onClick={() => {
               //
-            }}>
+            }}
+            disabled={!(connHelperAction && connectModuleName && autoConnectName)}>
             <>Connect</>
           </button>
         )}
@@ -118,7 +122,7 @@ const getOptions = ({ nodes }) => {
               })
               .map((handle) => {
                 return {
-                  label: `Connec to socket: ${handle.displayName} (${handle.type === 'source' ? 'output' : 'input'})`,
+                  label: `${handle.displayName} (AutoConnect, ${handle.type === 'source' ? 'output' : 'input'})`,
                   value: handle.id,
                 }
               }),
