@@ -16,7 +16,7 @@ export const name = 'NumberPicker'
 export const createData = () => {
   return {
     type: name,
-    data: { label: 'numberPicker1', number: 0 },
+    data: { label: 'floatPicker1', number: 0 },
     position: { x: 250, y: 25 },
   }
 }
@@ -95,6 +95,8 @@ export default function GUI({ id, data, selected }) {
               updateNodeData(id, 'float0', result)
             }, 1 / 120)
           }}></Slider>
+        {/*  */}
+        {/*  */}
         <InputNumber
           className='w-full nodrag'
           type='number'

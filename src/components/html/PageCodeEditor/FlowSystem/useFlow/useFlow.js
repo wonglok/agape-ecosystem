@@ -6,6 +6,7 @@ import { getID } from '@/backend/aws'
 import { nodeTypeList } from './nodeTypes'
 import Worker from 'worker-loader!./Worker.js'
 import nProgress from 'nprogress'
+import reset from './reset'
 
 function toArray(map) {
   let arr = []
@@ -296,16 +297,7 @@ export const useFlow = create((set, get) => {
     },
 
     resetDemo: () => {
-      set({
-        nodes: [
-          {
-            id: '1',
-            type: 'ColorPicker',
-            data: { label: 'node1', color: '#4FD1C5' },
-            position: { x: 250, y: 25 },
-          },
-        ],
-      })
+      set(reset)
       get().saveToDB()
     },
   }
