@@ -101,7 +101,7 @@ let getConnectItems = ({ handTemplate, nodes, hand }) => {
   nodes.forEach((nd) => {
     if (okTypes.some((t) => t.name === nd.type)) {
       let handHandleType = hand?.handleType
-      let handHandleID = hand?.handleId
+      // let handHandleID = hand?.handleId
 
       let template = getTemplateByNodeInstance(nd)
 
@@ -113,6 +113,7 @@ let getConnectItems = ({ handTemplate, nodes, hand }) => {
             return r.type === 'target'
           }
         })
+
         // .filter((hh) => {
         //   return hh.id === handHandleID && handHandleID !== ''
         // })
