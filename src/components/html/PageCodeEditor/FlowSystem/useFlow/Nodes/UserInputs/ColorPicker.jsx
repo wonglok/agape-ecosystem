@@ -114,7 +114,6 @@ export const SettingsGUI = ({ data, id }) => {
 
   return (
     <>
-      {/*  */}
       <div style={{ backgroundColor: data.color }} className='w-10 overflow-hidden border-2 rounded-xl'>
         <input
           type='color'
