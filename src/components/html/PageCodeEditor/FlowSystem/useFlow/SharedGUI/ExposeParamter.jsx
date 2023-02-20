@@ -24,19 +24,24 @@ export function ExposeParamter({ id, data }) {
                 </div>
               </div>
 
-              <div className='flex items-center'>
-                <div>Enable Group</div>
-                <div className=''>
-                  <Switch
-                    className='p-1 ml-2 bg-gray-200'
-                    defaultChecked={data.isGroupedForExpose}
-                    onChange={(val) => {
-                      //
-                      updateNodeData(id, 'isGroupedForExpose', val)
-                    }}
-                  />
+              {data.isExposed && (
+                <div className='flex items-center'>
+                  <div>Enable Group</div>
+                  <div className=''>
+                    <Switch
+                      className='p-1 ml-2 bg-gray-200'
+                      defaultChecked={data.isGroupedForExpose}
+                      onChange={(val) => {
+                        //
+                        updateNodeData(id, 'isGroupedForExpose', val)
+                      }}
+                    />
+                  </div>
                 </div>
-              </div>
+              )}
+
+              {/*  */}
+              {/*  */}
 
               {data.isGroupedForExpose && (
                 <div className=''>

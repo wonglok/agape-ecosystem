@@ -10,7 +10,7 @@ export function RunNode({ globals, nodes, node, edges }) {
     return nodeTypeList.find((r) => r.type === node.type)
   }, [node.type])
 
-  let core = useCore(node.type)
+  let core = useCore(`${node.type}`)
 
   let { on, send } = useMemo(() => {
     let on = (name, fnc) => {
@@ -85,10 +85,10 @@ export function RunNode({ globals, nodes, node, edges }) {
         },
       })
 
-      console.log('Preload::', node.type)
+      console.log('Prep::', node.type)
       Promise.all(core.preloads.map((r) => r()))
         .then(() => {
-          console.log('Setup::', node.type)
+          console.log('Run::', node.type)
           return Promise.all(core.readys.map((r) => r()))
         })
         .finally(() => {

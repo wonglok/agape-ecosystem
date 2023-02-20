@@ -88,21 +88,21 @@ export default function GUI({ id, data, selected }) {
           min={0}
           max={10}
           step={0.01}
-          defaultValue={data.slider}
+          defaultValue={data.float0}
           onChange={(result) => {
             clearInterval(tt)
             tt = setTimeout(() => {
-              updateNodeData(id, 'slider', result)
+              updateNodeData(id, 'float0', result)
             }, 1 / 120)
           }}></Slider>
         <InputNumber
           className='w-full nodrag'
           type='number'
-          value={data.slider}
+          value={data.float0}
           onChange={(result) => {
             clearInterval(tt)
             tt = setTimeout(() => {
-              updateNodeData(id, 'slider', result)
+              updateNodeData(id, 'float0', result)
             }, 1 / 120)
           }}></InputNumber>
       </div>
@@ -141,7 +141,7 @@ export const run = async ({ core, globals, getNode, send }) => {
       let now = JSON.stringify(node)
       if (last !== now) {
         last = now
-        send('number', node?.data?.slider)
+        send('number', node?.data?.float0)
       }
     })
     core.onClean(() => {
