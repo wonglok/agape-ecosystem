@@ -48,11 +48,11 @@ export default function GUI({ id, data, selected }) {
       <div className='flex items-center justify-center'>
         <div
           style={{ backgroundColor: selected ? '#7298ff' : '#a0a0a0' }}
-          className='flex items-center justify-center w-12 h-10 bg-transparent  rounded-l-xl'>
+          className='flex items-center justify-center w-12 h-10 bg-transparent  rounded-tl-xl'>
           <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'>
             <path
               fill='white'
-              d='M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-17 5c0-1.654 1.346-3 3-3h6v9h-9v-6zm0 14v-6h9v9h-6c-1.654 0-3-1.346-3-3zm20 0c0 1.654-1.346 3-3 3h-6v-9h9v6zm0-8h-9v-9h6c1.654 0 3 1.346 3 3v6zm-2 6h-5v-1h5v1zm-5-11h5v1h-5v-1zm0 13v-1h5v1h-5zm-6-2v1h-2v2h-1v-2h-2v-1h2v-2h1v2h2zm-1.793-10.5l1.414 1.414-.707.707-1.414-1.414-1.414 1.414-.708-.707 1.414-1.414-1.414-1.414.707-.707 1.415 1.414 1.415-1.415.708.708-1.416 1.414zm9.793-2c0-.276.224-.5.5-.5s.5.224.5.5-.224.5-.5.5-.5-.224-.5-.5zm1 4c0 .276-.224.5-.5.5s-.5-.224-.5-.5.224-.5.5-.5.5.224.5.5z'
+              d='M24 7v-2c0-2.761-2.238-5-5-5h-14c-2.761 0-5 2.239-5 5v2h10v2h-10v6h4v2h-4v2c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-2h-8v-2h8v-6h-5v-2h5zm-16 11c0 .552-.447 1-1 1s-1-.448-1-1v-4c0-.552.447-1 1-1s1 .448 1 1v4zm3 0c0 .552-.447 1-1 1s-1-.448-1-1v-4c0-.552.447-1 1-1s1 .448 1 1v4zm3 0c0 .552-.447 1-1 1s-1-.448-1-1v-4c0-.552.447-1 1-1s1 .448 1 1v4zm0-8c0 .552-.447 1-1 1s-1-.448-1-1v-4c0-.552.447-1 1-1s1 .448 1 1v4zm3 0c0 .552-.447 1-1 1s-1-.448-1-1v-4c0-.552.447-1 1-1s1 .448 1 1v4z'
             />
           </svg>
         </div>
@@ -70,7 +70,7 @@ export default function GUI({ id, data, selected }) {
         /> */}
       </div>
 
-      <div className='px-3 py-1 pb-3 nodrag'>
+      <div className='px-3 pt-1 pb-3 nodrag'>
         <Slider
           className='nodrag'
           min={-100}
@@ -128,7 +128,7 @@ export const run = async ({ core, globals, getNode, send }) => {
       let now = JSON.stringify(node)
       if (last !== now) {
         last = now
-        send('number', node?.data?.number)
+        send('number', node?.data?.slider)
       }
     })
     globals.onClean(() => {
