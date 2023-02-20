@@ -24,7 +24,6 @@ export const createData = () => {
 export default function GUI({ id, data, selected }) {
   const updateNodeData = useFlow((s) => s.updateNodeData)
   const updateNodeLabel = useFlow((s) => s.updateNodeLabel)
-  let tt = 0
   return (
     <div
       className={`text-sm rounded-xl transition-transform duration-300 scale-100  border bg-white ${
@@ -82,32 +81,7 @@ export default function GUI({ id, data, selected }) {
         /> */}
       </div>
 
-      <div className='px-3 pt-1 pb-3 nodrag'>
-        <Slider
-          className='nodrag'
-          min={0}
-          max={10}
-          step={0.01}
-          defaultValue={data.float0}
-          onChange={(result) => {
-            clearInterval(tt)
-            tt = setTimeout(() => {
-              updateNodeData(id, 'float0', result)
-            }, 1 / 120)
-          }}></Slider>
-        {/*  */}
-        {/*  */}
-        <InputNumber
-          className='w-full nodrag'
-          type='number'
-          value={data.float0}
-          onChange={(result) => {
-            clearInterval(tt)
-            tt = setTimeout(() => {
-              updateNodeData(id, 'float0', result)
-            }, 1 / 120)
-          }}></InputNumber>
-      </div>
+      <SettingsGUI data={data} id={id}></SettingsGUI>
 
       {handles
         .filter((r) => r.type === 'source')
@@ -134,6 +108,8 @@ export default function GUI({ id, data, selected }) {
 }
 
 export const SettingsGUI = ({ data, id }) => {
+  let tt = 0
+
   const updateNodeData = useFlow((s) => s.updateNodeData)
 
   return (
@@ -151,8 +127,7 @@ export const SettingsGUI = ({ data, id }) => {
               updateNodeData(id, 'float0', result)
             }, 1 / 120)
           }}></Slider>
-        {/*  */}
-        {/*  */}
+
         <InputNumber
           className='w-full nodrag'
           type='number'

@@ -28,7 +28,7 @@ function Content() {
         <meshPhysicalMaterial roughness={0.0} transmission={1} thickness={1.5}></meshPhysicalMaterial>
       </mesh> */}
 
-      <Environment preset='dawn' background></Environment>
+      <Environment preset='sunset' background></Environment>
       <OrbitControls dampingFactor={1} enableDamping object-position={[0.0, 2.5, 8]}></OrbitControls>
 
       {/* <gridHelper args={[100, 100, 0xffffff, 0xffffff]}></gridHelper> */}

@@ -4,7 +4,7 @@ import { FlowSystemRunner } from '../../FlowSystem/FlowSystemRunner/FlowSystemRu
 import { HorizontalChildren } from '../../Grid/HorizontalChildren'
 import { HorizontalParent } from '../../Grid/HorizontalParent'
 import { useFlow } from '../../FlowSystem/useFlow/useFlow'
-import { Loading } from '../Loading/Loading'
+import { ExposedSettingsGUI } from '../../FlowSystem/useFlow/SharedGUI/ExposedSettingsGUI'
 
 export function ShaderEditorLayout() {
   let openFile = useFlow((s) => s.openFile)
@@ -18,7 +18,10 @@ export function ShaderEditorLayout() {
   return (
     <div className='w-full h-full'>
       <HorizontalParent>
-        <HorizontalChildren className={'relative'} width='calc(100% - 50%)'>
+        <HorizontalChildren className={'relative border-gray-400 border-r'} width='calc(20%)'>
+          <ExposedSettingsGUI></ExposedSettingsGUI>
+        </HorizontalChildren>
+        <HorizontalChildren className={'relative'} width='calc(100% - 40%)'>
           <FlowSystemEditor></FlowSystemEditor>
 
           <div className='absolute top-0 left-0'>
@@ -74,8 +77,8 @@ export function ShaderEditorLayout() {
             </button>
           </div>
         </HorizontalChildren>
-        {/* border-l border-gray-500 */}
-        <HorizontalChildren className={'relative'} width='calc(50%)'>
+
+        <HorizontalChildren className={'relative'} width='calc(40%)'>
           <FlowSystemRunner></FlowSystemRunner>
         </HorizontalChildren>
       </HorizontalParent>
