@@ -42,11 +42,13 @@ export function ExposeParamter({ id, data }) {
                 <div className=''>
                   <div>Group Name</div>
                   <div className=''>
-                    <input
-                      className='p-3 bg-gray-100'
+                    <Input
+                      className='px-3 bg-gray-100'
                       type='text'
-                      onChange={() => {
-                        //
+                      defaultValue={data.groupName}
+                      onChange={(ev) => {
+                        let val = ev.target.value
+                        updateNodeData(id, 'groupName', val)
                       }}
                     />
                   </div>
