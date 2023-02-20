@@ -11,17 +11,17 @@ export function ExposedSettingsGUI() {
         .map((n) => {
           let template = getTemplateByNodeInstance(n)
           return (
-            <div key={n.id}>
-              <div className='px-4 text-sm'>
+            <div key={n.id} className='mb-5 border-b-2'>
+              <div className='px-3 text-sm'>
                 {n.type} - {n?.data?.label}
               </div>
 
-              <>{template?.SettingsGUI && <template.SettingsGUI data={n.data} id={n.id}></template.SettingsGUI>}</>
+              <div className='px-3 text-sm'>
+                {template?.SettingsGUI && <template.SettingsGUI data={n.data} id={n.id}></template.SettingsGUI>}
+              </div>
             </div>
           )
         })}
     </div>
   )
 }
-
-//

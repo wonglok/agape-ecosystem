@@ -69,14 +69,18 @@ export default function GUI({ id, data, selected }) {
           onChange={(evt) => updateNodeLabel(id, evt.target.value)}
           className='w-full h-10 pl-2 text-xs bg-gray-100 appearance-none nodrag'
         />
-        <div style={{ backgroundColor: data.color }} className='w-16 mx-1 overflow-hidden border border-2 rounded-xl'>
+
+        <div className='px-3 nodrag'>
+          <SettingsGUI data={data} id={id}></SettingsGUI>
+        </div>
+        {/* <div style={{ backgroundColor: data.color }} className='w-16 mx-1 overflow-hidden border border-2 rounded-xl'>
           <input
             type='color'
             defaultValue={data.color}
             onChange={(evt) => updateNodeColor(id, evt.target.value)}
             className='text-xs opacity-0'
           />
-        </div>
+        </div> */}
         <ExposeParamter id={id} data={data}></ExposeParamter>
       </div>
 
@@ -102,6 +106,26 @@ export default function GUI({ id, data, selected }) {
           )
         })}
     </div>
+  )
+}
+
+export const SettingsGUI = ({ data, id }) => {
+  let tt = 0
+  const updateNodeData = useFlow((s) => s.updateNodeData)
+
+  return (
+    <>
+      <div style={{ backgroundColor: data.color }} className='w-16 mx-1 overflow-hidden  border-2 rounded-xl'>
+        <input
+          type='color'
+          defaultValue={data.color}
+          onChange={(evt) => updateNodeData(id, 'color', evt.target.value)}
+          className='text-xs opacity-0'
+        />
+      </div>
+
+      {/*  */}
+    </>
   )
 }
 

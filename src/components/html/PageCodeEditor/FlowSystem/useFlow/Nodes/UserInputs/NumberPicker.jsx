@@ -80,8 +80,9 @@ export default function GUI({ id, data, selected }) {
           className='h-10 text-xs opacity-0'
         /> */}
       </div>
-
-      <SettingsGUI data={data} id={id}></SettingsGUI>
+      <div className='px-3 pt-0 pb-3'>
+        <SettingsGUI data={data} id={id}></SettingsGUI>
+      </div>
 
       {handles
         .filter((r) => r.type === 'source')
@@ -109,34 +110,34 @@ export default function GUI({ id, data, selected }) {
 
 export const SettingsGUI = ({ data, id }) => {
   let tt = 0
-
   const updateNodeData = useFlow((s) => s.updateNodeData)
 
   return (
     <>
-      <div className='px-3 pt-1 pb-3 nodrag'>
+      <div className='nodrag'>
         <Slider
           className='nodrag'
           min={0}
           max={10}
           step={0.01}
-          defaultValue={data.float0}
-          onChange={(result) => {
-            clearInterval(tt)
-            tt = setTimeout(() => {
-              updateNodeData(id, 'float0', result)
-            }, 1 / 120)
-          }}></Slider>
-
-        <InputNumber
-          className='w-full nodrag'
-          type='number'
           value={data.float0}
           onChange={(result) => {
             clearInterval(tt)
             tt = setTimeout(() => {
               updateNodeData(id, 'float0', result)
-            }, 1 / 120)
+            }, 1)
+          }}></Slider>
+
+        <InputNumber
+          className='w-full nodrag'
+          type='number'
+          step={0.01}
+          value={data.float0}
+          onChange={(result) => {
+            clearInterval(tt)
+            tt = setTimeout(() => {
+              updateNodeData(id, 'float0', result)
+            }, 1)
           }}></InputNumber>
       </div>
       {/*  */}
