@@ -37,7 +37,21 @@ export function ExposeParamter({ id, data }) {
                   />
                 </div>
               </div>
-              <div className='flex items-center'></div>
+
+              {data.isGroupedForExpose && (
+                <div className=''>
+                  <div>Group Name</div>
+                  <div className=''>
+                    <input
+                      className='p-3 bg-gray-100'
+                      type='text'
+                      onChange={() => {
+                        //
+                      }}
+                    />
+                  </div>
+                </div>
+              )}
             </div>
           }>
           <div className={`p-2 ml-1 mr-3 rounded-xl ${data.isExposed ? 'bg-green-100' : 'bg-gray-100'}`}>
