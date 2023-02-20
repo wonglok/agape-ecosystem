@@ -55,7 +55,7 @@ export default function GUI({ id, data, selected }) {
       <div className='flex items-center justify-center'>
         <div
           style={{ backgroundColor: selected ? '#6C6F72' : '#C2C2C2' }}
-          className='flex items-center justify-center w-12 h-10 bg-transparent  rounded-l-xl'>
+          className='flex items-center justify-center w-20 h-10 bg-transparent  rounded-l-xl'>
           <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'>
             <path
               fill='white'
@@ -110,12 +110,12 @@ export default function GUI({ id, data, selected }) {
 }
 
 export const SettingsGUI = ({ data, id }) => {
-  let tt = 0
   const updateNodeData = useFlow((s) => s.updateNodeData)
 
   return (
     <>
-      <div style={{ backgroundColor: data.color }} className='w-16 mx-1 overflow-hidden  border-2 rounded-xl'>
+      {/*  */}
+      <div style={{ backgroundColor: data.color }} className='w-10 overflow-hidden border-2 rounded-xl'>
         <input
           type='color'
           defaultValue={data.color}

@@ -5,7 +5,7 @@ export function ExposedSettingsGUI() {
   let nodes = useFlow((s) => s.nodes)
 
   return (
-    <div>
+    <div className='py-5'>
       {nodes
         .filter((r) => r.data.isExposed)
         .map((n) => {
