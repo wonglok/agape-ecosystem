@@ -144,7 +144,7 @@ export const run = async ({ core, globals, getNode, send }) => {
         send('number', node?.data?.float0)
       }
     })
-    core.onClean(() => {
+    globals.onClean(() => {
       clearInterval(tt)
     })
   })

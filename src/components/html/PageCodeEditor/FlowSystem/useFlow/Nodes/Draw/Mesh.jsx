@@ -120,7 +120,7 @@ export const run = async ({ core, globals, nodeData, on, send }) => {
       mesh.material = data
     })
 
-    core.onClean(() => {
+    globals.onClean(() => {
       mesh.removeFromParent()
     })
   })

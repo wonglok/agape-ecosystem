@@ -163,7 +163,7 @@ export const run = async ({ core, globals, getNode, on, send }) => {
 
     send('material', physical)
 
-    core.onClean(() => {
+    globals.onClean(() => {
       physical.dispose()
     })
   })
