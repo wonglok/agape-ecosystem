@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { Handle, Position } from 'reactflow'
 import { useFlow } from '../../useFlow'
 import { getTemplateByNodeInstance } from '../../nodeTypes'
@@ -110,7 +110,7 @@ export default function GUI({ id, data, selected }) {
 
 export const SettingsGUI = ({ data, id }) => {
   const updateNodeData = useFlow((s) => s.updateNodeData)
-
+  let tt = useRef(0)
   return (
     <>
       <div className='nodrag'>
@@ -121,7 +121,10 @@ export const SettingsGUI = ({ data, id }) => {
           step={0.01}
           value={data.float0}
           onChange={(result) => {
-            updateNodeData(id, 'float0', result)
+            clearTimeout(tt.current)
+            tt.current = setTimeout(() => {
+              updateNodeData(id, 'float0', result)
+            }, 1)
           }}></Slider>
 
         <InputNumber
@@ -130,9 +133,12 @@ export const SettingsGUI = ({ data, id }) => {
           step={0.01}
           value={data.float0}
           onChange={(result) => {
-            // clearInterval(tt)
-            // tt = setTimeout(() => {
-            updateNodeData(id, 'float0', result)
+            // clearInterval(tt.current)
+            // tt.current = setTimeout(() => {
+            clearTimeout(tt.current)
+            tt.current = setTimeout(() => {
+              updateNodeData(id, 'float0', result)
+            }, 1)
             // }, 1)
           }}></InputNumber>
       </div>

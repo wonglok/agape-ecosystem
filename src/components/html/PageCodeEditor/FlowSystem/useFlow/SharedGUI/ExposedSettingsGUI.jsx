@@ -13,17 +13,13 @@ export function ExposedSettingsGUI() {
   }, [])
 
   let onRender = (n) => {
-    let template = getTemplateByNodeInstance(n)
+    let tmpl = getTemplateByNodeInstance(n)
     return (
       <div key={n.id} className='mb-5 border-b-2'>
-        <div className='px-3 text-sm'>
-          {n.type} - {n?.data?.label}
-        </div>
+        <div className='px-3 text-sm'>{n?.data?.label}</div>
 
         <div className='px-3 text-sm'>
-          {template?.SettingsGUI && (
-            <template.SettingsGUI isSettings={true} data={n.data} id={n.id}></template.SettingsGUI>
-          )}
+          {tmpl?.SettingsGUI && <tmpl.SettingsGUI isSettings={true} data={n.data} id={n.id}></tmpl.SettingsGUI>}
         </div>
       </div>
     )
