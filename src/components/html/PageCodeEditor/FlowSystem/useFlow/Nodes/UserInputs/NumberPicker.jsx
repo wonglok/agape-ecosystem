@@ -4,6 +4,7 @@ import { useFlow } from '../../useFlow'
 import { getTemplateByNodeInstance } from '../../nodeTypes'
 import { InputNumber, Slider } from 'antd'
 import { ExposeParamter } from '../../SharedGUI/ExposeParamter'
+import { makeHoverStateTarget } from '../../SharedGUI/HoverState'
 
 export const handles = [
   //
@@ -47,6 +48,7 @@ export default function GUI({ id, data, selected }) {
               type={r.type}
               id={r.id}
               key={r.id}
+              {...makeHoverStateTarget({ handle: r })}
               className='w-2 h-4 bg-gray-400 rounded-full'
               style={{ top: `calc(10px + 20px * ${i})` }}
               position={Position.Left}

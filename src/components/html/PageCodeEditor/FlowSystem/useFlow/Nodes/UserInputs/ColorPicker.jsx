@@ -4,6 +4,7 @@ import { useFlow } from '../../useFlow'
 import { getTemplateByNodeInstance } from '../../nodeTypes'
 import { Color } from 'three'
 import { ExposeParamter } from '../../SharedGUI/ExposeParamter'
+import { makeHoverStateTarget } from '../../SharedGUI/HoverState'
 
 export const handles = [
   //
@@ -41,6 +42,7 @@ export default function GUI({ id, data, selected }) {
                 let remoteHandle = template.handles.find((h) => h.id === connection.sourceHandle)
                 return remoteHandle?.dataType === r.dataType
               }}
+              {...makeHoverStateTarget({ handle: r })}
               type={r.type}
               id={r.id}
               key={r.id}
@@ -104,6 +106,7 @@ export default function GUI({ id, data, selected }) {
 }
 
 export const run = async ({ core, globals, getNode, send }) => {
+  //
   //
   core.onPreload(() => {})
   core.onReady(() => {

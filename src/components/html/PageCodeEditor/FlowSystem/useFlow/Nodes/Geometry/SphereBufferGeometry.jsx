@@ -4,6 +4,7 @@ import { useFlow } from '../../useFlow'
 import { getTemplateByNodeInstance } from '../../nodeTypes'
 import { SphereGeometry } from 'three'
 import { ExposeParamter } from '../../SharedGUI/ExposeParamter'
+import { makeHoverStateTarget } from '../../SharedGUI/HoverState'
 
 export const handles = [
   //
@@ -46,6 +47,7 @@ export default function GUI({ id, data, selected }) {
                 let remoteHandle = template.handles.find((h) => h.id === connection.sourceHandle)
                 return remoteHandle?.dataType === r.dataType
               }}
+              {...makeHoverStateTarget({ handle: r })}
               style={{ left: `calc(10px + 20px * ${i})` }}
               position={Position.Top}
             />

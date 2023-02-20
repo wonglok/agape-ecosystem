@@ -4,6 +4,7 @@ import { useFlow } from '../../useFlow'
 import { getTemplateByNodeInstance } from '../../nodeTypes'
 import { SphereGeometry, TorusKnotGeometry } from 'three'
 import { ExposeParamter } from '../../SharedGUI/ExposeParamter'
+import { makeHoverStateTarget } from '../../SharedGUI/HoverState'
 
 export const handles = [
   //
@@ -39,6 +40,7 @@ export default function GUI({ id, data, selected }) {
               id={r.id}
               key={r.id}
               className=''
+              {...makeHoverStateTarget({ handle: r })}
               isValidConnection={(connection) => {
                 // console.log(connection)
                 let oppositeNode = useFlow.getState().nodes.find((n) => n.id === connection.source)

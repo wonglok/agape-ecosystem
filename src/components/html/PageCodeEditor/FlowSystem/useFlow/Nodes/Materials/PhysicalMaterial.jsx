@@ -4,6 +4,7 @@ import { useFlow } from '../../useFlow'
 import { getTemplateByNodeInstance } from '../../nodeTypes'
 import { Color, MeshPhysicalMaterial } from 'three'
 import { ExposeParamter } from '../../SharedGUI/ExposeParamter'
+import { makeHoverStateTarget } from '../../SharedGUI/HoverState'
 
 export const handles = [
   //
@@ -46,28 +47,7 @@ export default function GUI({ id, data, selected }) {
                 let remoteHandle = template.handles.find((h) => h.id === connection.sourceHandle)
                 return remoteHandle?.dataType === r.dataType
               }}
-              onMouseEnter={() => {
-                useFlow.getState().edges.forEach((edge) => {
-                  if (edge.targetHandle === r.id) {
-                    edge.animated = true
-                    edge.style = {
-                      stroke: 'cyan',
-                    }
-                  }
-                })
-                useFlow.setState({ edges: [...useFlow.getState().edges] })
-                useFlow.getState().saveToDB()
-              }}
-              onMouseLeave={() => {
-                useFlow.getState().edges.forEach((edge) => {
-                  edge.animated = false
-                  edge.style = {
-                    stroke: '',
-                  }
-                })
-                useFlow.setState({ edges: [...useFlow.getState().edges] })
-                useFlow.getState().saveToDB()
-              }}
+              {...makeHoverStateTarget({ handle: r })}
               type={r.type}
               id={r.id}
               key={r.id}
