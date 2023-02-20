@@ -49,6 +49,7 @@ let filterConnectionSockets = (it, hand) => {
     .filter((h) => {
       let handeHand = handTemplate?.handles?.find((r) => r?.id === hand?.handleId)
       // console.log(handeHand)
+      // return handTemplate?.handles.some((h) => h.dataType === handeHand.dataType)
 
       return h.dataType === handeHand.dataType
       // console.log(h.dataType)
@@ -112,9 +113,9 @@ let getConnectItems = ({ handTemplate, nodes, hand }) => {
             return r.type === 'target'
           }
         })
-        .filter((hh) => {
-          return hh.id === handHandleID && handHandleID !== ''
-        })
+        // .filter((hh) => {
+        //   return hh.id === handHandleID && handHandleID !== ''
+        // })
         .map((hh) => {
           return {
             label: `${hh.displayName} ${hh.type}`,
