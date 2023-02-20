@@ -147,16 +147,16 @@ export const SettingsGUI = ({ data, id }) => {
   )
 }
 
-export const run = async ({ onSetting = () => {}, core, globals, getNode, send, on }) => {
+export const run = async ({ core, globals, getNode, send, on }) => {
   core.onPreload(() => {})
   core.onReady(() => {
     let node = getNode()
-    if (node?.data?.isExposed) {
-      onSetting('number', (value) => {
-        node.data.float0 = value
-        send('number', value)
-      })
-    }
+    // if (node?.data?.isExposed) {
+    //   onSetting('number', (value) => {
+    //     node.data.float0 = value
+    //     send('number', value)
+    //   })
+    // }
 
     let last = ''
     let tt = setInterval(() => {
