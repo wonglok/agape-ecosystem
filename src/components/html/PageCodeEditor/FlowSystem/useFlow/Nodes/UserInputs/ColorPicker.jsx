@@ -123,7 +123,7 @@ export const run = async ({ core, globals, getNode, send }) => {
         send('color', color)
       }
     })
-    globals.onClean(() => {
+    core.onClean(() => {
       //
       clearInterval(tt)
     })

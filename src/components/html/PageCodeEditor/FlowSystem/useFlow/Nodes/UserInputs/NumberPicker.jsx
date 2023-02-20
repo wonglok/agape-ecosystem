@@ -21,10 +21,6 @@ export const createData = () => {
   }
 }
 
-export function Settings({ id, data }) {
-  return <div></div>
-}
-
 export default function GUI({ id, data, selected }) {
   const updateNodeData = useFlow((s) => s.updateNodeData)
   const updateNodeLabel = useFlow((s) => s.updateNodeLabel)
@@ -56,6 +52,8 @@ export default function GUI({ id, data, selected }) {
           )
         })}
       <div className='flex items-center justify-center'>
+        {/*  */}
+        {/*  */}
         <div
           style={{ backgroundColor: selected ? '#7298ff' : '#a0a0a0' }}
           className='flex items-center justify-center w-12 h-10 bg-transparent  rounded-tl-xl'>
@@ -66,12 +64,14 @@ export default function GUI({ id, data, selected }) {
             />
           </svg>
         </div>
+
         <input
           type='text'
           defaultValue={data.label}
           onChange={(evt) => updateNodeLabel(id, evt.target.value)}
           className='w-full h-10 pl-2 text-xs bg-gray-100 appearance-none rounded-r-xl nodrag'
         />
+
         <ExposeParamter id={id} data={data}></ExposeParamter>
 
         {/* <input
@@ -144,7 +144,7 @@ export const run = async ({ core, globals, getNode, send }) => {
         send('number', node?.data?.slider)
       }
     })
-    globals.onClean(() => {
+    core.onClean(() => {
       clearInterval(tt)
     })
   })
