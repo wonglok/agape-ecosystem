@@ -54,9 +54,7 @@ export function ShaderEditorLayout() {
                     let firstReader = new FileReader()
                     firstReader.onload = () => {
                       let obj = JSON.parse(firstReader.result)
-
                       useFlow.setState({ edges: obj.edges, nodes: obj.nodes })
-                      console.log(obj)
                     }
                     firstReader.readAsText(first)
                   }
