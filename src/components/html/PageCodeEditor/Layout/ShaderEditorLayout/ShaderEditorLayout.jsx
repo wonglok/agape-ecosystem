@@ -24,9 +24,19 @@ export function ShaderEditorLayout() {
           <button
             className='absolute top-0 left-0'
             onClick={() => {
-              useFlow.getState().resetDemo()
+              let st = useFlow.getState()
+              let data = {
+                edges: st.edges,
+                nodes: st.nodes,
+              }
+
+              let a = document.createElement('a')
+              a.href = URL.createObjectURL(new Blob([JSON.stringify(data)], { type: 'application/json' }))
+              a.download = 'backup.json'
+              a.click()
+              // useFlow.getState().resetDemo()
             }}>
-            Button
+            Download
           </button>
         </HorizontalChildren>
         {/* border-l border-gray-500 */}

@@ -4,7 +4,7 @@ import { useCore } from '../useCore/useCore'
 import { useFlow } from '../../../useFlow/useFlow'
 import { useThree } from '@react-three/fiber'
 
-export function RunNode({ globals, node, edges }) {
+export function RunNode({ globals, nodes, node, edges }) {
   let nodeTemplate = useMemo(() => {
     return nodeTypeList.find((r) => r.type === node.type)
   }, [node.type])
@@ -62,6 +62,11 @@ export function RunNode({ globals, node, edges }) {
 
   let get = useThree((s) => s.get)
 
+  let nodesRef = useRef(nodes)
+  useEffect(() => {
+    nodesRef.current = nodes
+  }, [nodes])
+
   useEffect(() => {
     let run = nodeTemplate?.run
     if (run) {
@@ -69,7 +74,7 @@ export function RunNode({ globals, node, edges }) {
         core: core,
         globals,
         getNode() {
-          return useFlow.getState().nodes.find((n) => n.id === node.id)
+          return nodesRef.current.find((n) => n.id === node.id)
         },
         on: (name, fnc) => {
           api.current.on(name, fnc)
