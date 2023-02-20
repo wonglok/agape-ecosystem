@@ -108,8 +108,7 @@ export default function GUI({ id, data, selected }) {
   )
 }
 
-export const SettingsGUI = ({ data, id }) => {
-  let tt = 0
+export const SettingsGUI = ({ isSettings, data, id }) => {
   const updateNodeData = useFlow((s) => s.updateNodeData)
 
   return (
@@ -122,10 +121,7 @@ export const SettingsGUI = ({ data, id }) => {
           step={0.01}
           value={data.float0}
           onChange={(result) => {
-            clearInterval(tt)
-            tt = setTimeout(() => {
-              updateNodeData(id, 'float0', result)
-            }, 2)
+            updateNodeData(id, 'float0', result)
           }}></Slider>
 
         <InputNumber
