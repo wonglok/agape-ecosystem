@@ -18,16 +18,25 @@ let sync = () => {
     edges: toArray(doc.getMap('edges')),
   })
 }
-const rootManager = new Y.UndoManager([doc.getMap('nodes'), doc.getMap('edges')])
-rootManager.on('stack-item-popped', sync)
-rootManager.off('stack-item-popped', sync)
 
+doc.on('update', () => {
+  sync()
+})
+const rootManager = new Y.UndoManager([doc.getMap('nodes'), doc.getMap('edges')])
+// rootManager.on('stack-item-popped', sync)
+// rootManager.off('stack-item-popped', sync)
+// rootManager.on('stack-item-updated', sync)
+let provider = false
+
+self.onclose = () => {
+  provider?.destroy()
+}
 self.onmessage = (ev) => {
   if (ev.data.type === 'load') {
-    let provider = new IndexeddbPersistence(ev.data.docName, doc)
-    provider.whenSynced.then(() => {
-      sync()
-    })
+    provider = new IndexeddbPersistence(ev.data.docName, doc)
+    // provider.whenSynced.then(() => {
+    //   sync()
+    // })
   } else if (ev.data.type === 'saveDB') {
     let edges = ev.data.edges
     let nodes = ev.data.nodes
@@ -55,10 +64,8 @@ self.onmessage = (ev) => {
     })
   } else if (ev.data.type === 'undo') {
     rootManager.undo()
-    sync()
-  } else if (ev.data.type === 'undo') {
+  } else if (ev.data.type === 'redo') {
     rootManager.redo()
-    sync()
   }
   //
 }

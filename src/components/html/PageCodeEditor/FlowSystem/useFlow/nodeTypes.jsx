@@ -36,6 +36,8 @@ export let getDataTypesFromTemplate = (template) => {
 }
 
 let filterConnectionSockets = (it, hand) => {
+  let handTemplate = getTemplateByNodeInstance(hand.node)
+
   return it.handles
     .filter((h) => {
       if (hand.handleType === 'target') {
@@ -45,7 +47,14 @@ let filterConnectionSockets = (it, hand) => {
       }
     })
     .filter((h) => {
-      return hand.handleId === h.id
+      let handeHand = handTemplate?.handles?.find((r) => r?.id === hand?.handleId)
+      // console.log(handeHand)
+
+      return h.dataType === handeHand.dataType
+      // console.log(h.dataType)
+      // return checkSupportDataTypes(handTemplate, [h.dataType])
+      // return handTemplate.dataType === h.dataType
+      // return hand.handleId === h.id
     })
 }
 
@@ -58,8 +67,8 @@ export let getCreateItems = ({ handTemplate, nodes, hand }) => {
   })
 
   return templates
-    .filter((it) => {
-      return filterConnectionSockets(it, hand).length > 0
+    .filter((template) => {
+      return filterConnectionSockets(template, hand).length > 0
     })
     .map((it) => {
       return {

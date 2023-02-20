@@ -2,6 +2,7 @@ import React from 'react'
 import { Handle, Position } from 'reactflow'
 import { useFlow } from '../../useFlow'
 import { getTemplateByNodeInstance } from '../../nodeTypes'
+import { InputNumber, Slider } from 'antd'
 
 export const handles = [
   //
@@ -19,11 +20,11 @@ export const createData = () => {
 }
 
 export default function GUI({ id, data, selected }) {
-  const updateNodeColor = useFlow((s) => s.updateNodeColor)
+  const updateNodeData = useFlow((s) => s.updateNodeData)
   const updateNodeLabel = useFlow((s) => s.updateNodeLabel)
 
   return (
-    <div className='flex items-center justify-center text-sm rounded-xl' style={{ backgroundColor: data.color }}>
+    <div className='text-sm bg-white rounded-xl'>
       {handles
         .filter((r) => r.type === 'target')
         .map((r, i) => {
@@ -51,7 +52,7 @@ export default function GUI({ id, data, selected }) {
           <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'>
             <path
               fill='white'
-              d='M15.835 7l4.317-3.788c.459.426.885.884 1.272 1.376l-2.798 2.412h-2.791zm6.659-.814c.957 1.723 1.506 3.703 1.506 5.814 0 6.627-5.373 12-12 12s-12-5.373-12-12 5.373-12 12-12c2.453 0 4.732.74 6.634 2.003l-6.151 5.354c-1.37 1.19-.425 2.109-1.553 3.68-.153.214-.242.428-.267.633-.076.622.375 1.146.941 1.216.224.027.473-.018.71-.158 1.785-1.051 2.509.134 3.911-1.091l6.269-5.451zm-9.478 11.834c0-1.473-1.417-1.78-2.001-4.02-.583 2.239-2.015 2.547-2.015 4.02 0 1.093.91 1.98 2.015 1.98s2.001-.887 2.001-1.98z'
+              d='M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-17 5c0-1.654 1.346-3 3-3h6v9h-9v-6zm0 14v-6h9v9h-6c-1.654 0-3-1.346-3-3zm20 0c0 1.654-1.346 3-3 3h-6v-9h9v6zm0-8h-9v-9h6c1.654 0 3 1.346 3 3v6zm-2 6h-5v-1h5v1zm-5-11h5v1h-5v-1zm0 13v-1h5v1h-5zm-6-2v1h-2v2h-1v-2h-2v-1h2v-2h1v2h2zm-1.793-10.5l1.414 1.414-.707.707-1.414-1.414-1.414 1.414-.708-.707 1.414-1.414-1.414-1.414.707-.707 1.415 1.414 1.415-1.415.708.708-1.416 1.414zm9.793-2c0-.276.224-.5.5-.5s.5.224.5.5-.224.5-.5.5-.5-.224-.5-.5zm1 4c0 .276-.224.5-.5.5s-.5-.224-.5-.5.224-.5.5-.5.5.224.5.5z'
             />
           </svg>
         </div>
@@ -59,7 +60,7 @@ export default function GUI({ id, data, selected }) {
           type='text'
           defaultValue={data.label}
           onChange={(evt) => updateNodeLabel(id, evt.target.value)}
-          className='w-full h-10 pl-2 text-xs appearance-none nodrag'
+          className='w-full h-10 pl-2 text-xs appearance-none nodrag rounded-r-xl'
         />
         {/* <input
           type='color'
@@ -67,6 +68,18 @@ export default function GUI({ id, data, selected }) {
           onChange={(evt) => updateNodeColor(id, evt.target.value)}
           className='h-10 text-xs opacity-0'
         /> */}
+      </div>
+
+      <div className='px-3 py-1 pb-3'>
+        <Slider
+          className='nodrag'
+          defaultValue={data.slider}
+          onChange={(result) => updateNodeData(id, 'slider', result)}></Slider>
+        <InputNumber
+          className='w-full nodrag'
+          type='number'
+          value={data.slider}
+          onChange={(result) => updateNodeData(id, 'slider', result)}></InputNumber>
       </div>
 
       {handles

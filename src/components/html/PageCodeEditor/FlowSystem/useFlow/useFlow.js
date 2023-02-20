@@ -166,6 +166,19 @@ export const useFlow = create((set, get) => {
       })
       get().saveToDB()
     },
+    updateNodeData: (nodeId, prop, value) => {
+      set({
+        nodes: get().nodes.map((node) => {
+          if (node.id === nodeId) {
+            node.data = { ...node.data, [prop]: value }
+          }
+          return node
+        }),
+      })
+      get().saveToDB()
+    },
+
+    //
     updateNodeLabel: (nodeId, label) => {
       set({
         nodes: get().nodes.map((node) => {
