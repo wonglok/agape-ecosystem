@@ -7,7 +7,12 @@ import { Color, MeshPhysicalMaterial } from 'three'
 export const handles = [
   //
   { type: 'target', dataType: 'color', id: 'color', displayName: 'Color' },
+  { type: 'target', dataType: 'number', id: 'ior', displayName: 'IndexOfRefraction' },
+  { type: 'target', dataType: 'number', id: 'thickness', displayName: 'Thickness' },
   { type: 'target', dataType: 'number', id: 'transmission', displayName: 'Transmission' },
+  { type: 'target', dataType: 'number', id: 'roughness', displayName: 'Roughness' },
+  { type: 'target', dataType: 'number', id: 'metalness', displayName: 'Metalness' },
+
   { type: 'source', dataType: 'material', id: 'material', displayName: 'Material' },
 ]
 
@@ -23,7 +28,6 @@ export const createData = () => {
 
 export default function GUI({ id, data, selected }) {
   const updateNodeLabel = useFlow((s) => s.updateNodeLabel)
-  const updateNodeColor = useFlow((s) => s.updateNodeColor)
 
   return (
     <div className='text-sm rounded-xl'>
@@ -72,12 +76,17 @@ export default function GUI({ id, data, selected }) {
           className='inline-block h-10 text-xs opacity-0 appearance-none cursor-grabbing y-0'
         /> */}
       </div>
-      <div className='flex items-center w-full text-xs bg-white '>
-        <div className='py-1 ml-2 '>Color</div>
-      </div>
-      <div className='flex items-center w-full text-xs bg-white '>
-        <div className='py-1 ml-2 '>Transmission</div>
-      </div>
+
+      {handles
+        .filter((r) => r.id !== 'material')
+        .map((h) => {
+          return (
+            <div key={h.id} className='flex items-center w-full text-xs bg-white '>
+              <div className='py-1 ml-2 '>{h.displayName}</div>
+            </div>
+          )
+        })}
+
       <div className='flex items-center w-full text-xs bg-white rounded-b-xl '>
         <div className='py-1 ml-2'></div>
       </div>
@@ -120,9 +129,28 @@ export const run = async ({ core, globals, getNode, on, send }) => {
       send('material', physical)
     })
 
+    on('thickness', (thickness) => {
+      physical.thickness = thickness
+      send('material', physical)
+    })
+
+    on('ior', (ior) => {
+      physical.ior = ior
+      send('material', physical)
+    })
+
     on('transmission', (transmission) => {
       physical.transmission = transmission
+      send('material', physical)
+    })
 
+    on('roughness', (roughness) => {
+      physical.roughness = roughness
+      send('material', physical)
+    })
+
+    on('metalness', (metalness) => {
+      physical.metalness = metalness
       send('material', physical)
     })
 

@@ -73,8 +73,9 @@ export default function GUI({ id, data, selected }) {
       <div className='px-3 pt-1 pb-3 nodrag'>
         <Slider
           className='nodrag'
-          min={-100}
-          step={0.1}
+          min={0}
+          max={10}
+          step={0.01}
           defaultValue={data.slider}
           onChange={(result) => {
             clearInterval(tt)
