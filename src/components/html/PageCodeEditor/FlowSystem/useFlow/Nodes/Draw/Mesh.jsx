@@ -115,6 +115,7 @@ export const run = async ({ core, globals, nodeData, on, send }) => {
       // console.log('geometry', data)
       mesh.geometry = data
     })
+
     on('material', (data) => {
       // console.log('material', data)
       mesh.material = data
