@@ -7,7 +7,7 @@ import { Color, MeshPhysicalMaterial } from 'three'
 export const handles = [
   //
   { type: 'target', dataType: 'color', id: 'color', displayName: 'Color' },
-  { type: 'target', dataType: 'number', id: 'ior', displayName: 'IndexOfRefraction' },
+  { type: 'target', dataType: 'number', id: 'ior', displayName: 'Index of Refraction' },
   { type: 'target', dataType: 'number', id: 'thickness', displayName: 'Thickness' },
   { type: 'target', dataType: 'number', id: 'transmission', displayName: 'Transmission' },
   { type: 'target', dataType: 'number', id: 'roughness', displayName: 'Roughness' },
