@@ -3,6 +3,7 @@ import { Handle, Position } from 'reactflow'
 import { useFlow } from '../../useFlow'
 import { getTemplateByNodeInstance } from '../../nodeTypes'
 import { Color, MeshPhysicalMaterial } from 'three'
+import { ExposeParamter } from '../../SharedGUI/ExposeParamter'
 
 export const handles = [
   //
@@ -31,7 +32,7 @@ export default function GUI({ id, data, selected }) {
 
   return (
     <div
-      className={`text-sm rounded-xl transition-transform duration-300 scale-100 hover:scale-110 border bg-white ${
+      className={`text-sm rounded-xl transition-transform duration-300 scale-100  border bg-white ${
         selected ? ' border-cyan-500 shadow-cyan-100 shadow-lg ' : ' border-transparent'
       }`}>
       {handles
@@ -45,10 +46,32 @@ export default function GUI({ id, data, selected }) {
                 let remoteHandle = template.handles.find((h) => h.id === connection.sourceHandle)
                 return remoteHandle?.dataType === r.dataType
               }}
+              onMouseEnter={() => {
+                useFlow.getState().edges.forEach((edge) => {
+                  if (edge.targetHandle === r.id) {
+                    edge.animated = true
+                    edge.style = {
+                      stroke: 'cyan',
+                    }
+                  }
+                })
+                useFlow.setState({ edges: [...useFlow.getState().edges] })
+                useFlow.getState().saveToDB()
+              }}
+              onMouseLeave={() => {
+                useFlow.getState().edges.forEach((edge) => {
+                  edge.animated = false
+                  edge.style = {
+                    stroke: '',
+                  }
+                })
+                useFlow.setState({ edges: [...useFlow.getState().edges] })
+                useFlow.getState().saveToDB()
+              }}
               type={r.type}
               id={r.id}
               key={r.id}
-              className='w-2 h-4 bg-gray-400 rounded-full'
+              className='w-2 h-4 bg-gray-400 rounded-full hover:shadow-lg hover:shadow-cyan-500 hover:bg-cyan-400'
               style={{ top: `calc(52px + 25px * ${i})` }}
               position={Position.Left}
             />

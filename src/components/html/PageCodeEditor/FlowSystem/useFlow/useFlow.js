@@ -134,7 +134,7 @@ export const useFlow = create((set, get) => {
             showTool: false,
           })
         }
-        get().fitToView()
+        // get().fitToView()
         get().saveToDB()
       },
     onConnectStart: (_, info) => {

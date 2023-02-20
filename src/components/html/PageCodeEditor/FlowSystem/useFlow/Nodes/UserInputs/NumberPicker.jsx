@@ -3,6 +3,7 @@ import { Handle, Position } from 'reactflow'
 import { useFlow } from '../../useFlow'
 import { getTemplateByNodeInstance } from '../../nodeTypes'
 import { InputNumber, Slider } from 'antd'
+import { ExposeParamter } from '../../SharedGUI/ExposeParamter'
 
 export const handles = [
   //
@@ -29,7 +30,7 @@ export default function GUI({ id, data, selected }) {
   let tt = 0
   return (
     <div
-      className={`text-sm rounded-xl transition-transform duration-300 scale-100 hover:scale-110 border bg-white ${
+      className={`text-sm rounded-xl transition-transform duration-300 scale-100  border bg-white ${
         selected ? ' border-cyan-500 shadow-cyan-100 shadow-lg ' : ' border-transparent'
       }`}>
       {handles
@@ -67,8 +68,10 @@ export default function GUI({ id, data, selected }) {
           type='text'
           defaultValue={data.label}
           onChange={(evt) => updateNodeLabel(id, evt.target.value)}
-          className='w-full h-10 pl-2 text-xs bg-gray-100 appearance-none rounded-tr-xl nodrag'
+          className='w-full h-10 pl-2 text-xs bg-gray-100 appearance-none rounded-r-xl nodrag'
         />
+        <ExposeParamter id={id} data={data}></ExposeParamter>
+
         {/* <input
           type='color'
           defaultValue={data.color}

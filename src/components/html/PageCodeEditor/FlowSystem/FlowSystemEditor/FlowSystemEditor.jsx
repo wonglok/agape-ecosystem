@@ -42,7 +42,7 @@ export function FlowSystemEditorCore() {
   useEffect(() => {
     useFlow.setState({
       fitToView: () => {
-        fitView({ padding: 0.1 })
+        // fitView({ padding: 0.1 })
       },
     })
   }, [fitView, setViewport])

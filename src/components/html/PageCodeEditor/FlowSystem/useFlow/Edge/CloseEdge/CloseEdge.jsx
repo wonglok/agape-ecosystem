@@ -28,6 +28,7 @@ export default function CustomEdge({
   targetPosition,
   style = {},
   markerEnd,
+  animated,
 }) {
   const [edgePath1, labelX1, labelY1] = getBezierPath({
     sourceX,

@@ -3,6 +3,7 @@ import { Handle, Position } from 'reactflow'
 import { useFlow } from '../../useFlow'
 import { getTemplateByNodeInstance } from '../../nodeTypes'
 import { Color } from 'three'
+import { ExposeParamter } from '../../SharedGUI/ExposeParamter'
 
 export const handles = [
   //
@@ -25,7 +26,7 @@ export default function GUI({ id, data, selected }) {
 
   return (
     <div
-      className={`text-sm rounded-xl transition-transform duration-300 scale-100 hover:scale-110 border bg-white ${
+      className={`text-sm rounded-xl transition-transform duration-300 scale-100  border bg-white ${
         selected ? ' border-cyan-500 shadow-cyan-100 shadow-lg ' : ' border-transparent'
       }`}>
       {handles
@@ -74,6 +75,7 @@ export default function GUI({ id, data, selected }) {
             className='h-10 text-xs opacity-0'
           />
         </div>
+        <ExposeParamter id={id} data={data}></ExposeParamter>
       </div>
 
       {handles
