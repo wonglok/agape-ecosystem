@@ -21,23 +21,58 @@ export function ShaderEditorLayout() {
         <HorizontalChildren className={'relative'} width='calc(100% - 50%)'>
           <FlowSystemEditor></FlowSystemEditor>
 
-          <button
-            className='absolute top-0 left-0'
-            onClick={() => {
-              let st = useFlow.getState()
-              let data = {
-                edges: st.edges,
-                nodes: st.nodes,
-              }
+          <div className='absolute top-0 left-0'>
+            <button
+              onClick={() => {
+                let st = useFlow.getState()
+                let data = {
+                  edges: st.edges,
+                  nodes: st.nodes,
+                }
 
-              let a = document.createElement('a')
-              a.href = URL.createObjectURL(new Blob([JSON.stringify(data)], { type: 'application/json' }))
-              a.download = 'backup.json'
-              a.click()
-              // useFlow.getState().resetDemo()
-            }}>
-            Download
-          </button>
+                let a = document.createElement('a')
+                a.href = URL.createObjectURL(new Blob([JSON.stringify(data)], { type: 'application/json' }))
+                a.download = 'backup.json'
+                a.click()
+                // useFlow.getState().resetDemo()
+              }}>
+              Download
+            </button>
+            <button
+              onClick={() => {
+                let input = document.createElement('input')
+                input.type = 'file'
+                input.onchange = ({
+                  target: {
+                    files: [first],
+                  },
+                }) => {
+                  if (first) {
+                    let firstReader = new FileReader()
+                    firstReader.onload = () => {
+                      let obj = JSON.parse(firstReader.result)
+
+                      useFlow.setState({ edges: obj.edges, nodes: obj.nodes })
+                      console.log(obj)
+                    }
+                    firstReader.readAsText(first)
+                  }
+                }
+                input.click()
+                // let st = useFlow.getState()
+                // let data = {
+                //   edges: st.edges,
+                //   nodes: st.nodes,
+                // }
+                // let a = document.createElement('a')
+                // a.href = URL.createObjectURL(new Blob([JSON.stringify(data)], { type: 'application/json' }))
+                // a.download = 'backup.json'
+                // a.click()
+                // useFlow.getState().resetDemo()
+              }}>
+              Restore
+            </button>
+          </div>
         </HorizontalChildren>
         {/* border-l border-gray-500 */}
         <HorizontalChildren className={'relative'} width='calc(50%)'>

@@ -30,7 +30,10 @@ export default function GUI({ id, data, selected }) {
   const updateNodeLabel = useFlow((s) => s.updateNodeLabel)
 
   return (
-    <div className='text-sm rounded-xl'>
+    <div
+      className={`text-sm rounded-xl transition-transform duration-300 overflow-hidden border ${
+        selected ? ' border-cyan-500 shadow-cyan-100 shadow-lg ' : ' border-transparent'
+      }`}>
       {handles
         .filter((r) => r.type === 'target')
         .map((r, i) => {
@@ -53,7 +56,7 @@ export default function GUI({ id, data, selected }) {
         })}
       <div className='flex items-center justify-center rounded-t-xl'>
         <div
-          style={{ backgroundColor: selected ? '#7298ff' : '#a0a0a0' }}
+          style={{ backgroundColor: selected ? '#6C6F72' : '#C2C2C2' }}
           className='flex items-center justify-center w-12 h-10 bg-transparent  rounded-tl-xl '>
           <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'>
             <path

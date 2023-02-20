@@ -24,7 +24,10 @@ export default function GUI({ id, data, selected }) {
   const updateNodeLabel = useFlow((s) => s.updateNodeLabel)
   let tt = 0
   return (
-    <div className='text-sm bg-white rounded-xl'>
+    <div
+      className={`text-sm rounded-xl transition-transform duration-300 overflow-hidden border bg-white ${
+        selected ? ' border-cyan-500 shadow-cyan-100 shadow-lg ' : ' border-transparent'
+      }`}>
       {handles
         .filter((r) => r.type === 'target')
         .map((r, i) => {

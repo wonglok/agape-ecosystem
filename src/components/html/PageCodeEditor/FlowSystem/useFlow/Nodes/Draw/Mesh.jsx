@@ -26,7 +26,10 @@ export default function GUI({ id, data, selected }) {
   const updateNodeColor = useFlow((s) => s.updateNodeColor)
 
   return (
-    <div className='flex items-center justify-center text-sm rounded-xl'>
+    <div
+      className={`text-sm rounded-xl transition-transform duration-300 overflow-hidden border ${
+        selected ? ' border-cyan-500 shadow-cyan-100 shadow-lg ' : ' border-transparent'
+      }`}>
       {handles
         .filter((r) => r.type === 'target')
         .map((r, i, a) => {

@@ -24,7 +24,10 @@ export default function GUI({ id, data, selected }) {
   const updateNodeLabel = useFlow((s) => s.updateNodeLabel)
 
   return (
-    <div className='flex items-center justify-center text-sm rounded-xl' style={{ backgroundColor: data.color }}>
+    <div
+      className={`text-sm rounded-xl transition-transform duration-300 overflow-hidden border ${
+        selected ? ' border-cyan-500 shadow-cyan-100 shadow-lg ' : ' border border-gray-200'
+      }`}>
       {handles
         .filter((r) => r.type === 'target')
         .map((r, i) => {
@@ -48,7 +51,7 @@ export default function GUI({ id, data, selected }) {
         })}
       <div className='flex items-center justify-center'>
         <div
-          style={{ backgroundColor: selected ? '#7298ff' : '#a0a0a0' }}
+          style={{ backgroundColor: selected ? '#6C6F72' : '#C2C2C2' }}
           className='flex items-center justify-center w-12 h-10 bg-transparent  rounded-l-xl'>
           <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'>
             <path
@@ -63,12 +66,14 @@ export default function GUI({ id, data, selected }) {
           onChange={(evt) => updateNodeLabel(id, evt.target.value)}
           className='w-full h-10 pl-2 text-xs appearance-none nodrag'
         />
-        <input
-          type='color'
-          defaultValue={data.color}
-          onChange={(evt) => updateNodeColor(id, evt.target.value)}
-          className='h-10 text-xs opacity-0'
-        />
+        <div style={{ backgroundColor: data.color }}>
+          <input
+            type='color'
+            defaultValue={data.color}
+            onChange={(evt) => updateNodeColor(id, evt.target.value)}
+            className='h-10 text-xs opacity-0'
+          />
+        </div>
       </div>
 
       {handles
