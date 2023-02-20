@@ -67,12 +67,12 @@ export default function GUI({ id, data, selected }) {
           onChange={(evt) => updateNodeLabel(id, evt.target.value)}
           className='w-full h-10 pl-2 text-xs bg-gray-100 appearance-none nodrag'
         />
-        <div style={{ backgroundColor: data.color }} className='overflow-hidden rounded-r-xl'>
+        <div style={{ backgroundColor: data.color }} className='w-16 mx-1 overflow-hidden border border-2 rounded-xl'>
           <input
             type='color'
             defaultValue={data.color}
             onChange={(evt) => updateNodeColor(id, evt.target.value)}
-            className='h-10 text-xs opacity-0'
+            className='text-xs opacity-0'
           />
         </div>
         <ExposeParamter id={id} data={data}></ExposeParamter>
