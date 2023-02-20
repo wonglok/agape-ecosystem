@@ -52,6 +52,7 @@ export default function GUI({ id, data, selected }) {
             />
           )
         })}
+
       <div className='flex items-center justify-center'>
         <div
           style={{ backgroundColor: selected ? '#6C6F72' : '#C2C2C2' }}

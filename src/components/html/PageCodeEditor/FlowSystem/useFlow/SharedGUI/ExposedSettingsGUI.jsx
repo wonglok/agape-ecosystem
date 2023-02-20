@@ -1,16 +1,18 @@
+import { useMemo } from 'react'
 import { getTemplateByNodeInstance } from '../nodeTypes'
 import { useFlow } from '../useFlow'
 
 export function ExposedSettingsGUI() {
   let nodes = useFlow((s) => s.nodes)
 
-  let groupNames = nodes.reduce((acc, item, key) => {
-    if (!acc.includes(item.data.groupName) && item.data.groupName && item.data.isExposed) {
-      acc.push(item.data.groupName)
-    }
-
-    return acc
-  }, [])
+  let groupNames = useMemo(() => {
+    return nodes.reduce((acc, item, key) => {
+      if (!acc.includes(item.data.groupName) && item.data.groupName && item.data.isExposed) {
+        acc.push(item.data.groupName)
+      }
+      return acc
+    }, [])
+  }, [nodes])
 
   let onRender = (n) => {
     let tmpl = getTemplateByNodeInstance(n)
