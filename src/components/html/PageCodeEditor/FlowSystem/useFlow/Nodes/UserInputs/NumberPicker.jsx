@@ -108,7 +108,7 @@ export default function GUI({ id, data, selected }) {
   )
 }
 
-export const SettingsGUI = ({ isSettings, data, id }) => {
+export const SettingsGUI = ({ data, id }) => {
   const updateNodeData = useFlow((s) => s.updateNodeData)
 
   return (

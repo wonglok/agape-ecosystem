@@ -5,7 +5,7 @@ export function ExposedSettingsGUI() {
   let nodes = useFlow((s) => s.nodes)
 
   let groupNames = nodes.reduce((acc, item, key) => {
-    if (!acc.includes(item.data.groupName) && item.data.groupName) {
+    if (!acc.includes(item.data.groupName) && item.data.groupName && item.data.isExposed) {
       acc.push(item.data.groupName)
     }
 
@@ -42,6 +42,7 @@ export function ExposedSettingsGUI() {
           </div>
         )
       })}
+
       {nodes.filter((r) => !groupNames.some((n) => n === r.data.groupName)).filter((r) => r.data.isExposed).length >
         0 && <div className='px-4 text-center underline'>No Group</div>}
       {nodes
