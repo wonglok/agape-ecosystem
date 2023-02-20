@@ -22,7 +22,7 @@ export const createData = () => {
 export default function GUI({ id, data, selected }) {
   const updateNodeData = useFlow((s) => s.updateNodeData)
   const updateNodeLabel = useFlow((s) => s.updateNodeLabel)
-
+  let tt = 0
   return (
     <div className='text-sm bg-white rounded-xl'>
       {handles
@@ -70,16 +70,28 @@ export default function GUI({ id, data, selected }) {
         /> */}
       </div>
 
-      <div className='px-3 py-1 pb-3'>
+      <div className='px-3 py-1 pb-3 nodrag'>
         <Slider
           className='nodrag'
+          min={-100}
+          step={0.1}
           defaultValue={data.slider}
-          onChange={(result) => updateNodeData(id, 'slider', result)}></Slider>
+          onChange={(result) => {
+            clearInterval(tt)
+            tt = setTimeout(() => {
+              updateNodeData(id, 'slider', result)
+            }, 16.67)
+          }}></Slider>
         <InputNumber
           className='w-full nodrag'
           type='number'
           value={data.slider}
-          onChange={(result) => updateNodeData(id, 'slider', result)}></InputNumber>
+          onChange={(result) => {
+            clearInterval(tt)
+            tt = setTimeout(() => {
+              updateNodeData(id, 'slider', result)
+            }, 16.67)
+          }}></InputNumber>
       </div>
 
       {handles
