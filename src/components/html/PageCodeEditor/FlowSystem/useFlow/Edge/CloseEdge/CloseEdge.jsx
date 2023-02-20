@@ -6,8 +6,6 @@ const foreignObjectSize = 40
 const onEdgeClick = (evt, id) => {
   evt.stopPropagation()
 
-  console.log(id)
-
   let edges = [...useFlow.getState().edges]
 
   let idx = edges.findIndex((r) => r.id === id)
@@ -31,7 +29,7 @@ export default function CustomEdge({
   style = {},
   markerEnd,
 }) {
-  const [edgePath, labelX, labelY] = getBezierPath({
+  const [edgePath1, labelX1, labelY1] = getBezierPath({
     sourceX,
     sourceY,
     sourcePosition,
@@ -42,12 +40,12 @@ export default function CustomEdge({
 
   return (
     <>
-      <path id={id} style={style} className='react-flow__edge-path' d={edgePath} markerEnd={markerEnd} />
+      <path id={id} style={style} className='react-flow__edge-path' d={edgePath1} markerEnd={markerEnd} />
       <foreignObject
         width={foreignObjectSize}
         height={foreignObjectSize}
-        x={labelX - foreignObjectSize / 2}
-        y={labelY - foreignObjectSize / 2}
+        x={labelX1 - foreignObjectSize / 2}
+        y={labelY1 - foreignObjectSize / 2}
         className='edgebutton-foreignobject'
         requiredExtensions='http://www.w3.org/1999/xhtml'>
         <div>
@@ -60,8 +58,8 @@ export default function CustomEdge({
         dangerouslySetInnerHTML={{
           __html: `
 .edgebutton {
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
   background: #eee;
   border: 1px solid #fff;
   cursor: pointer;

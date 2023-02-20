@@ -204,6 +204,7 @@ export const useFlow = create((set, get) => {
           sourceHandle: get().hand.handleId,
           targetHandle: get().remoteHandleName,
           target: id,
+          type: 'CloseEdge',
         }
         let edges = get().edges
         edges.push(newEdge)
@@ -217,6 +218,7 @@ export const useFlow = create((set, get) => {
           sourceHandle: get().remoteHandleName,
           targetHandle: get().hand.handleId,
           target: get().hand?.nodeId,
+          type: 'CloseEdge',
         }
 
         let edges = get().edges

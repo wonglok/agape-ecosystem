@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useRef } from 'react'
 import { nodeTypeList } from '../../../useFlow/nodeTypes'
 import { useCore } from '../useCore/useCore'
-import { useFlow } from '../../../useFlow/useFlow'
+// import { useFlow } from '../../../useFlow/useFlow'
 import { useThree } from '@react-three/fiber'
 
+//sendInput = () => {}, onOutput = () => {},
 export function RunNode({ globals, nodes, node, edges }) {
   let nodeTemplate = useMemo(() => {
     return nodeTypeList.find((r) => r.type === node.type)
