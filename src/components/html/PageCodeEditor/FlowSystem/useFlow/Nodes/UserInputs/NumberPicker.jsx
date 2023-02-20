@@ -125,7 +125,7 @@ export const SettingsGUI = ({ data, id }) => {
             clearInterval(tt)
             tt = setTimeout(() => {
               updateNodeData(id, 'float0', result)
-            }, 1)
+            }, 2)
           }}></Slider>
 
         <InputNumber
@@ -134,10 +134,10 @@ export const SettingsGUI = ({ data, id }) => {
           step={0.01}
           value={data.float0}
           onChange={(result) => {
-            clearInterval(tt)
-            tt = setTimeout(() => {
-              updateNodeData(id, 'float0', result)
-            }, 1)
+            // clearInterval(tt)
+            // tt = setTimeout(() => {
+            updateNodeData(id, 'float0', result)
+            // }, 1)
           }}></InputNumber>
       </div>
       {/*  */}

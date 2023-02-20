@@ -4,6 +4,14 @@ import { useFlow } from '../useFlow'
 export function ExposedSettingsGUI() {
   let nodes = useFlow((s) => s.nodes)
 
+  nodes.reduce((acc, item, key) => {
+    if (!acc.includes(item.groupName)) {
+      acc.push(item.groupName)
+    }
+
+    return acc
+  }, [])
+
   return (
     <div className='py-5'>
       {nodes
