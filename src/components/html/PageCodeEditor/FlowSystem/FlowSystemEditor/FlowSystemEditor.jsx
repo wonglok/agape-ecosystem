@@ -64,7 +64,7 @@ export function FlowSystemEditorCore() {
         fitView
         snapToGrid
         snapGrid={[10, 10]}>
-        <Background />
+        <Background color='#898989' size={1} style={{ backgroundColor: '#e5e5e5' }} />
         <Controls />
       </ReactFlow>
       <div

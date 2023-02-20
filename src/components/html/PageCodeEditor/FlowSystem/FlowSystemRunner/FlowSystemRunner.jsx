@@ -23,12 +23,12 @@ function Content() {
     <>
       <RunnerObject key={edges.map((r) => r.id).join('_')} nodes={nodes} edges={edges}></RunnerObject>
 
-      <mesh scale={[1, 1, 1]}>
+      {/* <mesh scale={[1, 1, 1]}>
         <torusBufferGeometry args={[2.5, 1, 64, 64]}></torusBufferGeometry>
         <meshPhysicalMaterial roughness={0.0} transmission={1} thickness={1.5}></meshPhysicalMaterial>
-      </mesh>
+      </mesh> */}
 
-      <Environment preset='sunset' background></Environment>
+      <Environment preset='dawn' background></Environment>
       <OrbitControls dampingFactor={1} enableDamping object-position={[0.0, 2.5, 8]}></OrbitControls>
 
       {/* <gridHelper args={[100, 100, 0xffffff, 0xffffff]}></gridHelper> */}

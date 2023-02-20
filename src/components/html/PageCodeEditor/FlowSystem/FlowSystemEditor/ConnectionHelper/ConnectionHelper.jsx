@@ -105,8 +105,6 @@ export function ConnectionHelper() {
       </div>
 
       {/*  */}
-
-      {/*  */}
     </div>
   )
 }

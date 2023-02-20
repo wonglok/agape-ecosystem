@@ -25,8 +25,8 @@ export default function GUI({ id, data, selected }) {
 
   return (
     <div
-      className={`text-sm rounded-xl transition-transform duration-300 overflow-hidden border ${
-        selected ? ' border-cyan-500 shadow-cyan-100 shadow-lg ' : ' border border-gray-200'
+      className={`text-sm rounded-xl transition-transform duration-300 scale-100 hover:scale-110 border bg-white ${
+        selected ? ' border-cyan-500 shadow-cyan-100 shadow-lg ' : ' border-transparent'
       }`}>
       {handles
         .filter((r) => r.type === 'target')
@@ -64,9 +64,9 @@ export default function GUI({ id, data, selected }) {
           type='text'
           defaultValue={data.label}
           onChange={(evt) => updateNodeLabel(id, evt.target.value)}
-          className='w-full h-10 pl-2 text-xs appearance-none nodrag'
+          className='w-full h-10 pl-2 text-xs bg-gray-100 appearance-none nodrag'
         />
-        <div style={{ backgroundColor: data.color }}>
+        <div style={{ backgroundColor: data.color }} className='overflow-hidden rounded-r-xl'>
           <input
             type='color'
             defaultValue={data.color}
