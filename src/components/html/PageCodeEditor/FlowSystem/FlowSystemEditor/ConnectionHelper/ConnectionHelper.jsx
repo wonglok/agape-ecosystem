@@ -15,27 +15,6 @@ export function ConnectionHelper() {
       })
     },
   })
-  // let selectedFirstNode = useFlow((s) => s.selectedFirstNode)
-  // useEffect(() => {
-  //   if (selectedFirstNode) {
-  //     let template = getTemplateByNodeInstance(selectedFirstNode)
-
-  //     let handleType = (template?.handles || []).some((h) => h.type === 'source') ? 'source' : 'target'
-
-  //     let handleId = (template?.handles || []).find((h) => h.type === handleType)
-
-  //     useFlow.setState({
-  //       hand: {
-  //         node: selectedFirstNode,
-  //         nodeType: selectedFirstNode.type || '',
-  //         nodeId: selectedFirstNode.id,
-  //         handleType,
-  //         handleId,
-  //       },
-  //     })
-  //     //selectedFirstNode
-  //   }
-  // }, [selectedFirstNode])
 
   let nodes = useFlow((s) => s.nodes)
   let connHelperAction = useFlow((s) => s.connHelperAction)

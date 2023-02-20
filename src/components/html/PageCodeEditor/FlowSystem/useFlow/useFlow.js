@@ -8,13 +8,13 @@ import Worker from 'worker-loader!./Worker.js'
 import nProgress from 'nprogress'
 import reset from './reset'
 
-function toArray(map) {
-  let arr = []
-  for (let item of map.values()) {
-    arr.push(item)
-  }
-  return arr
-}
+// function toArray(map) {
+//   let arr = []
+//   for (let item of map.values()) {
+//     arr.push(item)
+//   }
+//   return arr
+// }
 
 export const useFlow = create((set, get) => {
   return {

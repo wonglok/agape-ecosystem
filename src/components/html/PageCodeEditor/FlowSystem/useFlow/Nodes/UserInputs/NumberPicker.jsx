@@ -133,10 +133,53 @@ export default function GUI({ id, data, selected }) {
   )
 }
 
-export const run = async ({ core, globals, getNode, send }) => {
-  //
+export const SettingsGUI = ({ data, id }) => {
+  const updateNodeData = useFlow((s) => s.updateNodeData)
+
+  return (
+    <>
+      <div className='px-3 pt-1 pb-3 nodrag'>
+        <Slider
+          className='nodrag'
+          min={0}
+          max={10}
+          step={0.01}
+          defaultValue={data.float0}
+          onChange={(result) => {
+            clearInterval(tt)
+            tt = setTimeout(() => {
+              updateNodeData(id, 'float0', result)
+            }, 1 / 120)
+          }}></Slider>
+        {/*  */}
+        {/*  */}
+        <InputNumber
+          className='w-full nodrag'
+          type='number'
+          value={data.float0}
+          onChange={(result) => {
+            clearInterval(tt)
+            tt = setTimeout(() => {
+              updateNodeData(id, 'float0', result)
+            }, 1 / 120)
+          }}></InputNumber>
+      </div>
+      {/*  */}
+    </>
+  )
+}
+
+export const run = async ({ onSetting = () => {}, core, globals, getNode, send, on }) => {
   core.onPreload(() => {})
   core.onReady(() => {
+    let node = getNode()
+    if (node?.data?.isExposed) {
+      onSetting('number', (value) => {
+        node.data.float0 = value
+        send('number', value)
+      })
+    }
+
     let last = ''
     let tt = setInterval(() => {
       let node = getNode()
@@ -146,6 +189,7 @@ export const run = async ({ core, globals, getNode, send }) => {
         send('number', node?.data?.float0)
       }
     })
+
     globals.onClean(() => {
       clearInterval(tt)
     })
