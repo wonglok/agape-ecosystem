@@ -50,7 +50,7 @@ export default function CustomEdge({
         requiredExtensions='http://www.w3.org/1999/xhtml'>
         <div>
           <button className='edgebutton' onClick={(event) => onEdgeClick(event, id)}>
-            ×
+            {`×`}
           </button>
         </div>
       </foreignObject>
