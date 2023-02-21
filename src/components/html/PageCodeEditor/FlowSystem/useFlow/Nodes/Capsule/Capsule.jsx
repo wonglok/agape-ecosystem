@@ -25,7 +25,7 @@ export const provideHandle = ({ nodes }) => {
         handlesInt.push({
           ...h,
           id: h.id + n.id,
-          type: 'target',
+          type: h.type === 'target' ? 'source' : 'target',
           label: n.data.label,
           oldNode: n,
           oldNodeID: n.id,
