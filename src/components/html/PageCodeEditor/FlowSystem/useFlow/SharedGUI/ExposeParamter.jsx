@@ -43,7 +43,7 @@ export function ExposeParamter({ id, data }) {
               {/*  */}
               {/*  */}
 
-              {data.isGroupedForExpose && (
+              {data.isExposed && data.isGroupedForExpose && (
                 <div className=''>
                   <div>Group Name</div>
                   <div className=''>

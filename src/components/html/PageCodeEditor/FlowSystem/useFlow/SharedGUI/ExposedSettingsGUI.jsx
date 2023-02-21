@@ -7,7 +7,12 @@ export function ExposedSettingsGUI() {
 
   let groupNames = useMemo(() => {
     return nodes.reduce((acc, item, key) => {
-      if (!acc.includes(item.data.groupName) && item.data.groupName && item.data.isExposed) {
+      if (
+        item.data.isGroupedForExpose &&
+        item.data.isExposed &&
+        item.data.groupName &&
+        !acc.includes(item.data.groupName)
+      ) {
         acc.push(item.data.groupName)
       }
       return acc
@@ -19,7 +24,6 @@ export function ExposedSettingsGUI() {
     return (
       <div key={n.id} className='mb-5 border-b-2'>
         <div className='px-3 text-sm'>{n?.data?.label}</div>
-
         <div className='px-3 text-sm'>
           {tmpl?.SettingsGUI && <tmpl.SettingsGUI isSettings={true} data={n.data} id={n.id}></tmpl.SettingsGUI>}
         </div>

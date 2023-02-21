@@ -1,7 +1,6 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { nodeTypeList } from '../../../useFlow/nodeTypes'
 import { useCore } from '../useCore/useCore'
-// import { useFlow } from '../../../useFlow/useFlow'
 import { useThree } from '@react-three/fiber'
 
 //sendInput = () => {}, onOutput = () => {},
@@ -68,12 +67,14 @@ export function RunNode({ globals, nodes, node, edges }) {
     nodesRef.current = nodes
   }, [nodes])
 
+  let [compos, setCompos] = useState(null)
   useEffect(() => {
     let run = nodeTemplate?.run
     if (run) {
       run({
         core: core,
         globals,
+        setCompos,
         getNode() {
           return nodesRef.current.find((n) => n.id === node.id)
         },
@@ -99,6 +100,8 @@ export function RunNode({ globals, nodes, node, edges }) {
 
   return (
     <>
+      {compos}
+
       {/*  */}
       {/*  */}
       {/*  */}

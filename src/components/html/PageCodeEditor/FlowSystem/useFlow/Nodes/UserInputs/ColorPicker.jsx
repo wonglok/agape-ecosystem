@@ -111,14 +111,7 @@ export default function GUI({ id, data, selected }) {
 }
 
 export function receiveSettings({ node, input }) {
-  let nodes = useFlow.getState().nodes
-  nodes = nodes.map((nd) => {
-    if (nd.id === node.id) {
-      node.data = { ...node.data, color: input }
-    }
-  })
-  useFlow.setState({ nodes: [...nodes] })
-  return null
+  node.data.color = input
 }
 
 export const SettingsGUI = ({ data, id }) => {

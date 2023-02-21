@@ -5,6 +5,8 @@ import { HorizontalChildren } from '../../Grid/HorizontalChildren'
 import { HorizontalParent } from '../../Grid/HorizontalParent'
 import { useFlow } from '../../FlowSystem/useFlow/useFlow'
 import { ExposedSettingsGUI } from '../../FlowSystem/useFlow/SharedGUI/ExposedSettingsGUI'
+import { createData } from '../../FlowSystem/useFlow/Nodes/Capsule/Capsule'
+import { getID } from '@/backend/aws'
 
 export function ShaderEditorLayout() {
   let openFile = useFlow((s) => s.openFile)
@@ -27,6 +29,32 @@ export function ShaderEditorLayout() {
           <div className='absolute top-0 left-0'>
             <button
               onClick={() => {
+                let input = document.createElement('input')
+                input.type = 'file'
+                input.onchange = ({
+                  target: {
+                    files: [first],
+                  },
+                }) => {
+                  if (first) {
+                    let firstReader = new FileReader()
+                    firstReader.onload = () => {
+                      let obj = JSON.parse(firstReader.result)
+                      let nodeForEncap = createData()
+                      nodeForEncap.id = getID()
+                      nodeForEncap.data.nodes = obj.nodes
+                      nodeForEncap.data.edges = obj.edges
+                      useFlow.setState({ nodes: [nodeForEncap], edges: [] })
+                    }
+                    firstReader.readAsText(first)
+                  }
+                }
+                input.click()
+              }}>
+              Load Encapsule
+            </button>
+            <button
+              onClick={() => {
                 let st = useFlow.getState()
                 let data = {
                   edges: st.edges,
@@ -37,7 +65,6 @@ export function ShaderEditorLayout() {
                 a.href = URL.createObjectURL(new Blob([JSON.stringify(data)], { type: 'application/json' }))
                 a.download = 'backup.json'
                 a.click()
-                // useFlow.getState().resetDemo()
               }}>
               Download
             </button>
@@ -60,16 +87,6 @@ export function ShaderEditorLayout() {
                   }
                 }
                 input.click()
-                // let st = useFlow.getState()
-                // let data = {
-                //   edges: st.edges,
-                //   nodes: st.nodes,
-                // }
-                // let a = document.createElement('a')
-                // a.href = URL.createObjectURL(new Blob([JSON.stringify(data)], { type: 'application/json' }))
-                // a.download = 'backup.json'
-                // a.click()
-                // useFlow.getState().resetDemo()
               }}>
               Restore
             </button>
