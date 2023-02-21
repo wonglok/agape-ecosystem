@@ -59,13 +59,9 @@ export const createData = () => {
 }
 
 export default function GUI({ id, data, selected }) {
-  const updateNodeLabel = () => {
-    //
-  }
+  const updateNodeLabel = useFlow((s) => s.updateNodeLabel)
 
   provideHandle({ nodes: data.nodes })
-
-  // const handles =
 
   return (
     <div
