@@ -108,6 +108,17 @@ export default function GUI({ id, data, selected }) {
   )
 }
 
+export function receiveSettings({ node, input }) {
+  let nodes = useFlow.getState().nodes
+  nodes = nodes.map((nd) => {
+    if (nd.id === node.id) {
+      node.data = { ...node.data, float0: input }
+    }
+  })
+  useFlow.setState({ nodes: [...nodes] })
+  return null
+}
+
 export const SettingsGUI = ({ data, id }) => {
   const updateNodeData = useFlow((s) => s.updateNodeData)
   let tt = useRef(0)
@@ -150,7 +161,7 @@ export const SettingsGUI = ({ data, id }) => {
 export const run = async ({ core, globals, getNode, send, on }) => {
   core.onPreload(() => {})
   core.onReady(() => {
-    let node = getNode()
+    // let node = getNode()
     // if (node?.data?.isExposed) {
     //   onSetting('number', (value) => {
     //     node.data.float0 = value
