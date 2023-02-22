@@ -3,7 +3,7 @@ import { Handle, Position } from 'reactflow'
 import { useFlow } from '../../useFlow'
 import { getTemplateByNodeInstance } from '../../nodeTypes'
 import { Color, MeshPhysicalMaterial } from 'three'
-import { ExposeParamter } from '../../SharedGUI/ExposeParamter'
+import { ExportParamter } from '../../SharedGUI/ExportParamter'
 import { makeHoverStateTarget } from '../../SharedGUI/HoverState'
 
 export const handles = [
@@ -74,8 +74,11 @@ export default function GUI({ id, data, selected }) {
           type='text'
           defaultValue={data.label}
           onChange={(evt) => updateNodeLabel(id, evt.target.value)}
-          className='w-full h-10 pl-2 text-xs bg-gray-100 appearance-none nodrag rounded-tr-xl'
+          className='w-full h-10 pl-2 text-xs bg-gray-100 appearance-none nodrag rounded-r-xl'
         />
+
+        <ExportParamter id={id} data={data}></ExportParamter>
+
         {/* <input
           type='color'
           defaultValue={data.color}

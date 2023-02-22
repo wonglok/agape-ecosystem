@@ -68,6 +68,7 @@ export function ShaderEditorLayout() {
               }}>
               Download
             </button>
+
             <button
               onClick={() => {
                 let input = document.createElement('input')
@@ -89,6 +90,22 @@ export function ShaderEditorLayout() {
                 input.click()
               }}>
               Restore
+            </button>
+
+            <button
+              onClick={() => {
+                //
+
+                let st = useFlow.getState()
+                st.nodes.push({
+                  id: getID(),
+                  type: 'ExportGroup',
+                  data: { label: 'Group Export' },
+                  position: { x: 0, y: 0 },
+                })
+                useFlow.setState({ edges: [...st.edges], nodes: [...st.nodes] })
+              }}>
+              + Group
             </button>
           </div>
         </HorizontalChildren>

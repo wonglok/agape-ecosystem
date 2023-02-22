@@ -1843,6 +1843,21 @@
     d3-zoom "^3.0.0"
     zustand "^4.3.1"
 
+"@reactflow/core@^11.3.3":
+  version "11.5.5"
+  resolved "https://registry.yarnpkg.com/@reactflow/core/-/core-11.5.5.tgz#bced11d76fc200b4dc301f2f2b882c4f4ec3dad3"
+  integrity sha512-/FPnpvO9I4E6/mmfZInbsVusR214gzIZ2e2xgl9XJdBo90cWaqHgo0c5F2YPXX19R3mItzxveN+WlENFEOvdPg==
+  dependencies:
+    "@types/d3" "^7.4.0"
+    "@types/d3-drag" "^3.0.1"
+    "@types/d3-selection" "^3.0.3"
+    "@types/d3-zoom" "^3.0.1"
+    classcat "^5.0.3"
+    d3-drag "^3.0.0"
+    d3-selection "^3.0.0"
+    d3-zoom "^3.0.0"
+    zustand "^4.3.1"
+
 "@reactflow/minimap@11.3.7":
   version "11.3.7"
   resolved "https://registry.yarnpkg.com/@reactflow/minimap/-/minimap-11.3.7.tgz#7bec64a1c42786d59012e86a777424e140931cce"
@@ -1854,6 +1869,17 @@
     classcat "^5.0.3"
     d3-selection "^3.0.0"
     d3-zoom "^3.0.0"
+    zustand "^4.3.1"
+
+"@reactflow/node-resizer@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@reactflow/node-resizer/-/node-resizer-2.0.1.tgz#45d4fe18b3fa2d92029e2c1bd32283763c3737b8"
+  integrity sha512-07PNFkv4lH07SEthuz5l87YtFIms+8SFkYVsMhe6Cfdej1tPuIa4f6Xmy0ILOLjBU0B2TRrbw0+T+cJ62zcofQ==
+  dependencies:
+    "@reactflow/core" "^11.3.3"
+    classcat "^5.0.4"
+    d3-drag "^3.0.0"
+    d3-selection "^3.0.0"
     zustand "^4.3.1"
 
 "@reactflow/node-toolbar@1.1.7":
@@ -2837,7 +2863,7 @@ chokidar@^3.5.3:
   optionalDependencies:
     fsevents "~2.3.2"
 
-classcat@^5.0.3:
+classcat@^5.0.3, classcat@^5.0.4:
   version "5.0.4"
   resolved "https://registry.yarnpkg.com/classcat/-/classcat-5.0.4.tgz#e12d1dfe6df6427f260f03b80dc63571a5107ba6"
   integrity sha512-sbpkOw6z413p+HDGcBENe498WM9woqWHiJxCq7nvmxe9WmrUmqfAcxpIwAiMtM5Q3AhYkzXcNQHqsWq0mND51g==

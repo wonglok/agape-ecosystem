@@ -84,6 +84,8 @@ export default function GUI({ id, data, selected }) {
         <SettingsGUI data={data} id={id}></SettingsGUI>
       </div>
 
+      {/*  */}
+
       {handles
         .filter((r) => r.type === 'source')
         .map((r, i) => {
@@ -154,14 +156,6 @@ export const SettingsGUI = ({ data, id }) => {
 export const run = async ({ core, globals, getNode, send, on }) => {
   core.onPreload(() => {})
   core.onReady(() => {
-    // let node = getNode()
-    // if (node?.data?.isExposed) {
-    //   onSetting('number', (value) => {
-    //     node.data.float0 = value
-    //     send('number', value)
-    //   })
-    // }
-
     let last = ''
     let tt = setInterval(() => {
       let node = getNode()

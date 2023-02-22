@@ -21,6 +21,9 @@ export function ExposedSettingsGUI() {
 
   let onRender = (n) => {
     let tmpl = getTemplateByNodeInstance(n)
+
+    tmpl.SettingsGUI = tmpl.SettingsGUI || (() => {})
+
     return (
       <div key={n.id} className='mb-5 border-b-2'>
         <div className='px-3 text-sm'>{n?.data?.label}</div>

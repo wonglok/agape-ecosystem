@@ -20,6 +20,7 @@ export const provideHandle = ({ nodes }) => {
   nodes.filter((n) => {
     let temp = getTemplateByNodeInstance(n)
 
+    console.log(n.label)
     if (n.data.isExposed) {
       temp.handles.forEach((h) => {
         handlesInt.push({
@@ -33,6 +34,29 @@ export const provideHandle = ({ nodes }) => {
           groupName: n.data.groupName,
         })
       })
+    }
+  })
+
+  nodes.filter((n) => {
+    let temp = getTemplateByNodeInstance(n)
+
+    if (n.data.isExported) {
+      temp.handles
+        .filter((h) => {
+          return h.type === 'source'
+        })
+        .forEach((h) => {
+          handlesInt.push({
+            ...h,
+            id: h.id + n.id,
+            type: 'source',
+            label: n.data.label,
+            oldNode: n,
+            oldNodeID: n.id,
+            oldHandleID: h.id,
+            groupName: n.data.groupName,
+          })
+        })
     }
   })
 
@@ -135,7 +159,8 @@ export default function GUI({ id, data, selected }) {
       <div>
         {handles
           .filter((r) => r.type === 'source')
-          .map((r, i) => {
+          .map((r, i, arr) => {
+            let h = i + handles.filter((r) => r.type === 'target').length + 1 + 1
             return (
               <Handle
                 isValidConnection={(connection) => {
@@ -145,13 +170,30 @@ export default function GUI({ id, data, selected }) {
                   let remoteHandle = template.handles.find((h) => h.id === connection.targetHandle)
                   return remoteHandle?.dataType === r.dataType
                 }}
+                {...makeHoverStateTarget({ handle: r })}
                 type={r.type}
                 id={r.id}
                 key={r.id + id + i}
-                className='w-4 h-2 bg-gray-400 rounded-full'
-                style={{ left: `calc(50% - 1rem / 2 + 25px * ${i})` }}
-                position={Position.Bottom}
+                className='w-2 h-4 bg-gray-400 rounded-full hover:shadow-lg hover:shadow-cyan-500 hover:bg-cyan-400'
+                style={{ top: `calc(25px *  ${h})` }}
+                position={Position.Right}
               />
+
+              // <Handle
+              //   isValidConnection={(connection) => {
+              //     // console.log(connection)
+              //     let oppositeNode = useFlow.getState().nodes.find((n) => n.id === connection.target)
+              //     let template = getTemplateByNodeInstance(oppositeNode)
+              //     let remoteHandle = template.handles.find((h) => h.id === connection.targetHandle)
+              //     return remoteHandle?.dataType === r.dataType
+              //   }}
+              //   type={r.type}
+              //   id={r.id}
+              //   key={r.id + id + i}
+              //   className='w-4 h-2 bg-gray-400 rounded-full'
+              //   style={{ left: `calc(50% - 1rem / 2 + 25px * ${i})` }}
+              //   position={Position.Bottom}
+              // />
             )
           })}
       </div>
