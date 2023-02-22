@@ -4,7 +4,7 @@ import { useCore } from '../useCore/useCore'
 import { useThree } from '@react-three/fiber'
 
 //sendInput = () => {}, onOutput = () => {},
-export function RunNode({ globals, nodes, node, edges }) {
+export function RunNode({ globals, scope, nodes, node, edges }) {
   let nodeTemplate = useMemo(() => {
     return nodeTypeList.find((r) => r.type === node.type)
   }, [node.type])
@@ -74,7 +74,14 @@ export function RunNode({ globals, nodes, node, edges }) {
       run({
         core: core,
         globals,
+        scope,
         setCompos,
+        share: (v, node) => {
+          globals[node?.id] = v
+        },
+        give: (node) => {
+          return globals[node?.id]
+        },
         getNode() {
           return nodesRef.current.find((n) => n.id === node.id)
         },
@@ -96,7 +103,7 @@ export function RunNode({ globals, nodes, node, edges }) {
           console.log('Done::', node.type)
         })
     }
-  }, [core, get, nodeTemplate, node.id, globals, api, node.type])
+  }, [core, get, nodeTemplate, node.id, globals, api, node.type, scope])
 
   return (
     <>

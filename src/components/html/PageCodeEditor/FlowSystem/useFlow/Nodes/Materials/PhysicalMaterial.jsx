@@ -127,10 +127,12 @@ export default function GUI({ id, data, selected }) {
   )
 }
 
-export const run = async ({ core, globals, getNode, on, send }) => {
+export const run = async ({ core, globals, getNode, on, send, share }) => {
   //
   core.onReady(() => {
     let physical = new MeshPhysicalMaterial({ color: 0xffffff })
+
+    share(physical, getNode())
 
     on('color', (color) => {
       physical.color = physical.color || new Color('#ffffff')

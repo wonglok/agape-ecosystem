@@ -20,7 +20,6 @@ export const provideHandle = ({ nodes }) => {
   nodes.filter((n) => {
     let temp = getTemplateByNodeInstance(n)
 
-    console.log(n.label)
     if (n.data.isExposed) {
       temp.handles.forEach((h) => {
         handlesInt.push({
@@ -203,14 +202,29 @@ export default function GUI({ id, data, selected }) {
 
 //receiveSettings
 
-export const run = async ({ core, globals, setCompos, getNode, on, send }) => {
+export const run = async ({ core, globals, setCompos, getNode, on, send, give }) => {
   //
+  let allHandles = provideHandle({ nodes: getNode().data.nodes })
 
-  provideHandle({ nodes: getNode().data.nodes }).forEach((hdl) => {
-    on(hdl.id, (v) => {
-      let template = getTemplateByNodeInstance(hdl.oldNode)
-      template.receiveSettings({ node: hdl.oldNode, input: v })
-    })
+  allHandles.forEach((hdl) => {
+    if (hdl.type === 'target') {
+      on(hdl.id, (v) => {
+        let template = getTemplateByNodeInstance(hdl.oldNode)
+        template.receiveSettings({ node: hdl.oldNode, input: v })
+
+        allHandles
+          .filter((r) => r.type === 'source')
+          .forEach((h) => {
+            let tt = setInterval(() => {
+              let item = give(h.oldNode)
+              if (item) {
+                clearInterval(tt)
+                send(h.id, item)
+              }
+            })
+          })
+      })
+    }
   })
 
   let nodes = getNode().data.nodes
@@ -237,7 +251,7 @@ export const run = async ({ core, globals, setCompos, getNode, on, send }) => {
   //   console.log(handles)
   // })
 
-  setCompos(<RunnerObject nodes={nodes} edges={edges}></RunnerObject>)
+  setCompos(<RunnerObject globals={globals} nodes={nodes} edges={edges}></RunnerObject>)
 
   return null
 }

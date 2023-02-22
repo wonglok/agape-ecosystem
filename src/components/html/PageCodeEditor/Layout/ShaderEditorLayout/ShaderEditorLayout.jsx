@@ -10,7 +10,7 @@ import { getID } from '@/backend/aws'
 
 export function ShaderEditorLayout() {
   let openFile = useFlow((s) => s.openFile)
-  let ready = useFlow((s) => s.ready)
+  // let ready = useFlow((s) => s.ready)
   let docName = 'docNameNew'
   useEffect(() => {
     return openFile({ docName })
@@ -99,7 +99,7 @@ export function ShaderEditorLayout() {
                 let st = useFlow.getState()
                 st.nodes.push({
                   id: getID(),
-                  type: 'ExportGroup',
+                  type: 'Group',
                   data: { label: 'Group Export' },
                   position: { x: 0, y: 0 },
                 })
