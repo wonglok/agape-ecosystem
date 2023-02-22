@@ -25,7 +25,7 @@ export function ExposedSettingsGUI() {
     tmpl.SettingsGUI = tmpl.SettingsGUI || (() => {})
 
     return (
-      <div key={n.id} className='mb-5 border-b-2'>
+      <div key={n.id} className='pb-5 mb-5 border-b-2'>
         <div className='px-3 text-sm'>{n?.data?.label}</div>
         <div className='px-3 text-sm'>
           {tmpl?.SettingsGUI && <tmpl.SettingsGUI isSettings={true} data={n.data} id={n.id}></tmpl.SettingsGUI>}
