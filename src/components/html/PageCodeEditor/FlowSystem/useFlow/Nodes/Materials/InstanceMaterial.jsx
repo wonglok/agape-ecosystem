@@ -169,13 +169,22 @@ export const run = async ({ core, globals, getNode, on, send, share }) => {
       })
     }
 
-    let waitFor = async (key) => {
+    let onValue = async (key, setter) => {
+      on(key, (value) => {
+        readyPhy(() => {
+          core.now.cache.set(key, value)
+          setter(value)
+          send('material', physical)
+        })
+      })
+
       return new Promise((resolve, reject) => {
         let item = core.now.cache.has(key)
         let tt = setInterval(() => {
           if (item) {
             clearInterval(tt)
             resolve(core.now.cache.get(key))
+            setter(core.now.cache.get(key))
           }
         })
       })
@@ -186,78 +195,24 @@ export const run = async ({ core, globals, getNode, on, send, share }) => {
       share(physical, getNode().id)
       send('material', physical)
 
-      waitFor('color').then((value) => {
+      onValue('color', (value) => {
         physical['color'] = value
       })
-      waitFor('thickness').then((value) => {
+      onValue('thickness', (value) => {
         physical['thickness'] = value
       })
-      waitFor('ior').then((value) => {
+      onValue('ior', (value) => {
         physical['ior'] = value
       })
-      waitFor('transmission').then((value) => {
+      onValue('transmission', (value) => {
         physical['transmission'] = value
       })
-      waitFor('roughness').then((value) => {
+      onValue('roughness', (value) => {
         physical['roughness'] = value
       })
-      waitFor('metalness').then((value) => {
+      onValue('metalness', (value) => {
         physical['metalness'] = value
       })
-    })
-
-    on('color', (color) => {
-      readyPhy(() => {
-        let newColor = new Color(color)
-        core.now.cache.set('color', newColor)
-        physical.color = newColor
-        send('material', physical)
-      })
-    })
-
-    on('thickness', (thickness) => {
-      readyPhy(() => {
-        core.now.cache.set('thickness', thickness)
-        physical.thickness = thickness
-        send('material', physical)
-      })
-    })
-
-    on('ior', (ior) => {
-      readyPhy(() => {
-        core.now.cache.set('ior', ior)
-        physical.ior = ior
-        send('material', physical)
-      })
-    })
-
-    on('transmission', (transmission) => {
-      readyPhy(() => {
-        core.now.cache.set('transmission', transmission)
-        physical.transmission = transmission
-        send('material', physical)
-      })
-    })
-
-    on('roughness', (roughness) => {
-      readyPhy(() => {
-        core.now.cache.set('roughness', roughness)
-        physical.roughness = roughness
-        send('material', physical)
-      })
-    })
-
-    on('metalness', (metalness) => {
-      readyPhy(() => {
-        core.now.cache.set('metalness', metalness)
-        physical.metalness = metalness
-        send('material', physical)
-      })
-    })
-
-    readyPhy(() => {
-      core.now.cache.set('physical', physical)
-      send('material', physical)
     })
 
     globals.onClean(() => {
