@@ -11,6 +11,17 @@ export const handles = [
   { type: 'target', dataType: 'material', id: 'receiver', displayName: 'Inherit', position: Position.Top },
 
   { type: 'target', dataType: 'color', id: 'color', displayName: 'Color' },
+
+  { type: 'target', dataType: 'texture', id: 'map', displayName: 'Texture Color' },
+  { type: 'target', dataType: 'texture', id: 'normalMap', displayName: 'Texture Normal' },
+
+  { type: 'target', dataType: 'texture', id: 'roughnessMap', displayName: 'Texture Roughness' },
+  { type: 'target', dataType: 'texture', id: 'metalnessMap', displayName: 'Texture Metalness' },
+  { type: 'target', dataType: 'texture', id: 'emissiveMap', displayName: 'Texture Emissive' },
+
+  //
+  { type: 'target', dataType: 'color', id: 'emissive', displayName: 'Color Emissive' },
+
   { type: 'target', dataType: 'number', id: 'ior', displayName: 'Index of Refraction' },
   { type: 'target', dataType: 'number', id: 'thickness', displayName: 'Thickness' },
   { type: 'target', dataType: 'number', id: 'transmission', displayName: 'Transmission' },
@@ -196,6 +207,25 @@ export const run = async ({ core, globals, getNode, on, send, share }) => {
 
       onValue('color', (value) => {
         physical['color'] = value
+      })
+      onValue('map', (value) => {
+        physical['map'] = value
+      })
+      onValue('normalMap', (value) => {
+        physical['normalMap'] = value
+      })
+      onValue('roughnessMap', (value) => {
+        physical['roughnessMap'] = value
+      })
+      onValue('metalnessMap', (value) => {
+        physical['metalnessMap'] = value
+      })
+      onValue('emissiveMap', (value) => {
+        physical['emissiveMap'] = value
+      })
+
+      onValue('emissive', (value) => {
+        physical['emissive'] = value
       })
       onValue('thickness', (value) => {
         physical['thickness'] = value
