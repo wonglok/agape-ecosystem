@@ -104,13 +104,13 @@ export default function GUI({ id, data, selected }) {
   )
 }
 
-export const run = async ({ core, globals, nodeData, on, send }) => {
+export const run = async ({ core, setCompos, globals, nodeData, on, send }) => {
   core.onReady(() => {
     let box = new BoxGeometry(2, 2, 0.1)
     let physical = new MeshPhysicalMaterial({ color: '#a0a0a0' })
     let mesh = new Mesh(box, physical)
-    core.now.scene.add(mesh)
 
+    setCompos(<primitive object={mesh}></primitive>)
     on('geometry', (data) => {
       // console.log('geometry', data)
       mesh.geometry = data

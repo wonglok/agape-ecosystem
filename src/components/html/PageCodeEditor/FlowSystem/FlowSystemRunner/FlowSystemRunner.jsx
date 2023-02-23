@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber'
 import { Suspense } from 'react'
 import { RunnerObject } from './RunnerObject/RunnerObject'
 import { useFlow } from '../useFlow/useFlow'
+import { HomeTrim } from '@/components/content/HomeTrim/HomeTrim'
 
 export function FlowSystemRunner() {
   return (
@@ -21,6 +22,8 @@ function Content() {
   let edges = useFlow((s) => s.edges)
   return (
     <>
+      {/* Demo */}
+      <HomeTrim></HomeTrim>
       <RunnerObject key={edges.map((r) => r.id).join('_')} nodes={nodes} edges={edges}></RunnerObject>
 
       {/* <mesh scale={[1, 1, 1]}>

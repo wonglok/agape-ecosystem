@@ -56,7 +56,7 @@ export const useFlow = create((set, get) => {
 
       set({
         saveToDB: () => {
-          worker.postMessage({ type: 'saveDB', nodes: get().nodes, edges: get().edges })
+          worker.postMessage({ type: 'saveDB', docName, nodes: get().nodes, edges: get().edges })
         },
       })
       return () => {

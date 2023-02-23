@@ -9,6 +9,16 @@ import { makeHoverStateTarget } from '../../SharedGUI/HoverState'
 export const handles = [
   //
   { type: 'target', dataType: 'color', id: 'color', displayName: 'Color' },
+  { type: 'target', dataType: 'texture', id: 'map', displayName: 'Texture Color' },
+  { type: 'target', dataType: 'texture', id: 'normalMap', displayName: 'Texture Normal' },
+
+  { type: 'target', dataType: 'texture', id: 'roughnessMap', displayName: 'Texture Roughness' },
+  { type: 'target', dataType: 'texture', id: 'metalnessMap', displayName: 'Texture Metalness' },
+  { type: 'target', dataType: 'texture', id: 'emissiveMap', displayName: 'Texture Emissive' },
+
+  //
+  { type: 'target', dataType: 'color', id: 'emissive', displayName: 'Color Emissive' },
+
   { type: 'target', dataType: 'number', id: 'ior', displayName: 'Index of Refraction' },
   { type: 'target', dataType: 'number', id: 'thickness', displayName: 'Thickness' },
   { type: 'target', dataType: 'number', id: 'transmission', displayName: 'Transmission' },
@@ -163,6 +173,36 @@ export const run = async ({ core, globals, getNode, on, send, share }) => {
 
     on('metalness', (metalness) => {
       physical.metalness = metalness
+      send('material', physical)
+    })
+
+    on('map', (map) => {
+      physical.map = map
+      send('material', physical)
+    })
+
+    on('normalMap', (normalMap) => {
+      physical.normalMap = normalMap
+      send('material', physical)
+    })
+
+    on('roughnessMap', (roughnessMap) => {
+      physical.roughnessMap = roughnessMap
+      send('material', physical)
+    })
+
+    on('metalnessMap', (metalnessMap) => {
+      physical.metalnessMap = metalnessMap
+      send('material', physical)
+    })
+
+    on('emissiveMap', (emissiveMap) => {
+      physical.emissiveMap = emissiveMap
+      send('material', physical)
+    })
+
+    on('emissive', (emissive) => {
+      physical.emissive = new Color(emissive)
       send('material', physical)
     })
 
