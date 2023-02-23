@@ -3,6 +3,8 @@ import { useState } from 'react'
 import { useReactFlow } from 'reactflow'
 
 export function ExportGroup(node) {
+  let { getIntersectingNodes, getEdges, getNodes, getZoom } = useReactFlow()
+
   let [size, setSize] = useState({ width: node.data.width || 500, height: node.data.height || 500 })
   let [init, setInit] = useState({ width: node.data.width || 500, height: node.data.height || 500 })
   const bind = useDrag((state) => {
@@ -11,13 +13,12 @@ export function ExportGroup(node) {
     } else {
       // console.log(state.initial)
 
-      node.data.width = init.width + state.movement[0]
-      node.data.height = init.height + state.movement[1]
+      node.data.width = init.width + state.movement[0] / getZoom()
+      node.data.height = init.height + state.movement[1] / getZoom()
       setSize({ width: node.data.width, height: node.data.height })
     }
   }, {})
 
-  let { getIntersectingNodes, getEdges, getNodes } = useReactFlow()
   return (
     <div
       style={{
