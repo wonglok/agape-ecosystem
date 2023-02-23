@@ -76,7 +76,7 @@ export function RunNode({ globals, scope, nodes, node, edges }) {
         globals,
         scope,
         setCompos,
-        share: (v, id) => {
+        share: (id, v) => {
           globals[id] = v
         },
         give: (id) => {

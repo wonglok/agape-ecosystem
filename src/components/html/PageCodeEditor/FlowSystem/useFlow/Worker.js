@@ -76,6 +76,8 @@ self.onmessage = (ev) => {
         })
       }
     })
+
+    //
   } else if (ev.data.type === 'saveDB') {
     let edges = ev.data.edges
     let nodes = ev.data.nodes
