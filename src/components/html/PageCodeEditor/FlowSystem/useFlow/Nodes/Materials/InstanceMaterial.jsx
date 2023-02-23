@@ -156,7 +156,7 @@ export default function GUI({ id, data, selected }) {
 
 export const run = async ({ core, globals, getNode, on, send, share }) => {
   //
-  core.now.cache = new Map()
+  let cache = new Map()
   core.onReady(() => {
     let physical = new MeshPhysicalMaterial({})
 
@@ -172,19 +172,19 @@ export const run = async ({ core, globals, getNode, on, send, share }) => {
     let onValue = async (key, setter) => {
       on(key, (value) => {
         readyPhy(() => {
-          core.now.cache.set(key, value)
+          cache.set(key, value)
           setter(value)
           send('material', physical)
         })
       })
 
       return new Promise((resolve, reject) => {
-        let item = core.now.cache.has(key)
+        let item = cache.has(key)
         let tt = setInterval(() => {
           if (item) {
             clearInterval(tt)
-            resolve(core.now.cache.get(key))
-            setter(core.now.cache.get(key))
+            resolve(cache.get(key))
+            setter(cache.get(key))
           }
         })
       })
@@ -217,6 +217,7 @@ export const run = async ({ core, globals, getNode, on, send, share }) => {
 
     globals.onClean(() => {
       readyPhy(() => {
+        cache?.clear()
         physical?.dispose()
       })
     })
