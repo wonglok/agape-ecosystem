@@ -4,6 +4,7 @@ import { Suspense } from 'react'
 import { RunnerObject } from './RunnerObject/RunnerObject'
 import { useFlow } from '../useFlow/useFlow'
 import { HomeTrim } from '@/components/content/HomeTrim/HomeTrim'
+import { Bloom, EffectComposer } from '@react-three/postprocessing'
 
 export function FlowSystemRunner() {
   return (
@@ -24,6 +25,9 @@ function Content() {
     <>
       {/* Demo */}
       <HomeTrim></HomeTrim>
+      <EffectComposer>
+        <Bloom luminanceThreshold={0.2} mipmapBlur></Bloom>
+      </EffectComposer>
       <RunnerObject key={edges.map((r) => r.id).join('_')} nodes={nodes} edges={edges}></RunnerObject>
 
       {/* <mesh scale={[1, 1, 1]}>
