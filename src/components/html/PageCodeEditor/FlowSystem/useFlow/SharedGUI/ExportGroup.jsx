@@ -4,6 +4,7 @@ import { useReactFlow } from 'reactflow'
 
 export function ExportGroup(node) {
   let { getIntersectingNodes, getEdges, getNodes, getZoom } = useReactFlow()
+  let [canSel, setSel] = useState('')
 
   let [size, setSize] = useState({ width: node.data.width || 500, height: node.data.height || 500 })
   let [init, setInit] = useState({ width: node.data.width || 500, height: node.data.height || 500 })
@@ -21,7 +22,7 @@ export function ExportGroup(node) {
 
   return (
     <div
-      className='export-group'
+      className={'export-group ' + (canSel ? '' : 'nodrag')}
       style={{
         width: `${size.width.toFixed(0)}px`,
         height: `${size.height.toFixed(0)}px`,
@@ -57,6 +58,15 @@ export function ExportGroup(node) {
           }}>
           Download Grouped JSON
         </button>
+        <button
+          className={'px-5 py-2 m-4 rounded-2xl ' + (!canSel ? 'bg-blue-500' : 'bg-gray-200')}
+          onClick={() => {
+            setSel((s) => !s)
+          }}>
+          {canSel ? 'Toggle Lock' : 'Locked'}
+        </button>
+
+        <button></button>
       </div>
       <div {...bind()} className='absolute bottom-0 right-0 w-8 h-8 bg-red-500 nodrag touch-none'></div>
     </div>
