@@ -30,6 +30,18 @@ export function ConnectionHelper() {
     return getOptions({ nodes, hand })
   }, [hand, nodes])
 
+  useEffect(() => {
+    let hh = (ev) => {
+      //
+      if (ev.key === 'Escape') {
+        useFlow.setState({ showTool: false })
+      }
+    }
+    window.addEventListener('keydown', hh)
+    return () => {
+      window.removeEventListener('keydown', hh)
+    }
+  })
   return (
     <div className='p-3 bg-gray-300 border rounded-lg bg-opacity-40  backdrop-blur-lg '>
       <Cascader
