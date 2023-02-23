@@ -7,12 +7,16 @@ import { useFlow } from '../../FlowSystem/useFlow/useFlow'
 import { ExposedSettingsGUI } from '../../FlowSystem/useFlow/SharedGUI/ExposedSettingsGUI'
 import { createData } from '../../FlowSystem/useFlow/Nodes/Capsule/Capsule'
 import { getID } from '@/backend/aws'
+import nProgress from 'nprogress'
 
 export function ShaderEditorLayout() {
   let openFile = useFlow((s) => s.openFile)
   // let ready = useFlow((s) => s.ready)
   let docName = 'docNameNew'
   useEffect(() => {
+    setTimeout(() => {
+      nProgress.done()
+    }, 500)
     return openFile({ docName })
   }, [docName, openFile])
 
@@ -33,29 +37,6 @@ export function ShaderEditorLayout() {
               download={'demo-2022-02-23.zip'}>
               Download Demo Files
             </a>
-            <button
-              className='px-4 py-1 m-1 text-xs text-white bg-gray-700 rounded-2xl'
-              onClick={() => {
-                let input = document.createElement('input')
-                input.type = 'file'
-                input.onchange = ({
-                  target: {
-                    files: [first],
-                  },
-                }) => {
-                  if (first) {
-                    let firstReader = new FileReader()
-                    firstReader.onload = () => {
-                      let obj = JSON.parse(firstReader.result)
-                      useFlow.setState({ edges: obj.edges, nodes: obj.nodes })
-                    }
-                    firstReader.readAsText(first)
-                  }
-                }
-                input.click()
-              }}>
-              Load Demo File
-            </button>
           </div>
           <div className='absolute top-0 left-0'>
             <button
@@ -132,6 +113,29 @@ export function ShaderEditorLayout() {
                 a.click()
               }}>
               Backup
+            </button>
+            <button
+              className='px-4 py-1 m-1 text-xs text-white bg-gray-700 rounded-2xl'
+              onClick={() => {
+                let input = document.createElement('input')
+                input.type = 'file'
+                input.onchange = ({
+                  target: {
+                    files: [first],
+                  },
+                }) => {
+                  if (first) {
+                    let firstReader = new FileReader()
+                    firstReader.onload = () => {
+                      let obj = JSON.parse(firstReader.result)
+                      useFlow.setState({ edges: obj.edges, nodes: obj.nodes })
+                    }
+                    firstReader.readAsText(first)
+                  }
+                }
+                input.click()
+              }}>
+              Restore
             </button>
           </div>
         </HorizontalChildren>
