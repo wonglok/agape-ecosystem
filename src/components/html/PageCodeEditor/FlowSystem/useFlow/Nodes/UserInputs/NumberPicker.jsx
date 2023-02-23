@@ -16,7 +16,7 @@ export const name = 'NumberPicker'
 export const createData = () => {
   return {
     type: name,
-    data: { label: 'floatPicker1', number: 0 },
+    data: { label: 'floatPicker1', float0: 0 },
     position: { x: 250, y: 25 },
   }
 }

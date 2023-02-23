@@ -6,6 +6,7 @@ import { nodeTypes } from '../useFlow/nodeTypes'
 import { useEffect, useMemo, useRef } from 'react'
 import { ConnectionHelper } from './ConnectionHelper/ConnectionHelper'
 import { edgeTypes } from '../useFlow/edgeTypes'
+import ExportGroup from '../useFlow/SharedGUI/ExportGroup'
 
 export function FlowSystemEditor() {
   return (
@@ -47,7 +48,12 @@ export function FlowSystemEditorCore() {
     })
   }, [fitView, setViewport])
 
-  let nodeTypes2 = useMemo(() => nodeTypes, [])
+  let nodeTypes2 = useMemo(() => {
+    return {
+      ...nodeTypes,
+      ExportGroup: ExportGroup,
+    }
+  }, [])
   let edgeTypes2 = useMemo(() => edgeTypes, [])
   return (
     <div className='relative w-full h-full' ref={reactFlowWrapper}>

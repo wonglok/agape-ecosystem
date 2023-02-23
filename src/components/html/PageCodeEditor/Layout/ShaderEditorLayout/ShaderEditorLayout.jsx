@@ -28,6 +28,7 @@ export function ShaderEditorLayout() {
 
           <div className='absolute top-0 left-0'>
             <button
+              className='px-4 py-1 m-1 text-xs text-white bg-gray-700 rounded-2xl'
               onClick={() => {
                 let input = document.createElement('input')
                 input.type = 'file'
@@ -53,23 +54,9 @@ export function ShaderEditorLayout() {
               }}>
               Load Encapsule
             </button>
-            <button
-              onClick={() => {
-                let st = useFlow.getState()
-                let data = {
-                  edges: st.edges,
-                  nodes: st.nodes,
-                }
-
-                let a = document.createElement('a')
-                a.href = URL.createObjectURL(new Blob([JSON.stringify(data)], { type: 'application/json' }))
-                a.download = 'backup.json'
-                a.click()
-              }}>
-              Download
-            </button>
 
             <button
+              className='px-4 py-1 m-1 text-xs text-white bg-gray-700 rounded-2xl'
               onClick={() => {
                 let input = document.createElement('input')
                 input.type = 'file'
@@ -89,23 +76,35 @@ export function ShaderEditorLayout() {
                 }
                 input.click()
               }}>
-              Restore
+              Load All
             </button>
 
             <button
+              className='px-4 py-1 m-1 text-xs text-white bg-gray-700 rounded-2xl'
               onClick={() => {
                 //
 
                 let st = useFlow.getState()
-                st.nodes.push({
+                st.nodes.unshift({
                   id: getID(),
-                  type: 'Group',
-                  data: { label: 'Group Export' },
+                  type: 'ExportGroup',
+                  data: { label: 'Group', width: 500, height: 500 },
                   position: { x: 0, y: 0 },
+                  style: { zIndex: -1 },
                 })
+                st.nodes = st.nodes.slice().sort((a, b) => {
+                  if (a.type.includes('group') || b.type.includes('group')) {
+                    return 1
+                  } else if (a.type.includes('group') && !b.type.includes('group')) {
+                    return -1
+                  } else {
+                    return 0
+                  }
+                })
+
                 useFlow.setState({ edges: [...st.edges], nodes: [...st.nodes] })
               }}>
-              + Group
+              Export Group
             </button>
           </div>
         </HorizontalChildren>

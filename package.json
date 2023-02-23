@@ -30,6 +30,7 @@
     "@react-three/fiber": "^8.10.1",
     "@reactflow/node-resizer": "^2.0.1",
     "@tabler/icons": "^2.2.0",
+    "@use-gesture/react": "^10.2.24",
     "antd": "^5.2.0",
     "daisyui": "^2.50.0",
     "ethers": "^5.6.5",

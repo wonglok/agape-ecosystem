@@ -8,6 +8,8 @@ export function ExposedSettingsGUI() {
   let groupNames = useMemo(() => {
     return nodes.reduce((acc, item, key) => {
       if (
+        item &&
+        item.data &&
         item.data.isGroupedForExpose &&
         item.data.isExposed &&
         item.data.groupName &&
