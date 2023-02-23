@@ -108,7 +108,7 @@ export default function GUI({ id, data, selected }) {
 export const run = async ({ core, globals, nodeData, on, send }) => {
   //
   core.onReady(() => {
-    let box = new SphereGeometry(0.75, 32, 32)
+    let box = new SphereGeometry(0.4, 32, 32)
 
     send('geometry', box)
   })

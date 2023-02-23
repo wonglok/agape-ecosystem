@@ -108,7 +108,7 @@ export default function GUI({ id, data, selected }) {
 export const run = async ({ core, globals, nodeData, on, send }) => {
   //
   core.onReady(() => {
-    let box = new TorusKnotGeometry(1, 0.2, 240, 64, 4, 3)
+    let box = new TorusKnotGeometry(1.3, 0.2, 240, 64, 4, 3)
 
     send('geometry', box)
   })

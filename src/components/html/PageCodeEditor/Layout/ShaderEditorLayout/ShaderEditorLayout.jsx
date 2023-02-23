@@ -84,7 +84,7 @@ export function ShaderEditorLayout() {
                 }
                 input.click()
               }}>
-              Load Package
+              Add Package
             </button>
 
             <button
@@ -113,6 +113,25 @@ export function ShaderEditorLayout() {
                 useFlow.setState({ edges: [...st.edges], nodes: [...st.nodes] })
               }}>
               Add Exporter
+            </button>
+
+            <button
+              className='px-4 py-1 m-1 text-xs text-white bg-gray-700 rounded-2xl'
+              onClick={() => {
+                //
+
+                let st = useFlow.getState()
+                let data = {
+                  edges: st.edges,
+                  nodes: st.nodes,
+                }
+
+                let a = document.createElement('a')
+                a.href = URL.createObjectURL(new Blob([JSON.stringify(data)], { type: 'application/json' }))
+                a.download = 'backup.json'
+                a.click()
+              }}>
+              Backup
             </button>
           </div>
         </HorizontalChildren>
