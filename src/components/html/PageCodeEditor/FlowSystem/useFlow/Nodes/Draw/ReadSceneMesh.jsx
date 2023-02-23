@@ -156,7 +156,6 @@ export const run = async ({ core, globals, getNode, on, send }) => {
         for (let kn in data) {
           mesh.material[kn] = data[kn]
         }
-        // console.log('material', data)
       })
     })
 
