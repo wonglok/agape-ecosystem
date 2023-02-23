@@ -26,7 +26,7 @@ function Content() {
       {/* Demo */}
       <HomeTrim></HomeTrim>
       <EffectComposer>
-        <Bloom luminanceThreshold={0.2} mipmapBlur></Bloom>
+        <Bloom luminanceThreshold={0.9} intensity={1} mipmapBlur></Bloom>
       </EffectComposer>
       <RunnerObject key={edges.map((r) => r.id).join('_')} nodes={nodes} edges={edges}></RunnerObject>
 
