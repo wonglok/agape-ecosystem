@@ -2,7 +2,6 @@ import React from 'react'
 import { Handle, Position } from 'reactflow'
 import { useFlow } from '../../useFlow'
 import { getTemplateByNodeInstance } from '../../nodeTypes'
-import { Color, MeshPhysicalMaterial } from 'three'
 import { ExportParamter } from '../../SharedGUI/ExportParamter'
 import { makeHoverStateTarget } from '../../SharedGUI/HoverState'
 
