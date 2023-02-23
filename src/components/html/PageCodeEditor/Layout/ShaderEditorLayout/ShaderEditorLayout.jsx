@@ -26,35 +26,13 @@ export function ShaderEditorLayout() {
         <HorizontalChildren className={'relative'} width='calc(100% - 40%)'>
           <FlowSystemEditor></FlowSystemEditor>
 
-          <div className='absolute top-0 left-0'>
-            <button
-              className='px-4 py-1 m-1 text-xs text-white bg-gray-700 rounded-2xl'
-              onClick={() => {
-                let input = document.createElement('input')
-                input.type = 'file'
-                input.onchange = ({
-                  target: {
-                    files: [first],
-                  },
-                }) => {
-                  if (first) {
-                    let firstReader = new FileReader()
-                    firstReader.onload = () => {
-                      let obj = JSON.parse(firstReader.result)
-                      let nodeForEncap = createData()
-                      nodeForEncap.id = getID()
-                      nodeForEncap.data.nodes = obj.nodes
-                      nodeForEncap.data.edges = obj.edges
-                      useFlow.setState({ nodes: [nodeForEncap], edges: [] })
-                    }
-                    firstReader.readAsText(first)
-                  }
-                }
-                input.click()
-              }}>
-              Load Encapsule
-            </button>
-
+          <div className='absolute top-0 right-0'>
+            <a
+              className='inline-block px-4 py-1 m-1 text-xs text-white bg-gray-700 rounded-2xl'
+              href={'/sample/demo-2022-02-23.zip'}
+              download={'demo-2022-02-23.zip'}>
+              Download Demo Files
+            </a>
             <button
               className='px-4 py-1 m-1 text-xs text-white bg-gray-700 rounded-2xl'
               onClick={() => {
@@ -76,7 +54,37 @@ export function ShaderEditorLayout() {
                 }
                 input.click()
               }}>
-              Load All
+              Load Demo File
+            </button>
+          </div>
+          <div className='absolute top-0 left-0'>
+            <button
+              className='px-4 py-1 m-1 text-xs text-white bg-gray-700 rounded-2xl'
+              onClick={() => {
+                let input = document.createElement('input')
+                input.type = 'file'
+                input.onchange = ({
+                  target: {
+                    files: [first],
+                  },
+                }) => {
+                  if (first) {
+                    let firstReader = new FileReader()
+                    firstReader.onload = () => {
+                      let obj = JSON.parse(firstReader.result)
+                      let nodeForEncap = createData()
+                      nodeForEncap.id = getID()
+                      nodeForEncap.data.label = 'My Package'
+                      nodeForEncap.data.nodes = obj.nodes
+                      nodeForEncap.data.edges = obj.edges
+                      useFlow.setState({ nodes: [nodeForEncap], edges: [] })
+                    }
+                    firstReader.readAsText(first)
+                  }
+                }
+                input.click()
+              }}>
+              Load Package
             </button>
 
             <button
@@ -104,7 +112,7 @@ export function ShaderEditorLayout() {
 
                 useFlow.setState({ edges: [...st.edges], nodes: [...st.nodes] })
               }}>
-              Export Group
+              Add Exporter
             </button>
           </div>
         </HorizontalChildren>

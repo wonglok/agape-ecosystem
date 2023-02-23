@@ -17,7 +17,7 @@ export function ExportGroup(node) {
     }
   }, {})
 
-  let { getIntersectingNodes, getEdges } = useReactFlow()
+  let { getIntersectingNodes, getEdges, getNodes } = useReactFlow()
   return (
     <div
       style={{
@@ -38,12 +38,12 @@ export function ExportGroup(node) {
               return intersections.some((r) => r.id === ed.target || r.id === ed.source)
             })
 
+            let node2 = getNodes().find((r) => r.id === node.id)
             let okNodes = intersections
 
-            console.log(node)
             let data = {
               edges: okEdges,
-              nodes: [...okNodes, node],
+              nodes: [...okNodes, node2],
             }
 
             let a = document.createElement('a')
@@ -53,7 +53,7 @@ export function ExportGroup(node) {
 
             //
           }}>
-          Download Backup
+          Download Grouped JSON
         </button>
       </div>
       <div {...bind()} className='absolute bottom-0 right-0 w-8 h-8 bg-red-500 nodrag touch-none'></div>
