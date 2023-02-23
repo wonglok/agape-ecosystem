@@ -153,7 +153,7 @@ export const SettingsGUI = ({ data, id }) => {
   )
 }
 
-export const run = async ({ core, globals, getNode, send, on }) => {
+export const run = async ({ setReady, core, globals, getNode, send, on }) => {
   core.onPreload(() => {})
   core.onReady(() => {
     let last = ''
