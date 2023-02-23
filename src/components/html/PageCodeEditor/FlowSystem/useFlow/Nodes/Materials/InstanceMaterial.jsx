@@ -10,23 +10,23 @@ export const handles = [
   //
   { type: 'target', dataType: 'material', id: 'receiver', displayName: 'Inherit', position: Position.Top },
 
-  { type: 'target', dataType: 'color', id: 'color', displayName: 'Color' },
+  { type: 'target', propID: true, dataType: 'color', id: 'color', displayName: 'Color' },
 
-  { type: 'target', dataType: 'texture', id: 'map', displayName: 'Texture Color' },
-  { type: 'target', dataType: 'texture', id: 'normalMap', displayName: 'Texture Normal' },
+  { type: 'target', propID: true, dataType: 'texture', id: 'map', displayName: 'Texture Color' },
+  { type: 'target', propID: true, dataType: 'texture', id: 'normalMap', displayName: 'Texture Normal' },
 
-  { type: 'target', dataType: 'texture', id: 'roughnessMap', displayName: 'Texture Roughness' },
-  { type: 'target', dataType: 'texture', id: 'metalnessMap', displayName: 'Texture Metalness' },
-  { type: 'target', dataType: 'texture', id: 'emissiveMap', displayName: 'Texture Emissive' },
+  { type: 'target', propID: true, dataType: 'texture', id: 'roughnessMap', displayName: 'Texture Roughness' },
+  { type: 'target', propID: true, dataType: 'texture', id: 'metalnessMap', displayName: 'Texture Metalness' },
+  { type: 'target', propID: true, dataType: 'texture', id: 'emissiveMap', displayName: 'Texture Emissive' },
 
   //
-  { type: 'target', dataType: 'color', id: 'emissive', displayName: 'Color Emissive' },
+  { type: 'target', propID: true, dataType: 'color', id: 'emissive', displayName: 'Color Emissive' },
 
-  { type: 'target', dataType: 'number', id: 'ior', displayName: 'Index of Refraction' },
-  { type: 'target', dataType: 'number', id: 'thickness', displayName: 'Thickness' },
-  { type: 'target', dataType: 'number', id: 'transmission', displayName: 'Transmission' },
-  { type: 'target', dataType: 'number', id: 'roughness', displayName: 'Roughness' },
-  { type: 'target', dataType: 'number', id: 'metalness', displayName: 'Metalness' },
+  { type: 'target', propID: true, dataType: 'number', id: 'ior', displayName: 'Index of Refraction' },
+  { type: 'target', propID: true, dataType: 'number', id: 'thickness', displayName: 'Thickness' },
+  { type: 'target', propID: true, dataType: 'number', id: 'transmission', displayName: 'Transmission' },
+  { type: 'target', propID: true, dataType: 'number', id: 'roughness', displayName: 'Roughness' },
+  { type: 'target', propID: true, dataType: 'number', id: 'metalness', displayName: 'Metalness' },
 
   { type: 'source', dataType: 'material', id: 'material', displayName: 'Material' },
 ]
@@ -169,83 +169,92 @@ export const run = async ({ core, globals, getNode, on, send, share }) => {
   //
   let cache = new Map()
   core.onReady(() => {
-    let physical = new MeshPhysicalMaterial({})
+    handles
+      .filter((r) => r.propID)
+      .forEach((hh) => {
+        //
+        //
 
-    let readyPhy = (fnc = () => {}) => {
-      let tt = setInterval(() => {
-        if (physical) {
-          clearInterval(tt)
-          fnc()
-        }
-      })
-    }
-
-    let onValue = async (key, setter) => {
-      on(key, (value) => {
-        readyPhy(() => {
-          cache.set(key, value)
-          setter(value)
-          send('material', physical)
-        })
+        console.log(hh)
       })
 
-      return new Promise((resolve, reject) => {
-        let tt = setInterval(() => {
-          let item = cache.has(key)
-          if (item) {
-            clearInterval(tt)
-            resolve(cache.get(key))
-            setter(cache.get(key))
-            send('material', physical)
-          }
-        })
-      })
-    }
+    // let physical = new MeshPhysicalMaterial({})
 
-    on('receiver', async (material) => {
-      physical = { ...material }
+    // let readyPhy = (fnc = () => {}) => {
+    //   let tt = setInterval(() => {
+    //     if (physical) {
+    //       clearInterval(tt)
+    //       fnc()
+    //     }
+    //   })
+    // }
 
-      send('material', physical)
-      share(getNode().id, physical)
-    })
+    // let onValue = async (key, setter) => {
+    //   on(key, (value) => {
+    //     readyPhy(() => {
+    //       cache.set(key, value)
+    //       setter(value)
+    //       send('material', physical)
+    //     })
+    //   })
 
-    onValue('color', (value) => {
-      physical['color'] = value
-    })
-    onValue('map', (value) => {
-      physical['map'] = value
-    })
-    onValue('normalMap', (value) => {
-      physical['normalMap'] = value
-    })
-    onValue('roughnessMap', (value) => {
-      physical['roughnessMap'] = value
-    })
-    onValue('metalnessMap', (value) => {
-      physical['metalnessMap'] = value
-    })
-    onValue('emissiveMap', (value) => {
-      physical['emissiveMap'] = value
-    })
+    //   return new Promise((resolve, reject) => {
+    //     let tt = setInterval(() => {
+    //       let item = cache.has(key)
+    //       if (item) {
+    //         clearInterval(tt)
+    //         resolve(cache.get(key))
+    //         setter(cache.get(key))
+    //         send('material', physical)
+    //       }
+    //     })
+    //   })
+    // }
 
-    onValue('emissive', (value) => {
-      physical['emissive'] = value
-    })
-    onValue('thickness', (value) => {
-      physical['thickness'] = value
-    })
-    onValue('ior', (value) => {
-      physical['ior'] = value
-    })
-    onValue('transmission', (value) => {
-      physical['transmission'] = value
-    })
-    onValue('roughness', (value) => {
-      physical['roughness'] = value
-    })
-    onValue('metalness', (value) => {
-      physical['metalness'] = value
-    })
+    // on('receiver', async (material) => {
+    //   physical = { ...material }
+
+    //   send('material', physical)
+    //   share(getNode().id, physical)
+    // })
+
+    // onValue('color', (value) => {
+    //   physical['color'] = value
+    // })
+    // onValue('map', (value) => {
+    //   physical['map'] = value
+    // })
+    // onValue('normalMap', (value) => {
+    //   physical['normalMap'] = value
+    // })
+    // onValue('roughnessMap', (value) => {
+    //   physical['roughnessMap'] = value
+    // })
+    // onValue('metalnessMap', (value) => {
+    //   physical['metalnessMap'] = value
+    // })
+    // onValue('emissiveMap', (value) => {
+    //   physical['emissiveMap'] = value
+    // })
+
+    // onValue('emissive', (value) => {
+    //   physical['emissive'] = value
+    // })
+    // onValue('thickness', (value) => {
+    //   physical['thickness'] = value
+    // })
+    // onValue('ior', (value) => {
+    //   physical['ior'] = value
+    // })
+    // onValue('transmission', (value) => {
+    //   physical['transmission'] = value
+    // })
+    // onValue('roughness', (value) => {
+    //   physical['roughness'] = value
+    // })
+    // onValue('metalness', (value) => {
+    //   physical['metalness'] = value
+    // })
 
     globals.onClean(() => {})
   })

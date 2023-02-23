@@ -1,10 +1,10 @@
 // import * as Y from 'yjs'
 // import { IndexeddbPersistence } from 'y-indexeddb'
-import localforage from 'localforage'
+// import localforage from 'localforage'
 
-let store = localforage.createInstance({
-  name: 'documents',
-})
+// let store = localforage.createInstance({
+//   name: 'documents',
+// })
 
 // function toArray(map) {
 //   let arr = []

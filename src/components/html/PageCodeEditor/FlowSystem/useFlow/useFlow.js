@@ -51,8 +51,15 @@ export const useFlow = create((set, get) => {
       //     nProgress.done()
       //   }
       // })
-      nProgress.start()
-      // worker.postMessage({ type: 'load', docName })
+      nProgress.start() // worker.postMessage({ type: 'load', docName })
+
+      fetch(`/date/2022-20-23/backup.json`)
+        .then((res) => {
+          return res.json()
+        })
+        .then((dat) => {
+          set({ edges: dat.edges, nodes: dat.nodes })
+        })
 
       set({
         saveToDB: () => {
