@@ -179,12 +179,13 @@ export const run = async ({ core, globals, getNode, on, send, share }) => {
       })
 
       return new Promise((resolve, reject) => {
-        let item = cache.has(key)
         let tt = setInterval(() => {
+          let item = cache.has(key)
           if (item) {
             clearInterval(tt)
             resolve(cache.get(key))
             setter(cache.get(key))
+            send('material', physical)
           }
         })
       })
@@ -193,7 +194,6 @@ export const run = async ({ core, globals, getNode, on, send, share }) => {
     on('receiver', async (material) => {
       physical = material.clone()
       share(physical, getNode().id)
-      send('material', physical)
 
       onValue('color', (value) => {
         physical['color'] = value
@@ -213,6 +213,7 @@ export const run = async ({ core, globals, getNode, on, send, share }) => {
       onValue('metalness', (value) => {
         physical['metalness'] = value
       })
+      send('material', physical)
     })
 
     globals.onClean(() => {
