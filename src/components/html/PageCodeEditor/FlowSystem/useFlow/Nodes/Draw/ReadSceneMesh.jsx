@@ -2,8 +2,10 @@ import React from 'react'
 import { Handle, Position } from 'reactflow'
 import { useFlow } from '../../useFlow'
 import { getTemplateByNodeInstance } from '../../nodeTypes'
-import { BoxGeometry, Mesh, MeshPhysicalMaterial } from 'three'
-import { ExposeParamter } from '../../SharedGUI/ExposeParamter'
+import { MeshPhysicalMaterial } from 'three'
+
+//BoxGeometry, Mesh,
+// import { ExposeParamter } from '../../SharedGUI/ExposeParamter'
 import { makeHoverStateTarget } from '../../SharedGUI/HoverState'
 
 export const handles = [
