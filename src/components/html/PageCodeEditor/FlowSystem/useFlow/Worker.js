@@ -66,23 +66,22 @@ self.onmessage = (ev) => {
     // provider.whenSynced.then(() => {
     //   sync()
     // })
-    store.getItem(ev.data.docName).then((doc) => {
-      if (typeof doc === 'string') {
-        let data = JSON.parse(doc)
-        self.postMessage({
-          type: 'sync',
-          nodes: data.nodes,
-          edges: data.edges,
-        })
-      }
-    })
-
+    // store.getItem(ev.data.docName).then((doc) => {
+    //   if (typeof doc === 'string') {
+    //     let data = JSON.parse(doc)
+    //     self.postMessage({
+    //       type: 'sync',
+    //       nodes: data.nodes,
+    //       edges: data.edges,
+    //     })
+    //   }
+    // })
     //
   } else if (ev.data.type === 'saveDB') {
     let edges = ev.data.edges
     let nodes = ev.data.nodes
 
-    store.setItem(ev.data.docName, JSON.stringify({ nodes: nodes, edges: edges }))
+    // store.setItem(ev.data.docName, JSON.stringify({ nodes: nodes, edges: edges }))
   } else if (ev.data.type === 'undo') {
     // rootManager.undo()
   } else if (ev.data.type === 'redo') {

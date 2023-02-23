@@ -140,7 +140,7 @@ export default function GUI({ id, data, selected }) {
 export const run = async ({ core, globals, getNode, on, send, share }) => {
   //
   core.onReady(() => {
-    let physical = new MeshPhysicalMaterial({ color: 0xffffff })
+    let physical = {}
 
     share(getNode().id, physical)
 
@@ -209,7 +209,7 @@ export const run = async ({ core, globals, getNode, on, send, share }) => {
     send('material', physical)
 
     globals.onClean(() => {
-      physical.dispose()
+      //
     })
   })
 }

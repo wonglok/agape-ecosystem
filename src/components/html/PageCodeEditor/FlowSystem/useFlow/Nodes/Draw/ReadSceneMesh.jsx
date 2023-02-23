@@ -137,30 +137,27 @@ export const run = async ({ core, globals, getNode, on, send }) => {
       })
     }
 
-    on('geometry', (data) => {
-      readyMesh(() => {
-        if (data) {
-          mesh.geometry = data
-        }
-      })
-    })
-
-    on('material', (data) => {
-      readyMesh(() => {
-        if (data) {
-          mesh.material = data
-        } else {
-          mesh.material = mesh.userData.oMat.clone()
-        }
-      })
-      // console.log('material', data)
-    })
-
     readyMesh(() => {
       if (!mesh.userData.oMat) {
         mesh.userData.oMat = mesh.material.clone()
       }
       mesh.material = mesh.userData.oMat.clone()
+
+      on('geometry', (data) => {
+        if (data) {
+          mesh.geometry = data
+        }
+      })
+
+      on('material', (data) => {
+        if (!(mesh.material instanceof MeshPhysicalMaterial)) {
+          mesh.material = new MeshPhysicalMaterial({})
+        }
+        for (let kn in data) {
+          mesh.material[kn] = data[kn]
+        }
+        // console.log('material', data)
+      })
     })
 
     globals.onClean(() => {

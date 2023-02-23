@@ -203,7 +203,7 @@ export const run = async ({ core, globals, getNode, on, send, share }) => {
     }
 
     on('receiver', async (material) => {
-      physical = material.clone()
+      physical = { ...material }
 
       send('material', physical)
       share(getNode().id, physical)
@@ -247,11 +247,6 @@ export const run = async ({ core, globals, getNode, on, send, share }) => {
       physical['metalness'] = value
     })
 
-    globals.onClean(() => {
-      readyPhy(() => {
-        cache?.clear()
-        physical?.dispose()
-      })
-    })
+    globals.onClean(() => {})
   })
 }
