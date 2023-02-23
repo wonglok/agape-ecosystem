@@ -193,7 +193,6 @@ export const run = async ({ core, globals, getNode, on, send, share }) => {
 
     on('receiver', async (material) => {
       physical = material.clone()
-      share(physical, getNode().id)
 
       onValue('color', (value) => {
         physical['color'] = value
@@ -213,7 +212,9 @@ export const run = async ({ core, globals, getNode, on, send, share }) => {
       onValue('metalness', (value) => {
         physical['metalness'] = value
       })
+
       send('material', physical)
+      share(physical, getNode().id)
     })
 
     globals.onClean(() => {
