@@ -80,11 +80,10 @@ export default function GUI({ id, data, selected }) {
           className='h-10 text-xs opacity-0'
         /> */}
       </div>
+
       <div className='px-3 pt-0 pb-3'>
         <SettingsGUI data={data} id={id}></SettingsGUI>
       </div>
-
-      {/*  */}
 
       {handles
         .filter((r) => r.type === 'source')
