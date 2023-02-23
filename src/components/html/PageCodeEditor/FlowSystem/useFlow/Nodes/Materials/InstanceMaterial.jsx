@@ -205,46 +205,46 @@ export const run = async ({ core, globals, getNode, on, send, share }) => {
     on('receiver', async (material) => {
       physical = material.clone()
 
-      onValue('color', (value) => {
-        physical['color'] = value
-      })
-      onValue('map', (value) => {
-        physical['map'] = value
-      })
-      onValue('normalMap', (value) => {
-        physical['normalMap'] = value
-      })
-      onValue('roughnessMap', (value) => {
-        physical['roughnessMap'] = value
-      })
-      onValue('metalnessMap', (value) => {
-        physical['metalnessMap'] = value
-      })
-      onValue('emissiveMap', (value) => {
-        physical['emissiveMap'] = value
-      })
-
-      onValue('emissive', (value) => {
-        physical['emissive'] = value
-      })
-      onValue('thickness', (value) => {
-        physical['thickness'] = value
-      })
-      onValue('ior', (value) => {
-        physical['ior'] = value
-      })
-      onValue('transmission', (value) => {
-        physical['transmission'] = value
-      })
-      onValue('roughness', (value) => {
-        physical['roughness'] = value
-      })
-      onValue('metalness', (value) => {
-        physical['metalness'] = value
-      })
-
       send('material', physical)
       share(physical, getNode().id)
+    })
+
+    onValue('color', (value) => {
+      physical['color'] = value
+    })
+    onValue('map', (value) => {
+      physical['map'] = value
+    })
+    onValue('normalMap', (value) => {
+      physical['normalMap'] = value
+    })
+    onValue('roughnessMap', (value) => {
+      physical['roughnessMap'] = value
+    })
+    onValue('metalnessMap', (value) => {
+      physical['metalnessMap'] = value
+    })
+    onValue('emissiveMap', (value) => {
+      physical['emissiveMap'] = value
+    })
+
+    onValue('emissive', (value) => {
+      physical['emissive'] = value
+    })
+    onValue('thickness', (value) => {
+      physical['thickness'] = value
+    })
+    onValue('ior', (value) => {
+      physical['ior'] = value
+    })
+    onValue('transmission', (value) => {
+      physical['transmission'] = value
+    })
+    onValue('roughness', (value) => {
+      physical['roughness'] = value
+    })
+    onValue('metalness', (value) => {
+      physical['metalness'] = value
     })
 
     globals.onClean(() => {
