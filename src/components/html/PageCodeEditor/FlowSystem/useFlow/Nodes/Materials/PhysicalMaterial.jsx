@@ -142,7 +142,7 @@ export const run = async ({ core, globals, getNode, on, send, share }) => {
   core.onReady(() => {
     let physical = new MeshPhysicalMaterial({ color: 0xffffff })
 
-    share(physical, getNode().id)
+    share(getNode().id, physical)
 
     on('color', (color) => {
       physical.color = physical.color || new Color('#ffffff')

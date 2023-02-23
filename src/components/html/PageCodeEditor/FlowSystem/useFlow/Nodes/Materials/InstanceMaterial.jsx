@@ -206,7 +206,7 @@ export const run = async ({ core, globals, getNode, on, send, share }) => {
       physical = material.clone()
 
       send('material', physical)
-      share(physical, getNode().id)
+      share(getNode().id, physical)
     })
 
     onValue('color', (value) => {
