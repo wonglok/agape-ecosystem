@@ -31,12 +31,13 @@ let provider = false
 self.onclose = () => {
   provider?.destroy()
 }
+
 self.onmessage = (ev) => {
   if (ev.data.type === 'load') {
     provider = new IndexeddbPersistence(ev.data.docName, doc)
-    // provider.whenSynced.then(() => {
-    //   sync()
-    // })
+    provider.whenSynced.then(() => {
+      sync()
+    })
   } else if (ev.data.type === 'saveDB') {
     let edges = ev.data.edges
     let nodes = ev.data.nodes
