@@ -21,6 +21,7 @@ export function ExportGroup(node) {
 
   return (
     <div
+      className='export-group'
       style={{
         width: `${size.width.toFixed(0)}px`,
         height: `${size.height.toFixed(0)}px`,

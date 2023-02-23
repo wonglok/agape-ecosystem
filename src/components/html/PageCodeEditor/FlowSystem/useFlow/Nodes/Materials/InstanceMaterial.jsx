@@ -169,12 +169,41 @@ export const run = async ({ core, globals, getNode, on, send, share }) => {
       })
     }
 
-    on('receiver', (material) => {
-      physical = material.clone()
-      physical.color = core.now.cache.get('color')
-      share(physical, getNode().id)
+    let waitFor = async (key) => {
+      return new Promise((resolve, reject) => {
+        let item = core.now.cache.has(key)
+        let tt = setInterval(() => {
+          if (item) {
+            clearInterval(tt)
+            resolve(core.now.cache.get(key))
+          }
+        })
+      })
+    }
 
+    on('receiver', async (material) => {
+      physical = material.clone()
+      share(physical, getNode().id)
       send('material', physical)
+
+      waitFor('color').then((value) => {
+        physical['color'] = value
+      })
+      waitFor('thickness').then((value) => {
+        physical['thickness'] = value
+      })
+      waitFor('ior').then((value) => {
+        physical['ior'] = value
+      })
+      waitFor('transmission').then((value) => {
+        physical['transmission'] = value
+      })
+      waitFor('roughness').then((value) => {
+        physical['roughness'] = value
+      })
+      waitFor('metalness').then((value) => {
+        physical['metalness'] = value
+      })
     })
 
     on('color', (color) => {
@@ -188,6 +217,7 @@ export const run = async ({ core, globals, getNode, on, send, share }) => {
 
     on('thickness', (thickness) => {
       readyPhy(() => {
+        core.now.cache.set('thickness', thickness)
         physical.thickness = thickness
         send('material', physical)
       })
@@ -195,6 +225,7 @@ export const run = async ({ core, globals, getNode, on, send, share }) => {
 
     on('ior', (ior) => {
       readyPhy(() => {
+        core.now.cache.set('ior', ior)
         physical.ior = ior
         send('material', physical)
       })
@@ -202,6 +233,7 @@ export const run = async ({ core, globals, getNode, on, send, share }) => {
 
     on('transmission', (transmission) => {
       readyPhy(() => {
+        core.now.cache.set('transmission', transmission)
         physical.transmission = transmission
         send('material', physical)
       })
@@ -209,6 +241,7 @@ export const run = async ({ core, globals, getNode, on, send, share }) => {
 
     on('roughness', (roughness) => {
       readyPhy(() => {
+        core.now.cache.set('roughness', roughness)
         physical.roughness = roughness
         send('material', physical)
       })
@@ -216,12 +249,14 @@ export const run = async ({ core, globals, getNode, on, send, share }) => {
 
     on('metalness', (metalness) => {
       readyPhy(() => {
+        core.now.cache.set('metalness', metalness)
         physical.metalness = metalness
         send('material', physical)
       })
     })
 
     readyPhy(() => {
+      core.now.cache.set('physical', physical)
       send('material', physical)
     })
 

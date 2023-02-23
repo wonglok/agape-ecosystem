@@ -119,9 +119,9 @@ export const useFlow = create((set, get) => {
       ({ reactFlowWrapper, project }) =>
       (event) => {
         const targetIsPane = event.target.classList.contains('react-flow__pane')
+        const targetIsGrouper = event.target.classList.contains('export-group')
 
-        console.log('classlist', event.target.classList)
-        if (targetIsPane) {
+        if (targetIsPane || targetIsGrouper) {
           // we need to remove the wrapper bounds, in order to get the correct position
           const { top, left } = reactFlowWrapper.current.getBoundingClientRect()
 
