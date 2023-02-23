@@ -167,94 +167,38 @@ export default function GUI({ id, data, selected }) {
 
 export const run = async ({ core, globals, getNode, on, send, share }) => {
   //
-  let cache = new Map()
+  let base = new Map()
+  let local = new Map()
   core.onReady(() => {
+    //
+    let pulse = () => {
+      //
+      let specification = {}
+      for (let [key, val] of base.entries()) {
+        specification[key] = val
+      }
+      for (let [key, val] of local.entries()) {
+        specification[key] = val
+      }
+
+      send('material', specification)
+    }
+
+    on('receiver', (mateiralSpec) => {
+      for (let kn in mateiralSpec) {
+        base.set(kn, mateiralSpec[kn])
+      }
+      pulse()
+    })
+
     handles
       .filter((r) => r.propID)
-      .forEach((hh) => {
-        //
-        //
-
-        console.log(hh)
+      .forEach(({ id }) => {
+        on(id, (val) => {
+          local.set(id, val)
+        })
+        pulse()
       })
-
-    // let physical = new MeshPhysicalMaterial({})
-
-    // let readyPhy = (fnc = () => {}) => {
-    //   let tt = setInterval(() => {
-    //     if (physical) {
-    //       clearInterval(tt)
-    //       fnc()
-    //     }
-    //   })
-    // }
-
-    // let onValue = async (key, setter) => {
-    //   on(key, (value) => {
-    //     readyPhy(() => {
-    //       cache.set(key, value)
-    //       setter(value)
-    //       send('material', physical)
-    //     })
-    //   })
-
-    //   return new Promise((resolve, reject) => {
-    //     let tt = setInterval(() => {
-    //       let item = cache.has(key)
-    //       if (item) {
-    //         clearInterval(tt)
-    //         resolve(cache.get(key))
-    //         setter(cache.get(key))
-    //         send('material', physical)
-    //       }
-    //     })
-    //   })
-    // }
-
-    // on('receiver', async (material) => {
-    //   physical = { ...material }
-
-    //   send('material', physical)
-    //   share(getNode().id, physical)
-    // })
-
-    // onValue('color', (value) => {
-    //   physical['color'] = value
-    // })
-    // onValue('map', (value) => {
-    //   physical['map'] = value
-    // })
-    // onValue('normalMap', (value) => {
-    //   physical['normalMap'] = value
-    // })
-    // onValue('roughnessMap', (value) => {
-    //   physical['roughnessMap'] = value
-    // })
-    // onValue('metalnessMap', (value) => {
-    //   physical['metalnessMap'] = value
-    // })
-    // onValue('emissiveMap', (value) => {
-    //   physical['emissiveMap'] = value
-    // })
-
-    // onValue('emissive', (value) => {
-    //   physical['emissive'] = value
-    // })
-    // onValue('thickness', (value) => {
-    //   physical['thickness'] = value
-    // })
-    // onValue('ior', (value) => {
-    //   physical['ior'] = value
-    // })
-    // onValue('transmission', (value) => {
-    //   physical['transmission'] = value
-    // })
-    // onValue('roughness', (value) => {
-    //   physical['roughness'] = value
-    // })
-    // onValue('metalness', (value) => {
-    //   physical['metalness'] = value
-    // })
 
     globals.onClean(() => {})
   })
