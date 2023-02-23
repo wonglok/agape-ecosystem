@@ -109,7 +109,6 @@ export const run = async ({ core, globals, nodeData, on, send }) => {
   //
   core.onReady(() => {
     let box = new TorusGeometry(2.5, 0.2, 256, 32)
-
     send('geometry', box)
   })
 }
