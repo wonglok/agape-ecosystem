@@ -8,6 +8,8 @@ import { makeHoverStateTarget } from '../../SharedGUI/HoverState'
 
 export const handles = [
   //
+  { type: 'target', dataType: 'material', id: 'receiver', displayName: 'Inherit', position: Position.Top },
+
   { type: 'target', dataType: 'color', id: 'color', displayName: 'Color' },
   { type: 'target', dataType: 'number', id: 'ior', displayName: 'Index of Refraction' },
   { type: 'target', dataType: 'number', id: 'thickness', displayName: 'Thickness' },
@@ -18,12 +20,12 @@ export const handles = [
   { type: 'source', dataType: 'material', id: 'material', displayName: 'Material' },
 ]
 
-export const name = 'PhysicalMaterial'
+export const name = 'InstanceMaterial'
 
 export const createData = () => {
   return {
     type: name,
-    data: { label: 'materialPhysical1', color: '#a0a0a0' },
+    data: { label: 'instanceMaterial1', color: '#a0a0a0' },
     position: { x: 250, y: 25 },
   }
 }
@@ -37,6 +39,30 @@ export default function GUI({ id, data, selected }) {
         selected ? ' border-cyan-500 shadow-cyan-100 shadow-lg ' : ' border-transparent'
       }`}>
       {handles
+        .filter((r) => r.position === Position.Top)
+        .filter((r) => r.type === 'target')
+        .map((r, i) => {
+          return (
+            <Handle
+              isValidConnection={(connection) => {
+                let oppositeNode = useFlow.getState().nodes.find((n) => n.id === connection.source)
+                let template = getTemplateByNodeInstance(oppositeNode)
+                let remoteHandle = template.handles.find((h) => h.id === connection.sourceHandle)
+                return remoteHandle?.dataType === r.dataType
+              }}
+              {...makeHoverStateTarget({ handle: r })}
+              type={r.type}
+              id={r.id}
+              key={r.id}
+              className='w-4 h-2 bg-gray-400 rounded-full hover:shadow-lg hover:shadow-cyan-500 hover:bg-cyan-400'
+              style={{ left: `calc(50% + 15px * ${i})` }}
+              position={r.position}
+            />
+          )
+        })}
+
+      {handles
+        .filter((r) => r.position !== Position.Top)
         .filter((r) => r.type === 'target')
         .map((r, i) => {
           return (
@@ -52,7 +78,7 @@ export default function GUI({ id, data, selected }) {
               id={r.id}
               key={r.id}
               className='w-2 h-4 bg-gray-400 rounded-full hover:shadow-lg hover:shadow-cyan-500 hover:bg-cyan-400'
-              style={{ top: `calc(52px + 25px * ${i})` }}
+              style={{ top: `calc(52px + 24px * ${i})` }}
               position={Position.Left}
             />
           )
@@ -88,6 +114,7 @@ export default function GUI({ id, data, selected }) {
       </div>
 
       {handles
+        .filter((r) => r.position !== Position.Top)
         .filter((r) => r.id !== 'material')
         .map((h) => {
           return (
@@ -129,47 +156,79 @@ export default function GUI({ id, data, selected }) {
 
 export const run = async ({ core, globals, getNode, on, send, share }) => {
   //
+  core.now.cache = new Map()
   core.onReady(() => {
-    let physical = new MeshPhysicalMaterial({ color: 0xffffff })
+    let physical = new MeshPhysicalMaterial({})
 
-    share(physical, getNode().id)
+    let readyPhy = (fnc = () => {}) => {
+      let tt = setInterval(() => {
+        if (physical) {
+          clearInterval(tt)
+          fnc()
+        }
+      })
+    }
 
-    on('color', (color) => {
-      physical.color = physical.color || new Color('#ffffff')
-      physical.color.set(color)
+    on('receiver', (material) => {
+      physical = material.clone()
+      physical.color = core.now.cache.get('color')
+      share(physical, getNode().id)
 
       send('material', physical)
+    })
+
+    on('color', (color) => {
+      readyPhy(() => {
+        let newColor = new Color(color)
+        core.now.cache.set('color', newColor)
+        physical.color = newColor
+        send('material', physical)
+      })
     })
 
     on('thickness', (thickness) => {
-      physical.thickness = thickness
-      send('material', physical)
+      readyPhy(() => {
+        physical.thickness = thickness
+        send('material', physical)
+      })
     })
 
     on('ior', (ior) => {
-      physical.ior = ior
-      send('material', physical)
+      readyPhy(() => {
+        physical.ior = ior
+        send('material', physical)
+      })
     })
 
     on('transmission', (transmission) => {
-      physical.transmission = transmission
-      send('material', physical)
+      readyPhy(() => {
+        physical.transmission = transmission
+        send('material', physical)
+      })
     })
 
     on('roughness', (roughness) => {
-      physical.roughness = roughness
-      send('material', physical)
+      readyPhy(() => {
+        physical.roughness = roughness
+        send('material', physical)
+      })
     })
 
     on('metalness', (metalness) => {
-      physical.metalness = metalness
+      readyPhy(() => {
+        physical.metalness = metalness
+        send('material', physical)
+      })
+    })
+
+    readyPhy(() => {
       send('material', physical)
     })
 
-    send('material', physical)
-
     globals.onClean(() => {
-      physical.dispose()
+      readyPhy(() => {
+        physical?.dispose()
+      })
     })
   })
 }

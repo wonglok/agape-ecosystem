@@ -76,11 +76,11 @@ export function RunNode({ globals, scope, nodes, node, edges }) {
         globals,
         scope,
         setCompos,
-        share: (v, node) => {
-          globals[node?.id] = v
+        share: (v, id) => {
+          globals[id] = v
         },
-        give: (node) => {
-          return globals[node?.id]
+        give: (id) => {
+          return globals[id]
         },
         getNode() {
           return nodesRef.current.find((n) => n.id === node.id)

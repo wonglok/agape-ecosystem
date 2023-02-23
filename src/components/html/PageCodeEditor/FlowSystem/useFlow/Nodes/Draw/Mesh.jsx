@@ -8,8 +8,8 @@ import { makeHoverStateTarget } from '../../SharedGUI/HoverState'
 
 export const handles = [
   //
-  { type: 'target', dataType: 'geometry', id: 'geometry', displayName: 'Geometry' },
   { type: 'target', dataType: 'material', id: 'material', displayName: 'Material' },
+  { type: 'target', dataType: 'geometry', id: 'geometry', displayName: 'Geometry' },
   { type: 'source', dataType: 'object3d', id: 'object3d', displayName: 'Object3D' },
 ]
 

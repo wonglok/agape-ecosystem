@@ -3,6 +3,7 @@ import { useFlow } from '../../useFlow'
 import { getTemplateByNodeInstance } from '../../nodeTypes'
 import { makeHoverStateTarget } from '../../SharedGUI/HoverState'
 import { RunnerObject } from '../../../FlowSystemRunner/RunnerObject/RunnerObject'
+import { ExportParamter } from '../../SharedGUI/ExportParamter'
 
 // [
 //   // //
@@ -22,16 +23,18 @@ export const provideHandle = ({ nodes }) => {
 
     if (n.data.isExposed) {
       temp.handles.forEach((h) => {
-        handlesInt.push({
-          ...h,
-          id: h.id + n.id,
-          type: h.type === 'target' ? 'source' : 'target',
-          label: n.data.label,
-          oldNode: n,
-          oldNodeID: n.id,
-          oldHandleID: h.id,
-          groupName: n.data.groupName,
-        })
+        if (!handlesInt.some((hh) => hh.id === h.id + n.id)) {
+          handlesInt.push({
+            ...h,
+            id: h.id + n.id,
+            type: h.type === 'target' ? 'source' : 'target',
+            label: n.data.label,
+            oldNode: n,
+            oldNodeID: n.id,
+            oldHandleID: h.id,
+            groupName: n.data.groupName,
+          })
+        }
       })
     }
   })
@@ -45,16 +48,18 @@ export const provideHandle = ({ nodes }) => {
           return h.type === 'source'
         })
         .forEach((h) => {
-          handlesInt.push({
-            ...h,
-            id: h.id + n.id,
-            type: 'source',
-            label: n.data.label,
-            oldNode: n,
-            oldNodeID: n.id,
-            oldHandleID: h.id,
-            groupName: n.data.groupName,
-          })
+          if (!handlesInt.some((hh) => hh.id === h.id + n.id)) {
+            handlesInt.push({
+              ...h,
+              id: h.id + n.id,
+              type: 'source',
+              label: n.data.label,
+              oldNode: n,
+              oldNodeID: n.id,
+              oldHandleID: h.id,
+              groupName: n.data.groupName,
+            })
+          }
         })
     }
   })
@@ -97,7 +102,7 @@ export default function GUI({ id, data, selected }) {
           return (
             <Handle
               isValidConnection={(connection) => {
-                let oppositeNode = useFlow.getState().nodes.find((n) => n.id === connection.source)
+                let oppositeNode = useFlow.getState().nodes.find((n) => n.id === connection.source && n.id !== id)
                 let template = getTemplateByNodeInstance(oppositeNode)
                 let remoteHandle = template.handles.find((h) => h.id === connection.sourceHandle)
                 return remoteHandle?.dataType === r.dataType
@@ -137,6 +142,8 @@ export default function GUI({ id, data, selected }) {
           onChange={(evt) => updateNodeColor(id, evt.target.value)}
           className='inline-block h-10 text-xs opacity-0 appearance-none cursor-grabbing y-0'
         /> */}
+
+        <ExportParamter id={id} data={data}></ExportParamter>
       </div>
 
       {handles
@@ -164,7 +171,7 @@ export default function GUI({ id, data, selected }) {
               <Handle
                 isValidConnection={(connection) => {
                   // console.log(connection)
-                  let oppositeNode = useFlow.getState().nodes.find((n) => n.id === connection.target)
+                  let oppositeNode = useFlow.getState().nodes.find((n) => n.id === connection.target && n.id !== id)
                   let template = getTemplateByNodeInstance(oppositeNode)
                   let remoteHandle = template.handles.find((h) => h.id === connection.targetHandle)
                   return remoteHandle?.dataType === r.dataType
@@ -216,7 +223,7 @@ export const run = async ({ core, globals, setCompos, getNode, on, send, give })
           .filter((r) => r.type === 'source')
           .forEach((h) => {
             let tt = setInterval(() => {
-              let item = give(h.oldNode)
+              let item = give(h.oldNode.id)
               if (item) {
                 clearInterval(tt)
                 send(h.id, item)
