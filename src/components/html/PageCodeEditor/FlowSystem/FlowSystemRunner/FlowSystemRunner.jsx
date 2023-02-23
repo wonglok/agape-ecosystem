@@ -19,16 +19,14 @@ export function FlowSystemRunner() {
 }
 
 function Content() {
-  let nodes = useFlow((s) => s.nodes)
-  let edges = useFlow((s) => s.edges)
   return (
     <>
       {/* Demo */}
       <HomeTrim></HomeTrim>
-      <EffectComposer>
+      <Convo></Convo>
+      {/* <EffectComposer>
         <Bloom luminanceThreshold={0.9} intensity={1} mipmapBlur></Bloom>
-      </EffectComposer>
-      <RunnerObject key={edges.map((r) => r.id).join('_')} nodes={nodes} edges={edges}></RunnerObject>
+      </EffectComposer> */}
 
       {/* <mesh scale={[1, 1, 1]}>
         <torusBufferGeometry args={[2.5, 1, 64, 64]}></torusBufferGeometry>
@@ -46,3 +44,13 @@ function Content() {
 //
 
 //
+function Convo() {
+  let nodes = useFlow((s) => s.nodes)
+  let edges = useFlow((s) => s.edges)
+
+  return (
+    <>
+      <RunnerObject key={edges.map((r) => r.id).join('_')} nodes={nodes} edges={edges}></RunnerObject>
+    </>
+  )
+}
