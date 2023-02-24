@@ -21,55 +21,94 @@ export function ExportGroup(node) {
   }, {})
 
   return (
-    <div
-      className={'export-group ' + (canSel ? '' : 'nodrag')}
-      style={{
-        width: `${size.width.toFixed(0)}px`,
-        height: `${size.height.toFixed(0)}px`,
-        position: 'relative',
-        backgroundColor: `rgba(255,0,0,0.1)`,
-      }}>
-      <div className='absolute top-0 left-0 w-full text-center'>
-        <button
-          className='px-5 py-2 m-4 bg-gray-200 rounded-2xl'
-          onClick={() => {
-            //
-            const intersections = getIntersectingNodes(node)
-            const edges = getEdges()
+    <>
+      <div
+        className={'export-group ' + (canSel ? '' : 'nodrag')}
+        style={{
+          width: `${size.width.toFixed(0)}px`,
+          height: `2px`, //${size.height.toFixed(0)}px
+          position: 'relative',
+          backgroundColor: `rgba(255,0,0,1)`,
+        }}>
+        <div className='absolute top-0 left-0 w-full p-3 text-center bg-blue-300'>
+          <button
+            className='px-5 py-2 m-4 bg-gray-200 rounded-2xl'
+            onClick={() => {
+              //
+              const intersections = getIntersectingNodes(node)
+              const edges = getEdges()
 
-            let okEdges = edges.filter((ed) => {
-              return intersections.some((r) => r.id === ed.target || r.id === ed.source)
-            })
+              let okEdges = edges.filter((ed) => {
+                return intersections.some((r) => r.id === ed.target || r.id === ed.source)
+              })
 
-            let node2 = getNodes().find((r) => r.id === node.id)
-            let okNodes = intersections
+              let node2 = getNodes().find((r) => r.id === node.id)
+              let okNodes = intersections
 
-            let data = {
-              edges: okEdges,
-              nodes: [...okNodes, node2],
-            }
+              let data = {
+                edges: okEdges,
+                nodes: [...okNodes, node2],
+              }
 
-            let a = document.createElement('a')
-            a.href = URL.createObjectURL(new Blob([JSON.stringify(data)], { type: 'application/json' }))
-            a.download = 'backup.json'
-            a.click()
+              let a = document.createElement('a')
+              a.href = URL.createObjectURL(new Blob([JSON.stringify(data)], { type: 'application/json' }))
+              a.download = 'backup.json'
+              a.click()
 
-            //
-          }}>
-          Download Grouped JSON
-        </button>
-        <button
-          className={'px-5 py-2 m-4 rounded-2xl ' + (!canSel ? 'bg-blue-500' : 'bg-gray-200')}
-          onClick={() => {
-            setSel((s) => !s)
-          }}>
-          {canSel ? 'Toggle Lock' : 'Locked'}
-        </button>
+              //
+            }}>
+            Download Grouped JSON
+          </button>
+          <button
+            className={'px-5 py-2 m-4 rounded-2xl ' + (!canSel ? 'bg-blue-500' : 'bg-gray-200')}
+            onClick={() => {
+              setSel((s) => !s)
+            }}>
+            {canSel ? 'Toggle Lock' : 'Locked'}
+          </button>
 
-        <button></button>
+          <button></button>
+        </div>
       </div>
-      <div {...bind()} className='absolute bottom-0 right-0 w-8 h-8 bg-red-500 nodrag touch-none'></div>
-    </div>
+      <div
+        style={{
+          width: `${size.width.toFixed(0)}px`,
+          position: 'absolute',
+          left: `0px`,
+          height: '2px',
+          backgroundColor: 'red',
+          top: `${size.height.toFixed(0)}px`,
+        }}>
+        <div {...bind()} className='absolute bottom-0 right-0 w-8 h-8 bg-red-500 nodrag touch-none'></div>
+      </div>
+      <div
+        style={{
+          height: `${size.height.toFixed(0)}px`,
+          position: 'absolute',
+          left: `0px`,
+          width: '2px',
+          backgroundColor: 'red',
+          top: `${(size.height * 0.0).toFixed(0)}px`,
+        }}></div>
+      <div
+        style={{
+          height: `${size.height.toFixed(0)}px`,
+          left: `${size.width.toFixed(0)}px`,
+          position: 'absolute',
+          width: '2px',
+          backgroundColor: 'red',
+          top: `${(size.height * 0.0).toFixed(0)}px`,
+        }}></div>
+
+      <div
+        style={{
+          top: `0px`,
+          width: `${size.width.toFixed(0)}px`,
+          position: 'absolute',
+          height: '2px',
+          backgroundColor: 'red',
+        }}></div>
+    </>
   )
 }
 export default ExportGroup
