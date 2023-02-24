@@ -171,17 +171,24 @@ export const run = async ({ setReady, core, globals, getNode, send, on }) => {
   core.onPreload(() => {})
   core.onReady(() => {
     let last = ''
+    let tex = false
     let tt = setInterval(() => {
       let node = getNode()
       let now = JSON.stringify(node)
       if (last !== now) {
         last = now
 
-        new TextureLoader().loadAsync(node?.data?.textureImageDataURL).then((v) => {
+        tex = new TextureLoader().loadAsync(node?.data?.textureImageDataURL).then((v) => {
           v.flipY = getNode().data.flipY || false
           v.needsUpdate = true
           send('textureObject', v)
         })
+      }
+    })
+
+    window.addEventListener('needsUpdate', () => {
+      if (tex) {
+        send('textureObject', tex)
       }
     })
 

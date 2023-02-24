@@ -165,6 +165,11 @@ export const run = async ({ setReady, core, globals, getNode, send, on }) => {
       }
     })
 
+    window.addEventListener('needsUpdate', () => {
+      let node = getNode()
+      send('number', node?.data?.float0)
+    })
+
     globals.onClean(() => {
       clearInterval(tt)
     })

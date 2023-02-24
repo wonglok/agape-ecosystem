@@ -153,6 +153,10 @@ export const run = async ({ core, globals, getNode, send }) => {
       }
     })
 
+    window.addEventListener('needsUpdate', () => {
+      send('color', color)
+    })
+
     globals.onClean(() => {
       //
       clearInterval(tt)

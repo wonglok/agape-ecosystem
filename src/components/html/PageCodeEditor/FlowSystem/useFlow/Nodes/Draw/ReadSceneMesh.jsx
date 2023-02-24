@@ -124,6 +124,9 @@ export const run = async ({ core, globals, getNode, on, send }) => {
     timer = setInterval(() => {
       let scan = core?.now?.scene?.getObjectByName(getNode()?.data?.objectName)
       if (scan) {
+        if (!mesh) {
+          window.dispatchEvent(new CustomEvent('needsUpdate', { detail: {} }))
+        }
         mesh = scan
       }
     })
@@ -152,9 +155,9 @@ export const run = async ({ core, globals, getNode, on, send }) => {
       })
 
       on('material', (data) => {
-        if (!(mesh.material instanceof MeshPhysicalMaterial)) {
-          mesh.material = new MeshPhysicalMaterial({})
-        }
+        // if (!(mesh.material instanceof MeshPhysicalMaterial)) {
+        //   mesh.material = new MeshPhysicalMaterial({})
+        // }
 
         for (let kn in data) {
           if (typeof data[kn] !== 'undefined') {
@@ -164,6 +167,7 @@ export const run = async ({ core, globals, getNode, on, send }) => {
           }
         }
       })
+      window.dispatchEvent(new CustomEvent('needsUpdate', { detail: {} }))
     })
 
     globals.onClean(() => {
