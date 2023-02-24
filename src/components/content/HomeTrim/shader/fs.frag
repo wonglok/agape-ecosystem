@@ -124,6 +124,7 @@ void main() {
 
     emissiveColor.rgb = vec3(sampledDiffuseColor2) * texelRoughness2.r * 5.0;
     // emissiveColor.rgb = sampledDiffuseColor2.rgb;
+
   #endif
   totalEmissiveRadiance = emissiveColor.rgb;
 
