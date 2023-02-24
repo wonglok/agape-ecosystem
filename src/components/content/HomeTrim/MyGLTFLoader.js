@@ -2810,6 +2810,32 @@ class GLTFParser {
         assignExtrasToUserData(mesh, meshDef)
 
         setTimeout(() => {
+          if (!mesh.userData.old) {
+            mesh.userData.old = mesh.material.clone()
+          }
+          let newMat = new MeshPhysicalMaterial({
+            transmission: 0.01,
+            ior: 1.5,
+          })
+          if (mesh.userData?.old?.roughnessMap) {
+            newMat.transmissionMap = mesh.userData?.old?.roughnessMap
+          }
+          for (let kn in mesh.userData.old) {
+            if (kn === 'defines') {
+              continue
+            }
+            if (kn === 'transmission') {
+              if (mesh.userData.old[kn] > newMat[kn]) {
+                if (mesh.userData.old[kn]) {
+                  newMat[kn] = mesh.userData.old[kn]
+                }
+              }
+
+              continue
+            }
+            newMat[kn] = mesh.userData.old[kn]
+          }
+          mesh.material = newMat
           mesh.material.customProgramCacheKey = () => {
             return vs + fs + mesh.id + mesh.name
           }

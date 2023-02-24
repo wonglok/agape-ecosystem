@@ -107,26 +107,33 @@ void main() {
     // reads channel G, compatible with a combined OcclusionRoughnessMetallic (RGB) texture
     roughnessFactor *= texelRoughness.g;
   #endif
-	#include <metalnessmap_fragment>
+	// #include <metalnessmap_fragment>
+  float metalnessFactor = metalness;
+  #ifdef USE_METALNESSMAP
+    vec4 texelMetalness = texture2D( metalnessMap, vUv );
+    // reads channel B, compatible with a combined OcclusionRoughnessMetallic (RGB) texture
+    metalnessFactor *= texelMetalness.b;
+  #endif
+
 	#include <normal_fragment_begin>
 	#include <normal_fragment_maps>
 	#include <clearcoat_normal_fragment_begin>
 	#include <clearcoat_normal_fragment_maps>
 
   vec4 emissiveColor = vec4(0.0, 0.0, 0.0, 1.0);
+
+  float extraTransmission = 0.0;
 	#ifdef USE_EMISSIVEMAP
     emissiveColor = texture2D( emissiveMap, vUv );
   #endif
 
-  #ifdef USE_MAP
-    vec4 sampledDiffuseColor2 = texture2D( map, vUv );
-    vec4 texelRoughness2 = texture2D( roughnessMap, vUv );
-
-    emissiveColor.rgb = vec3(sampledDiffuseColor2) * texelRoughness2.r * 5.0;
-    // emissiveColor.rgb = sampledDiffuseColor2.rgb;
-
+  #ifdef USE_ROUGHNESSMAP
+    vec4 texelInfo = texture2D( roughnessMap, vUv );
+    roughnessFactor += texelInfo.r * 5.0;
+    // extraTransmission = texelInfo.b;
+    // emissiveColor.rgb = diffuseColor.rgb;
   #endif
-  totalEmissiveRadiance = emissiveColor.rgb;
+  // totalEmissiveRadiance += emissiveColor.rgb;
 
 
 	// accumulation
@@ -138,7 +145,30 @@ void main() {
 	#include <aomap_fragment>
 	vec3 totalDiffuse = reflectedLight.directDiffuse + reflectedLight.indirectDiffuse;
 	vec3 totalSpecular = reflectedLight.directSpecular + reflectedLight.indirectSpecular;
-	#include <transmission_fragment>
+	// #include <transmission_fragment>
+  #ifdef USE_TRANSMISSION
+	material.transmission = min(transmission + extraTransmission, 1.0);
+	material.transmissionAlpha = 1.0;
+	material.thickness = thickness;
+	material.attenuationDistance = attenuationDistance;
+	material.attenuationColor = attenuationColor;
+	#ifdef USE_TRANSMISSIONMAP
+		material.transmission *= texture2D( transmissionMap, vUv ).r;
+	#endif
+	#ifdef USE_THICKNESSMAP
+		material.thickness *= texture2D( thicknessMap, vUv ).g;
+	#endif
+	vec3 pos = vWorldPosition;
+	vec3 v = normalize( cameraPosition - pos );
+	vec3 n = inverseTransformDirection( normal, viewMatrix );
+	vec4 transmission = getIBLVolumeRefraction(
+		n, v, material.roughness, material.diffuseColor, material.specularColor, material.specularF90,
+		pos, modelMatrix, viewMatrix, projectionMatrix, material.ior, material.thickness,
+		material.attenuationColor, material.attenuationDistance );
+	material.transmissionAlpha = mix( material.transmissionAlpha, transmission.a, material.transmission );
+	totalDiffuse = mix( totalDiffuse, transmission.rgb, material.transmission );
+#endif
+
 	vec3 outgoingLight = totalDiffuse + totalSpecular + totalEmissiveRadiance;
 	#ifdef USE_SHEEN
 		// Sheen energy compensation approximation calculation can be found at the end of

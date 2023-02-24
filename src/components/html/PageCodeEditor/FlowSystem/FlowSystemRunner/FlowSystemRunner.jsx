@@ -1,10 +1,11 @@
 import { Environment, MeshTransmissionMaterial, OrbitControls, Select, Stars } from '@react-three/drei'
-import { Canvas } from '@react-three/fiber'
+import { Canvas, useThree } from '@react-three/fiber'
 import { Suspense } from 'react'
 import { RunnerObject } from './RunnerObject/RunnerObject'
 import { useFlow } from '../useFlow/useFlow'
 import { HomeTrim } from '@/components/content/HomeTrim/HomeTrim'
 import { Bloom, EffectComposer } from '@react-three/postprocessing'
+import { Color } from 'three'
 
 export function FlowSystemRunner() {
   return (
@@ -22,10 +23,14 @@ function Content() {
   return (
     <>
       {/* Demo */}
+      <pointLight color={'white'} position={[1, 2, 0]}></pointLight>
+      <pointLight color={'white'} position={[-1, 2, 0]}></pointLight>
+
       <HomeTrim></HomeTrim>
       <Convo></Convo>
-      <EffectComposer>
-        <Bloom luminanceThreshold={0.5} intensity={1} mipmapBlur></Bloom>
+      <BG></BG>
+      <EffectComposer disableNormalPass={false}>
+        <Bloom luminanceThreshold={0.7} intensity={3} radius={0.8} mipmapBlur></Bloom>
       </EffectComposer>
 
       {/* <mesh scale={[1, 1, 1]}>
@@ -33,7 +38,7 @@ function Content() {
         <meshPhysicalMaterial roughness={0.0} transmission={1} thickness={1.5}></meshPhysicalMaterial>
       </mesh> */}
 
-      <Environment preset='sunset'></Environment>
+      <Environment preset='night'></Environment>
       <OrbitControls dampingFactor={1} enableDamping object-position={[0.0, 2.5, 8]}></OrbitControls>
 
       {/* <gridHelper args={[100, 100, 0xffffff, 0xffffff]}></gridHelper> */}
@@ -42,6 +47,11 @@ function Content() {
 }
 
 //
+function BG() {
+  let scene = useThree((r) => r.scene)
+  scene.background = new Color('#000000')
+  return null
+}
 
 //
 function Convo() {
