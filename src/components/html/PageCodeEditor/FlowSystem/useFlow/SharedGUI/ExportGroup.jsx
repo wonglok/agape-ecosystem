@@ -54,8 +54,6 @@ export function ExportGroup(node) {
               a.href = URL.createObjectURL(new Blob([JSON.stringify(data)], { type: 'application/json' }))
               a.download = 'backup.json'
               a.click()
-
-              //
             }}>
             Download Grouped JSON
           </button>
