@@ -24,16 +24,16 @@ function Content() {
       {/* Demo */}
       <HomeTrim></HomeTrim>
       <Convo></Convo>
-      {/* <EffectComposer>
-        <Bloom luminanceThreshold={0.9} intensity={1} mipmapBlur></Bloom>
-      </EffectComposer> */}
+      <EffectComposer>
+        <Bloom luminanceThreshold={0.5} intensity={1} mipmapBlur></Bloom>
+      </EffectComposer>
 
       {/* <mesh scale={[1, 1, 1]}>
         <torusBufferGeometry args={[2.5, 1, 64, 64]}></torusBufferGeometry>
         <meshPhysicalMaterial roughness={0.0} transmission={1} thickness={1.5}></meshPhysicalMaterial>
       </mesh> */}
 
-      <Environment preset='sunset' background></Environment>
+      <Environment preset='sunset'></Environment>
       <OrbitControls dampingFactor={1} enableDamping object-position={[0.0, 2.5, 8]}></OrbitControls>
 
       {/* <gridHelper args={[100, 100, 0xffffff, 0xffffff]}></gridHelper> */}

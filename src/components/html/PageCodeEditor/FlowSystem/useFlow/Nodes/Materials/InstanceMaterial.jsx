@@ -18,7 +18,6 @@ export const handles = [
   { type: 'target', propID: true, dataType: 'texture', id: 'metalnessMap', displayName: 'Texture Metalness' },
   { type: 'target', propID: true, dataType: 'texture', id: 'emissiveMap', displayName: 'Texture Emissive' },
 
-  //
   { type: 'target', propID: true, dataType: 'color', id: 'emissive', displayName: 'Color Emissive' },
 
   { type: 'target', propID: true, dataType: 'number', id: 'ior', displayName: 'Index of Refraction' },

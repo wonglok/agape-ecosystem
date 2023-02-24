@@ -69,12 +69,12 @@ export function ExportGroup(node) {
         </div>
       </div>
       <div
-        className='bg-blue-500'
+        className='bg-blue-300'
         style={{
-          width: `${(size.width + 3).toFixed(0)}px`,
+          width: `${(size.width + 2).toFixed(0)}px`,
           position: 'absolute',
-          left: `-1px`,
-          height: '50px',
+          left: `0px`,
+          height: '100px',
           top: `${size.height.toFixed(0)}px`,
         }}></div>
       <div
@@ -83,27 +83,27 @@ export function ExportGroup(node) {
           position: 'absolute',
           left: `0px`,
           height: '2px',
-          backgroundColor: 'red',
           top: `${size.height.toFixed(0)}px`,
         }}>
-        <div {...bind()} className='absolute bottom-0 right-0 w-8 h-8 bg-red-500 nodrag touch-none'></div>
+        <div {...bind()} className='absolute bottom-0 right-0 w-8 h-8 bg-red-500 rounded-full nodrag touch-none'></div>
       </div>
+
       <div
+        className='bg-blue-300'
         style={{
           height: `${size.height.toFixed(0)}px`,
           position: 'absolute',
           left: `0px`,
-          width: '2px',
-          backgroundColor: 'red',
+          width: '20px',
           top: `${(size.height * 0.0).toFixed(0)}px`,
         }}></div>
       <div
+        className='bg-blue-300'
         style={{
-          height: `${size.height.toFixed(0)}px`,
+          height: `${(size.height + 100).toFixed(0)}px`,
           left: `${size.width.toFixed(0)}px`,
           position: 'absolute',
-          width: '2px',
-          backgroundColor: 'red',
+          width: '20px',
           top: `${(size.height * 0.0).toFixed(0)}px`,
         }}></div>
 
@@ -113,7 +113,6 @@ export function ExportGroup(node) {
           width: `${size.width.toFixed(0)}px`,
           position: 'absolute',
           height: '2px',
-          backgroundColor: 'red',
         }}></div>
     </>
   )
