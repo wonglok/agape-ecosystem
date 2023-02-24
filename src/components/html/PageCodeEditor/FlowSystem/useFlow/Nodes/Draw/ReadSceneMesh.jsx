@@ -151,13 +151,22 @@ export const run = async ({ core, globals, getNode, on, send }) => {
         }
       })
 
+      let ct = 0
       on('material', (data) => {
         if (!(mesh.material instanceof MeshPhysicalMaterial)) {
           mesh.material = new MeshPhysicalMaterial({})
         }
-        for (let kn in data) {
-          mesh.material[kn] = data[kn]
-        }
+        clearInterval(ct)
+
+        ct = setInterval(() => {
+          for (let kn in data) {
+            if (typeof data[kn] !== 'undefined') {
+              if (mesh.material[kn] !== data[kn]) {
+                mesh.material[kn] = data[kn]
+              }
+            }
+          }
+        })
       })
     })
 

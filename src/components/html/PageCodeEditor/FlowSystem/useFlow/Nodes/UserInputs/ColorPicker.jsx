@@ -140,6 +140,7 @@ export const run = async ({ core, globals, getNode, send }) => {
   core.onReady(() => {
     let color = new Color(getNode().data.color)
     let last = ''
+
     let tt = setInterval(() => {
       let node = getNode()
       let now = JSON.stringify(node)
@@ -151,6 +152,7 @@ export const run = async ({ core, globals, getNode, send }) => {
         send('color', color)
       }
     })
+
     globals.onClean(() => {
       //
       clearInterval(tt)
