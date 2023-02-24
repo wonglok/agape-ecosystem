@@ -71,6 +71,15 @@ export function ExportGroup(node) {
         </div>
       </div>
       <div
+        className='bg-blue-500'
+        style={{
+          width: `${(size.width + 3).toFixed(0)}px`,
+          position: 'absolute',
+          left: `-1px`,
+          height: '50px',
+          top: `${size.height.toFixed(0)}px`,
+        }}></div>
+      <div
         style={{
           width: `${size.width.toFixed(0)}px`,
           position: 'absolute',
