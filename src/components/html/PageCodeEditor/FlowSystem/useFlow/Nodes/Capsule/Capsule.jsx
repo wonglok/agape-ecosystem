@@ -305,27 +305,6 @@ export const run = async ({ core, globals, setCompos, getNode, on, send, give })
   let nodes = getNode().data.nodes
   let edges = getNode().data.edges
 
-  // handles.forEach((it) => {
-  //   console.log(it)
-
-  //   let nds = nodes.find((nid) => nid.id === it.id)
-  //   console.log(nds)
-  // })
-
-  // nodes
-  //   .filter((n) => {
-  //     return n.data.isExposed
-  //   })
-  //   .map((node) => {
-  //     console.log(node)
-  //   })
-
-  // nodes.map((n) => {
-  //   let template = getTemplateByNodeInstance(n)
-  //   let handles = template.handles
-  //   console.log(handles)
-  // })
-
   setCompos(<RunnerObject globals={globals} nodes={nodes} edges={edges}></RunnerObject>)
 
   return null
