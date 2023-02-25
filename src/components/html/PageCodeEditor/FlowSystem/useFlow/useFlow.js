@@ -33,42 +33,53 @@ export const useFlow = create((set, get) => {
       // }
       // window.addEventListener('keydown', hh)
 
-      // let sync = ({ nodes, edges }) => {
-      //   set({
-      //     nodes: nodes,
-      //     edges: edges,
-      //   })
-      // }
-
-      // let worker = new Worker()
-
-      // worker.addEventListener('message', (ev) => {
-      //   if (ev.data.type === 'sync') {
-      //     sync({
-      //       nodes: ev.data.nodes,
-      //       edges: ev.data.edges,
-      //     })
-      //     nProgress.done()
-      //   }
-      // })
-      nProgress.start() // worker.postMessage({ type: 'load', docName })
-
-      fetch(`/date/2022-20-23/backup.json`)
-        .then((res) => {
-          return res.json()
+      let sync = ({ nodes, edges }) => {
+        set({
+          nodes: nodes,
+          edges: edges,
         })
-        .then((dat) => {
-          set({ edges: dat.edges, nodes: dat.nodes })
-        })
+      }
+
+      let worker = new Worker()
+
+      let did = false
+      let initTemplate = () => {
+        if (!did) {
+          did = true
+
+          fetch(`/date/2022-20-23/backup.json`)
+            .then((r) => r.json())
+            .then((dat) => {
+              if (get().nodes.length === 0 && get().edges.length === 0) {
+                set({ nodes: dat.nodes, edges: dat.edges })
+              }
+            })
+        }
+      }
+      worker.addEventListener('message', (ev) => {
+        if (ev.data.type === 'sync') {
+          sync({
+            nodes: ev.data.nodes,
+            edges: ev.data.edges,
+          })
+
+          setTimeout(() => {
+            initTemplate()
+          })
+          nProgress.done()
+        }
+      })
+      nProgress.start()
+      worker.postMessage({ type: 'load', docName })
 
       set({
         saveToDB: () => {
-          // worker.postMessage({ type: 'saveDB', docName, nodes: get().nodes, edges: get().edges })
+          worker.postMessage({ type: 'saveDB', docName, nodes: get().nodes, edges: get().edges })
         },
       })
       return () => {
         // window.removeEventListener('keydown', hh)
-        // worker.terminate()
+        worker.terminate()
       }
     },
     saveToDB: () => {},

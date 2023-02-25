@@ -1,10 +1,16 @@
 import { useDrag } from '@use-gesture/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useReactFlow } from 'reactflow'
+import { useFlow } from '../useFlow'
 
 export function ExportGroup(node) {
   let { getIntersectingNodes, getEdges, getNodes, getZoom } = useReactFlow()
-  let [canSel, setSel] = useState('')
+  let [canSel, setSel] = useState(node.data.canSel)
+
+  useEffect(() => {
+    node.data.canSel = canSel
+    useFlow.getState().saveToDB()
+  }, [canSel, node])
 
   let [size, setSize] = useState({ width: node.data.width || 500, height: node.data.height || 500 })
   let [init, setInit] = useState({ width: node.data.width || 500, height: node.data.height || 500 })
@@ -12,8 +18,6 @@ export function ExportGroup(node) {
     if (state.first) {
       setInit({ width: node.data.width || 500, height: node.data.height || 500 })
     } else {
-      // console.log(state.initial)
-
       node.data.width = init.width + state.movement[0] / getZoom()
       node.data.height = init.height + state.movement[1] / getZoom()
       setSize({ width: node.data.width, height: node.data.height })

@@ -143,10 +143,12 @@ export const run = async ({ core, globals, getNode, on, send }) => {
     }
 
     readyMesh(() => {
-      if (!mesh.userData.oMat) {
-        mesh.userData.oMat = mesh.material.clone()
+      if (mesh?.material) {
+        if (!mesh.userData.oMat) {
+          mesh.userData.oMat = mesh.material.clone()
+        }
+        mesh.material = mesh.userData.oMat.clone()
       }
-      mesh.material = mesh.userData.oMat.clone()
 
       on('geometry', (data) => {
         if (data) {
@@ -159,14 +161,17 @@ export const run = async ({ core, globals, getNode, on, send }) => {
         //   mesh.material = new MeshPhysicalMaterial({})
         // }
 
-        for (let kn in data) {
-          if (typeof data[kn] !== 'undefined') {
-            if (mesh.material[kn] !== data[kn]) {
-              mesh.material[kn] = data[kn]
+        if (mesh?.material) {
+          for (let kn in data) {
+            if (typeof data[kn] !== 'undefined') {
+              if (mesh.material[kn] !== data[kn]) {
+                mesh.material[kn] = data[kn]
+              }
             }
           }
         }
       })
+
       window.dispatchEvent(new CustomEvent('needsUpdate', { detail: {} }))
     })
 

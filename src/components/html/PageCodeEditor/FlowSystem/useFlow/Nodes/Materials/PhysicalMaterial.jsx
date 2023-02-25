@@ -62,7 +62,7 @@ export default function GUI({ id, data, selected }) {
               id={r.id}
               key={r.id}
               className='w-2 h-4 bg-gray-400 rounded-full hover:shadow-lg hover:shadow-cyan-500 hover:bg-cyan-400'
-              style={{ top: `calc(52px + 25px * ${i})` }}
+              style={{ top: `calc(52px + 24px * ${i})` }}
               position={Position.Left}
             />
           )

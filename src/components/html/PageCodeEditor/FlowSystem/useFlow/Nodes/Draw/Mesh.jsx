@@ -25,7 +25,7 @@ export const createData = () => {
 
 export default function GUI({ id, data, selected }) {
   const updateNodeLabel = useFlow((s) => s.updateNodeLabel)
-  const updateNodeColor = useFlow((s) => s.updateNodeColor)
+  // const updateNodeColor = useFlow((s) => s.updateNodeColor)
 
   return (
     <div

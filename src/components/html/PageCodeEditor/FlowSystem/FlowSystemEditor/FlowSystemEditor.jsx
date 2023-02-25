@@ -54,7 +54,9 @@ export function FlowSystemEditorCore() {
       ExportGroup: ExportGroup,
     }
   }, [])
+
   let edgeTypes2 = useMemo(() => edgeTypes, [])
+
   return (
     <div className='relative w-full h-full' ref={reactFlowWrapper}>
       <ReactFlow
