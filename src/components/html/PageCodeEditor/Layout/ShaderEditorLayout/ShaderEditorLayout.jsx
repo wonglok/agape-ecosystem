@@ -79,7 +79,7 @@ export function ShaderEditorLayout() {
                 // }
                 // input.click()
               }}>
-              Add Package
+              Load Package
             </button>
 
             <button
@@ -107,7 +107,7 @@ export function ShaderEditorLayout() {
 
                 useFlow.setState({ edges: [...st.edges], nodes: [...st.nodes] })
               }}>
-              Add Exporter
+              Export Package
             </button>
 
             <button

@@ -95,7 +95,7 @@ export function ExportGroup(node) {
                 })
               }, 100)
             }}>
-            Download Grouped JSON
+            Download Scoped Package
           </button>
           {/* <button
             className={'px-5 py-2 m-4 rounded-2xl ' + (!canSel ? 'bg-blue-500' : 'bg-gray-200')}
