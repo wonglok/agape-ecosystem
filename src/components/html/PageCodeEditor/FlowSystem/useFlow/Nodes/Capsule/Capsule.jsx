@@ -4,6 +4,7 @@ import { getTemplateByNodeInstance } from '../../nodeTypes'
 import { makeHoverStateTarget } from '../../SharedGUI/HoverState'
 import { RunnerObject } from '../../../FlowSystemRunner/RunnerObject/RunnerObject'
 import { ExportParamter } from '../../SharedGUI/ExportParamter'
+import { getID } from '@/backend/aws'
 
 // [
 //   // //
@@ -169,6 +170,30 @@ export default function GUI({ id, data, selected }) {
                 let firstReader = new FileReader()
                 firstReader.onload = () => {
                   let obj = JSON.parse(firstReader.result)
+
+                  let renewIDs = (data) => {
+                    let oldNewMap = new Map()
+                    let provide = (id) => {
+                      if (oldNewMap.has(id)) {
+                        return oldNewMap.get(id)
+                      } else {
+                        oldNewMap.set(id, getID())
+                        return oldNewMap.get(id)
+                      }
+                    }
+                    data.nodes.forEach((it) => {
+                      it.id = provide(it.id)
+                    })
+                    data.edges.forEach((it) => {
+                      it.id = provide(it.id)
+                      it.source = provide(it.source)
+                      it.target = provide(it.target)
+                    })
+
+                    return data
+                  }
+
+                  obj = renewIDs(obj)
 
                   updateNodeData(id, 'nodes', obj.nodes)
                   updateNodeData(id, 'edges', obj.edges)
