@@ -169,6 +169,10 @@ export const run = async ({ core, globals, getNode, on, send }) => {
               }
             }
           }
+        } else {
+          if (mesh) {
+            mesh.material = mesh.userData.oMat.clone()
+          }
         }
       })
 

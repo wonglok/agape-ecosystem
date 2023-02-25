@@ -53,28 +53,31 @@ export function ShaderEditorLayout() {
             <button
               className='px-4 py-1 m-1 text-xs text-white bg-gray-700 rounded-2xl'
               onClick={() => {
-                let input = document.createElement('input')
-                input.type = 'file'
-                input.onchange = ({
-                  target: {
-                    files: [first],
-                  },
-                }) => {
-                  if (first) {
-                    let firstReader = new FileReader()
-                    firstReader.onload = () => {
-                      let obj = JSON.parse(firstReader.result)
-                      let nodeForEncap = createData()
-                      nodeForEncap.id = getID()
-                      nodeForEncap.data.label = 'My Package'
-                      nodeForEncap.data.nodes = obj.nodes
-                      nodeForEncap.data.edges = obj.edges
-                      useFlow.setState({ nodes: [nodeForEncap], edges: [] })
-                    }
-                    firstReader.readAsText(first)
-                  }
-                }
-                input.click()
+                let nodeForEncap = createData()
+                nodeForEncap.id = getID()
+                nodeForEncap.data.label = 'My Package'
+                nodeForEncap.data.nodes = []
+                nodeForEncap.data.edges = []
+
+                useFlow.setState({ nodes: [...useFlow.getState().nodes, nodeForEncap] })
+
+                // let input = document.createElement('input')
+                // input.type = 'file'
+                // input.onchange = ({
+                //   target: {
+                //     files: [first],
+                //   },
+                // }) => {
+                //   if (first) {
+                //     let firstReader = new FileReader()
+                //     firstReader.onload = () => {
+                //       let obj = JSON.parse(firstReader.result)
+
+                //     }
+                //     firstReader.readAsText(first)
+                //   }
+                // }
+                // input.click()
               }}>
               Add Package
             </button>

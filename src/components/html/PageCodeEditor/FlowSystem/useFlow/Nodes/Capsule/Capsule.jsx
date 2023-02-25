@@ -92,6 +92,7 @@ export const createData = () => {
 
 export default function GUI({ id, data, selected }) {
   const updateNodeLabel = useFlow((s) => s.updateNodeLabel)
+  const updateNodeData = useFlow((s) => s.updateNodeData)
 
   provideHandle({ nodes: data.nodes })
 
@@ -116,7 +117,7 @@ export default function GUI({ id, data, selected }) {
               id={r.id}
               key={r.id + id + i}
               className='w-2 h-4 bg-gray-400 rounded-full hover:shadow-lg hover:shadow-cyan-500 hover:bg-cyan-400'
-              style={{ top: `calc(52px + 25px *  ${i})` }}
+              style={{ top: `calc(50px + 52px + 25px *  ${i})` }}
               position={Position.Left}
             />
           )
@@ -147,7 +148,42 @@ export default function GUI({ id, data, selected }) {
           className='inline-block h-10 text-xs opacity-0 appearance-none cursor-grabbing y-0'
         /> */}
 
+        {/*  */}
+
         <ExportParamter id={id} data={data}></ExportParamter>
+      </div>
+
+      <div className=' flex justify-center'>
+        <button
+          style={{ height: `30px`, marginTop: '10px', marginBottom: '10px' }}
+          className='px-3 text-center bg-gray-200'
+          onClick={() => {
+            let input = document.createElement('input')
+            input.type = 'file'
+            input.onchange = ({
+              target: {
+                files: [first],
+              },
+            }) => {
+              if (first) {
+                let firstReader = new FileReader()
+                firstReader.onload = () => {
+                  let obj = JSON.parse(firstReader.result)
+
+                  updateNodeData(id, 'nodes', obj.nodes)
+                  updateNodeData(id, 'edges', obj.edges)
+
+                  provideHandle({ nodes: obj.nodes })
+
+                  window.dispatchEvent(new CustomEvent('needsUpdate'))
+                }
+                firstReader.readAsText(first)
+              }
+            }
+            input.click()
+          }}>
+          Load Program
+        </button>
       </div>
 
       {handles
@@ -185,7 +221,7 @@ export default function GUI({ id, data, selected }) {
                 id={r.id}
                 key={r.id + id + i}
                 className='w-2 h-4 bg-gray-400 rounded-full hover:shadow-lg hover:shadow-cyan-500 hover:bg-cyan-400'
-                style={{ top: `calc(25px *  ${h})` }}
+                style={{ top: `calc(50px + 25px *  ${h})` }}
                 position={Position.Right}
               />
 

@@ -1,5 +1,5 @@
 import { useDrag } from '@use-gesture/react'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useReactFlow } from 'reactflow'
 import { useFlow } from '../useFlow'
 
@@ -24,40 +24,50 @@ export function ExportGroup(node) {
     }
   }, {})
 
+  let ref = useRef()
   return (
     <>
       <div
         className={'export-group '}
+        ref={ref}
         style={{
           width: `${size.width.toFixed(0)}px`,
           height: `2px`, //${size.height.toFixed(0)}px
           position: 'relative',
-          backgroundColor: `rgba(255,0,0,1)`,
         }}>
         <div className='absolute top-0 left-0 w-full p-3 text-center bg-blue-300'>
           <button
             className='px-5 py-2 m-4 bg-gray-200 rounded-2xl'
             onClick={() => {
               //
-              const intersections = getIntersectingNodes(node)
-              const edges = getEdges()
 
-              let okEdges = edges.filter((ed) => {
-                return intersections.some((r) => r.id === ed.target || r.id === ed.source)
-              })
+              ref.current.style.height = size.height + 'px'
 
-              let node2 = getNodes().find((r) => r.id === node.id)
-              let okNodes = intersections
+              setTimeout(() => {
+                const intersections = getIntersectingNodes(node)
+                const edges = getEdges()
 
-              let data = {
-                edges: okEdges,
-                nodes: [...okNodes, node2],
-              }
+                let okEdges = edges.filter((ed) => {
+                  return intersections.some((r) => r.id === ed.target || r.id === ed.source)
+                })
 
-              let a = document.createElement('a')
-              a.href = URL.createObjectURL(new Blob([JSON.stringify(data)], { type: 'application/json' }))
-              a.download = 'backup.json'
-              a.click()
+                let node2 = getNodes().find((r) => r.id === node.id)
+                let okNodes = intersections
+
+                let data = {
+                  edges: okEdges,
+                  nodes: [...okNodes, node2],
+                }
+
+                let a = document.createElement('a')
+                a.href = URL.createObjectURL(new Blob([JSON.stringify(data)], { type: 'application/json' }))
+                a.download = 'backup.json'
+                a.click()
+
+                setTimeout(() => {
+                  ref.current.style.height = '2px'
+                })
+              }, 100)
             }}>
             Download Grouped JSON
           </button>
@@ -81,6 +91,7 @@ export function ExportGroup(node) {
           height: '20px',
           top: `${size.height.toFixed(0)}px`,
         }}></div>
+
       <div
         style={{
           width: `${size.width.toFixed(0)}px`,
