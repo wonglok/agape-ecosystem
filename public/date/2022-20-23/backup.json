@@ -1,1 +1,117 @@
-{"edges":[{"id":"_d8a8e69a11d14015ec15d531b66592ab","source":"_2539901189583bf97f7d304a74a4cf25","sourceHandle":"material","targetHandle":"material","target":"_80289e8d884ad7fa1b1face6e5fe10f1","type":"CloseEdge","animated":false,"style":{"stroke":""}},{"source":"_f0e0345558b18196fd6f68725965b333","sourceHandle":"color","target":"_2539901189583bf97f7d304a74a4cf25","targetHandle":"color","type":"CloseEdge","id":"reactflow__edge-_f0e0345558b18196fd6f68725965b333color-_2539901189583bf97f7d304a74a4cf25color","animated":false,"style":{"stroke":""}}],"nodes":[{"width":889,"height":2,"id":"_eb53785a536e2ed117d21466fe3920fd","type":"ExportGroup","data":{"label":"Group","width":889.0054122862257,"height":978.4209341114265,"canSel":true},"position":{"x":-990,"y":-510},"style":{"zIndex":-1},"selected":false,"positionAbsolute":{"x":-990,"y":-510},"dragging":false},{"type":"ReadSceneMesh","data":{"label":"meshItem1","color":"#a0a0a0","objectName":"RetopoFlow325_9"},"position":{"x":20,"y":210},"id":"_80289e8d884ad7fa1b1face6e5fe10f1","width":193,"height":82,"selected":false,"positionAbsolute":{"x":20,"y":210},"dragging":false},{"type":"ColorPicker","data":{"label":"colorPicker1","color":"#00ffe5"},"position":{"x":-940,"y":-370},"id":"_f0e0345558b18196fd6f68725965b333","width":345,"height":42,"selected":false,"positionAbsolute":{"x":-940,"y":-370},"dragging":false},{"type":"PhysicalMaterial","data":{"label":"physical","color":"#a0a0a0"},"position":{"x":-390,"y":-310},"id":"_2539901189583bf97f7d304a74a4cf25","width":249,"height":338,"selected":false,"positionAbsolute":{"x":-390,"y":-310},"dragging":false}]}
+{
+  "edges": [
+    {
+      "id": "_d8a8e69a11d14015ec15d531b66592ab",
+      "source": "_2539901189583bf97f7d304a74a4cf25",
+      "sourceHandle": "material",
+      "targetHandle": "material",
+      "target": "_80289e8d884ad7fa1b1face6e5fe10f1",
+      "type": "CloseEdge",
+      "animated": false,
+      "style": {
+        "stroke": ""
+      }
+    },
+    {
+      "source": "_f0e0345558b18196fd6f68725965b333",
+      "sourceHandle": "color",
+      "target": "_2539901189583bf97f7d304a74a4cf25",
+      "targetHandle": "color",
+      "type": "CloseEdge",
+      "id": "reactflow__edge-_f0e0345558b18196fd6f68725965b333color-_2539901189583bf97f7d304a74a4cf25color",
+      "animated": false,
+      "style": {
+        "stroke": ""
+      }
+    }
+  ],
+  "nodes": [
+    {
+      "width": 806,
+      "height": 2,
+      "id": "_eb53785a536e2ed117d21466fe3920fd",
+      "type": "ExportGroup",
+      "data": {
+        "label": "Group",
+        "width": 806.29047655434,
+        "height": 788.5798483909838,
+        "canSel": true
+      },
+      "position": {
+        "x": -750,
+        "y": -570
+      },
+      "style": {
+        "zIndex": -1
+      },
+      "selected": true,
+      "positionAbsolute": {
+        "x": -750,
+        "y": -570
+      },
+      "dragging": false
+    },
+    {
+      "type": "ReadSceneMesh",
+      "data": {
+        "label": "meshItem1",
+        "color": "#a0a0a0",
+        "objectName": "RetopoFlow325_9"
+      },
+      "position": {
+        "x": -180,
+        "y": 40
+      },
+      "id": "_80289e8d884ad7fa1b1face6e5fe10f1",
+      "width": 193,
+      "height": 82,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -180,
+        "y": 40
+      },
+      "dragging": false
+    },
+    {
+      "type": "ColorPicker",
+      "data": {
+        "label": "colorPicker1",
+        "color": "#00ffe5",
+        "isExposed": false
+      },
+      "position": {
+        "x": -700,
+        "y": -430
+      },
+      "id": "_f0e0345558b18196fd6f68725965b333",
+      "width": 345,
+      "height": 42,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -700,
+        "y": -430
+      },
+      "dragging": false
+    },
+    {
+      "type": "PhysicalMaterial",
+      "data": {
+        "label": "physical",
+        "color": "#a0a0a0"
+      },
+      "position": {
+        "x": -270,
+        "y": -400
+      },
+      "id": "_2539901189583bf97f7d304a74a4cf25",
+      "width": 249,
+      "height": 338,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -270,
+        "y": -400
+      },
+      "dragging": false
+    }
+  ]
+}
