@@ -87,7 +87,7 @@ export default function GUI({ id, data, selected }) {
           className='w-full h-10 pl-2 text-xs bg-gray-100 appearance-none nodrag rounded-r-xl'
         />
 
-        <ExportParamter id={id} data={data}></ExportParamter>
+        {/* <ExportParamter id={id} data={data}></ExportParamter> */}
 
         {/* <input
           type='color'
