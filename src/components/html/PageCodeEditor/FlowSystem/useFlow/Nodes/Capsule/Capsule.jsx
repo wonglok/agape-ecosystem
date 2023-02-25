@@ -16,6 +16,10 @@ export const name = 'Capsule'
 
 let dynamicHandles = []
 export const provideHandle = ({ nodes }) => {
+  while (dynamicHandles.length > 0) {
+    dynamicHandles.pop()
+  }
+
   let handlesInt = []
 
   nodes.filter((n) => {
