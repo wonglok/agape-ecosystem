@@ -195,6 +195,8 @@ export default function GUI({ id, data, selected }) {
 
                   obj = renewIDs(obj)
 
+                  let newEdges = useFlow.getState()
+
                   updateNodeData(id, 'nodes', obj.nodes)
                   updateNodeData(id, 'edges', obj.edges)
 
