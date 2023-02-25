@@ -193,18 +193,6 @@ export default function GUI({ id, data, selected }) {
                     return data
                   }
 
-                  let removeEdgesList = useFlow.getState().edges.filter((r) => {
-                    return r.source === id || r.target === id
-                  })
-
-                  let newEdgeList = useFlow.getState().edges.slice()
-                  removeEdgesList.forEach((e) => {
-                    //
-                    newEdgeList.splice(newEdgeList.findIndex((it) => it.id === e.id))
-                  })
-
-                  useFlow.setState({ edges: newEdgeList })
-
                   obj = renewIDs(obj)
 
                   updateNodeData(id, 'nodes', obj.nodes)

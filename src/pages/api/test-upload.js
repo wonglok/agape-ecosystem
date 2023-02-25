@@ -1,27 +1,5 @@
-import { Credentials } from 'aws-sdk'
-// import S3 from 'aws-sdk/clients/s3'
-import {
-  DeleteObjectCommand,
-  GetObjectAclCommand,
-  GetObjectAttributesCommand,
-  GetObjectCommand,
-  PutBucketCorsCommand,
-  PutObjectCommand,
-  S3Client,
-  UploadPartCommand,
-} from '@aws-sdk/client-s3'
+import { DeleteObjectCommand, PutBucketCorsCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import path from 'path'
-/*
-
-var base64 = require('base-64');
-var utf8 = require('utf8');
-
-var text = 'foo © bar 𝌆 baz';
-var bytes = utf8.encode(text);
-var encoded = base64.encode(bytes);
-
-
-*/
 
 const s3Client = new S3Client({
   region: process.env.LOK_S3_REGION,
@@ -61,7 +39,6 @@ export async function uploadFileToObjectStorage(base64Data, path, fileName, Cont
     ContentType: `${ContentType}`,
   }
 
-  // see: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#upload-property
   await s3Client.send(new PutObjectCommand(params))
 
   return `${process.env.LOK_S3_ENDPOINT}/${path}/${fileName}`
@@ -74,7 +51,6 @@ export async function deleteFileFromObjectStorage(url) {
     Key,
   }
 
-  // see: https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#deleteObject-property
   // eslint-disable-next-line consistent-return
   return s3Client.send(new DeleteObjectCommand(params))
 }
