@@ -42,7 +42,7 @@ export default function GUI({ id, data, selected }) {
                 let oppositeNode = useFlow.getState().nodes.find((n) => n.id === connection.source)
                 let template = getTemplateByNodeInstance(oppositeNode)
                 let remoteHandle = template.handles.find((h) => h.id === connection.sourceHandle)
-                return remoteHandle?.dataType === r.dataType
+                return remoteHandle?.dataType === r.dataType || r.type === 'any' || remoteHandle?.dataType === 'any'
               }}
               {...makeHoverStateTarget({ handle: r })}
               type={r.type}
@@ -79,7 +79,7 @@ export default function GUI({ id, data, selected }) {
           className='h-10 text-xs  opacity-0'
         /> */}
       </div>
-
+      {/*
       <div className='flex items-center justify-center'>
         <input
           type='text'
@@ -88,7 +88,7 @@ export default function GUI({ id, data, selected }) {
           onChange={(evt) => updateNodeData(id, 'objectName', evt.target.value)}
           className='w-full h-10 pl-2 text-xs bg-gray-100 appearance-none nodrag rounded-r-xl'
         />
-      </div>
+      </div> */}
 
       {handles
         .filter((r) => r.type === 'source')
@@ -99,7 +99,7 @@ export default function GUI({ id, data, selected }) {
                 let oppositeNode = useFlow.getState().nodes.find((n) => n.id === connection.target)
                 let template = getTemplateByNodeInstance(oppositeNode)
                 let remoteHandle = template.handles.find((h) => h.id === connection.targetHandle)
-                return remoteHandle?.dataType === r.dataType
+                return remoteHandle?.dataType === r.dataType || r.type === 'any' || remoteHandle?.dataType === 'any'
               }}
               type={r.type}
               id={r.id}

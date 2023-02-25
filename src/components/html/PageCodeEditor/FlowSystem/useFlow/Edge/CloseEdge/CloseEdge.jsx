@@ -76,7 +76,7 @@ export default function CustomEdge({
   border-radius: 50%;
   font-size: 12px;
   line-height: 1;
-  opacity: 0.05;
+  opacity: 0.15;
   box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.08);
 }
 

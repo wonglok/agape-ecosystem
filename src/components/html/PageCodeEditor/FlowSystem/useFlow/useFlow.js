@@ -6,7 +6,6 @@ import { getID } from '@/backend/aws'
 import { nodeTypeList } from './nodeTypes'
 import Worker from 'worker-loader!./Worker.js'
 import nProgress from 'nprogress'
-import reset from './reset'
 
 // function toArray(map) {
 //   let arr = []
@@ -315,9 +314,9 @@ export const useFlow = create((set, get) => {
       })
     },
 
-    resetDemo: () => {
-      set(reset)
-      get().saveToDB()
-    },
+    // resetDemo: () => {
+    //   set(reset)
+    //   get().saveToDB()
+    // },
   }
 })
