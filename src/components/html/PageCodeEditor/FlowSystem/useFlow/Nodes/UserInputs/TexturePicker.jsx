@@ -1,13 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { Handle, Position } from 'reactflow'
 import { useFlow } from '../../useFlow'
 import { getTemplateByNodeInstance } from '../../nodeTypes'
 // import { InputNumber, Slider } from 'antd'
 import { ExposeParamter } from '../../SharedGUI/ExposeParamter'
 import { makeHoverStateTarget } from '../../SharedGUI/HoverState'
-import { TextureLoader } from 'three'
+import { Texture, TextureLoader } from 'three'
 import { Switch } from 'antd'
+import md5 from 'md5'
+import path from 'path'
 
 export const handles = [
   //
@@ -136,8 +138,22 @@ export const SettingsGUI = ({ data, id }) => {
               if (first) {
                 let reader = new FileReader()
                 reader.onload = () => {
-                  let url = reader.result
-                  updateNodeData(id, 'textureImageDataURL', url)
+                  let dataURL = reader.result.replace(`base64,`, `_______B64_________`)
+                  let fileData = dataURL.split('_______B64_________').pop()
+
+                  fetch(`/api/test-upload`, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                      method: 'upload',
+                      fileData: fileData,
+                      fileName: `file-${md5(fileData)}${path.extname(first.name)}`,
+                      contentType: first.type,
+                    }),
+                  })
+                    .then((r) => r.json())
+                    .then((r) => {
+                      updateNodeData(id, 'textureImageDataURL', r)
+                    })
                 }
                 reader.readAsDataURL(first)
               }
@@ -154,13 +170,44 @@ export const SettingsGUI = ({ data, id }) => {
           className='ml-3 bg-gray-200'
           defaultChecked={data.flipY || false}
           onChange={(ev) => {
-            console.log(ev)
             updateNodeData(id, 'flipY', ev)
           }}></Switch>
       </div>
 
       <div>
-        {(data.textureImageDataURL && <img className='w-32' src={data.textureImageDataURL} alt='yo'></img>) || ''}
+        {(data.textureImageDataURL && (
+          <>
+            <img className='w-32' src={data.textureImageDataURL} alt='yo'></img>
+            <button
+              className='p-3 bg-gray-300'
+              onClick={() => {
+                //
+
+                fetch(`/api/test-upload`, {
+                  method: 'POST',
+                  body: JSON.stringify({
+                    method: 'delete',
+                    url: data.textureImageDataURL,
+                  }),
+                })
+                  .then((r) => {
+                    return r.json()
+                  })
+                  .then(
+                    () => {
+                      //
+                      updateNodeData(id, 'textureImageDataURL', false)
+                    },
+                    () => {
+                      updateNodeData(id, 'textureImageDataURL', false)
+                    },
+                  )
+              }}>
+              Remove
+            </button>
+          </>
+        )) ||
+          ''}
       </div>
       {/*  */}
     </>
@@ -171,24 +218,44 @@ export const run = async ({ setReady, core, globals, getNode, send, on }) => {
   core.onPreload(() => {})
   core.onReady(() => {
     let last = ''
-    let tex = false
     let tt = setInterval(() => {
       let node = getNode()
       let now = JSON.stringify(node)
       if (last !== now) {
         last = now
 
-        tex = new TextureLoader().loadAsync(node?.data?.textureImageDataURL).then((v) => {
-          v.flipY = getNode().data.flipY || false
-          v.needsUpdate = true
-          send('textureObject', v)
-        })
+        if (node?.data?.textureImageDataURL) {
+          new TextureLoader().loadAsync(node?.data?.textureImageDataURL).then((v) => {
+            v.flipY = getNode().data.flipY || false
+            v.needsUpdate = true
+            send('textureObject', v)
+          })
+        } else {
+          send(
+            'textureObject',
+            new TextureLoader().load(
+              `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII=`,
+            ),
+          )
+        }
       }
     })
 
     window.addEventListener('needsUpdate', () => {
-      if (tex) {
-        send('textureObject', tex)
+      let node = getNode()
+      if (node?.data?.textureImageDataURL) {
+        new TextureLoader().loadAsync(node?.data?.textureImageDataURL).then((v) => {
+          v.flipY = getNode().data.flipY || false
+          v.needsUpdate = true
+          send('textureObject', v)
+        })
+      } else {
+        send(
+          'textureObject',
+          new TextureLoader().load(
+            `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII=`,
+          ),
+        )
       }
     })
 
