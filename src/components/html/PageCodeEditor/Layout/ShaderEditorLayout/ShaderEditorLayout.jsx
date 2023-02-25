@@ -34,8 +34,9 @@ export function ShaderEditorLayout() {
             <button
               className='inline-block px-4 py-1 m-1 text-xs text-white bg-gray-700 rounded-2xl'
               onClick={() => {
-                //
                 if (window.confirm('delete all and then reset?')) {
+                  useFlow.setState({ nodes: [], edges: [] })
+
                   fetch(`/date/2022-20-23/backup.json`)
                     .then((r) => r.json())
                     .then((dat) => {
@@ -44,7 +45,6 @@ export function ShaderEditorLayout() {
                       }
                     })
                 }
-                //
               }}>
               Factory Reset
             </button>
