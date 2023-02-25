@@ -47,15 +47,14 @@ let filterConnectionSockets = (it, hand) => {
       }
     })
     .filter((h) => {
+      if (h.type === 'any') {
+        return true
+      }
+
+      //
       let handeHand = handTemplate?.handles?.find((r) => r?.id === hand?.handleId)
-      // console.log(handeHand)
-      // return handTemplate?.handles.some((h) => h.dataType === handeHand.dataType)
 
       return h.dataType === handeHand?.dataType
-      // console.log(h.dataType)
-      // return checkSupportDataTypes(handTemplate, [h.dataType])
-      // return handTemplate.dataType === h.dataType
-      // return hand.handleId === h.id
     })
 }
 
@@ -101,7 +100,6 @@ let getConnectItems = ({ handTemplate, nodes, hand }) => {
   nodes.forEach((nd) => {
     if (okTypes.some((t) => t.name === nd.type)) {
       let handHandleType = hand?.handleType
-      // let handHandleID = hand?.handleId
 
       let template = getTemplateByNodeInstance(nd)
 
@@ -137,20 +135,62 @@ let getConnectItems = ({ handTemplate, nodes, hand }) => {
 }
 
 export const getOptions = ({ nodes, hand }) => {
-  //!SECTION
-
   let handTemplate = getTemplateByNodeInstance(hand.node)
+  let connectPossibilities = [...getConnectItems({ handTemplate, nodes, hand })]
+
+  nodes
+    .filter((r) => r.type === 'OutputNode')
+    .forEach((nd) => {
+      let handHandleType = hand?.handleType
+
+      let option = {
+        label: `${nd.type} - ${nd?.data?.label || ''}`,
+        value: nd.id,
+        children: [
+          //
+          {
+            label: 'Any Target',
+            value: 'anyTarget',
+          },
+          {
+            label: 'Any Target',
+            value: 'anyTarget',
+          },
+        ].filter((r) => {
+          if (handHandleType === 'target' || handHandleType === 'anyTarget') {
+            return r.value === 'anySource'
+          } else if (handHandleType === 'source' || handHandleType === 'anySource') {
+            return r.value === 'anyTarget'
+          }
+        }),
+      }
+
+      connectPossibilities.push(option)
+    })
 
   return [
     {
       label: 'Create',
       value: 'create',
-      children: getCreateItems({ handTemplate, nodes, hand }),
+      children: [
+        ...getCreateItems({ handTemplate, nodes, hand }),
+        {
+          label: `OutputNode`,
+          value: `OutputNode`,
+          children: [
+            {
+              label: 'Any Target',
+              value: 'anyTarget',
+            },
+          ],
+        },
+      ],
     },
+    //
     {
       label: 'Connect',
       value: 'connect',
-      children: getConnectItems({ handTemplate, nodes, hand }),
+      children: connectPossibilities,
     },
   ]
 }
