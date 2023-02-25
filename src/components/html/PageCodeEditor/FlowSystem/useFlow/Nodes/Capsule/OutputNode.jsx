@@ -18,7 +18,7 @@ export const name = 'OutputNode'
 export const createData = () => {
   return {
     type: name,
-    data: { label: 'outputNode', color: '#a0a0a0' },
+    data: { label: 'outputNode', color: '#a0a0a0', isExported: true },
     position: { x: 250, y: 25 },
   }
 }
@@ -42,7 +42,7 @@ export default function GUI({ id, data, selected }) {
                 let oppositeNode = useFlow.getState().nodes.find((n) => n.id === connection.source)
                 let template = getTemplateByNodeInstance(oppositeNode)
                 let remoteHandle = template.handles.find((h) => h.id === connection.sourceHandle)
-                return remoteHandle?.dataType === r.dataType || r.type === 'any' || remoteHandle?.dataType === 'any'
+                return remoteHandle?.dataType === r.dataType || r.dataType === 'any' || remoteHandle?.dataType === 'any'
               }}
               {...makeHoverStateTarget({ handle: r })}
               type={r.type}
@@ -96,10 +96,12 @@ export default function GUI({ id, data, selected }) {
           return (
             <Handle
               isValidConnection={(connection) => {
+                console.log(r)
+
                 let oppositeNode = useFlow.getState().nodes.find((n) => n.id === connection.target)
                 let template = getTemplateByNodeInstance(oppositeNode)
                 let remoteHandle = template.handles.find((h) => h.id === connection.targetHandle)
-                return remoteHandle?.dataType === r.dataType || r.type === 'any' || remoteHandle?.dataType === 'any'
+                return remoteHandle?.dataType === r.dataType || r.dataType === 'any' || remoteHandle?.dataType === 'any'
               }}
               type={r.type}
               id={r.id}
@@ -115,5 +117,10 @@ export default function GUI({ id, data, selected }) {
 }
 
 export const run = async ({ core, globals, getNode, on, send }) => {
+  //
+
+  on('anyTarget', (ev) => {
+    send('anySource', ev)
+  })
   //
 }
