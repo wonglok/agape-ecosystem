@@ -5,12 +5,12 @@ import { useFlow } from '../useFlow'
 
 export function ExportGroup(node) {
   let { getIntersectingNodes, getEdges, getNodes, getZoom } = useReactFlow()
-  let [canSel, setSel] = useState(node.data.canSel)
+  // let [canSel, setSel] = useState(node.data.canSel)
 
-  useEffect(() => {
-    node.data.canSel = canSel
-    useFlow.getState().saveToDB()
-  }, [canSel, node])
+  // useEffect(() => {
+  //   node.data.canSel = canSel
+  //   useFlow.getState().saveToDB()
+  // }, [canSel, node])
 
   let [size, setSize] = useState({ width: node.data.width || 500, height: node.data.height || 500 })
   let [init, setInit] = useState({ width: node.data.width || 500, height: node.data.height || 500 })
@@ -27,7 +27,7 @@ export function ExportGroup(node) {
   return (
     <>
       <div
-        className={'export-group ' + (canSel ? '' : 'nodrag')}
+        className={'export-group '}
         style={{
           width: `${size.width.toFixed(0)}px`,
           height: `2px`, //${size.height.toFixed(0)}px
@@ -61,15 +61,15 @@ export function ExportGroup(node) {
             }}>
             Download Grouped JSON
           </button>
-          <button
+          {/* <button
             className={'px-5 py-2 m-4 rounded-2xl ' + (!canSel ? 'bg-blue-500' : 'bg-gray-200')}
             onClick={() => {
               setSel((s) => !s)
             }}>
             {canSel ? 'Toggle Lock' : 'Locked'}
-          </button>
+          </button> */}
 
-          <button></button>
+          {/* <button></button> */}
         </div>
       </div>
       <div
@@ -78,7 +78,7 @@ export function ExportGroup(node) {
           width: `${(size.width + 2).toFixed(0)}px`,
           position: 'absolute',
           left: `0px`,
-          height: '100px',
+          height: '20px',
           top: `${size.height.toFixed(0)}px`,
         }}></div>
       <div
@@ -104,7 +104,7 @@ export function ExportGroup(node) {
       <div
         className='bg-blue-300'
         style={{
-          height: `${(size.height + 100).toFixed(0)}px`,
+          height: `${(size.height + 20).toFixed(0)}px`,
           left: `${size.width.toFixed(0)}px`,
           position: 'absolute',
           width: '20px',
