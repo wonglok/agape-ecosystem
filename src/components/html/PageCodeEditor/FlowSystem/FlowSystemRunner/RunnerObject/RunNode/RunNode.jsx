@@ -3,7 +3,6 @@ import { nodeTypeList } from '../../../useFlow/nodeTypes'
 import { useCore } from '../useCore/useCore'
 import { useThree } from '@react-three/fiber'
 
-//sendInput = () => {}, onOutput = () => {},
 export function RunNode({ globals, scope, nodes, node, edges }) {
   let nodeTemplate = useMemo(() => {
     return nodeTypeList.find((r) => r.type === node.type)
@@ -107,10 +106,10 @@ export function RunNode({ globals, scope, nodes, node, edges }) {
 
   return (
     <>
+      {/*  */}
+
       {compos}
 
-      {/*  */}
-      {/*  */}
       {/*  */}
     </>
   )
