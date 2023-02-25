@@ -198,9 +198,10 @@ export default function GUI({ id, data, selected }) {
                   updateNodeData(id, 'nodes', obj.nodes)
                   updateNodeData(id, 'edges', obj.edges)
 
-                  provideHandle({ nodes: obj.nodes })
-
-                  window.dispatchEvent(new CustomEvent('needsUpdate'))
+                  setTimeout(() => {
+                    provideHandle({ nodes: obj.nodes })
+                    window.dispatchEvent(new CustomEvent('needsUpdate'))
+                  })
                 }
                 firstReader.readAsText(first)
               }
