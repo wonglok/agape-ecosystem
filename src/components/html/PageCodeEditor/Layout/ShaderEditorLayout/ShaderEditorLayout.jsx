@@ -31,12 +31,23 @@ export function ShaderEditorLayout() {
           <FlowSystemEditor></FlowSystemEditor>
 
           <div className='absolute top-0 right-0'>
-            <a
+            <button
               className='inline-block px-4 py-1 m-1 text-xs text-white bg-gray-700 rounded-2xl'
-              href={'/sample/demo-2022-02-23.zip'}
-              download={'demo-2022-02-23.zip'}>
-              Download Demo Files
-            </a>
+              onClick={() => {
+                //
+                if (window.confirm('delete all and then reset?')) {
+                  fetch(`/date/2022-20-23/backup.json`)
+                    .then((r) => r.json())
+                    .then((dat) => {
+                      if (useFlow.getState().nodes.length === 0 && useFlow.getState().edges.length === 0) {
+                        useFlow.setState({ nodes: dat.nodes, edges: dat.edges })
+                      }
+                    })
+                }
+                //
+              }}>
+              Factory Reset
+            </button>
           </div>
           <div className='absolute top-0 left-0'>
             <button
