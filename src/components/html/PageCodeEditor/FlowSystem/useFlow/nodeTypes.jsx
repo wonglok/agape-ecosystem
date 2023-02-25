@@ -51,7 +51,7 @@ let filterConnectionSockets = (it, hand) => {
       // console.log(handeHand)
       // return handTemplate?.handles.some((h) => h.dataType === handeHand.dataType)
 
-      return h.dataType === handeHand.dataType
+      return h.dataType === handeHand?.dataType
       // console.log(h.dataType)
       // return checkSupportDataTypes(handTemplate, [h.dataType])
       // return handTemplate.dataType === h.dataType
