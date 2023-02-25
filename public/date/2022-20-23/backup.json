@@ -1,18 +1,6 @@
 {
   "edges": [
     {
-      "id": "_d8a8e69a11d14015ec15d531b66592ab",
-      "source": "_2539901189583bf97f7d304a74a4cf25",
-      "sourceHandle": "material",
-      "targetHandle": "material",
-      "target": "_80289e8d884ad7fa1b1face6e5fe10f1",
-      "type": "CloseEdge",
-      "animated": false,
-      "style": {
-        "stroke": ""
-      }
-    },
-    {
       "source": "_f0e0345558b18196fd6f68725965b333",
       "sourceHandle": "color",
       "target": "_2539901189583bf97f7d304a74a4cf25",
@@ -23,6 +11,26 @@
       "style": {
         "stroke": ""
       }
+    },
+    {
+      "source": "_abcef53e8eb21211242423d4c9dc2ac0",
+      "sourceHandle": "material_ff5447265adf3e216b1f12fc8502d1a6",
+      "target": "_80289e8d884ad7fa1b1face6e5fe10f1",
+      "targetHandle": "material",
+      "type": "CloseEdge",
+      "id": "reactflow__edge-_abcef53e8eb21211242423d4c9dc2ac0material_ff5447265adf3e216b1f12fc8502d1a6-_80289e8d884ad7fa1b1face6e5fe10f1material",
+      "animated": false,
+      "style": {
+        "stroke": ""
+      }
+    },
+    {
+      "id": "_affc1207dc1996a7e0b53c145769377d",
+      "source": "_a7bdec62988171cdd5334445b4fac896",
+      "sourceHandle": "color",
+      "targetHandle": "color_ed8bab453251cb5dfdd8a756d314d77b",
+      "target": "_abcef53e8eb21211242423d4c9dc2ac0",
+      "type": "CloseEdge"
     }
   ],
   "nodes": [
@@ -38,16 +46,16 @@
         "canSel": true
       },
       "position": {
-        "x": -750,
-        "y": -570
+        "x": -770,
+        "y": -640
       },
       "style": {
         "zIndex": -1
       },
-      "selected": true,
+      "selected": false,
       "positionAbsolute": {
-        "x": -750,
-        "y": -570
+        "x": -770,
+        "y": -640
       },
       "dragging": false
     },
@@ -59,16 +67,16 @@
         "objectName": "RetopoFlow325_9"
       },
       "position": {
-        "x": -180,
-        "y": 40
+        "x": -100,
+        "y": 620
       },
       "id": "_80289e8d884ad7fa1b1face6e5fe10f1",
       "width": 193,
       "height": 82,
       "selected": false,
       "positionAbsolute": {
-        "x": -180,
-        "y": 40
+        "x": -100,
+        "y": 620
       },
       "dragging": false
     },
@@ -77,7 +85,9 @@
       "data": {
         "label": "colorPicker1",
         "color": "#00ffe5",
-        "isExposed": false
+        "isExposed": true,
+        "isGroupedForExpose": true,
+        "groupName": "color"
       },
       "position": {
         "x": -700,
@@ -97,19 +107,148 @@
       "type": "PhysicalMaterial",
       "data": {
         "label": "physical",
-        "color": "#a0a0a0"
+        "color": "#a0a0a0",
+        "isExported": true,
+        "isGroupedForExported": true,
+        "exportName": "physical"
       },
       "position": {
-        "x": -270,
-        "y": -400
+        "x": -280,
+        "y": -360
       },
       "id": "_2539901189583bf97f7d304a74a4cf25",
       "width": 249,
       "height": 338,
       "selected": false,
       "positionAbsolute": {
-        "x": -270,
-        "y": -400
+        "x": -280,
+        "y": -360
+      },
+      "dragging": false
+    },
+    {
+      "type": "Capsule",
+      "data": {
+        "label": "My Package",
+        "nodes": [
+          {
+            "width": 345,
+            "height": 42,
+            "type": "ColorPicker",
+            "data": {
+              "label": "colorPicker1",
+              "color": 57546,
+              "isExposed": true,
+              "isGroupedForExpose": true,
+              "groupName": "color"
+            },
+            "position": {
+              "x": -700,
+              "y": -430
+            },
+            "id": "_ed8bab453251cb5dfdd8a756d314d77b",
+            "selected": false,
+            "positionAbsolute": {
+              "x": -700,
+              "y": -430
+            },
+            "dragging": false
+          },
+          {
+            "width": 249,
+            "height": 338,
+            "type": "PhysicalMaterial",
+            "data": {
+              "label": "physical",
+              "color": "#a0a0a0",
+              "isExported": true,
+              "isGroupedForExported": true,
+              "exportName": "physical"
+            },
+            "position": {
+              "x": -280,
+              "y": -360
+            },
+            "id": "_ff5447265adf3e216b1f12fc8502d1a6",
+            "selected": false,
+            "positionAbsolute": {
+              "x": -280,
+              "y": -360
+            },
+            "dragging": false
+          },
+          {
+            "width": 806,
+            "height": 789,
+            "id": "_d0f2dd8e6f5989e4705d1d7a2d17a3b0",
+            "type": "ExportGroup",
+            "data": {
+              "label": "Group",
+              "width": 806.29047655434,
+              "height": 788.5798483909838,
+              "canSel": true
+            },
+            "position": {
+              "x": -770,
+              "y": -640
+            },
+            "style": {
+              "zIndex": -1
+            },
+            "selected": true,
+            "positionAbsolute": {
+              "x": -770,
+              "y": -640
+            },
+            "dragging": false
+          }
+        ],
+        "edges": [
+          {
+            "source": "_ed8bab453251cb5dfdd8a756d314d77b",
+            "sourceHandle": "color",
+            "target": "_ff5447265adf3e216b1f12fc8502d1a6",
+            "targetHandle": "color",
+            "type": "CloseEdge",
+            "id": "_62590ed5dbd1bb5df42152bc1c220bc6",
+            "animated": false,
+            "style": {
+              "stroke": ""
+            }
+          }
+        ]
+      },
+      "position": {
+        "x": -470,
+        "y": 430
+      },
+      "id": "_abcef53e8eb21211242423d4c9dc2ac0",
+      "width": 249,
+      "height": 148,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -470,
+        "y": 430
+      },
+      "dragging": false
+    },
+    {
+      "type": "ColorPicker",
+      "data": {
+        "label": "colorPicker1",
+        "color": "#00e0ca"
+      },
+      "position": {
+        "x": -930,
+        "y": 370
+      },
+      "id": "_a7bdec62988171cdd5334445b4fac896",
+      "width": 345,
+      "height": 42,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -930,
+        "y": 370
       },
       "dragging": false
     }
