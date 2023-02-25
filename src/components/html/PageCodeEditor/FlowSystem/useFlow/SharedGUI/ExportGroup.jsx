@@ -2,6 +2,7 @@ import { useDrag } from '@use-gesture/react'
 import { useEffect, useRef, useState } from 'react'
 import { useReactFlow } from 'reactflow'
 import { useFlow } from '../useFlow'
+import { getID } from '@/backend/aws'
 
 export function ExportGroup(node) {
   let { getIntersectingNodes, getEdges, getNodes, getZoom } = useReactFlow()
@@ -25,6 +26,28 @@ export function ExportGroup(node) {
   }, {})
 
   let ref = useRef()
+
+  let renewIDs = (data) => {
+    let oldNewMap = new Map()
+    let provide = (id) => {
+      if (oldNewMap.has(id)) {
+        return oldNewMap.get(id)
+      } else {
+        oldNewMap.set(id, getID())
+        return oldNewMap.get(id)
+      }
+    }
+    data.nodes.forEach((it) => {
+      it.id = provide(it.id)
+    })
+    data.edges.forEach((it) => {
+      it.id = provide(it.id)
+      it.source = provide(it.source)
+      it.target = provide(it.target)
+    })
+
+    return data
+  }
   return (
     <>
       <div
@@ -45,6 +68,7 @@ export function ExportGroup(node) {
 
               setTimeout(() => {
                 const intersections = getIntersectingNodes(node)
+
                 const edges = getEdges()
 
                 let okEdges = edges.filter((ed) => {
@@ -58,6 +82,8 @@ export function ExportGroup(node) {
                   edges: okEdges,
                   nodes: [...okNodes, node2],
                 }
+
+                renewIDs(data)
 
                 let a = document.createElement('a')
                 a.href = URL.createObjectURL(new Blob([JSON.stringify(data)], { type: 'application/json' }))
