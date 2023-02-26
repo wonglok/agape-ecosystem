@@ -90,76 +90,6 @@ export function ShaderEditorLayout() {
               }}>
               Factory Reset
             </button>
-            <button
-              className='px-4 py-1 m-1 text-xs text-white bg-gray-700 rounded-2xl'
-              onClick={() => {
-                //
-                let input = document.createElement('input')
-                input.type = 'file'
-
-                input.onchange = ({
-                  target: {
-                    files: [first],
-                  },
-                }) => {
-                  if (first) {
-                    let fd = new FormData()
-                    fd.set('file', first)
-                    fd.set('fileName', `file-${md5(first.name + first.type)}${path.extname(first.name)}`)
-                    fd.set('contentType', first.type + '')
-
-                    fetch(`/api/test-upload-glb`, {
-                      method: 'POST',
-                      body: fd,
-                    })
-                      .then((r) => r.json())
-                      .then(async (r) => {
-                        console.log(r)
-
-                        let defaultItem = localStorage.getItem('defaultItem')
-
-                        if (defaultItem !== '' || defaultItem !== null) {
-                          await fetch(`/api/test-upload`, {
-                            method: 'POST',
-                            body: JSON.stringify({
-                              method: 'delete',
-                              url: defaultItem,
-                            }),
-                          })
-                            .then((r) => r.json())
-                            .then((r) => {
-                              console.log(r)
-                            })
-                        }
-
-                        localStorage.setItem('defaultItem', r)
-
-                        window.dispatchEvent(new CustomEvent('loadGLB', { detail: r }))
-                      })
-
-                    // let reader = new FileReader()
-                    // reader.onload = () => {
-                    //   let dataURL = reader.result.replace(`base64,`, `_______B64_________`)
-                    //   let fileData = dataURL.split('_______B64_________').pop()
-
-                    //   console.log(fileData)
-
-                    //   /*
-                    //   JSON.stringify({
-                    //       method: 'upload',
-                    //       fileData: fileData,
-                    //       fileName: `file-${md5(fileData)}${path.extname(first.name)}`,
-                    //       contentType: first.type,
-                    //     })
-                    //     */
-                    // }
-                    // reader.readAsDataURL(first)
-                  }
-                }
-                input.click()
-              }}>
-              Upload GLB
-            </button>
           </div>
 
           <div className='absolute top-0 left-0'>
@@ -171,6 +101,7 @@ export function ShaderEditorLayout() {
               className='px-4 py-1 m-1 text-xs text-white bg-gray-700 rounded-2xl'
               onClick={() => {
                 //
+                //
 
                 let st = useFlow.getState()
                 st.nodes.unshift({
@@ -180,15 +111,15 @@ export function ShaderEditorLayout() {
                   position: { x: 0, y: 0 },
                   style: { zIndex: -1 },
                 })
-                st.nodes = st.nodes.slice().sort((a, b) => {
-                  if (a.type.includes('group') || b.type.includes('group')) {
-                    return 1
-                  } else if (a.type.includes('group') && !b.type.includes('group')) {
-                    return -1
-                  } else {
-                    return 0
-                  }
-                })
+                // st.nodes = st.nodes.slice().sort((a, b) => {
+                //   if (a.type.includes('group') || b.type.includes('group')) {
+                //     return 1
+                //   } else if (a.type.includes('group') && !b.type.includes('group')) {
+                //     return -1
+                //   } else {
+                //     return 0
+                //   }
+                // })
 
                 useFlow.setState({ edges: [...st.edges], nodes: [...st.nodes] })
               }}>
@@ -235,6 +166,27 @@ export function ShaderEditorLayout() {
                 input.click()
               }}>
               Restore
+            </button>
+
+            <button
+              className='px-4 py-1 m-1 text-xs text-white bg-gray-700 rounded-2xl'
+              onClick={() => {
+                //
+                let glbNode = {
+                  id: getID(),
+                  type: 'GLBPicker',
+                  data: { label: 'glbPicker1', glbFileURL: '', flipY: false },
+                  position: { x: 0, y: 0 },
+                }
+
+                let nodes = useFlow.getState().nodes
+                nodes.push(glbNode)
+                useFlow.setState({ nodes: [...nodes] })
+                //
+
+                //
+              }}>
+              Add GLB
             </button>
           </div>
         </HorizontalChildren>

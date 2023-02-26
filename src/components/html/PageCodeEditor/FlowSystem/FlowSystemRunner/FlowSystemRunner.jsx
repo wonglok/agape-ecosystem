@@ -22,6 +22,8 @@ export function FlowSystemRunner() {
 function Content() {
   return (
     <>
+      <Convo></Convo>
+
       {/* <pointLight intensity={0.5} color={'white'} position={[1, 1, 0]}>
         <Sphere scale={0.05} visible={false}></Sphere>
       </pointLight>
@@ -35,7 +37,6 @@ function Content() {
       {/* <Env></Env> */}
 
       <HomeTrim></HomeTrim>
-      <Convo></Convo>
       <BG></BG>
 
       <EffectComposer disableNormalPass={false}>
