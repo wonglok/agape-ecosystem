@@ -18,6 +18,8 @@ import nProgress from 'nprogress'
 export const useFlow = create((set, get) => {
   return {
     //
+    viewport: { x: 0, y: 0, zoom: 1 },
+    rect: { top: 0, left: 0, width: 1024, height: 1024 },
     ready: null,
     nodes: [],
     edges: [],

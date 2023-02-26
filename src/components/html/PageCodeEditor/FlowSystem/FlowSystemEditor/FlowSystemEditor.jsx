@@ -38,7 +38,13 @@ export function FlowSystemEditorCore() {
     showTool: r.showTool,
   }))
 
-  const { project, setViewport, fitView, getViewport } = useReactFlow()
+  const { project, setViewport, fitView } = useReactFlow()
+  const { x, y, zoom } = useViewport()
+
+  useEffect(() => {
+    let { top, left, width, height } = reactFlowWrapper.current.getBoundingClientRect()
+    useFlow.setState({ viewport: { x, y, zoom }, rect: { top, left, width, height } })
+  }, [x, y, zoom, reactFlowWrapper])
 
   useEffect(() => {
     useFlow.setState({

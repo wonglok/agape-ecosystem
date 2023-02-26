@@ -104,11 +104,15 @@ export function ShaderEditorLayout() {
                 //
 
                 let st = useFlow.getState()
+
+                let viewport = useFlow.getState().viewport
+                let rect = useFlow.getState().rect
+
                 st.nodes.unshift({
                   id: getID(),
                   type: 'ExportGroup',
                   data: { label: 'Group', width: 500, height: 500 },
-                  position: { x: 0, y: 0 },
+                  position: { x: -viewport.x + rect.width / 2, y: -viewport.y + rect.height / 2 },
                   style: { zIndex: -1 },
                 })
                 // st.nodes = st.nodes.slice().sort((a, b) => {
@@ -172,11 +176,15 @@ export function ShaderEditorLayout() {
               className='px-4 py-1 m-1 text-xs text-white bg-gray-700 rounded-2xl'
               onClick={() => {
                 //
+
+                let viewport = useFlow.getState().viewport
+                let rect = useFlow.getState().rect
+
                 let glbNode = {
                   id: getID(),
                   type: 'GLBPicker',
-                  data: { label: 'glbPicker1', glbFileURL: '', flipY: false },
-                  position: { x: 0, y: 0 },
+                  data: { label: 'glbPicker2', glbFileURL: '', flipY: false },
+                  position: { x: -viewport.x + rect.width / 2, y: -viewport.y + rect.height / 2 },
                 }
 
                 let nodes = useFlow.getState().nodes
