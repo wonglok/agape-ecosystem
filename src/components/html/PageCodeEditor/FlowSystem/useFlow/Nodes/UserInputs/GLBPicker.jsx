@@ -2,11 +2,10 @@
 import React, { useRef, useState } from 'react'
 import { Handle, Position } from 'reactflow'
 import { useFlow } from '../../useFlow'
-import { getTemplateByNodeInstance } from '../../nodeTypes'
 // import { InputNumber, Slider } from 'antd'
 import { ExposeParamter } from '../../SharedGUI/ExposeParamter'
 import { makeHoverStateTarget } from '../../SharedGUI/HoverState'
-import { Texture, TextureLoader } from 'three'
+import { TextureLoader } from 'three' // Texture,
 import { Switch } from 'antd'
 import md5 from 'md5'
 import path from 'path'
@@ -22,13 +21,13 @@ export const name = 'GLBPicker'
 export const createData = () => {
   return {
     type: name,
-    data: { label: 'glbPicker1', textureImageDataURL: '', flipY: false },
+    data: { label: 'glbPicker1', glbFileURL: '', flipY: false },
     position: { x: 250, y: 25 },
   }
 }
 
 export default function GUI({ id, data, selected }) {
-  const updateNodeData = useFlow((s) => s.updateNodeData)
+  // const updateNodeData = useFlow((s) => s.updateNodeData)
   const updateNodeLabel = useFlow((s) => s.updateNodeLabel)
   return (
     <div
@@ -145,7 +144,7 @@ export const SettingsGUI = ({ data, id }) => {
                   })
                     .then((r) => r.json())
                     .then((r) => {
-                      updateNodeData(id, 'textureImageDataURL', r)
+                      updateNodeData(id, 'glbFileURL', r)
                     })
                 }
                 reader.readAsDataURL(first)
@@ -168,9 +167,9 @@ export const SettingsGUI = ({ data, id }) => {
       </div>
 
       <div>
-        {(data.textureImageDataURL && (
+        {(data.glbFileURL && (
           <>
-            <img className='w-32' src={data.textureImageDataURL} alt='yo'></img>
+            <img className='w-32' src={data.glbFileURL} alt='yo'></img>
             <button
               className='p-3 bg-gray-300'
               onClick={() => {
@@ -180,7 +179,7 @@ export const SettingsGUI = ({ data, id }) => {
                   method: 'POST',
                   body: JSON.stringify({
                     method: 'delete',
-                    url: data.textureImageDataURL,
+                    url: data.glbFileURL,
                   }),
                 })
                   .then((r) => {
@@ -188,11 +187,10 @@ export const SettingsGUI = ({ data, id }) => {
                   })
                   .then(
                     () => {
-                      //
-                      updateNodeData(id, 'textureImageDataURL', false)
+                      updateNodeData(id, 'glbFileURL', false)
                     },
                     () => {
-                      updateNodeData(id, 'textureImageDataURL', false)
+                      updateNodeData(id, 'glbFileURL', false)
                     },
                   )
               }}>
@@ -217,8 +215,8 @@ export const run = async ({ setReady, core, globals, getNode, send, on }) => {
       if (last !== now) {
         last = now
 
-        if (node?.data?.textureImageDataURL) {
-          new TextureLoader().loadAsync(node?.data?.textureImageDataURL).then((v) => {
+        if (node?.data?.glbFileURL) {
+          new TextureLoader().loadAsync(node?.data?.glbFileURL).then((v) => {
             v.flipY = getNode().data.flipY || false
             v.needsUpdate = true
             send('glbObject', v)
@@ -236,8 +234,8 @@ export const run = async ({ setReady, core, globals, getNode, send, on }) => {
 
     window.addEventListener('needsUpdate', () => {
       let node = getNode()
-      if (node?.data?.textureImageDataURL) {
-        new TextureLoader().loadAsync(node?.data?.textureImageDataURL).then((v) => {
+      if (node?.data?.glbFileURL) {
+        new TextureLoader().loadAsync(node?.data?.glbFileURL).then((v) => {
           v.flipY = getNode().data.flipY || false
           v.needsUpdate = true
           send('glbObject', v)
