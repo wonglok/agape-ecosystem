@@ -44,9 +44,17 @@ export function HomeTrim() {
   let [html, setHTML] = useState('')
   return (
     <>
-      {html && <Html className='bg-white'>{html}</Html>}
+      {html && (
+        <Html
+          className='bg-white'
+          calculatePosition={(el, camera, size) => {
+            return [0, 0]
+          }}>
+          {html}
+        </Html>
+      )}
       <group
-        onPointerOver={(ev) => {
+        onPointerMove={(ev) => {
           setHTML(ev?.object?.name)
         }}>
         <Center>
