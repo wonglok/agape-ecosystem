@@ -104,17 +104,17 @@ export default function GUI({ id, data, selected }) {
 }
 
 export const run = async ({ core, globals, getNode, on, send }) => {
-  let mesh = false
+  let meshPointer = false
   let timer = 0
   core.onPreload(() => {
     //
     timer = setInterval(() => {
       let scan = core?.now?.scene?.getObjectByName(getNode()?.data?.objectName)
       if (scan) {
-        if (!mesh) {
+        if (!meshPointer) {
           window.dispatchEvent(new CustomEvent('needsUpdate', { detail: {} }))
         }
-        mesh = scan
+        meshPointer = scan
       }
     })
     //
@@ -122,7 +122,7 @@ export const run = async ({ core, globals, getNode, on, send }) => {
   core.onReady(() => {
     let readyMesh = (fnc = () => {}) => {
       let tt = setInterval(() => {
-        if (mesh) {
+        if (meshPointer) {
           clearInterval(tt)
           fnc()
         }
@@ -130,35 +130,35 @@ export const run = async ({ core, globals, getNode, on, send }) => {
     }
 
     readyMesh(() => {
-      if (mesh?.material) {
-        if (!mesh.userData.oMat) {
-          mesh.userData.oMat = mesh.material.clone()
+      if (meshPointer?.material) {
+        if (!meshPointer.userData.oMat) {
+          meshPointer.userData.oMat = meshPointer.material.clone()
         }
-        mesh.material = mesh.userData.oMat.clone()
+        meshPointer.material = meshPointer.userData.oMat.clone()
       }
 
       on('geometry', (data) => {
         if (data) {
-          mesh.geometry = data
+          meshPointer.geometry = data
         }
       })
 
       on('material', (data) => {
-        // if (!(mesh.material instanceof MeshPhysicalMaterial)) {
-        //   mesh.material = new MeshPhysicalMaterial({})
+        // if (!(meshPointer.material instanceof MeshPhysicalMaterial)) {
+        //   meshPointer.material = new MeshPhysicalMaterial({})
         // }
 
-        if (mesh?.material) {
+        if (meshPointer?.material) {
           for (let kn in data) {
             if (typeof data[kn] !== 'undefined') {
-              if (mesh.material[kn] !== data[kn]) {
-                mesh.material[kn] = data[kn]
+              if (meshPointer.material[kn] !== data[kn]) {
+                meshPointer.material[kn] = data[kn]
               }
             }
           }
         } else {
-          if (mesh) {
-            mesh.material = mesh.userData.oMat.clone()
+          if (meshPointer) {
+            meshPointer.material = meshPointer.userData.oMat.clone()
           }
         }
       })
