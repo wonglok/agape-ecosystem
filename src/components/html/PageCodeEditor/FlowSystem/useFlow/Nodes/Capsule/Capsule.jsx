@@ -252,7 +252,7 @@ export default function GUI({ id, data, selected }) {
         {info.all
           .filter((r) => r.type === 'source')
           .map((r, i, arr) => {
-            console.log(r)
+            // console.log(r)
             let h = i + info.all.filter((r) => r.type === 'target').length + 1 + 1
             return (
               <Handle
