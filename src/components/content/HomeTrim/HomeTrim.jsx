@@ -12,6 +12,7 @@ export function HomeTrim() {
     let hh = ({ detail }) => {
       setST(detail)
     }
+
     window.addEventListener('loadGLB', hh)
     return () => {
       window.removeEventListener('loadGLB', hh)
