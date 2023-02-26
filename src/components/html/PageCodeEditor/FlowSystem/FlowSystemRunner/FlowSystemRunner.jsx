@@ -25,7 +25,6 @@ function Content() {
       {/* <pointLight intensity={0.5} color={'white'} position={[1, 1, 0]}>
         <Sphere scale={0.05} visible={false}></Sphere>
       </pointLight>
-
       <pointLight intensity={0.5} color={'teal'} position={[0, -0.3, 0]}>
         <Sphere scale={0.05} visible={false}></Sphere>
       </pointLight>
