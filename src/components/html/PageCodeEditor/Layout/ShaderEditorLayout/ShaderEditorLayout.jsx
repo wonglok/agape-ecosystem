@@ -8,7 +8,47 @@ import { ExposedSettingsGUI } from '../../FlowSystem/useFlow/SharedGUI/ExposedSe
 import { createData } from '../../FlowSystem/useFlow/Nodes/Capsule/Capsule'
 import { getID } from '@/backend/aws'
 import nProgress from 'nprogress'
+import { ReactFlowProvider, useReactFlow } from 'reactflow'
 
+function AddEncap() {
+  let { project } = useReactFlow()
+  return (
+    <button
+      className='px-4 py-1 m-1 text-xs text-white bg-gray-700 rounded-2xl'
+      onClick={() => {
+        let nodeForEncap = createData()
+        nodeForEncap.id = getID()
+        nodeForEncap.data.label = 'My Package'
+        nodeForEncap.data.nodes = []
+        nodeForEncap.data.edges = []
+
+        let pos = project({ x: window.innerWidth / 2, y: window.innerHeight / 2 })
+
+        nodeForEncap.position = pos
+        useFlow.setState({ nodes: [...useFlow.getState().nodes, nodeForEncap] })
+
+        // let input = document.createElement('input')
+        // input.type = 'file'
+        // input.onchange = ({
+        //   target: {
+        //     files: [first],
+        //   },
+        // }) => {
+        //   if (first) {
+        //     let firstReader = new FileReader()
+        //     firstReader.onload = () => {
+        //       let obj = JSON.parse(firstReader.result)
+
+        //     }
+        //     firstReader.readAsText(first)
+        //   }
+        // }
+        // input.click()
+      }}>
+      Load Package
+    </button>
+  )
+}
 export function ShaderEditorLayout() {
   let openFile = useFlow((s) => s.openFile)
   // let ready = useFlow((s) => s.ready)
@@ -49,38 +89,11 @@ export function ShaderEditorLayout() {
               Factory Reset
             </button>
           </div>
+
           <div className='absolute top-0 left-0'>
-            <button
-              className='px-4 py-1 m-1 text-xs text-white bg-gray-700 rounded-2xl'
-              onClick={() => {
-                let nodeForEncap = createData()
-                nodeForEncap.id = getID()
-                nodeForEncap.data.label = 'My Package'
-                nodeForEncap.data.nodes = []
-                nodeForEncap.data.edges = []
-
-                useFlow.setState({ nodes: [...useFlow.getState().nodes, nodeForEncap] })
-
-                // let input = document.createElement('input')
-                // input.type = 'file'
-                // input.onchange = ({
-                //   target: {
-                //     files: [first],
-                //   },
-                // }) => {
-                //   if (first) {
-                //     let firstReader = new FileReader()
-                //     firstReader.onload = () => {
-                //       let obj = JSON.parse(firstReader.result)
-
-                //     }
-                //     firstReader.readAsText(first)
-                //   }
-                // }
-                // input.click()
-              }}>
-              Load Package
-            </button>
+            <ReactFlowProvider>
+              <AddEncap></AddEncap>
+            </ReactFlowProvider>
 
             <button
               className='px-4 py-1 m-1 text-xs text-white bg-gray-700 rounded-2xl'

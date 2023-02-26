@@ -180,46 +180,55 @@ export default function GUI({ id, data, selected }) {
               if (first) {
                 let firstReader = new FileReader()
                 firstReader.onload = () => {
-                  let obj = JSON.parse(firstReader.result)
+                  // let removeEdges = useFlow.getState().edges.filter((ed) => {
+                  //   return ed.source === id || ed.target === id
+                  // })
 
-                  let renewIDs = (data) => {
-                    let oldNewMap = new Map()
-                    let provide = (id) => {
-                      if (oldNewMap.has(id)) {
-                        return oldNewMap.get(id)
-                      } else {
-                        oldNewMap.set(id, getID())
-                        return oldNewMap.get(id)
-                      }
-                    }
-                    data.nodes.forEach((it) => {
-                      it.id = provide(it.id)
-                    })
-                    data.edges.forEach((it) => {
-                      it.id = provide(it.id)
-                      it.source = provide(it.source)
-                      it.target = provide(it.target)
-                    })
+                  // let remain = useFlow.getState().edges.filter((e) => {
+                  //   return removeEdges.some((r) => r.id === e.id)
+                  // })
 
-                    return data
-                  }
-
-                  obj = renewIDs(obj)
-
-                  let newEdges = useFlow.getState().edges.filter((ed) => {
-                    return ed.source !== id && ed.target !== id
-                  })
-                  useFlow.setState({ edges: newEdges.slice() })
-
-                  updateNodeData(id, 'nodes', obj.nodes)
-                  updateNodeData(id, 'edges', obj.edges)
-
-                  provideHandle({ nodes: obj.nodes })
+                  // useFlow.setState({ edges: remain })
 
                   setTimeout(() => {
-                    useFlow.getState().saveToDB()
-                    window.dispatchEvent(new CustomEvent('needsUpdate'))
-                  }, 100)
+                    let obj = JSON.parse(firstReader.result)
+
+                    let renewIDs = (data) => {
+                      let oldNewMap = new Map()
+                      let provide = (id) => {
+                        if (oldNewMap.has(id)) {
+                          return oldNewMap.get(id)
+                        } else {
+                          oldNewMap.set(id, getID())
+                          return oldNewMap.get(id)
+                        }
+                      }
+                      data.nodes.forEach((it) => {
+                        it.id = provide(it.id)
+                      })
+                      data.edges.forEach((it) => {
+                        it.id = provide(it.id)
+                        it.source = provide(it.source)
+                        it.target = provide(it.target)
+                      })
+
+                      return data
+                    }
+
+                    obj = renewIDs(obj)
+
+                    updateNodeData(id, 'nodes', obj.nodes)
+                    updateNodeData(id, 'edges', obj.edges)
+
+                    useFlow.setState({ nodes: JSON.parse(JSON.stringify(useFlow.getState().nodes)) })
+
+                    setTimeout(() => {
+                      provideHandle({ nodes: data.nodes })
+
+                      useFlow.getState().saveToDB()
+                      window.dispatchEvent(new CustomEvent('needsUpdate'))
+                    }, 5)
+                  }, 5)
                 }
                 firstReader.readAsText(first)
               }
