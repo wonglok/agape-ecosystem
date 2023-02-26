@@ -1,9 +1,9 @@
-import { Environment, OrbitControls } from '@react-three/drei'
+import { OrbitControls } from '@react-three/drei' //Environment,
 import { Canvas, useThree } from '@react-three/fiber'
 import { Suspense } from 'react'
 import { RunnerObject } from './RunnerObject/RunnerObject'
 import { useFlow } from '../useFlow/useFlow'
-import { HomeTrim } from '@/components/content/HomeTrim/HomeTrim'
+// import { HomeTrim } from '@/components/content/HomeTrim/HomeTrim'
 import { Bloom, EffectComposer } from '@react-three/postprocessing'
 import { Color } from 'three'
 
@@ -36,8 +36,8 @@ function Content() {
 
       {/* <Env></Env> */}
 
-      <HomeTrim></HomeTrim>
-      <BG></BG>
+      {/* <HomeTrim></HomeTrim> */}
+      {/* <BG></BG> */}
 
       <EffectComposer disableNormalPass={false}>
         <Bloom luminanceThreshold={0.7} intensity={3} radius={0.8} mipmapBlur></Bloom>
@@ -48,7 +48,7 @@ function Content() {
         <meshPhysicalMaterial roughness={0.0} transmission={1} thickness={1.5}></meshPhysicalMaterial>
       </mesh> */}
 
-      <Environment preset='sunset'></Environment>
+      {/* <Environment preset='sunset'></Environment> */}
 
       <OrbitControls dampingFactor={1} enableDamping object-position={[0.0, 2.5, 8]}></OrbitControls>
 

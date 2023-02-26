@@ -218,7 +218,7 @@ export const run = async ({ setCompos, core, globals, getNode, send, on }) => {
     let last = ''
     let tt = setInterval(() => {
       let node = getNode()
-      let now = JSON.stringify(node)
+      let now = JSON.stringify(node.data)
       if (last !== now) {
         last = now
 

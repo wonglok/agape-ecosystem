@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { nodeTypeList } from '../../../useFlow/nodeTypes'
+import { getTemplateByNodeInstance, nodeTypeList } from '../../../useFlow/nodeTypes'
 import { useCore } from '../useCore/useCore'
 import { useThree } from '@react-three/fiber'
 
