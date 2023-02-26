@@ -212,7 +212,7 @@ export default function GUI({ id, data, selected }) {
                   let newEdges = useFlow.getState().edges.filter((ed) => {
                     return ed.source !== id && ed.target !== id
                   })
-                  useFlow.setState({ edges: newEdges })
+                  useFlow.setState({ edges: newEdges.slice() })
 
                   provideHandle({ nodes: obj.nodes })
 
