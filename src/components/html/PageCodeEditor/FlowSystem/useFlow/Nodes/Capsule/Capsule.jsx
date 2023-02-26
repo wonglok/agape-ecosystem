@@ -15,11 +15,11 @@ import { getID } from '@/backend/aws'
 
 export const name = 'Capsule'
 
-// let dynamicHandles = []
+let dynamicHandles = []
 export const provideHandle = ({ nodes }) => {
-  // while (dynamicHandles.length > 0) {
-  //   dynamicHandles.pop()
-  // }
+  while (dynamicHandles.length > 0) {
+    dynamicHandles.pop()
+  }
 
   let handlesInt = []
   let inputs = []
@@ -76,15 +76,15 @@ export const provideHandle = ({ nodes }) => {
     }
   })
 
-  // handlesInt.forEach((it) => {
-  //   if (
-  //     !dynamicHandles.some((d) => {
-  //       return d.id === it.id
-  //     })
-  //   ) {
-  //     dynamicHandles.push(it)
-  //   }
-  // })
+  handlesInt.forEach((it) => {
+    if (
+      !dynamicHandles.some((d) => {
+        return d.id === it.id
+      })
+    ) {
+      dynamicHandles.push(it)
+    }
+  })
 
   return {
     all: handlesInt,

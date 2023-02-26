@@ -12,6 +12,9 @@ function importAll(r) {
     if (!nodeTypeList.some((r) => r.name === moduleObject.name)) {
       nodeTypeList.push({
         ...moduleObject,
+        get handles() {
+          return moduleObject.handles
+        },
         type: moduleObject.name,
         gui: moduleObject.default,
       })
@@ -31,7 +34,23 @@ export let getTemplateByNodeInstance = (node) => {
   return nodeTypeList.find((t) => t.type === node?.type)
 }
 
-export let getDataTypesFromTemplate = (template) => {
+// get handles from template refvractor
+export let getDataTypesFromTemplate = ({ template }) => {
+  if (template?.handles && template?.handles.length === 0) {
+    let dataTypeList = nodeTypeList.reduce((acc, item, key) => {
+      item.handles.forEach((h) => {
+        //
+        if (!acc.includes(h.dataType)) {
+          acc.push(h.dataType)
+        }
+      })
+
+      return acc
+    }, [])
+
+    return dataTypeList
+    // return (template.provideHandle({ nodes: node.data.nodes || [] })?.all || []).map((r) => r.dataType)
+  }
   return (template?.handles || []).map((r) => r.dataType)
 }
 
@@ -47,6 +66,10 @@ let filterConnectionSockets = (it, hand) => {
       }
     })
     .filter((h) => {
+      if (handTemplate.handles.length === 0) {
+        return true
+      }
+
       let handeHand = handTemplate?.handles?.find((r) => r?.id === hand?.handleId)
 
       if (h.dataType === 'any' || handeHand?.dataType === 'any') {
@@ -57,9 +80,11 @@ let filterConnectionSockets = (it, hand) => {
     })
 }
 
-export let getCreateItems = ({ handTemplate, nodes, hand }) => {
+export let getCreateItems = ({ nodes, hand }) => {
   //
-  let dataTypes = getDataTypesFromTemplate(handTemplate)
+  let handTemplate = getTemplateByNodeInstance(hand.node)
+
+  let dataTypes = getDataTypesFromTemplate({ template: handTemplate, node: hand.node })
 
   let templates = nodeTypeList.filter((template) => {
     return checkSupportDataTypes(template, dataTypes)
@@ -83,8 +108,10 @@ export let getCreateItems = ({ handTemplate, nodes, hand }) => {
     })
 }
 
-let getConnectItems = ({ handTemplate, nodes, hand }) => {
-  let dataTypes = getDataTypesFromTemplate(handTemplate)
+let getConnectItems = ({ nodes, hand }) => {
+  let handTemplate = getTemplateByNodeInstance(hand.node)
+
+  let dataTypes = getDataTypesFromTemplate({ template: handTemplate, node: hand.node })
 
   let templates = nodeTypeList.filter((template) => {
     return checkSupportDataTypes(template, dataTypes)
@@ -104,7 +131,7 @@ let getConnectItems = ({ handTemplate, nodes, hand }) => {
 
         let template = getTemplateByNodeInstance(nd)
 
-        let labelChildren = template.handles
+        let labelChildren = template?.handles
           .filter((r) => {
             if (handHandleType === 'target') {
               return r.type === 'source'
@@ -133,19 +160,17 @@ let getConnectItems = ({ handTemplate, nodes, hand }) => {
 }
 
 export const getOptions = ({ nodes, hand }) => {
-  let handTemplate = getTemplateByNodeInstance(hand.node)
-
   return [
     {
       label: 'Create',
       value: 'create',
-      children: getCreateItems({ handTemplate, nodes, hand }),
+      children: getCreateItems({ nodes, hand }),
     },
     //
     {
       label: 'Connect',
       value: 'connect',
-      children: getConnectItems({ handTemplate, nodes, hand }),
+      children: getConnectItems({ nodes, hand }),
     },
   ]
 }
