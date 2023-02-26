@@ -47,7 +47,7 @@ export function HomeTrim() {
     <>
       {typeof html !== 'undefined' && (
         <Html
-          className='bg-white'
+          className='z-20 bg-white'
           calculatePosition={(el, camera, size) => {
             return [0, 0]
           }}>
@@ -55,6 +55,9 @@ export function HomeTrim() {
         </Html>
       )}
       <group
+        // raycast={(rc, arr) => {
+
+        // }}
         onPointerDown={(ev) => {
           setHTML(ev?.object?.name)
         }}>

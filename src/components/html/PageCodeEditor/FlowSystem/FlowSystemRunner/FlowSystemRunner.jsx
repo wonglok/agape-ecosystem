@@ -23,7 +23,7 @@ function Content() {
   return (
     <>
       {/* Demo */}
-      <pointLight intensity={0.5} color={'white'} position={[1, 1, 0]}>
+      {/* <pointLight intensity={0.5} color={'white'} position={[1, 1, 0]}>
         <Sphere scale={0.05} visible={false}></Sphere>
       </pointLight>
 
@@ -32,7 +32,7 @@ function Content() {
       </pointLight>
       <pointLight intensity={0.5} color={'white'} position={[-1, 1, 0]}>
         <Sphere scale={0.05} visible={false}></Sphere>
-      </pointLight>
+      </pointLight> */}
 
       {/* <Env></Env> */}
       <HomeTrim></HomeTrim>
@@ -48,7 +48,7 @@ function Content() {
         <meshPhysicalMaterial roughness={0.0} transmission={1} thickness={1.5}></meshPhysicalMaterial>
       </mesh> */}
 
-      {/* <Environment preset='night'></Environment> */}
+      <Environment preset='sunset'></Environment>
       <OrbitControls dampingFactor={1} enableDamping object-position={[0.0, 2.5, 8]}></OrbitControls>
 
       {/* <gridHelper args={[100, 100, 0xffffff, 0xffffff]}></gridHelper> */}

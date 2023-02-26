@@ -9,22 +9,22 @@ export const handles = [
   //
   { type: 'target', dataType: 'material', id: 'receiver', displayName: 'Inherit', position: Position.Top },
 
-  { type: 'target', propID: true, dataType: 'color', id: 'color', displayName: 'Color' },
+  { type: 'target', isProp: true, dataType: 'color', id: 'color', displayName: 'Color' },
 
-  { type: 'target', propID: true, dataType: 'texture', id: 'map', displayName: 'Texture Color' },
-  { type: 'target', propID: true, dataType: 'texture', id: 'normalMap', displayName: 'Texture Normal' },
+  { type: 'target', isProp: true, dataType: 'texture', id: 'map', displayName: 'Texture Color' },
+  { type: 'target', isProp: true, dataType: 'texture', id: 'normalMap', displayName: 'Texture Normal' },
 
-  { type: 'target', propID: true, dataType: 'texture', id: 'roughnessMap', displayName: 'Texture Roughness' },
-  { type: 'target', propID: true, dataType: 'texture', id: 'metalnessMap', displayName: 'Texture Metalness' },
-  { type: 'target', propID: true, dataType: 'texture', id: 'emissiveMap', displayName: 'Texture Emissive' },
+  { type: 'target', isProp: true, dataType: 'texture', id: 'roughnessMap', displayName: 'Texture Roughness' },
+  { type: 'target', isProp: true, dataType: 'texture', id: 'metalnessMap', displayName: 'Texture Metalness' },
+  { type: 'target', isProp: true, dataType: 'texture', id: 'emissiveMap', displayName: 'Texture Emissive' },
 
-  { type: 'target', propID: true, dataType: 'color', id: 'emissive', displayName: 'Color Emissive' },
+  { type: 'target', isProp: true, dataType: 'color', id: 'emissive', displayName: 'Color Emissive' },
 
-  { type: 'target', propID: true, dataType: 'number', id: 'ior', displayName: 'Index of Refraction' },
-  { type: 'target', propID: true, dataType: 'number', id: 'thickness', displayName: 'Thickness' },
-  { type: 'target', propID: true, dataType: 'number', id: 'transmission', displayName: 'Transmission' },
-  { type: 'target', propID: true, dataType: 'number', id: 'roughness', displayName: 'Roughness' },
-  { type: 'target', propID: true, dataType: 'number', id: 'metalness', displayName: 'Metalness' },
+  { type: 'target', isProp: true, dataType: 'number', id: 'ior', displayName: 'Index of Refraction' },
+  { type: 'target', isProp: true, dataType: 'number', id: 'thickness', displayName: 'Thickness' },
+  { type: 'target', isProp: true, dataType: 'number', id: 'transmission', displayName: 'Transmission' },
+  { type: 'target', isProp: true, dataType: 'number', id: 'roughness', displayName: 'Roughness' },
+  { type: 'target', isProp: true, dataType: 'number', id: 'metalness', displayName: 'Metalness' },
 
   { type: 'source', dataType: 'material', id: 'material', displayName: 'Material' },
 ]
@@ -178,10 +178,11 @@ export const run = async ({ core, globals, getNode, on, send, share }) => {
     })
 
     handles
-      .filter((r) => r.propID)
+      .filter((r) => r.isProp)
       .forEach(({ id }) => {
         on(id, (val) => {
           local.set(id, val)
+          pulse()
         })
         pulse()
       })
