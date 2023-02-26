@@ -3,7 +3,7 @@ import { nodeTypeList } from '../../../useFlow/nodeTypes'
 import { useCore } from '../useCore/useCore'
 import { useThree } from '@react-three/fiber'
 
-export function RunNode({ globals, scope, nodes, node, edges }) {
+export function RunNode({ globals, emit = () => {}, scope, nodes, node, edges }) {
   let nodeTemplate = useMemo(() => {
     return nodeTypeList.find((r) => r.type === node.type)
   }, [node.type])
@@ -59,7 +59,7 @@ export function RunNode({ globals, scope, nodes, node, edges }) {
   api.current.on = on
   api.current.send = send
 
-  let get = useThree((s) => s.get)
+  // let get = useThree((s) => s.get)
 
   let nodesRef = useRef(nodes)
   useEffect(() => {
@@ -75,12 +75,13 @@ export function RunNode({ globals, scope, nodes, node, edges }) {
         globals,
         scope,
         setCompos,
-        share: (id, v) => {
-          globals[id] = v
-        },
-        give: (id) => {
-          return globals[id]
-        },
+        emit,
+        // share: (id, v) => {
+        //   globals[id] = v
+        // },
+        // give: (id) => {
+        //   return globals[id]
+        // },
         getNode() {
           return nodesRef.current.find((n) => n.id === node.id)
         },
@@ -102,7 +103,7 @@ export function RunNode({ globals, scope, nodes, node, edges }) {
           console.log('Done::', node.type)
         })
     }
-  }, [core, get, nodeTemplate, node.id, globals, api, node.type, scope])
+  }, [nodeTemplate?.run])
 
   return (
     <>

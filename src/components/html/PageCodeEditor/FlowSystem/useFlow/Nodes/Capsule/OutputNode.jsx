@@ -116,12 +116,22 @@ export default function GUI({ id, data, selected }) {
   )
 }
 
-export const run = async ({ core, globals, getNode, on, send, share }) => {
+export const writeArrive = ({ node, input }) => {
+  node.data.arrive = input
+}
+
+export const readArrive = ({ node }) => {
+  return node.data.arrive
+}
+
+export const run = async ({ core, globals, emit, getNode, on, send, share }) => {
   //
 
   on('anyTarget', (ev) => {
-    share(getNode().id, ev)
+    writeArrive({ node: getNode(), input: ev })
     send('anySource', ev)
+
+    emit({ node: getNode(), handle: handles.find((r) => r.id === 'anySource'), data: ev })
   })
 
   //

@@ -114,8 +114,11 @@ export default function GUI({ id, data, selected }) {
   )
 }
 
-export function receiveSettings({ node, input }) {
+export function writeSettings({ node, input }) {
   node.data.textureObject = input
+}
+export function readSettings({ node }) {
+  return node.data.textureObject
 }
 
 export const SettingsGUI = ({ data, id }) => {

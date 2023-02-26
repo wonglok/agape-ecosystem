@@ -15,13 +15,15 @@ import { getID } from '@/backend/aws'
 
 export const name = 'Capsule'
 
-let dynamicHandles = []
+// let dynamicHandles = []
 export const provideHandle = ({ nodes }) => {
-  while (dynamicHandles.length > 0) {
-    dynamicHandles.pop()
-  }
+  // while (dynamicHandles.length > 0) {
+  //   dynamicHandles.pop()
+  // }
 
   let handlesInt = []
+  let inputs = []
+  let outputs = []
 
   nodes.filter((n) => {
     let temp = getTemplateByNodeInstance(n)
@@ -29,7 +31,7 @@ export const provideHandle = ({ nodes }) => {
     if (n.data.isExposed) {
       temp.handles.forEach((h) => {
         if (!handlesInt.some((hh) => hh.id === h.id + n.id)) {
-          handlesInt.push({
+          let input = {
             ...h,
             id: h.id + n.id,
             type: h.type === 'target' ? 'source' : 'target',
@@ -38,7 +40,9 @@ export const provideHandle = ({ nodes }) => {
             oldNodeID: n.id,
             oldHandleID: h.id,
             groupName: n.data.groupName,
-          })
+          }
+          handlesInt.push(input)
+          inputs.push(input)
         }
       })
     }
@@ -54,7 +58,7 @@ export const provideHandle = ({ nodes }) => {
         })
         .forEach((h) => {
           if (!handlesInt.some((hh) => hh.id === h.id + n.id)) {
-            handlesInt.push({
+            let output = {
               ...h,
               id: h.id + n.id,
               type: 'source',
@@ -63,25 +67,32 @@ export const provideHandle = ({ nodes }) => {
               oldNodeID: n.id,
               oldHandleID: h.id,
               groupName: n.data.groupName,
-            })
+            }
+            handlesInt.push(output)
+
+            outputs.push(output)
           }
         })
     }
   })
 
-  handlesInt.forEach((it) => {
-    if (
-      !dynamicHandles.some((d) => {
-        return d.id === it.id
-      })
-    ) {
-      dynamicHandles.push(it)
-    }
-  })
+  // handlesInt.forEach((it) => {
+  //   if (
+  //     !dynamicHandles.some((d) => {
+  //       return d.id === it.id
+  //     })
+  //   ) {
+  //     dynamicHandles.push(it)
+  //   }
+  // })
 
-  return handlesInt
+  return {
+    all: handlesInt,
+    inputs,
+    outputs,
+  }
 }
-export const handles = dynamicHandles
+export const handles = []
 
 export const createData = () => {
   return {
@@ -95,14 +106,14 @@ export default function GUI({ id, data, selected }) {
   const updateNodeLabel = useFlow((s) => s.updateNodeLabel)
   const updateNodeData = useFlow((s) => s.updateNodeData)
 
-  provideHandle({ nodes: data.nodes })
+  let info = provideHandle({ nodes: data.nodes })
 
   return (
     <div
       className={`text-sm rounded-xl transition-transform duration-300 scale-100  border bg-white ${
         selected ? ' border-cyan-500 shadow-cyan-100 shadow-lg ' : ' border-transparent'
       }`}>
-      {handles
+      {info.inputs
         .filter((r) => r.type === 'target')
         .map((r, i) => {
           return (
@@ -197,14 +208,9 @@ export default function GUI({ id, data, selected }) {
 
                   updateNodeData(id, 'nodes', obj.nodes)
                   updateNodeData(id, 'edges', obj.edges)
-                  window.dispatchEvent(new CustomEvent('needsUpdate'))
-                  setTimeout(() => {
-                    window.dispatchEvent(new CustomEvent('needsUpdate'))
-                  }, 100)
 
                   setTimeout(() => {
                     provideHandle({ nodes: obj.nodes })
-                    window.dispatchEvent(new CustomEvent('needsUpdate'))
 
                     let newEdges = useFlow.getState().edges.filter((ed) => {
                       return ed.source !== id && ed.target !== id
@@ -214,6 +220,7 @@ export default function GUI({ id, data, selected }) {
 
                     useFlow.setState({ edges: newEdges })
                     useFlow.getState().saveToDB()
+                    window.dispatchEvent(new CustomEvent('needsUpdate'))
                   })
                 }
                 firstReader.readAsText(first)
@@ -225,7 +232,7 @@ export default function GUI({ id, data, selected }) {
         </button>
       </div>
 
-      {handles
+      {info.all
         .filter((r) => r.id !== 'material')
         .map((h) => {
           return (
@@ -242,11 +249,11 @@ export default function GUI({ id, data, selected }) {
         <div className='py-1 ml-2'></div>
       </div>
       <div>
-        {handles
+        {info.all
           .filter((r) => r.type === 'source')
           .map((r, i, arr) => {
             console.log(r)
-            let h = i + handles.filter((r) => r.type === 'target').length + 1 + 1
+            let h = i + info.all.filter((r) => r.type === 'target').length + 1 + 1
             return (
               <Handle
                 isValidConnection={(connection) => {
@@ -289,37 +296,38 @@ export default function GUI({ id, data, selected }) {
   )
 }
 
-//receiveSettings
+//writeSettings
 
 export const run = async ({ core, globals, setCompos, getNode, on, send, give }) => {
   //
-  let allHandles = provideHandle({ nodes: getNode().data.nodes })
 
-  allHandles.forEach((hdl) => {
+  //
+
+  let info = provideHandle({ nodes: getNode().data.nodes })
+
+  info.inputs.forEach((hdl) => {
     if (hdl.type === 'target') {
       on(hdl.id, (v) => {
         let template = getTemplateByNodeInstance(hdl.oldNode)
-        template.receiveSettings({ node: hdl.oldNode, input: v })
-
-        allHandles
-          .filter((r) => r.type === 'source')
-          .forEach((h) => {
-            let tt = setInterval(() => {
-              let item = give(h.oldNode.id)
-              if (item) {
-                clearInterval(tt)
-                send(h.id, item)
-              }
-            })
-          })
+        template.writeSettings({ node: hdl.oldNode, input: v })
       })
     }
   })
 
   let nodes = getNode().data.nodes
   let edges = getNode().data.edges
-
-  setCompos(<RunnerObject globals={globals} nodes={nodes} edges={edges}></RunnerObject>)
+  setCompos(
+    <RunnerObject
+      globals={globals}
+      emit={({ node, handle, data }) => {
+        let senderHandle = info.all.find((r) => r.oldNodeID === node.id)
+        if (senderHandle) {
+          send(senderHandle.id, data)
+        }
+      }}
+      nodes={nodes}
+      edges={edges}></RunnerObject>,
+  )
 
   return null
 }

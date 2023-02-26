@@ -144,7 +144,7 @@ export const run = async ({ core, globals, getNode, on, send, share }) => {
   core.onReady(() => {
     let physical = {}
 
-    share(getNode().id, physical)
+    // share(getNode().id, physical)
 
     on('color', (color) => {
       physical.color = new Color('#ffffff')

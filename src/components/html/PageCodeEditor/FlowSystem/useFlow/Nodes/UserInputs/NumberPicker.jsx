@@ -109,8 +109,11 @@ export default function GUI({ id, data, selected }) {
   )
 }
 
-export function receiveSettings({ node, input }) {
+export function writeSettings({ node, input }) {
   node.data.float0 = input
+}
+export function readSettings({ node }) {
+  return node.data.float0
 }
 
 export const SettingsGUI = ({ data, id }) => {
