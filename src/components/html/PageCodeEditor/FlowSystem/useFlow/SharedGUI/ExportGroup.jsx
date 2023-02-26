@@ -129,7 +129,7 @@ export function ExportGroup(node) {
         }}>
         <div {...bind()} className='absolute bottom-0 right-0 w-8 h-8 bg-red-500 rounded-full nodrag touch-none'></div>
       </div>
-      <Handle
+      {/* <Handle
         type={'source'}
         id={'programOut'}
         key={'programOut'}
@@ -142,7 +142,7 @@ export function ExportGroup(node) {
           height: '25px',
           top: `${size.height.toFixed(0)}px`,
         }}
-      />
+      /> */}
 
       <div
         className='bg-blue-300'
