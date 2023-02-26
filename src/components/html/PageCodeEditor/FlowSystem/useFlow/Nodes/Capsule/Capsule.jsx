@@ -110,7 +110,7 @@ export default function GUI({ id, data, selected }) {
               isValidConnection={(connection) => {
                 let oppositeNode = useFlow.getState().nodes.find((n) => n.id === connection.source && n.id !== id)
                 let template = getTemplateByNodeInstance(oppositeNode)
-                let remoteHandle = template.handles.find((h) => h.id === connection.sourceHandle)
+                let remoteHandle = template?.handles?.find((h) => h.id === connection.sourceHandle)
                 return remoteHandle?.dataType === r.dataType || r.dataType === 'any' || remoteHandle?.dataType === 'any'
               }}
               {...makeHoverStateTarget({ handle: r })}
@@ -151,7 +151,7 @@ export default function GUI({ id, data, selected }) {
 
         {/*  */}
 
-        <ExportParamter id={id} data={data}></ExportParamter>
+        {/* <ExportParamter id={id} data={data}></ExportParamter> */}
       </div>
 
       <div className=' flex justify-center'>
@@ -195,14 +195,25 @@ export default function GUI({ id, data, selected }) {
 
                   obj = renewIDs(obj)
 
-                  let newEdges = useFlow.getState()
-
                   updateNodeData(id, 'nodes', obj.nodes)
                   updateNodeData(id, 'edges', obj.edges)
+                  window.dispatchEvent(new CustomEvent('needsUpdate'))
+                  setTimeout(() => {
+                    window.dispatchEvent(new CustomEvent('needsUpdate'))
+                  }, 100)
 
                   setTimeout(() => {
                     provideHandle({ nodes: obj.nodes })
                     window.dispatchEvent(new CustomEvent('needsUpdate'))
+
+                    let newEdges = useFlow.getState().edges.filter((ed) => {
+                      return ed.source !== id && ed.target !== id
+                    })
+
+                    // console.log(newEdges)
+
+                    useFlow.setState({ edges: newEdges })
+                    useFlow.getState().saveToDB()
                   })
                 }
                 firstReader.readAsText(first)
@@ -242,7 +253,7 @@ export default function GUI({ id, data, selected }) {
                   // console.log(connection)
                   let oppositeNode = useFlow.getState().nodes.find((n) => n.id === connection.target && n.id !== id)
                   let template = getTemplateByNodeInstance(oppositeNode)
-                  let remoteHandle = template.handles.find((h) => h.id === connection.targetHandle)
+                  let remoteHandle = template?.handles?.find((h) => h.id === connection.targetHandle)
                   return (
                     remoteHandle?.dataType === r.dataType || r.dataType === 'any' || remoteHandle?.dataType === 'any'
                   )
@@ -261,7 +272,7 @@ export default function GUI({ id, data, selected }) {
               //     // console.log(connection)
               //     let oppositeNode = useFlow.getState().nodes.find((n) => n.id === connection.target)
               //     let template = getTemplateByNodeInstance(oppositeNode)
-              //     let remoteHandle = template.handles.find((h) => h.id === connection.targetHandle)
+              //     let remoteHandle = template?.handles?.find((h) => h.id === connection.targetHandle)
               //     return remoteHandle?.dataType === r.dataType || r.dataType === 'any' || remoteHandle?.dataType === 'any'
               //   }}
               //   type={r.type}
