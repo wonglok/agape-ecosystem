@@ -2,7 +2,7 @@ import React from 'react'
 import { Handle, Position } from 'reactflow'
 import { useFlow } from '../../useFlow'
 import { getTemplateByNodeInstance } from '../../nodeTypes'
-import { ExportParamter } from '../../SharedGUI/ExportParamter'
+// import { ExportParamter } from '../../SharedGUI/ExportParamter'
 import { makeHoverStateSource, makeHoverStateTarget } from '../../SharedGUI/HoverState'
 
 export const handles = [
@@ -171,6 +171,7 @@ export const run = async ({ core, globals, getNode, on, send, share }) => {
     }
 
     on('receiver', (mateiralSpec) => {
+      base.clear()
       for (let kn in mateiralSpec) {
         base.set(kn, mateiralSpec[kn])
       }
