@@ -4,7 +4,7 @@ import { useFlow } from '../../useFlow'
 import { getTemplateByNodeInstance } from '../../nodeTypes'
 import { Color } from 'three'
 import { ExposeParamter } from '../../SharedGUI/ExposeParamter'
-import { makeHoverStateTarget } from '../../SharedGUI/HoverState'
+import { makeHoverStateSource, makeHoverStateTarget } from '../../SharedGUI/HoverState'
 
 export const handles = [
   //
@@ -83,6 +83,7 @@ export default function GUI({ id, data, selected }) {
         .map((r, i) => {
           return (
             <Handle
+              {...makeHoverStateSource({ handle: r })}
               type={r.type}
               id={r.id}
               key={r.id}
