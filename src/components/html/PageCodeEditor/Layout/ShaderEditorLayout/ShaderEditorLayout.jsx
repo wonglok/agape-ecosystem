@@ -9,6 +9,8 @@ import { createData } from '../../FlowSystem/useFlow/Nodes/Capsule/Capsule'
 import { getID } from '@/backend/aws'
 import nProgress from 'nprogress'
 import { ReactFlowProvider, useReactFlow } from 'reactflow'
+import path from 'path'
+import md5 from 'md5'
 
 function AddEncap() {
   let { project } = useReactFlow()
@@ -87,6 +89,76 @@ export function ShaderEditorLayout() {
                 }
               }}>
               Factory Reset
+            </button>
+            <button
+              className='px-4 py-1 m-1 text-xs text-white bg-gray-700 rounded-2xl'
+              onClick={() => {
+                //
+                let input = document.createElement('input')
+                input.type = 'file'
+
+                input.onchange = ({
+                  target: {
+                    files: [first],
+                  },
+                }) => {
+                  if (first) {
+                    let fd = new FormData()
+                    fd.set('file', first)
+                    fd.set('fileName', `file-${md5(first.name + first.type)}${path.extname(first.name)}`)
+                    fd.set('contentType', first.type + '')
+
+                    fetch(`/api/test-upload-glb`, {
+                      method: 'POST',
+                      body: fd,
+                    })
+                      .then((r) => r.json())
+                      .then(async (r) => {
+                        console.log(r)
+
+                        let defaultItem = localStorage.getItem('defaultItem')
+
+                        if (defaultItem !== '' || defaultItem !== null) {
+                          await fetch(`/api/test-upload`, {
+                            method: 'POST',
+                            body: JSON.stringify({
+                              method: 'delete',
+                              url: defaultItem,
+                            }),
+                          })
+                            .then((r) => r.json())
+                            .then((r) => {
+                              console.log(r)
+                            })
+                        }
+
+                        localStorage.setItem('defaultItem', r)
+
+                        window.dispatchEvent(new CustomEvent('loadGLB', { detail: r }))
+                      })
+
+                    // let reader = new FileReader()
+                    // reader.onload = () => {
+                    //   let dataURL = reader.result.replace(`base64,`, `_______B64_________`)
+                    //   let fileData = dataURL.split('_______B64_________').pop()
+
+                    //   console.log(fileData)
+
+                    //   /*
+                    //   JSON.stringify({
+                    //       method: 'upload',
+                    //       fileData: fileData,
+                    //       fileName: `file-${md5(fileData)}${path.extname(first.name)}`,
+                    //       contentType: first.type,
+                    //     })
+                    //     */
+                    // }
+                    // reader.readAsDataURL(first)
+                  }
+                }
+                input.click()
+              }}>
+              Upload GLB
             </button>
           </div>
 

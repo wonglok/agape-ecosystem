@@ -1,13 +1,13 @@
 import { Center, Html, useGLTF } from '@react-three/drei'
-import { useLoader } from '@react-three/fiber'
+import { useFrame, useLoader } from '@react-three/fiber'
 import { MyGLTFLoader } from './MyGLTFLoader'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
 import { Environment, Lightformer } from '@react-three/drei'
 import { Vector3 } from 'three'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export function HomeTrim() {
-  let [st, setST] = useState(`/date/2022-20-24-mech/ball-4k-webp-each2k.glb`)
+  let [st, setST] = useState(`/date/2022-02-26/querlo-4k.glb`)
   useEffect(() => {
     let hh = ({ detail }) => {
       setST(detail)
@@ -42,9 +42,10 @@ export function HomeTrim() {
   }, [gltf])
 
   let [html, setHTML] = useState('')
+
   return (
     <>
-      {html && (
+      {typeof html !== 'undefined' && (
         <Html
           className='bg-white'
           calculatePosition={(el, camera, size) => {
@@ -54,7 +55,7 @@ export function HomeTrim() {
         </Html>
       )}
       <group
-        onPointerMove={(ev) => {
+        onPointerDown={(ev) => {
           setHTML(ev?.object?.name)
         }}>
         <Center>

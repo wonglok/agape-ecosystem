@@ -6,8 +6,6 @@ import { useFlow } from '../useFlow/useFlow'
 import { Env, HomeTrim } from '@/components/content/HomeTrim/HomeTrim'
 import { Bloom, EffectComposer } from '@react-three/postprocessing'
 import { Color } from 'three'
-import path from 'path'
-import md5 from 'md5'
 
 export function FlowSystemRunner() {
   return (
@@ -17,78 +15,6 @@ export function FlowSystemRunner() {
           <Content></Content>
         </Suspense>
       </Canvas>
-      <div className='absolute top-0 right-0'>
-        <button
-          className='w-full p-2 my-2 text-black bg-gray-200'
-          onClick={() => {
-            //
-            let input = document.createElement('input')
-            input.type = 'file'
-
-            input.onchange = ({
-              target: {
-                files: [first],
-              },
-            }) => {
-              if (first) {
-                let fd = new FormData()
-                fd.set('file', first)
-                fd.set('fileName', `file-${md5(first.name + first.type)}${path.extname(first.name)}`)
-                fd.set('contentType', first.type + '')
-
-                fetch(`/api/test-upload-glb`, {
-                  method: 'POST',
-                  body: fd,
-                })
-                  .then((r) => r.json())
-                  .then(async (r) => {
-                    console.log(r)
-
-                    let defaultItem = localStorage.getItem('defaultItem')
-
-                    if (defaultItem !== '' || defaultItem !== null) {
-                      await fetch(`/api/test-upload`, {
-                        method: 'POST',
-                        body: JSON.stringify({
-                          method: 'delete',
-                          url: defaultItem,
-                        }),
-                      })
-                        .then((r) => r.json())
-                        .then((r) => {
-                          console.log(r)
-                        })
-                    }
-
-                    localStorage.setItem('defaultItem', r)
-
-                    window.dispatchEvent(new CustomEvent('loadGLB', { detail: r }))
-                  })
-
-                // let reader = new FileReader()
-                // reader.onload = () => {
-                //   let dataURL = reader.result.replace(`base64,`, `_______B64_________`)
-                //   let fileData = dataURL.split('_______B64_________').pop()
-
-                //   console.log(fileData)
-
-                //   /*
-                //   JSON.stringify({
-                //       method: 'upload',
-                //       fileData: fileData,
-                //       fileName: `file-${md5(fileData)}${path.extname(first.name)}`,
-                //       contentType: first.type,
-                //     })
-                //     */
-                // }
-                // reader.readAsDataURL(first)
-              }
-            }
-            input.click()
-          }}>
-          Select URL
-        </button>
-      </div>
     </div>
   )
 }
