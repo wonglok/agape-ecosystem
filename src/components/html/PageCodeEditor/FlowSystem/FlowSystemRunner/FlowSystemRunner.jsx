@@ -1,4 +1,4 @@
-import { Environment, MeshTransmissionMaterial, OrbitControls, Select, Sphere, Stars } from '@react-three/drei'
+import { Environment, OrbitControls } from '@react-three/drei'
 import { Canvas, useThree } from '@react-three/fiber'
 import { Suspense } from 'react'
 import { RunnerObject } from './RunnerObject/RunnerObject'
@@ -22,7 +22,6 @@ export function FlowSystemRunner() {
 function Content() {
   return (
     <>
-      {/* Demo */}
       {/* <pointLight intensity={0.5} color={'white'} position={[1, 1, 0]}>
         <Sphere scale={0.05} visible={false}></Sphere>
       </pointLight>
@@ -35,6 +34,7 @@ function Content() {
       </pointLight> */}
 
       {/* <Env></Env> */}
+
       <HomeTrim></HomeTrim>
       <Convo></Convo>
       <BG></BG>
