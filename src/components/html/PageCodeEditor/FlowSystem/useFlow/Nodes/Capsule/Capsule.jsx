@@ -209,13 +209,14 @@ export default function GUI({ id, data, selected }) {
                   updateNodeData(id, 'nodes', obj.nodes)
                   updateNodeData(id, 'edges', obj.edges)
 
+                  let newEdges = useFlow.getState().edges.filter((ed) => {
+                    return ed.source !== id && ed.target !== id
+                  })
+                  useFlow.setState({ edges: newEdges })
+
                   provideHandle({ nodes: obj.nodes })
 
                   setTimeout(() => {
-                    let newEdges = useFlow.getState().edges.filter((ed) => {
-                      return ed.source !== id && ed.target !== id
-                    })
-                    useFlow.setState({ edges: newEdges })
                     useFlow.getState().saveToDB()
                     window.dispatchEvent(new CustomEvent('needsUpdate'))
                   }, 100)
