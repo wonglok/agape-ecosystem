@@ -66,6 +66,11 @@ export function RunNode({ globals, emit = () => {}, scope, nodes, node, edges })
     nodesRef.current = nodes
   }, [nodes])
 
+  let edgesRef = useRef(edges)
+  useEffect(() => {
+    edgesRef.current = edges
+  }, [edges])
+
   let [compos, setCompos] = useState(null)
   useEffect(() => {
     let run = nodeTemplate?.run
@@ -82,6 +87,12 @@ export function RunNode({ globals, emit = () => {}, scope, nodes, node, edges })
         // give: (id) => {
         //   return globals[id]
         // },
+        getNodes() {
+          return nodesRef.current
+        },
+        getEdges() {
+          return edgesRef.current
+        },
         getNode() {
           return nodesRef.current.find((n) => n.id === node.id)
         },
