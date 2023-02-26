@@ -45,9 +45,9 @@ export function HomeTrim() {
 
   return (
     <>
-      {typeof html !== 'undefined' && (
+      {html && (
         <Html
-          className='z-20 bg-white'
+          className='absolute z-50 bg-white'
           calculatePosition={(el, camera, size) => {
             return [0, 0]
           }}>

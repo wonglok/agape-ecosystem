@@ -1,54 +1,6 @@
 {
   "edges": [
     {
-      "source": "_ceb66caea480237c5ac5e5d2aebfe6c1",
-      "sourceHandle": "color",
-      "target": "_c1f20efe9575bdd63d1b3ea2bc681866",
-      "targetHandle": "color_bdb38d2381847c321b772a17963a6cf3",
-      "type": "CloseEdge",
-      "id": "reactflow__edge-_ceb66caea480237c5ac5e5d2aebfe6c1color-_c1f20efe9575bdd63d1b3ea2bc681866color_bdb38d2381847c321b772a17963a6cf3",
-      "animated": false,
-      "style": {
-        "stroke": ""
-      }
-    },
-    {
-      "source": "_2dfa414faf2ad63ff40d99ec104782a9",
-      "sourceHandle": "color",
-      "target": "_c1f20efe9575bdd63d1b3ea2bc681866",
-      "targetHandle": "color_328f44d20253bcddc02f74fc1a10076a",
-      "type": "CloseEdge",
-      "id": "reactflow__edge-_2dfa414faf2ad63ff40d99ec104782a9color-_c1f20efe9575bdd63d1b3ea2bc681866color_328f44d20253bcddc02f74fc1a10076a",
-      "animated": false,
-      "style": {
-        "stroke": ""
-      }
-    },
-    {
-      "source": "_c1f20efe9575bdd63d1b3ea2bc681866",
-      "sourceHandle": "anySource_4f1df2727048b2e2d8d3fb9c8cd90d38",
-      "target": "_62909ae077692f1d4041729afd498079",
-      "targetHandle": "material",
-      "type": "CloseEdge",
-      "id": "reactflow__edge-_c1f20efe9575bdd63d1b3ea2bc681866anySource_4f1df2727048b2e2d8d3fb9c8cd90d38-_62909ae077692f1d4041729afd498079material",
-      "animated": false,
-      "style": {
-        "stroke": ""
-      }
-    },
-    {
-      "source": "_c1f20efe9575bdd63d1b3ea2bc681866",
-      "sourceHandle": "anySource_4f1df2727048b2e2d8d3fb9c8cd90d38",
-      "target": "_f7ba3a2fa76d7be1e15ebd9287b138b2",
-      "targetHandle": "material",
-      "type": "CloseEdge",
-      "id": "reactflow__edge-_c1f20efe9575bdd63d1b3ea2bc681866anySource_4f1df2727048b2e2d8d3fb9c8cd90d38-_f7ba3a2fa76d7be1e15ebd9287b138b2material",
-      "animated": false,
-      "style": {
-        "stroke": ""
-      }
-    },
-    {
       "source": "_7a9a44a337954fd15ed46cbd91805727",
       "sourceHandle": "anySource",
       "target": "_4bd0e613e4851718762d1a59fa616087",
@@ -126,7 +78,55 @@
       "target": "_ae9852db7eb53b2d5dbdfafbcb771a8a",
       "targetHandle": "anyTarget",
       "type": "CloseEdge",
-      "id": "reactflow__edge-_77898f8c2dedfbe269d92187bb2e03f3material-_ae9852db7eb53b2d5dbdfafbcb771a8aanyTarget"
+      "id": "reactflow__edge-_77898f8c2dedfbe269d92187bb2e03f3material-_ae9852db7eb53b2d5dbdfafbcb771a8aanyTarget",
+      "animated": false,
+      "style": {
+        "stroke": ""
+      }
+    },
+    {
+      "source": "_ceb66caea480237c5ac5e5d2aebfe6c1",
+      "sourceHandle": "color",
+      "target": "_c1f20efe9575bdd63d1b3ea2bc681866",
+      "targetHandle": "color_df94a194a3acf9a9db048bc5aad10e24",
+      "type": "CloseEdge",
+      "id": "reactflow__edge-_ceb66caea480237c5ac5e5d2aebfe6c1color-_c1f20efe9575bdd63d1b3ea2bc681866color_df94a194a3acf9a9db048bc5aad10e24",
+      "animated": false,
+      "style": {
+        "stroke": ""
+      }
+    },
+    {
+      "source": "_2dfa414faf2ad63ff40d99ec104782a9",
+      "sourceHandle": "color",
+      "target": "_c1f20efe9575bdd63d1b3ea2bc681866",
+      "targetHandle": "color_4a8df4047b2312ab54f84b03c99eafe2",
+      "type": "CloseEdge",
+      "id": "reactflow__edge-_2dfa414faf2ad63ff40d99ec104782a9color-_c1f20efe9575bdd63d1b3ea2bc681866color_4a8df4047b2312ab54f84b03c99eafe2",
+      "animated": false,
+      "style": {
+        "stroke": ""
+      }
+    },
+    {
+      "source": "_c1f20efe9575bdd63d1b3ea2bc681866",
+      "sourceHandle": "anySource_1d6782271b28c1dc733aa042df67d9e7",
+      "target": "_f7ba3a2fa76d7be1e15ebd9287b138b2",
+      "targetHandle": "material",
+      "type": "CloseEdge",
+      "id": "reactflow__edge-_c1f20efe9575bdd63d1b3ea2bc681866anySource_1d6782271b28c1dc733aa042df67d9e7-_f7ba3a2fa76d7be1e15ebd9287b138b2material",
+      "animated": false,
+      "style": {
+        "stroke": ""
+      }
+    },
+    {
+      "source": "_c1f20efe9575bdd63d1b3ea2bc681866",
+      "sourceHandle": "anySource_fd0c505c4c4f2c962ae326ef63d6db7a",
+      "target": "_62909ae077692f1d4041729afd498079",
+      "targetHandle": "material",
+      "type": "CloseEdge",
+      "id": "reactflow__edge-_c1f20efe9575bdd63d1b3ea2bc681866anySource_fd0c505c4c4f2c962ae326ef63d6db7a-_62909ae077692f1d4041729afd498079material"
     }
   ],
   "nodes": [
@@ -134,7 +134,7 @@
       "type": "ColorPicker",
       "data": {
         "label": "master2",
-        "color": "#b94141",
+        "color": "#32698b",
         "isExposed": true,
         "isGroupedForExpose": true,
         "groupName": "color"
@@ -184,7 +184,7 @@
         "color": "#a0a0a0",
         "isExported": true,
         "arrive": {
-          "color": 12140865
+          "color": 3303819
         }
       },
       "position": {
@@ -206,7 +206,7 @@
       "data": {
         "label": "RetopoFlow325_9",
         "color": "#a0a0a0",
-        "objectName": "Cube018"
+        "objectName": "Querlo002"
       },
       "position": {
         "x": -70,
@@ -227,10 +227,10 @@
       "data": {
         "label": "meshItem1",
         "color": "#a0a0a0",
-        "objectName": "Cube026"
+        "objectName": "Querlo011"
       },
       "position": {
-        "x": -10,
+        "x": -60,
         "y": 920
       },
       "id": "_f7ba3a2fa76d7be1e15ebd9287b138b2",
@@ -238,7 +238,7 @@
       "height": 82,
       "selected": false,
       "positionAbsolute": {
-        "x": -10,
+        "x": -60,
         "y": 920
       },
       "dragging": false
@@ -291,7 +291,7 @@
       "type": "ColorPicker",
       "data": {
         "label": "colorPicker1",
-        "color": "#fdc291"
+        "color": "#ff7300"
       },
       "position": {
         "x": -1140,
@@ -334,7 +334,7 @@
       "type": "ColorPicker",
       "data": {
         "label": "colorPicker1",
-        "color": "#ffbb00"
+        "color": "#fdcc44"
       },
       "position": {
         "x": -1130,
@@ -361,43 +361,20 @@
             "type": "ColorPicker",
             "data": {
               "label": "master2",
-              "color": 16630417,
+              "color": 16675584,
               "isExposed": true,
               "isGroupedForExpose": true,
               "groupName": "color"
             },
             "position": {
-              "x": -980,
-              "y": -430
+              "x": -920,
+              "y": -570
             },
-            "id": "_bdb38d2381847c321b772a17963a6cf3",
+            "id": "_df94a194a3acf9a9db048bc5aad10e24",
             "selected": false,
             "positionAbsolute": {
-              "x": -980,
-              "y": -430
-            },
-            "dragging": false
-          },
-          {
-            "width": 193,
-            "height": 338,
-            "type": "PhysicalMaterial",
-            "data": {
-              "label": "physical",
-              "color": "#a0a0a0",
-              "isExported": false,
-              "isGroupedForExported": false,
-              "exportName": "physical"
-            },
-            "position": {
-              "x": -440,
-              "y": -440
-            },
-            "id": "_289ccc0c78519e736802ae0cb8628b75",
-            "selected": false,
-            "positionAbsolute": {
-              "x": -440,
-              "y": -440
+              "x": -920,
+              "y": -570
             },
             "dragging": false
           },
@@ -410,23 +387,18 @@
               "color": "#a0a0a0",
               "isExported": true,
               "arrive": {
-                "color": {
-                  "isColor": true,
-                  "r": 0.982250550332711,
-                  "g": 0.5394794890033748,
-                  "b": 0.28314874041918053
-                }
+                "color": 16675584
               }
             },
             "position": {
-              "x": -320,
-              "y": 20
+              "x": -370,
+              "y": -120
             },
-            "id": "_7b0f6949680751cf7726bc7c123eaf2a",
+            "id": "_1d6782271b28c1dc733aa042df67d9e7",
             "selected": false,
             "positionAbsolute": {
-              "x": -320,
-              "y": 20
+              "x": -370,
+              "y": -120
             },
             "dragging": false
           },
@@ -439,14 +411,14 @@
               "color": "#a0a0a0"
             },
             "position": {
-              "x": -510,
-              "y": 100
+              "x": -590,
+              "y": -120
             },
-            "id": "_2db0110126a0e8f695f1e0ee9a91f7f4",
+            "id": "_df482297dec59ce86a9d68d5b71e2cb0",
             "selected": false,
             "positionAbsolute": {
-              "x": -510,
-              "y": 100
+              "x": -590,
+              "y": -120
             },
             "dragging": false
           },
@@ -459,18 +431,18 @@
               "color": "#a0a0a0",
               "isExported": true,
               "arrive": {
-                "color": 16694016
+                "color": 16632900
               }
             },
             "position": {
-              "x": -380,
-              "y": 510
+              "x": -360,
+              "y": 290
             },
-            "id": "_4f1df2727048b2e2d8d3fb9c8cd90d38",
+            "id": "_fd0c505c4c4f2c962ae326ef63d6db7a",
             "selected": false,
             "positionAbsolute": {
-              "x": -380,
-              "y": 510
+              "x": -360,
+              "y": 290
             },
             "dragging": false
           },
@@ -480,91 +452,121 @@
             "type": "ColorPicker",
             "data": {
               "label": "sub3",
-              "color": 16694016,
+              "color": 16632900,
               "isExposed": true,
               "isGroupedForExpose": true,
               "groupName": "color"
             },
             "position": {
-              "x": -970,
-              "y": 80
+              "x": -1010,
+              "y": -140
             },
-            "id": "_328f44d20253bcddc02f74fc1a10076a",
+            "id": "_4a8df4047b2312ab54f84b03c99eafe2",
             "selected": false,
             "positionAbsolute": {
-              "x": -970,
-              "y": 80
+              "x": -1010,
+              "y": -140
             },
             "dragging": false
           },
           {
-            "width": 961,
-            "height": 1278,
-            "id": "_7367b168919aae2e483dcc731bb5458a",
+            "width": 193,
+            "height": 338,
+            "type": "InstanceMaterial",
+            "data": {
+              "label": "instanceMaterial1",
+              "color": "#a0a0a0"
+            },
+            "position": {
+              "x": -470,
+              "y": -540
+            },
+            "id": "_89ea794629a7e381773a7442b26df428",
+            "positionAbsolute": {
+              "x": -470,
+              "y": -540
+            }
+          },
+          {
+            "width": 1227,
+            "height": 1257,
+            "id": "_9742cbaf1d8ebfdfd96d182e55dc11c2",
             "type": "ExportGroup",
             "data": {
               "label": "Group",
-              "width": 961.4867647875088,
-              "height": 1277.719311753831
+              "width": 1227.0086995501629,
+              "height": 1257.4228192690935
             },
             "position": {
-              "x": -1070,
-              "y": -640
+              "x": -1150,
+              "y": -710
             },
             "style": {
               "zIndex": -1
             },
             "selected": true,
             "positionAbsolute": {
-              "x": -1070,
-              "y": -640
+              "x": -1150,
+              "y": -710
             },
             "dragging": false
           }
         ],
         "edges": [
           {
-            "source": "_bdb38d2381847c321b772a17963a6cf3",
-            "sourceHandle": "color",
-            "target": "_289ccc0c78519e736802ae0cb8628b75",
-            "targetHandle": "color",
+            "source": "_fd0c505c4c4f2c962ae326ef63d6db7a",
+            "sourceHandle": "anySource",
+            "target": "_a692ca01d6d6678ec92997836c67f741",
+            "targetHandle": "material",
             "type": "CloseEdge",
-            "id": "_607b2a6aa6d9813ddc565017a939ea9f",
+            "id": "_f717b9d351f4d9e4a280b858b8159111",
             "animated": false,
             "style": {
               "stroke": ""
             }
           },
           {
-            "source": "_289ccc0c78519e736802ae0cb8628b75",
+            "source": "_df482297dec59ce86a9d68d5b71e2cb0",
             "sourceHandle": "material",
-            "target": "_7b0f6949680751cf7726bc7c123eaf2a",
+            "target": "_fd0c505c4c4f2c962ae326ef63d6db7a",
             "targetHandle": "anyTarget",
             "type": "CloseEdge",
-            "id": "_e6e975d1d9ae6a6df207f6bdd5269b21",
+            "id": "_eae907df76c6c15580d8c008b314c51e",
             "animated": false,
             "style": {
               "stroke": ""
             }
           },
           {
-            "id": "_19bebea6b8dcf9b29b0b1a775d0a11ad",
-            "source": "_2db0110126a0e8f695f1e0ee9a91f7f4",
-            "sourceHandle": "material",
-            "targetHandle": "anyTarget",
-            "target": "_4f1df2727048b2e2d8d3fb9c8cd90d38",
+            "source": "_1d6782271b28c1dc733aa042df67d9e7",
+            "sourceHandle": "anySource",
+            "target": "_7f44c94fe00d301c147ae7e529ff2fe4",
+            "targetHandle": "material",
             "type": "CloseEdge",
+            "id": "_f9b8024b9b34b556e01f732527d17e34",
             "animated": false,
             "style": {
               "stroke": ""
             }
           },
           {
-            "id": "_2a53562dafb428c4f3d04e55b784a838",
-            "source": "_328f44d20253bcddc02f74fc1a10076a",
+            "source": "_4a8df4047b2312ab54f84b03c99eafe2",
+            "sourceHandle": "color",
+            "target": "_df482297dec59ce86a9d68d5b71e2cb0",
+            "targetHandle": "color",
+            "type": "CloseEdge",
+            "id": "_5435f96d5b0f470cbbbb2363fa672c3e",
+            "animated": false,
+            "style": {
+              "stroke": ""
+            }
+          },
+          {
+            "id": "_edc5fcd196292169084f93f8932614c5",
+            "source": "_df94a194a3acf9a9db048bc5aad10e24",
             "sourceHandle": "color",
             "targetHandle": "color",
-            "target": "_2db0110126a0e8f695f1e0ee9a91f7f4",
+            "target": "_89ea794629a7e381773a7442b26df428",
             "type": "CloseEdge",
             "animated": false,
             "style": {
@@ -572,12 +574,24 @@
             }
           },
           {
-            "id": "_097ef5fbc56be8e8e81035e25ad6963b",
-            "source": "_289ccc0c78519e736802ae0cb8628b75",
+            "source": "_89ea794629a7e381773a7442b26df428",
             "sourceHandle": "material",
+            "target": "_df482297dec59ce86a9d68d5b71e2cb0",
             "targetHandle": "receiver",
-            "target": "_2db0110126a0e8f695f1e0ee9a91f7f4",
             "type": "CloseEdge",
+            "id": "_d994b3cd5ff0c0506ac0e218756b33ca",
+            "animated": false,
+            "style": {
+              "stroke": ""
+            }
+          },
+          {
+            "source": "_89ea794629a7e381773a7442b26df428",
+            "sourceHandle": "material",
+            "target": "_1d6782271b28c1dc733aa042df67d9e7",
+            "targetHandle": "anyTarget",
+            "type": "CloseEdge",
+            "id": "_a49519324fac537adf0f3c2d219889fa",
             "animated": false,
             "style": {
               "stroke": ""
