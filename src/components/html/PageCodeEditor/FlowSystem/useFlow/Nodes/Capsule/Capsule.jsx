@@ -180,15 +180,14 @@ export default function GUI({ id, data, selected }) {
               if (first) {
                 let firstReader = new FileReader()
                 firstReader.onload = () => {
-                  // let removeEdges = useFlow.getState().edges.filter((ed) => {
-                  //   return ed.source === id || ed.target === id
-                  // })
+                  let newEdges = useFlow.getState().edges.filter((ed) => {
+                    return !(ed.source === id || ed.target === id)
+                  })
 
-                  // let remain = useFlow.getState().edges.filter((e) => {
-                  //   return removeEdges.some((r) => r.id === e.id)
-                  // })
-
-                  // useFlow.setState({ edges: remain })
+                  useFlow.setState({ edges: JSON.parse(JSON.stringify(newEdges)) })
+                  useFlow.getState().saveToDB()
+                  window.dispatchEvent(new CustomEvent('needsUpdate'))
+                  provideHandle({ nodes: data.nodes })
 
                   setTimeout(() => {
                     let obj = JSON.parse(firstReader.result)
