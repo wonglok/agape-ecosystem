@@ -209,19 +209,16 @@ export default function GUI({ id, data, selected }) {
                   updateNodeData(id, 'nodes', obj.nodes)
                   updateNodeData(id, 'edges', obj.edges)
 
-                  setTimeout(() => {
-                    provideHandle({ nodes: obj.nodes })
+                  provideHandle({ nodes: obj.nodes })
 
+                  setTimeout(() => {
                     let newEdges = useFlow.getState().edges.filter((ed) => {
                       return ed.source !== id && ed.target !== id
                     })
-
-                    // console.log(newEdges)
-
                     useFlow.setState({ edges: newEdges })
                     useFlow.getState().saveToDB()
                     window.dispatchEvent(new CustomEvent('needsUpdate'))
-                  })
+                  }, 100)
                 }
                 firstReader.readAsText(first)
               }
