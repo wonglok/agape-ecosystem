@@ -3,7 +3,7 @@ import { Canvas, useThree } from '@react-three/fiber'
 import { Suspense } from 'react'
 import { RunnerObject } from './RunnerObject/RunnerObject'
 import { useFlow } from '../useFlow/useFlow'
-import { Env, HomeTrim } from '@/components/content/HomeTrim/HomeTrim'
+import { HomeTrim } from '@/components/content/HomeTrim/HomeTrim'
 import { Bloom, EffectComposer } from '@react-three/postprocessing'
 import { Color } from 'three'
 
@@ -49,6 +49,7 @@ function Content() {
       </mesh> */}
 
       <Environment preset='sunset'></Environment>
+
       <OrbitControls dampingFactor={1} enableDamping object-position={[0.0, 2.5, 8]}></OrbitControls>
 
       {/* <gridHelper args={[100, 100, 0xffffff, 0xffffff]}></gridHelper> */}
