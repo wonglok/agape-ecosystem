@@ -10,7 +10,7 @@ import { Color } from 'three'
 export function FlowSystemRunner() {
   return (
     <div className='relative w-full h-full'>
-      <Canvas>
+      <Canvas gl={{}}>
         <Suspense fallback={null}>
           <Content></Content>
         </Suspense>
