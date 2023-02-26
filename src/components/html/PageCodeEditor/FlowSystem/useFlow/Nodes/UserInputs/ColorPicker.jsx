@@ -35,13 +35,6 @@ export default function GUI({ id, data, selected }) {
         .map((r, i) => {
           return (
             <Handle
-              isValidConnection={(connection) => {
-                // console.log(connection)
-                let oppositeNode = useFlow.getState().nodes.find((n) => n.id === connection.source)
-                let template = getTemplateByNodeInstance(oppositeNode)
-                let remoteHandle = template?.handles?.find((h) => h.id === connection.sourceHandle)
-                return remoteHandle?.dataType === r.dataType || r.dataType === 'any' || remoteHandle?.dataType === 'any'
-              }}
               {...makeHoverStateTarget({ handle: r })}
               type={r.type}
               id={r.id}
@@ -90,13 +83,6 @@ export default function GUI({ id, data, selected }) {
         .map((r, i) => {
           return (
             <Handle
-              isValidConnection={(connection) => {
-                // console.log(connection)
-                let oppositeNode = useFlow.getState().nodes.find((n) => n.id === connection.target)
-                let template = getTemplateByNodeInstance(oppositeNode)
-                let remoteHandle = template?.handles?.find((h) => h.id === connection.targetHandle)
-                return remoteHandle?.dataType === r.dataType || r.dataType === 'any' || remoteHandle?.dataType === 'any'
-              }}
               type={r.type}
               id={r.id}
               key={r.id}
