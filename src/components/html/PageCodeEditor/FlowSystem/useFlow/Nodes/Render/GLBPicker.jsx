@@ -227,6 +227,27 @@ let provideBlobPromise = (url) => {
   }
 }
 
+let glbPromCache = new Map()
+let asyncGetGLB = (url) => {
+  if (glbPromCache.has(url)) {
+    return glbPromCache.get(url)
+  } else {
+    glbPromCache.set(
+      url,
+      new Promise(async (resolve) => {
+        let loader = new MyGLTFLoader()
+        let draco = new DRACOLoader()
+        draco.setDecoderPath(`/draco/`)
+        loader.setDRACOLoader(draco)
+
+        resolve(loader.loadAsync(url))
+      }),
+    )
+
+    return glbPromCache.get(url)
+  }
+}
+
 export const run = async ({ setCompos, core, globals, getNode, send, on }) => {
   let o3 = new Object3D()
   core.now.scene.add(o3)
@@ -243,18 +264,12 @@ export const run = async ({ setCompos, core, globals, getNode, send, on }) => {
         last = now
 
         if (node?.data?.glbFileURL) {
-          let loader = new MyGLTFLoader()
-          let draco = new DRACOLoader()
-          draco.setDecoderPath(`/draco/`)
-          loader.setDRACOLoader(draco)
-
-          provideBlobPromise(node?.data?.glbFileURL).then((url) => {
-            loader.loadAsync(url).then((v) => {
-              o3.clear()
-              o3.add(v.scene)
-              // setCompos(<primitive object={v.scene}></primitive>)
-            })
+          // provideBlobPromise().then((url) => {
+          asyncGetGLB(node?.data?.glbFileURL).then((v) => {
+            o3.add(v.scene)
+            // setCompos(<primitive object={v.scene}></primitive>)
           })
+          // })
 
           // new TextureLoader().loadAsync(node?.data?.glbFileURL).then((v) => {
           //   v.flipY = getNode().data.flipY || false

@@ -66,6 +66,9 @@ import { toTrianglesDrawMode } from './BufferGeometryUtils.js'
 import vs from './shader/vs.vert'
 import fs from './shader/fs.frag'
 
+const MyTextureCache = new Map()
+const MyBufferCache = new Map()
+
 class MyGLTFLoader extends Loader {
   constructor(manager) {
     super(manager)
@@ -2302,9 +2305,9 @@ class GLTFParser {
 
     const cacheKey = (sourceDef.uri || sourceDef.bufferView) + ':' + textureDef.sampler
 
-    if (this.textureCache[cacheKey]) {
+    if (MyTextureCache.has(cacheKey)) {
       // See https://github.com/mrdoob/three.js/issues/21559.
-      return this.textureCache[cacheKey]
+      return MyTextureCache.get(cacheKey)
     }
 
     const promise = this.loadImageSource(sourceIndex, loader)
@@ -2329,7 +2332,7 @@ class GLTFParser {
         return null
       })
 
-    this.textureCache[cacheKey] = promise
+    MyTextureCache.set(cacheKey, promise)
 
     return promise
   }

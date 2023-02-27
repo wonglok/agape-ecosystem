@@ -217,31 +217,34 @@ export const SettingsGUI = ({ data, id }) => {
   )
 }
 
+let promiseCache = new Map()
+let asyncGetGLB = (url, load) => {
+  if (promiseCache.has(url)) {
+    return promiseCache.get(url)
+  } else {
+    promiseCache.set(
+      url,
+      new Promise(async (resolve) => {
+        resolve(
+          await load(url).then((v) => {
+            v.mapping = EquirectangularReflectionMapping
+            return v
+          }),
+        )
+      }),
+    )
+
+    return promiseCache.get(url)
+  }
+}
+
 export const run = async ({ setCompos, core, globals, getNode, send, on }) => {
   let envMap = false
 
   let load = (url) => {
     let loader = new RGBELoader()
 
-    return loader.loadAsync(url).then((v) => {
-      v.mapping = EquirectangularReflectionMapping
-
-      if (getNode().data.showBG) {
-        core.now.scene.background = v
-      } else {
-        core.now.scene.background = null
-      }
-      if (getNode().data.showEnv) {
-        core.now.scene.environment = v
-      } else {
-        core.now.scene.environment = null
-      }
-
-      envMap = v
-
-      send('envMap', v)
-      // setCompos(<primitive object={v.scene}></primitive>)
-    })
+    return loader.loadAsync(url)
   }
   let cancel = () => {
     core.now.scene.background = null
@@ -260,7 +263,23 @@ export const run = async ({ setCompos, core, globals, getNode, send, on }) => {
 
         // envMap
         if (node?.data?.envMapFileURL) {
-          load(node?.data?.envMapFileURL)
+          asyncGetGLB(node?.data?.envMapFileURL, load).then((v) => {
+            if (getNode().data.showBG) {
+              core.now.scene.background = v
+            } else {
+              core.now.scene.background = null
+            }
+            if (getNode().data.showEnv) {
+              core.now.scene.environment = v
+            } else {
+              core.now.scene.environment = null
+            }
+
+            envMap = v
+
+            send('envMap', v)
+            // setCompos(<primitive object={v.scene}></primitive>)
+          })
           // new TextureLoader().loadAsync(node?.data?.envMapFileURL).then((v) => {
           //   v.flipY = getNode().data.flipY || false
           //   v.needsUpdate = true
@@ -281,7 +300,7 @@ export const run = async ({ setCompos, core, globals, getNode, send, on }) => {
     window.addEventListener('needsUpdate', () => {
       let node = getNode()
       if (node?.data?.envMapFileURL) {
-        load(node?.data?.envMapFileURL)
+        asyncGetGLB(node?.data?.envMapFileURL, load)
 
         // new TextureLoader().loadAsync(node?.data?.envMapFileURL).then((v) => {
         //   v.flipY = getNode().data.flipY || false
