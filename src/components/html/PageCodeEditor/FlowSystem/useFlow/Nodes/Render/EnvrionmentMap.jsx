@@ -158,15 +158,15 @@ export const SettingsGUI = ({ data, id }) => {
         </button>
       </div>
 
-      {/* <div className='flex items-center mb-3'>
-        FlipY
+      <div className='flex items-center mb-3'>
+        Background
         <Switch
           className='ml-3 bg-gray-200'
-          defaultChecked={data.flipY || false}
+          defaultChecked={data.showBG || false}
           onChange={(ev) => {
-            updateNodeData(id, 'flipY', ev)
+            updateNodeData(id, 'showBG', ev)
           }}></Switch>
-      </div> */}
+      </div>
 
       <div>
         {(data.envMapFileURL && (
@@ -209,13 +209,23 @@ export const SettingsGUI = ({ data, id }) => {
 }
 
 export const run = async ({ setCompos, core, globals, getNode, send, on }) => {
+  let envMap = false
+
   let load = (url) => {
     let loader = new RGBELoader()
 
     return loader.loadAsync(url).then((v) => {
       v.mapping = EquirectangularReflectionMapping
-      core.now.scene.background = v
+
+      if (getNode().data.showBG) {
+        core.now.scene.background = v
+      } else {
+        core.now.scene.background = null
+      }
+
       core.now.scene.environment = v
+      envMap = v
+
       send('envMap', v)
       // setCompos(<primitive object={v.scene}></primitive>)
     })
@@ -223,6 +233,7 @@ export const run = async ({ setCompos, core, globals, getNode, send, on }) => {
   let cancel = () => {
     core.now.scene.background = null
     core.now.scene.environment = null
+    envMap = null
     send('envMap', null)
   }
 
@@ -234,8 +245,7 @@ export const run = async ({ setCompos, core, globals, getNode, send, on }) => {
       if (last !== now) {
         last = now
 
-        //
-
+        // envMap
         if (node?.data?.envMapFileURL) {
           load(node?.data?.envMapFileURL)
           // new TextureLoader().loadAsync(node?.data?.envMapFileURL).then((v) => {
