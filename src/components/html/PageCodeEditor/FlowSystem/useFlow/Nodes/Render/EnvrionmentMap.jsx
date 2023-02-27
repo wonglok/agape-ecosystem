@@ -238,7 +238,7 @@ let asyncGetGLB = (url, load) => {
   }
 }
 
-// training and tooling
+// training and tooling //
 
 export const run = async ({ setCompos, core, globals, getNode, send, on }) => {
   let envMap = false
