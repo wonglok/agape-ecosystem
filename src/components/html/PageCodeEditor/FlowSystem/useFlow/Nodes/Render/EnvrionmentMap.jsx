@@ -9,7 +9,7 @@ import { makeHoverStateSource, makeHoverStateTarget } from '../../SharedGUI/Hove
 import { Switch } from 'antd'
 import md5 from 'md5'
 import path from 'path'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+// import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader'
 import { EquirectangularReflectionMapping, Object3D, sRGBEncoding } from 'three'
 
