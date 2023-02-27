@@ -10,7 +10,8 @@
       "animated": false,
       "style": {
         "stroke": ""
-      }
+      },
+      "selected": false
     },
     {
       "source": "_0d486b064ece7fa9c07bb3788a727442",
@@ -22,7 +23,8 @@
       "animated": false,
       "style": {
         "stroke": ""
-      }
+      },
+      "selected": false
     },
     {
       "source": "_ae9852db7eb53b2d5dbdfafbcb771a8a",
@@ -34,7 +36,8 @@
       "animated": false,
       "style": {
         "stroke": ""
-      }
+      },
+      "selected": false
     },
     {
       "source": "_9fdda5ad4e2e8b7f48d909e2a3d4809e",
@@ -46,7 +49,8 @@
       "animated": false,
       "style": {
         "stroke": ""
-      }
+      },
+      "selected": false
     },
     {
       "id": "_8fcfd5795c44605225bc71c6d163b3cd",
@@ -58,7 +62,8 @@
       "animated": false,
       "style": {
         "stroke": ""
-      }
+      },
+      "selected": false
     },
     {
       "source": "_77898f8c2dedfbe269d92187bb2e03f3",
@@ -70,7 +75,8 @@
       "animated": false,
       "style": {
         "stroke": ""
-      }
+      },
+      "selected": false
     },
     {
       "source": "_77898f8c2dedfbe269d92187bb2e03f3",
@@ -82,19 +88,8 @@
       "animated": false,
       "style": {
         "stroke": ""
-      }
-    },
-    {
-      "source": "_ceb66caea480237c5ac5e5d2aebfe6c1",
-      "sourceHandle": "color",
-      "target": "_c1f20efe9575bdd63d1b3ea2bc681866",
-      "targetHandle": "color_df94a194a3acf9a9db048bc5aad10e24",
-      "type": "CloseEdge",
-      "id": "reactflow__edge-_ceb66caea480237c5ac5e5d2aebfe6c1color-_c1f20efe9575bdd63d1b3ea2bc681866color_df94a194a3acf9a9db048bc5aad10e24",
-      "animated": false,
-      "style": {
-        "stroke": ""
-      }
+      },
+      "selected": false
     },
     {
       "source": "_2dfa414faf2ad63ff40d99ec104782a9",
@@ -106,7 +101,8 @@
       "animated": false,
       "style": {
         "stroke": ""
-      }
+      },
+      "selected": false
     },
     {
       "source": "_c1f20efe9575bdd63d1b3ea2bc681866",
@@ -118,7 +114,8 @@
       "animated": false,
       "style": {
         "stroke": ""
-      }
+      },
+      "selected": false
     },
     {
       "source": "_c1f20efe9575bdd63d1b3ea2bc681866",
@@ -126,7 +123,25 @@
       "target": "_62909ae077692f1d4041729afd498079",
       "targetHandle": "material",
       "type": "CloseEdge",
-      "id": "reactflow__edge-_c1f20efe9575bdd63d1b3ea2bc681866anySource_fd0c505c4c4f2c962ae326ef63d6db7a-_62909ae077692f1d4041729afd498079material"
+      "id": "reactflow__edge-_c1f20efe9575bdd63d1b3ea2bc681866anySource_fd0c505c4c4f2c962ae326ef63d6db7a-_62909ae077692f1d4041729afd498079material",
+      "animated": false,
+      "style": {
+        "stroke": ""
+      },
+      "selected": false
+    },
+    {
+      "source": "_ceb66caea480237c5ac5e5d2aebfe6c1",
+      "sourceHandle": "color",
+      "target": "_c1f20efe9575bdd63d1b3ea2bc681866",
+      "targetHandle": "color_df94a194a3acf9a9db048bc5aad10e24",
+      "type": "CloseEdge",
+      "id": "reactflow__edge-_ceb66caea480237c5ac5e5d2aebfe6c1color-_c1f20efe9575bdd63d1b3ea2bc681866color_df94a194a3acf9a9db048bc5aad10e24",
+      "animated": false,
+      "style": {
+        "stroke": ""
+      },
+      "selected": false
     }
   ],
   "nodes": [
@@ -134,7 +149,7 @@
       "type": "ColorPicker",
       "data": {
         "label": "master2",
-        "color": "#32698b",
+        "color": "#e00000",
         "isExposed": true,
         "isGroupedForExpose": true,
         "groupName": "color"
@@ -158,8 +173,8 @@
       "type": "ExportGroup",
       "data": {
         "label": "Group",
-        "width": 1227.0086995501629,
-        "height": 1257.4228192690935
+        "width": 1262.0555745501629,
+        "height": 1252.6884442690935
       },
       "position": {
         "x": -1150,
@@ -168,7 +183,7 @@
       "style": {
         "zIndex": -1
       },
-      "width": 1227,
+      "width": 1262,
       "height": 2,
       "selected": false,
       "positionAbsolute": {
@@ -184,20 +199,20 @@
         "color": "#a0a0a0",
         "isExported": true,
         "arrive": {
-          "color": 3303819
+          "color": 14680064
         }
       },
       "position": {
-        "x": -370,
-        "y": -120
+        "x": -140,
+        "y": 280
       },
       "id": "_ae9852db7eb53b2d5dbdfafbcb771a8a",
       "width": 193,
       "height": 42,
       "selected": false,
       "positionAbsolute": {
-        "x": -370,
-        "y": -120
+        "x": -140,
+        "y": 280
       },
       "dragging": false
     },
@@ -206,19 +221,19 @@
       "data": {
         "label": "RetopoFlow325_9",
         "color": "#a0a0a0",
-        "objectName": "Querlo002"
+        "objectName": "RetopoFlow325_9"
       },
       "position": {
-        "x": -70,
-        "y": 1100
+        "x": -230,
+        "y": 1020
       },
       "id": "_62909ae077692f1d4041729afd498079",
       "width": 193,
       "height": 82,
       "selected": false,
       "positionAbsolute": {
-        "x": -70,
-        "y": 1100
+        "x": -230,
+        "y": 1020
       },
       "dragging": false
     },
@@ -274,16 +289,16 @@
         }
       },
       "position": {
-        "x": -360,
-        "y": 290
+        "x": -270,
+        "y": 370
       },
       "id": "_7a9a44a337954fd15ed46cbd91805727",
       "width": 193,
       "height": 42,
       "selected": false,
       "positionAbsolute": {
-        "x": -360,
-        "y": 290
+        "x": -270,
+        "y": 370
       },
       "dragging": false
     },
@@ -334,7 +349,7 @@
       "type": "ColorPicker",
       "data": {
         "label": "colorPicker1",
-        "color": "#fdcc44"
+        "color": "#ffbb00"
       },
       "position": {
         "x": -1130,
@@ -361,7 +376,12 @@
             "type": "ColorPicker",
             "data": {
               "label": "master2",
-              "color": 16675584,
+              "color": {
+                "isColor": true,
+                "r": 1,
+                "g": 0.17144110072255403,
+                "b": 0
+              },
               "isExposed": true,
               "isGroupedForExpose": true,
               "groupName": "color"
@@ -386,9 +406,7 @@
               "label": "material",
               "color": "#a0a0a0",
               "isExported": true,
-              "arrive": {
-                "color": 16675584
-              }
+              "arrive": {}
             },
             "position": {
               "x": -370,
@@ -430,9 +448,7 @@
               "label": "material2",
               "color": "#a0a0a0",
               "isExported": true,
-              "arrive": {
-                "color": 16632900
-              }
+              "arrive": {}
             },
             "position": {
               "x": -360,
@@ -452,7 +468,12 @@
             "type": "ColorPicker",
             "data": {
               "label": "sub3",
-              "color": 16632900,
+              "color": {
+                "isColor": true,
+                "r": 0.982250550332711,
+                "g": 0.6038273388475408,
+                "b": 0.057805430183792694
+              },
               "isExposed": true,
               "isGroupedForExpose": true,
               "groupName": "color"
@@ -600,16 +621,16 @@
         ]
       },
       "position": {
-        "x": -520,
-        "y": 860
+        "x": -530,
+        "y": 710
       },
       "id": "_c1f20efe9575bdd63d1b3ea2bc681866",
       "width": 193,
       "height": 196,
       "selected": false,
       "positionAbsolute": {
-        "x": -520,
-        "y": 860
+        "x": -530,
+        "y": 710
       },
       "dragging": false
     },
@@ -618,19 +639,19 @@
       "data": {
         "label": "meshItem1",
         "color": "#a0a0a0",
-        "objectName": "Plane"
+        "objectName": "RetopoFlow325"
       },
       "position": {
-        "x": 160,
-        "y": 240
+        "x": 190,
+        "y": 520
       },
       "id": "_448bce237ff76b816a4b427ea2f6037c",
       "width": 193,
       "height": 82,
       "selected": false,
       "positionAbsolute": {
-        "x": 160,
-        "y": 240
+        "x": 190,
+        "y": 520
       },
       "dragging": false
     },
@@ -642,16 +663,16 @@
         "objectName": "Cube023"
       },
       "position": {
-        "x": 190,
-        "y": 640
+        "x": -20,
+        "y": 660
       },
       "id": "_4bd0e613e4851718762d1a59fa616087",
       "width": 193,
       "height": 82,
       "selected": false,
       "positionAbsolute": {
-        "x": 190,
-        "y": 640
+        "x": -20,
+        "y": 660
       },
       "dragging": false
     },
@@ -668,6 +689,47 @@
       "id": "_77898f8c2dedfbe269d92187bb2e03f3",
       "width": 193,
       "height": 338
+    },
+    {
+      "id": "_daa08531afd228ee4b6c736d16a8cdec",
+      "type": "GLBPicker",
+      "data": {
+        "label": "mech",
+        "glbFileURL": "https://effectnode-2022.s3.ap-southeast-1.amazonaws.com/lok-dev/file-3fc2155c1310dd6c1deb7191a4e2543c.glb",
+        "flipY": false
+      },
+      "position": {
+        "x": -470,
+        "y": 1460
+      },
+      "width": 249,
+      "height": 150,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -470,
+        "y": 1460
+      },
+      "dragging": false
+    },
+    {
+      "type": "EnvironmentMap",
+      "data": {
+        "label": "envMapPicker",
+        "envMapFileURL": "https://effectnode-2022.s3.ap-southeast-1.amazonaws.com/lok-dev/file-97755b13f5501271c28a1a04e023360e.hdr"
+      },
+      "position": {
+        "x": -830,
+        "y": 1410
+      },
+      "id": "_dcfb07bf2056a18f09bd5740673af4aa",
+      "width": 249,
+      "height": 150,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -830,
+        "y": 1410
+      },
+      "dragging": false
     }
   ]
 }
