@@ -238,6 +238,8 @@ let asyncGetGLB = (url, load) => {
   }
 }
 
+// training and tooling
+
 export const run = async ({ setCompos, core, globals, getNode, send, on }) => {
   let envMap = false
 
@@ -276,7 +278,6 @@ export const run = async ({ setCompos, core, globals, getNode, send, on }) => {
             }
 
             envMap = v
-
             send('envMap', v)
             // setCompos(<primitive object={v.scene}></primitive>)
           })
