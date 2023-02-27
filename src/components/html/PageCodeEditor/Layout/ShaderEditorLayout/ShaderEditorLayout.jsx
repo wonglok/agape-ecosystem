@@ -103,8 +103,6 @@ export function ShaderEditorLayout() {
               className='px-4 py-1 m-1 text-xs text-white bg-gray-700 rounded-2xl'
               onClick={() => {
                 //
-                //
-
                 let st = useFlow.getState()
 
                 let viewport = useFlow.getState().viewport
