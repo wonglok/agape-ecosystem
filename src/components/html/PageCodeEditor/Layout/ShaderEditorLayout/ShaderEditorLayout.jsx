@@ -176,25 +176,21 @@ export function ShaderEditorLayout() {
               className='px-4 py-1 m-1 text-xs text-white bg-gray-700 rounded-2xl'
               onClick={() => {
                 //
-
-                let viewport = useFlow.getState().viewport
-                let rect = useFlow.getState().rect
-
-                let glbNode = {
-                  id: getID(),
-                  type: 'GLBPicker',
-                  data: { label: 'glbPicker2', glbFileURL: '', flipY: false },
-                  position: { x: -viewport.x + rect.width / 2, y: -viewport.y + rect.height / 2 },
-                }
-
-                let nodes = useFlow.getState().nodes
-                nodes.push(glbNode)
-                useFlow.setState({ nodes: [...nodes] })
+                // let viewport = useFlow.getState().viewport
+                // let rect = useFlow.getState().rect
+                // let glbNode = {
+                //   id: getID(),
+                //   type: 'GLBPicker',
+                //   data: { label: 'glbPicker2', glbFileURL: '', flipY: false },
+                //   position: { x: -viewport.x + rect.width / 2, y: -viewport.y + rect.height / 2 },
+                // }
+                // let nodes = useFlow.getState().nodes
+                // nodes.push(glbNode)
+                // useFlow.setState({ nodes: [...nodes] })
                 //
-
                 //
               }}>
-              Add GLB
+              Add Node
             </button>
           </div>
         </HorizontalChildren>
