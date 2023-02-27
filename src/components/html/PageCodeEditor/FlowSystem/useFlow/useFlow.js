@@ -18,6 +18,7 @@ import nProgress from 'nprogress'
 export const useFlow = create((set, get) => {
   return {
     //
+    toolAddOnlyMode: false,
     viewport: { x: 0, y: 0, zoom: 1 },
     rect: { top: 0, left: 0, width: 1024, height: 1024 },
     ready: null,
@@ -218,7 +219,12 @@ export const useFlow = create((set, get) => {
       newNode.id = id
       newNode.position = get().newNodePos
 
-      if (get()?.hand?.handleType === 'source') {
+      if (get().addNodeOnly) {
+        let nodes = get().nodes
+        nodes.push(newNode)
+        let edges = get().edges
+        set({ edges: [...edges], nodes: [...nodes], addNodeOnly: false })
+      } else if (get()?.hand?.handleType === 'source') {
         let newEdge = {
           id: getID(),
           source: get().hand?.nodeId,
@@ -231,7 +237,7 @@ export const useFlow = create((set, get) => {
         edges.push(newEdge)
         let nodes = get().nodes
         nodes.push(newNode)
-        set({ edges: [...edges], nodes: [...nodes] })
+        set({ edges: [...edges], nodes: [...nodes], addNodeOnly: false })
       } else if (get()?.hand?.handleType === 'target') {
         let newEdge = {
           id: getID(),
@@ -246,7 +252,7 @@ export const useFlow = create((set, get) => {
         edges.push(newEdge)
         let nodes = get().nodes
         nodes.push(newNode)
-        set({ edges: [...edges], nodes: [...nodes] })
+        set({ edges: [...edges], nodes: [...nodes], addNodeOnly: false })
       }
 
       get().saveToDB()

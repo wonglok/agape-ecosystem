@@ -159,7 +159,36 @@ let getConnectItems = ({ nodes, hand }) => {
   return arr
 }
 
-export const getOptions = ({ nodes, hand }) => {
+function getAddOnlyItem({ nodes }) {
+  return nodeTypeList.map((it) => {
+    let hh = it.handles
+    if (hh.length === 0) {
+      // let node = nodes.find((r) => r.name === it.type)
+      hh = it.provideHandle({ nodes: nodes }).all
+    }
+
+    return {
+      label: it.name,
+      value: it.name,
+      children: hh.map((t) => {
+        return {
+          label: `${t.displayName} ${t.type}`,
+          value: t.id,
+        }
+      }),
+    }
+  })
+}
+export const getOptions = ({ nodes, hand, toolAddOnlyMode }) => {
+  if (toolAddOnlyMode) {
+    return [
+      {
+        label: 'Create',
+        value: 'create',
+        children: getAddOnlyItem({ nodes }),
+      },
+    ]
+  }
   return [
     {
       label: 'Create',

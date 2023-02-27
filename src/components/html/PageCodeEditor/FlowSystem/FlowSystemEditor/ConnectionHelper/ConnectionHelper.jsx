@@ -25,10 +25,10 @@ export function ConnectionHelper() {
   let onAddEdge = useFlow((s) => s.onAddEdge)
 
   let hand = useFlow((s) => s.hand)
-
+  let toolAddOnlyMode = useFlow((s) => s.toolAddOnlyMode)
   let options = useMemo(() => {
-    return getOptions({ nodes, hand })
-  }, [hand, nodes])
+    return getOptions({ nodes, hand, toolAddOnlyMode })
+  }, [hand, nodes, toolAddOnlyMode])
 
   useEffect(() => {
     let hh = (ev) => {
