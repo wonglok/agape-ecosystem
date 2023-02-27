@@ -216,16 +216,25 @@ export default function GUI({ id, data, selected }) {
 
                     obj = renewIDs(obj)
 
-                    updateNodeData(id, 'nodes', obj.nodes)
-                    updateNodeData(id, 'edges', obj.edges)
+                    data.nodes = obj.nodes
+                    data.edges = obj.edges
 
-                    useFlow.setState({ nodes: JSON.parse(JSON.stringify(useFlow.getState().nodes)) })
+                    // updateNodeData(id, 'nodes', obj.nodes)
+                    // updateNodeData(id, 'edges', obj.edges)
+
+                    let nodes = JSON.parse(JSON.stringify(useFlow.getState().nodes))
+                    let edges = JSON.parse(JSON.stringify(useFlow.getState().edges))
+
+                    useFlow.setState({ nodes: [], edges: [] })
 
                     setTimeout(() => {
-                      provideHandle({ nodes: data.nodes })
-
+                      useFlow.setState({ nodes: nodes, edges: edges })
                       useFlow.getState().saveToDB()
-                      window.dispatchEvent(new CustomEvent('needsUpdate'))
+
+                      setTimeout(() => {
+                        provideHandle({ nodes: data.nodes })
+                        window.dispatchEvent(new CustomEvent('needsUpdate'))
+                      })
                     }, 5)
                   }, 5)
                 }
