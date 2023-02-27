@@ -129,7 +129,7 @@ void main() {
 
   #ifdef USE_ROUGHNESSMAP
     vec4 texelInfo = texture2D( roughnessMap, vUv );
-    roughnessFactor += texelInfo.r * 5.0;
+    // roughnessFactor += texelInfo.r * 5.0;
     // extraTransmission = texelInfo.b;
     // emissiveColor.rgb = diffuseColor.rgb;
   #endif

@@ -4,7 +4,7 @@ import { useFlow } from '../../useFlow'
 import { getTemplateByNodeInstance } from '../../nodeTypes'
 import { InputNumber, Slider } from 'antd'
 import { ExposeParamter } from '../../SharedGUI/ExposeParamter'
-import { makeHoverStateTarget } from '../../SharedGUI/HoverState'
+import { makeHoverStateSource, makeHoverStateTarget } from '../../SharedGUI/HoverState'
 
 export const handles = [
   //

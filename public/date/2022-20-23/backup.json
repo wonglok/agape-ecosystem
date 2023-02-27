@@ -1,19 +1,6 @@
 {
   "edges": [
     {
-      "source": "_7a9a44a337954fd15ed46cbd91805727",
-      "sourceHandle": "anySource",
-      "target": "_4bd0e613e4851718762d1a59fa616087",
-      "targetHandle": "material",
-      "type": "CloseEdge",
-      "id": "reactflow__edge-_7a9a44a337954fd15ed46cbd91805727anySource-_4bd0e613e4851718762d1a59fa616087material",
-      "animated": false,
-      "style": {
-        "stroke": ""
-      },
-      "selected": false
-    },
-    {
       "source": "_0d486b064ece7fa9c07bb3788a727442",
       "sourceHandle": "material",
       "target": "_7a9a44a337954fd15ed46cbd91805727",
@@ -92,56 +79,48 @@
       "selected": false
     },
     {
-      "source": "_2dfa414faf2ad63ff40d99ec104782a9",
-      "sourceHandle": "color",
-      "target": "_c1f20efe9575bdd63d1b3ea2bc681866",
-      "targetHandle": "color_4a8df4047b2312ab54f84b03c99eafe2",
-      "type": "CloseEdge",
-      "id": "reactflow__edge-_2dfa414faf2ad63ff40d99ec104782a9color-_c1f20efe9575bdd63d1b3ea2bc681866color_4a8df4047b2312ab54f84b03c99eafe2",
-      "animated": false,
-      "style": {
-        "stroke": ""
-      },
-      "selected": false
-    },
-    {
       "source": "_c1f20efe9575bdd63d1b3ea2bc681866",
-      "sourceHandle": "anySource_1d6782271b28c1dc733aa042df67d9e7",
-      "target": "_f7ba3a2fa76d7be1e15ebd9287b138b2",
-      "targetHandle": "material",
-      "type": "CloseEdge",
-      "id": "reactflow__edge-_c1f20efe9575bdd63d1b3ea2bc681866anySource_1d6782271b28c1dc733aa042df67d9e7-_f7ba3a2fa76d7be1e15ebd9287b138b2material",
-      "animated": false,
-      "style": {
-        "stroke": ""
-      },
-      "selected": false
-    },
-    {
-      "source": "_c1f20efe9575bdd63d1b3ea2bc681866",
-      "sourceHandle": "anySource_fd0c505c4c4f2c962ae326ef63d6db7a",
+      "sourceHandle": "anySource_130dec5cd4b780d072f478ff82ff0061",
       "target": "_62909ae077692f1d4041729afd498079",
       "targetHandle": "material",
       "type": "CloseEdge",
-      "id": "reactflow__edge-_c1f20efe9575bdd63d1b3ea2bc681866anySource_fd0c505c4c4f2c962ae326ef63d6db7a-_62909ae077692f1d4041729afd498079material",
-      "animated": false,
-      "style": {
-        "stroke": ""
-      },
-      "selected": false
+      "id": "reactflow__edge-_c1f20efe9575bdd63d1b3ea2bc681866anySource_130dec5cd4b780d072f478ff82ff0061-_62909ae077692f1d4041729afd498079material"
     },
     {
       "source": "_ceb66caea480237c5ac5e5d2aebfe6c1",
       "sourceHandle": "color",
       "target": "_c1f20efe9575bdd63d1b3ea2bc681866",
-      "targetHandle": "color_df94a194a3acf9a9db048bc5aad10e24",
+      "targetHandle": "color_25730f027f0416f8574590972cc827e1",
       "type": "CloseEdge",
-      "id": "reactflow__edge-_ceb66caea480237c5ac5e5d2aebfe6c1color-_c1f20efe9575bdd63d1b3ea2bc681866color_df94a194a3acf9a9db048bc5aad10e24",
+      "id": "reactflow__edge-_ceb66caea480237c5ac5e5d2aebfe6c1color-_c1f20efe9575bdd63d1b3ea2bc681866color_25730f027f0416f8574590972cc827e1",
       "animated": false,
       "style": {
         "stroke": ""
-      },
-      "selected": false
+      }
+    },
+    {
+      "source": "_2dfa414faf2ad63ff40d99ec104782a9",
+      "sourceHandle": "color",
+      "target": "_c1f20efe9575bdd63d1b3ea2bc681866",
+      "targetHandle": "color_412310c85631e574e2a9ec37d238d979",
+      "type": "CloseEdge",
+      "id": "reactflow__edge-_2dfa414faf2ad63ff40d99ec104782a9color-_c1f20efe9575bdd63d1b3ea2bc681866color_412310c85631e574e2a9ec37d238d979",
+      "animated": false,
+      "style": {
+        "stroke": ""
+      }
+    },
+    {
+      "source": "_c1f20efe9575bdd63d1b3ea2bc681866",
+      "sourceHandle": "anySource_6e2559c1af91f64362c2068ace110e0d",
+      "target": "_f7ba3a2fa76d7be1e15ebd9287b138b2",
+      "targetHandle": "material",
+      "type": "CloseEdge",
+      "id": "reactflow__edge-_c1f20efe9575bdd63d1b3ea2bc681866anySource_6e2559c1af91f64362c2068ace110e0d-_f7ba3a2fa76d7be1e15ebd9287b138b2material",
+      "animated": false,
+      "style": {
+        "stroke": ""
+      }
     }
   ],
   "nodes": [
@@ -149,22 +128,22 @@
       "type": "ColorPicker",
       "data": {
         "label": "master2",
-        "color": "#e00000",
+        "color": "#1fbcff",
         "isExposed": true,
         "isGroupedForExpose": true,
         "groupName": "color"
       },
       "position": {
-        "x": -920,
-        "y": -570
+        "x": -870,
+        "y": -530
       },
       "id": "_f0e0345558b18196fd6f68725965b333",
       "width": 345,
       "height": 42,
       "selected": false,
       "positionAbsolute": {
-        "x": -920,
-        "y": -570
+        "x": -870,
+        "y": -530
       },
       "dragging": false
     },
@@ -173,22 +152,22 @@
       "type": "ExportGroup",
       "data": {
         "label": "Group",
-        "width": 1262.0555745501629,
-        "height": 1252.6884442690935
+        "width": 931.5399495501629,
+        "height": 1045.7196942690935
       },
       "position": {
-        "x": -1150,
-        "y": -710
+        "x": -1060,
+        "y": -670
       },
       "style": {
         "zIndex": -1
       },
-      "width": 1262,
+      "width": 932,
       "height": 2,
       "selected": false,
       "positionAbsolute": {
-        "x": -1150,
-        "y": -710
+        "x": -1060,
+        "y": -670
       },
       "dragging": false
     },
@@ -199,20 +178,20 @@
         "color": "#a0a0a0",
         "isExported": true,
         "arrive": {
-          "color": 14680064
+          "color": 2079998
         }
       },
       "position": {
-        "x": -140,
-        "y": 280
+        "x": -350,
+        "y": -110
       },
       "id": "_ae9852db7eb53b2d5dbdfafbcb771a8a",
       "width": 193,
       "height": 42,
       "selected": false,
       "positionAbsolute": {
-        "x": -140,
-        "y": 280
+        "x": -350,
+        "y": -110
       },
       "dragging": false
     },
@@ -224,16 +203,16 @@
         "objectName": "RetopoFlow325_9"
       },
       "position": {
-        "x": -230,
-        "y": 1020
+        "x": -30,
+        "y": 910
       },
       "id": "_62909ae077692f1d4041729afd498079",
       "width": 193,
       "height": 82,
       "selected": false,
       "positionAbsolute": {
-        "x": -230,
-        "y": 1020
+        "x": -30,
+        "y": 910
       },
       "dragging": false
     },
@@ -242,19 +221,19 @@
       "data": {
         "label": "meshItem1",
         "color": "#a0a0a0",
-        "objectName": "Querlo011"
+        "objectName": "RetopoFlow325_2"
       },
       "position": {
-        "x": -60,
-        "y": 920
+        "x": -230,
+        "y": 1020
       },
       "id": "_f7ba3a2fa76d7be1e15ebd9287b138b2",
       "width": 193,
       "height": 82,
       "selected": false,
       "positionAbsolute": {
-        "x": -60,
-        "y": 920
+        "x": -230,
+        "y": 1020
       },
       "dragging": false
     },
@@ -289,16 +268,16 @@
         }
       },
       "position": {
-        "x": -270,
-        "y": 370
+        "x": -490,
+        "y": 280
       },
       "id": "_7a9a44a337954fd15ed46cbd91805727",
       "width": 193,
       "height": 42,
       "selected": false,
       "positionAbsolute": {
-        "x": -270,
-        "y": 370
+        "x": -490,
+        "y": 280
       },
       "dragging": false
     },
@@ -309,16 +288,16 @@
         "color": "#ff7300"
       },
       "position": {
-        "x": -1140,
-        "y": 830
+        "x": -1110,
+        "y": 820
       },
       "id": "_ceb66caea480237c5ac5e5d2aebfe6c1",
       "width": 345,
       "height": 42,
       "selected": false,
       "positionAbsolute": {
-        "x": -1140,
-        "y": 830
+        "x": -1110,
+        "y": 820
       },
       "dragging": false
     },
@@ -332,16 +311,16 @@
         "groupName": "color"
       },
       "position": {
-        "x": -1010,
-        "y": -140
+        "x": -1000,
+        "y": -110
       },
       "id": "_9fdda5ad4e2e8b7f48d909e2a3d4809e",
       "width": 345,
       "height": 42,
       "selected": false,
       "positionAbsolute": {
-        "x": -1010,
-        "y": -140
+        "x": -1000,
+        "y": -110
       },
       "dragging": false
     },
@@ -352,16 +331,16 @@
         "color": "#ffbb00"
       },
       "position": {
-        "x": -1130,
-        "y": 960
+        "x": -1110,
+        "y": 870
       },
       "id": "_2dfa414faf2ad63ff40d99ec104782a9",
       "width": 345,
       "height": 42,
       "selected": false,
       "positionAbsolute": {
-        "x": -1130,
-        "y": 960
+        "x": -1110,
+        "y": 870
       },
       "dragging": false
     },
@@ -376,12 +355,7 @@
             "type": "ColorPicker",
             "data": {
               "label": "master2",
-              "color": {
-                "isColor": true,
-                "r": 1,
-                "g": 0.17144110072255403,
-                "b": 0
-              },
+              "color": 16675584,
               "isExposed": true,
               "isGroupedForExpose": true,
               "groupName": "color"
@@ -390,7 +364,7 @@
               "x": -920,
               "y": -570
             },
-            "id": "_df94a194a3acf9a9db048bc5aad10e24",
+            "id": "_25730f027f0416f8574590972cc827e1",
             "selected": false,
             "positionAbsolute": {
               "x": -920,
@@ -406,17 +380,19 @@
               "label": "material",
               "color": "#a0a0a0",
               "isExported": true,
-              "arrive": {}
+              "arrive": {
+                "color": 16675584
+              }
             },
             "position": {
-              "x": -370,
-              "y": -120
+              "x": -140,
+              "y": 280
             },
-            "id": "_1d6782271b28c1dc733aa042df67d9e7",
+            "id": "_130dec5cd4b780d072f478ff82ff0061",
             "selected": false,
             "positionAbsolute": {
-              "x": -370,
-              "y": -120
+              "x": -140,
+              "y": 280
             },
             "dragging": false
           },
@@ -432,7 +408,7 @@
               "x": -590,
               "y": -120
             },
-            "id": "_df482297dec59ce86a9d68d5b71e2cb0",
+            "id": "_67e5a5e41a48fd99ebaca43dc860518d",
             "selected": false,
             "positionAbsolute": {
               "x": -590,
@@ -448,17 +424,19 @@
               "label": "material2",
               "color": "#a0a0a0",
               "isExported": true,
-              "arrive": {}
+              "arrive": {
+                "color": 16694016
+              }
             },
             "position": {
-              "x": -360,
-              "y": 290
+              "x": -270,
+              "y": 370
             },
-            "id": "_fd0c505c4c4f2c962ae326ef63d6db7a",
+            "id": "_6e2559c1af91f64362c2068ace110e0d",
             "selected": false,
             "positionAbsolute": {
-              "x": -360,
-              "y": 290
+              "x": -270,
+              "y": 370
             },
             "dragging": false
           },
@@ -468,12 +446,7 @@
             "type": "ColorPicker",
             "data": {
               "label": "sub3",
-              "color": {
-                "isColor": true,
-                "r": 0.982250550332711,
-                "g": 0.6038273388475408,
-                "b": 0.057805430183792694
-              },
+              "color": 16694016,
               "isExposed": true,
               "isGroupedForExpose": true,
               "groupName": "color"
@@ -482,7 +455,7 @@
               "x": -1010,
               "y": -140
             },
-            "id": "_4a8df4047b2312ab54f84b03c99eafe2",
+            "id": "_412310c85631e574e2a9ec37d238d979",
             "selected": false,
             "positionAbsolute": {
               "x": -1010,
@@ -502,21 +475,21 @@
               "x": -470,
               "y": -540
             },
-            "id": "_89ea794629a7e381773a7442b26df428",
+            "id": "_22a3195e82c8188b34e9ae1a6c5c5d5b",
             "positionAbsolute": {
               "x": -470,
               "y": -540
             }
           },
           {
-            "width": 1227,
-            "height": 1257,
-            "id": "_9742cbaf1d8ebfdfd96d182e55dc11c2",
+            "width": 1262,
+            "height": 1253,
+            "id": "_ec2556bafc100539d6976aa3fafe6c89",
             "type": "ExportGroup",
             "data": {
               "label": "Group",
-              "width": 1227.0086995501629,
-              "height": 1257.4228192690935
+              "width": 1262.0555745501629,
+              "height": 1252.6884442690935
             },
             "position": {
               "x": -1150,
@@ -535,94 +508,101 @@
         ],
         "edges": [
           {
-            "source": "_fd0c505c4c4f2c962ae326ef63d6db7a",
+            "source": "_6e2559c1af91f64362c2068ace110e0d",
             "sourceHandle": "anySource",
-            "target": "_a692ca01d6d6678ec92997836c67f741",
+            "target": "_6731a76240fe49b7c78a049e48247173",
             "targetHandle": "material",
             "type": "CloseEdge",
-            "id": "_f717b9d351f4d9e4a280b858b8159111",
+            "id": "_ac959e2c4052b4991d24e46666c1023d",
             "animated": false,
             "style": {
               "stroke": ""
-            }
+            },
+            "selected": false
           },
           {
-            "source": "_df482297dec59ce86a9d68d5b71e2cb0",
+            "source": "_67e5a5e41a48fd99ebaca43dc860518d",
             "sourceHandle": "material",
-            "target": "_fd0c505c4c4f2c962ae326ef63d6db7a",
+            "target": "_6e2559c1af91f64362c2068ace110e0d",
             "targetHandle": "anyTarget",
             "type": "CloseEdge",
-            "id": "_eae907df76c6c15580d8c008b314c51e",
+            "id": "_32ac3f580983447c4f36153ba1fdc982",
             "animated": false,
             "style": {
               "stroke": ""
-            }
+            },
+            "selected": false
           },
           {
-            "source": "_1d6782271b28c1dc733aa042df67d9e7",
+            "source": "_130dec5cd4b780d072f478ff82ff0061",
             "sourceHandle": "anySource",
-            "target": "_7f44c94fe00d301c147ae7e529ff2fe4",
+            "target": "_3f57512337c27cc3e78c811e3ad91125",
             "targetHandle": "material",
             "type": "CloseEdge",
-            "id": "_f9b8024b9b34b556e01f732527d17e34",
+            "id": "_ee602399f9a6058241d588a4911818c3",
             "animated": false,
             "style": {
               "stroke": ""
-            }
+            },
+            "selected": false
           },
           {
-            "source": "_4a8df4047b2312ab54f84b03c99eafe2",
+            "source": "_412310c85631e574e2a9ec37d238d979",
             "sourceHandle": "color",
-            "target": "_df482297dec59ce86a9d68d5b71e2cb0",
+            "target": "_67e5a5e41a48fd99ebaca43dc860518d",
             "targetHandle": "color",
             "type": "CloseEdge",
-            "id": "_5435f96d5b0f470cbbbb2363fa672c3e",
+            "id": "_3e83edf311c80ca03e73b44ec359d340",
             "animated": false,
             "style": {
               "stroke": ""
-            }
+            },
+            "selected": false
           },
           {
-            "id": "_edc5fcd196292169084f93f8932614c5",
-            "source": "_df94a194a3acf9a9db048bc5aad10e24",
+            "id": "_29f094512b12da10caa0a77fc96a6c19",
+            "source": "_25730f027f0416f8574590972cc827e1",
             "sourceHandle": "color",
             "targetHandle": "color",
-            "target": "_89ea794629a7e381773a7442b26df428",
+            "target": "_22a3195e82c8188b34e9ae1a6c5c5d5b",
             "type": "CloseEdge",
             "animated": false,
             "style": {
               "stroke": ""
-            }
+            },
+            "selected": false
           },
           {
-            "source": "_89ea794629a7e381773a7442b26df428",
+            "source": "_22a3195e82c8188b34e9ae1a6c5c5d5b",
             "sourceHandle": "material",
-            "target": "_df482297dec59ce86a9d68d5b71e2cb0",
+            "target": "_67e5a5e41a48fd99ebaca43dc860518d",
             "targetHandle": "receiver",
             "type": "CloseEdge",
-            "id": "_d994b3cd5ff0c0506ac0e218756b33ca",
+            "id": "_718f36d363422cf08f7d620d0893a5c6",
             "animated": false,
             "style": {
               "stroke": ""
-            }
+            },
+            "selected": false
           },
           {
-            "source": "_89ea794629a7e381773a7442b26df428",
+            "source": "_22a3195e82c8188b34e9ae1a6c5c5d5b",
             "sourceHandle": "material",
-            "target": "_1d6782271b28c1dc733aa042df67d9e7",
+            "target": "_130dec5cd4b780d072f478ff82ff0061",
             "targetHandle": "anyTarget",
             "type": "CloseEdge",
-            "id": "_a49519324fac537adf0f3c2d219889fa",
+            "id": "_9a3f1d33ab926439b38d903d3d199a19",
             "animated": false,
             "style": {
               "stroke": ""
-            }
+            },
+            "selected": false
           }
         ]
       },
       "position": {
         "x": -530,
-        "y": 710
+        "y": 760
       },
       "id": "_c1f20efe9575bdd63d1b3ea2bc681866",
       "width": 193,
@@ -630,7 +610,7 @@
       "selected": false,
       "positionAbsolute": {
         "x": -530,
-        "y": 710
+        "y": 760
       },
       "dragging": false
     },
@@ -642,37 +622,16 @@
         "objectName": "RetopoFlow325"
       },
       "position": {
-        "x": 190,
-        "y": 520
+        "x": 20,
+        "y": 420
       },
       "id": "_448bce237ff76b816a4b427ea2f6037c",
       "width": 193,
       "height": 82,
       "selected": false,
       "positionAbsolute": {
-        "x": 190,
-        "y": 520
-      },
-      "dragging": false
-    },
-    {
-      "type": "ReadSceneMesh",
-      "data": {
-        "label": "Cube023",
-        "color": "#a0a0a0",
-        "objectName": "Cube023"
-      },
-      "position": {
-        "x": -20,
-        "y": 660
-      },
-      "id": "_4bd0e613e4851718762d1a59fa616087",
-      "width": 193,
-      "height": 82,
-      "selected": false,
-      "positionAbsolute": {
-        "x": -20,
-        "y": 660
+        "x": 20,
+        "y": 420
       },
       "dragging": false
     },
@@ -683,12 +642,18 @@
         "color": "#a0a0a0"
       },
       "position": {
-        "x": -470,
-        "y": -540
+        "x": -460,
+        "y": -530
       },
       "id": "_77898f8c2dedfbe269d92187bb2e03f3",
       "width": 193,
-      "height": 338
+      "height": 338,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -460,
+        "y": -530
+      },
+      "dragging": false
     },
     {
       "id": "_daa08531afd228ee4b6c736d16a8cdec",
@@ -699,15 +664,15 @@
         "flipY": false
       },
       "position": {
-        "x": -470,
-        "y": 1460
+        "x": -550,
+        "y": 1110
       },
       "width": 249,
       "height": 150,
-      "selected": false,
+      "selected": true,
       "positionAbsolute": {
-        "x": -470,
-        "y": 1460
+        "x": -550,
+        "y": 1110
       },
       "dragging": false
     },
@@ -715,19 +680,21 @@
       "type": "EnvironmentMap",
       "data": {
         "label": "envMapPicker",
-        "envMapFileURL": "https://effectnode-2022.s3.ap-southeast-1.amazonaws.com/lok-dev/file-97755b13f5501271c28a1a04e023360e.hdr"
+        "envMapFileURL": "https://effectnode-2022.s3.ap-southeast-1.amazonaws.com/lok-dev/file-97755b13f5501271c28a1a04e023360e.hdr",
+        "showBG": true,
+        "showEnv": true
       },
       "position": {
-        "x": -830,
-        "y": 1410
+        "x": -850,
+        "y": 1070
       },
       "id": "_dcfb07bf2056a18f09bd5740673af4aa",
       "width": 249,
-      "height": 150,
+      "height": 218,
       "selected": false,
       "positionAbsolute": {
-        "x": -830,
-        "y": 1410
+        "x": -850,
+        "y": 1070
       },
       "dragging": false
     }

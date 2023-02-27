@@ -12,6 +12,7 @@ import path from 'path'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
 import { Object3D } from 'three'
+import { MyGLTFLoader } from '@/components/content/HomeTrim/MyGLTFLoader'
 
 export const handles = [
   //
@@ -207,6 +208,25 @@ export const SettingsGUI = ({ data, id }) => {
   )
 }
 
+let blobProms = new Map()
+let provideBlobPromise = (url) => {
+  if (blobProms.has(url)) {
+    return blobProms.get(url)
+  } else {
+    blobProms.set(
+      url,
+      new Promise(async (resolve) => {
+        let blobYo = await fetch(url, {
+          mode: 'cors',
+        }).then((r) => r.blob())
+        resolve(URL.createObjectURL(blobYo))
+      }),
+    )
+
+    return blobProms.get(url)
+  }
+}
+
 export const run = async ({ setCompos, core, globals, getNode, send, on }) => {
   let o3 = new Object3D()
   core.now.scene.add(o3)
@@ -223,15 +243,17 @@ export const run = async ({ setCompos, core, globals, getNode, send, on }) => {
         last = now
 
         if (node?.data?.glbFileURL) {
-          let loader = new GLTFLoader()
+          let loader = new MyGLTFLoader()
           let draco = new DRACOLoader()
           draco.setDecoderPath(`/draco/`)
           loader.setDRACOLoader(draco)
 
-          loader.loadAsync(node?.data?.glbFileURL).then((v) => {
-            o3.clear()
-            o3.add(v.scene)
-            // setCompos(<primitive object={v.scene}></primitive>)
+          provideBlobPromise(node?.data?.glbFileURL).then((url) => {
+            loader.loadAsync(url).then((v) => {
+              o3.clear()
+              o3.add(v.scene)
+              // setCompos(<primitive object={v.scene}></primitive>)
+            })
           })
 
           // new TextureLoader().loadAsync(node?.data?.glbFileURL).then((v) => {
