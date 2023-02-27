@@ -23,7 +23,7 @@ export const name = 'EnvironmentMap'
 export const createData = () => {
   return {
     type: name,
-    data: { label: 'envMapPicker', envMapFileURL: '' },
+    data: { label: 'envMapPicker', envMapFileURL: '', showEnv: true, showBG: false },
     position: { x: 0, y: 0 },
   }
 }
@@ -167,6 +167,16 @@ export const SettingsGUI = ({ data, id }) => {
           }}></Switch>
       </div>
 
+      <div className='flex items-center mb-3'>
+        Environment
+        <Switch
+          className='ml-3 bg-gray-200'
+          defaultChecked={data.showEnv || false}
+          onChange={(ev) => {
+            updateNodeData(id, 'showEnv', ev)
+          }}></Switch>
+      </div>
+
       <div>
         {(data.envMapFileURL && (
           <>
@@ -221,8 +231,12 @@ export const run = async ({ setCompos, core, globals, getNode, send, on }) => {
       } else {
         core.now.scene.background = null
       }
+      if (getNode().data.showEnv) {
+        core.now.scene.environment = v
+      } else {
+        core.now.scene.environment = null
+      }
 
-      core.now.scene.environment = v
       envMap = v
 
       send('envMap', v)
