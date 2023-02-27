@@ -142,12 +142,11 @@ export const SettingsGUI = ({ data, id }) => {
                   .then((r) => r.json())
                   .then(async (r) => {
                     //
-                    console.log(r)
+                    // console.log(r)
 
                     updateNodeData(id, 'envMapFileURL', r)
 
                     // if (defaultItem !== '' || defaultItem !== null) {
-
                     // }
                   })
               }
