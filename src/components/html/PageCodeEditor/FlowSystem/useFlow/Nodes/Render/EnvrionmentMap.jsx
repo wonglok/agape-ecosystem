@@ -234,6 +234,8 @@ export const run = async ({ setCompos, core, globals, getNode, send, on }) => {
       if (last !== now) {
         last = now
 
+        //
+
         if (node?.data?.envMapFileURL) {
           load(node?.data?.envMapFileURL)
           // new TextureLoader().loadAsync(node?.data?.envMapFileURL).then((v) => {
