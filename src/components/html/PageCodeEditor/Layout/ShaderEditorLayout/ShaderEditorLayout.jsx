@@ -24,7 +24,9 @@ function AddEncap() {
         nodeForEncap.data.nodes = []
         nodeForEncap.data.edges = []
 
-        let pos = project({ x: window.innerWidth / 2, y: window.innerHeight / 2 })
+        let viewport = useFlow.getState().viewport
+        let rect = useFlow.getState().rect
+        let pos = { x: -viewport.x + rect.width / 2, y: -viewport.y + rect.height / 2 }
 
         nodeForEncap.position = pos
         useFlow.setState({ nodes: [...useFlow.getState().nodes, nodeForEncap] })
@@ -112,7 +114,7 @@ export function ShaderEditorLayout() {
                   id: getID(),
                   type: 'ExportGroup',
                   data: { label: 'Group', width: 500, height: 500 },
-                  position: { x: -viewport.x + rect.width / 2, y: -viewport.y + rect.height / 2 },
+                  position: { x: -viewport.x + rect.width / 2, y: viewport.y + rect.height / 2 },
                   style: { zIndex: -1 },
                 })
                 // st.nodes = st.nodes.slice().sort((a, b) => {
@@ -176,19 +178,25 @@ export function ShaderEditorLayout() {
               className='px-4 py-1 m-1 text-xs text-white bg-gray-700 rounded-2xl'
               onClick={() => {
                 //
-                // let viewport = useFlow.getState().viewport
-                // let rect = useFlow.getState().rect
-                // let glbNode = {
-                //   id: getID(),
-                //   type: 'GLBPicker',
-                //   data: { label: 'glbPicker2', glbFileURL: '', flipY: false },
-                //   position: { x: -viewport.x + rect.width / 2, y: -viewport.y + rect.height / 2 },
-                // }
-                // let nodes = useFlow.getState().nodes
-                // nodes.push(glbNode)
-                // useFlow.setState({ nodes: [...nodes] })
-                //
-                //
+                let showTool = useFlow.getState().showTool
+                let viewport = useFlow.getState().viewport
+                let rect = useFlow.getState().rect
+                if (!showTool) {
+                  useFlow.setState({
+                    addNodeOnly: true,
+                    toolAddOnlyMode: true,
+                    showTool: true,
+                    toolTop: `${rect.height / 2 + rect.top}px`,
+                    toolLeft: `${rect.width / 2 + rect.left - 410 / 2}px`,
+                    newNodePos: { x: -viewport.x + rect.width / 2, y: -viewport.y + rect.height / 2 },
+                  })
+                } else {
+                  useFlow.setState({
+                    addNodeOnly: false,
+                    toolAddOnlyMode: false,
+                    showTool: false,
+                  })
+                }
               }}>
               Add Node
             </button>
