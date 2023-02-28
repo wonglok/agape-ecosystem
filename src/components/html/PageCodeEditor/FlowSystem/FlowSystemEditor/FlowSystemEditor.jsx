@@ -40,7 +40,7 @@ export function FlowSystemEditorCore() {
 
   useEffect(() => {
     if (!showTool) {
-      useFlow.setState({
+      useFlowƒ.setState({
         toolAddOnlyMode: false,
       })
     }
