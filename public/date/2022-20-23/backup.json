@@ -107,7 +107,31 @@
       "target": "_448bce237ff76b816a4b427ea2f6037c",
       "targetHandle": "material",
       "type": "CloseEdge",
-      "id": "reactflow__edge-_c1f20efe9575bdd63d1b3ea2bc681866anySource_06fd78d874d5c600794ea37e3b11d22f-_448bce237ff76b816a4b427ea2f6037cmaterial"
+      "id": "reactflow__edge-_c1f20efe9575bdd63d1b3ea2bc681866anySource_06fd78d874d5c600794ea37e3b11d22f-_448bce237ff76b816a4b427ea2f6037cmaterial",
+      "animated": false,
+      "style": {
+        "stroke": ""
+      }
+    },
+    {
+      "id": "_b5257f45d0bf80617de0fed2d4f7e600",
+      "source": "_7a9a44a337954fd15ed46cbd91805727",
+      "sourceHandle": "anySource",
+      "targetHandle": "material",
+      "target": "_5201f3f11118a750c8534e394e1a3676",
+      "type": "CloseEdge",
+      "animated": false,
+      "style": {
+        "stroke": ""
+      }
+    },
+    {
+      "id": "_2d9a81d614abdaf484a5bf5ea59331ba",
+      "source": "_ae9852db7eb53b2d5dbdfafbcb771a8a",
+      "sourceHandle": "anySource",
+      "targetHandle": "material",
+      "target": "_3dd1da9f0df74c49fd69759f03de2f59",
+      "type": "CloseEdge"
     }
   ],
   "nodes": [
@@ -143,8 +167,8 @@
         "height": 1031.7088486808582
       },
       "position": {
-        "x": -1060,
-        "y": -660
+        "x": -1040,
+        "y": -670
       },
       "style": {
         "zIndex": -1
@@ -153,8 +177,8 @@
       "height": 2,
       "selected": false,
       "positionAbsolute": {
-        "x": -1060,
-        "y": -660
+        "x": -1040,
+        "y": -670
       },
       "dragging": false
     },
@@ -187,7 +211,7 @@
       "data": {
         "label": "RetopoFlow325_9",
         "color": "#a0a0a0",
-        "objectName": "RetopoFlow325_9"
+        "objectName": "RetopoFlow010_12"
       },
       "position": {
         "x": -200,
@@ -251,7 +275,7 @@
         "color": "#a0a0a0",
         "isExported": true,
         "arrive": {
-          "color": 16701722
+          "color": 16646144
         }
       },
       "position": {
@@ -292,7 +316,7 @@
       "type": "ColorPicker",
       "data": {
         "label": "sub3",
-        "color": "#ffd91a",
+        "color": "#ff0000",
         "isExposed": true,
         "isGroupedForExpose": true,
         "groupName": "color"
@@ -602,7 +626,7 @@
       "data": {
         "label": "meshItem1",
         "color": "#a0a0a0",
-        "objectName": "RetopoFlow325"
+        "objectName": "RetopoFlow010_5"
       },
       "position": {
         "x": 70,
@@ -643,19 +667,19 @@
       "type": "GLBPicker",
       "data": {
         "label": "mech",
-        "glbFileURL": "https://effectnode-2022.s3.ap-southeast-1.amazonaws.com/lok-dev/file-3fc2155c1310dd6c1deb7191a4e2543c.glb",
+        "glbFileURL": "https://effectnode-2022.s3.ap-southeast-1.amazonaws.com/lok-dev/file-80f27816f84c9864cf8ad924bfb764c8.glb",
         "flipY": false
       },
       "position": {
-        "x": -530,
-        "y": 1090
+        "x": -550,
+        "y": 1130
       },
       "width": 249,
       "height": 150,
       "selected": false,
       "positionAbsolute": {
-        "x": -530,
-        "y": 1090
+        "x": -550,
+        "y": 1130
       },
       "dragging": false
     },
@@ -700,6 +724,36 @@
         "y": -30
       },
       "dragging": false
+    },
+    {
+      "type": "ReadSceneMesh",
+      "data": {
+        "label": "RetopoFlow010_20",
+        "color": "#a0a0a0",
+        "objectName": "RetopoFlow010_20"
+      },
+      "position": {
+        "x": -270,
+        "y": 420
+      },
+      "id": "_5201f3f11118a750c8534e394e1a3676",
+      "width": 193,
+      "height": 82
+    },
+    {
+      "type": "ReadSceneMesh",
+      "data": {
+        "label": "RetopoFlow010_4",
+        "color": "#a0a0a0",
+        "objectName": "RetopoFlow010_4"
+      },
+      "position": {
+        "x": 200,
+        "y": 200
+      },
+      "id": "_3dd1da9f0df74c49fd69759f03de2f59",
+      "width": 193,
+      "height": 82
     }
   ]
 }
