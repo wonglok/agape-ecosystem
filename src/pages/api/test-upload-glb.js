@@ -24,7 +24,7 @@ const s3Client = new S3Client({
 const thisConfig = [
   {
     AllowedHeaders: ['*'],
-    AllowedMethods: ['GET', 'POST'],
+    AllowedMethods: ['GET', 'POST', 'PUT', 'OPTIONS'],
     AllowedOrigins: ['*'],
     ExposeHeaders: ['ETag'],
   },
@@ -35,9 +35,10 @@ const corsParams = {
   CORSConfiguration: { CORSRules: thisConfig },
 }
 
-s3Client.send(new PutBucketCorsCommand(corsParams))
-
 export async function uploadFileToObjectStorage(base64Data, path, fileName, ContentType) {
+  await s3Client.send(new PutBucketCorsCommand(corsParams))
+
+  //
   const params = {
     Bucket: process.env.LOK_S3_BUCKET,
     Key: `${path}/${fileName}`,
