@@ -288,6 +288,7 @@ export const run = async ({ setCompos, core, globals, getNode, send, on }) => {
           // })
         } else {
           cancel()
+          //
           // send(
           //   'glbObject',
           //   new TextureLoader().load(

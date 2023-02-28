@@ -250,7 +250,7 @@ let asyncGetGLB = (url) => {
 
 export const run = async ({ setCompos, core, globals, getNode, send, on }) => {
   let o3 = new Object3D()
-  core.now.scene.add(o3)
+  // core.now.scene.add(o3)
 
   core.onPreload(() => {
     //
@@ -267,7 +267,19 @@ export const run = async ({ setCompos, core, globals, getNode, send, on }) => {
           // provideBlobPromise().then((url) => {
           asyncGetGLB(node?.data?.glbFileURL).then((v) => {
             o3.add(v.scene)
-            // setCompos(<primitive object={v.scene}></primitive>)
+            o3.traverse((it) => {
+              it.frustumCulled = false
+            })
+            setCompos(
+              <group
+                onClick={(ev) => {
+                  //
+
+                  console.log(ev.object.name)
+                }}>
+                <primitive object={o3}></primitive>
+              </group>,
+            )
           })
           // })
 
