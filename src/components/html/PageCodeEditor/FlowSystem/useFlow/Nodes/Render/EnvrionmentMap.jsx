@@ -120,7 +120,6 @@ export const SettingsGUI = ({ data, id }) => {
         <button
           className='w-full p-2 my-2 text-black bg-gray-200'
           onClick={() => {
-            //
             let input = document.createElement('input')
             input.type = 'file'
 
@@ -131,9 +130,10 @@ export const SettingsGUI = ({ data, id }) => {
             }) => {
               if (first) {
                 let fd = new FormData()
-                fd.set('file', first)
+                // fd.set('file', first)
                 fd.set('fileName', `file-${md5(first.name + first.type)}${path.extname(first.name)}`)
-                fd.set('contentType', first.type + '')
+                fd.set('mimetype', first.type + '')
+                fd.set('size', first.size)
 
                 fetch(`/api/test-upload-glb`, {
                   method: 'POST',
@@ -141,17 +141,61 @@ export const SettingsGUI = ({ data, id }) => {
                 })
                   .then((r) => r.json())
                   .then(async (r) => {
-                    //
-                    // console.log(r)
+                    const { url, fields, downloadURL } = r
+                    const formData = new FormData()
 
-                    updateNodeData(id, 'envMapFileURL', r)
+                    Object.entries({ ...fields, file: first }).forEach(([key, value]) => {
+                      formData.append(key, value)
+                    })
 
-                    // if (defaultItem !== '' || defaultItem !== null) {
-                    // }
+                    const upload = await fetch(url, {
+                      method: 'POST',
+                      body: formData,
+                    })
+
+                    if (upload.ok) {
+                      console.log('Uploaded successfully!')
+                      updateNodeData(id, 'envMapFileURL', downloadURL)
+                    } else {
+                      console.error('Upload failed.')
+                    }
                   })
               }
             }
             input.click()
+
+            // //
+            // let input = document.createElement('input')
+            // input.type = 'file'
+
+            // input.onchange = ({
+            //   target: {
+            //     files: [first],
+            //   },
+            // }) => {
+            //   if (first) {
+            //     let fd = new FormData()
+            //     // fd.set('file', first)
+            //     fd.set('fileName', `file-${md5(first.name + first.type)}${path.extname(first.name)}`)
+            //     fd.set('contentType', first.type + '')
+
+            //     fetch(`/api/test-upload-glb`, {
+            //       method: 'POST',
+            //       body: fd,
+            //     })
+            //       .then((r) => r.json())
+            //       .then(async (r) => {
+            //         //
+            //         // console.log(r)
+
+            //         updateNodeData(id, 'envMapFileURL', r)
+
+            //         // if (defaultItem !== '' || defaultItem !== null) {
+            //         // }
+            //       })
+            //   }
+            // }
+            // input.click()
           }}>
           Select File
         </button>

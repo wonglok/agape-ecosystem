@@ -133,9 +133,10 @@ export const SettingsGUI = ({ data, id }) => {
             }) => {
               if (first) {
                 let fd = new FormData()
-                fd.set('file', first)
+                // fd.set('file', first)
                 fd.set('fileName', `file-${md5(first.name + first.type)}${path.extname(first.name)}`)
-                fd.set('contentType', first.type + '')
+                fd.set('mimetype', first.type + '')
+                fd.set('size', first.size)
 
                 fetch(`/api/test-upload-glb`, {
                   method: 'POST',
@@ -143,10 +144,33 @@ export const SettingsGUI = ({ data, id }) => {
                 })
                   .then((r) => r.json())
                   .then(async (r) => {
-                    //
-                    console.log(r)
+                    const { url, fields, downloadURL } = r
+                    const formData = new FormData()
 
-                    updateNodeData(id, 'glbFileURL', r)
+                    Object.entries({ ...fields, file: first }).forEach(([key, value]) => {
+                      formData.append(key, value)
+                    })
+
+                    const upload = await fetch(url, {
+                      method: 'POST',
+                      body: formData,
+                    })
+
+                    if (upload.ok) {
+                      console.log('Uploaded successfully!')
+                      updateNodeData(id, 'glbFileURL', downloadURL)
+                    } else {
+                      console.error('Upload failed.')
+                    }
+
+                    // let fd = new FormData()
+                    // fd.set('file', first)
+                    // let upload = await fetch(`${r}`, {
+                    //   method: 'POST',
+                    //   body: fd,
+                    // }).then((r) => (r.ok ? r.json() : Promise.reject('bad upload')))
+
+                    // console.log(upload)
 
                     // if (defaultItem !== '' || defaultItem !== null) {
 

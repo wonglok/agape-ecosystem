@@ -1,6 +1,8 @@
 import { DeleteObjectCommand, PutBucketCorsCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import fs from 'fs'
 import * as formidable from 'formidable'
+// import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
+import { createPresignedPost } from '@aws-sdk/s3-presigned-post'
 
 //set bodyparser
 export const config = {
@@ -24,7 +26,7 @@ const s3Client = new S3Client({
 const thisConfig = [
   {
     AllowedHeaders: ['*'],
-    AllowedMethods: ['GET', 'POST', 'PUT', 'OPTIONS'],
+    AllowedMethods: ['GET', 'POST', 'PUT'],
     AllowedOrigins: ['*'],
     ExposeHeaders: ['ETag'],
   },
@@ -34,23 +36,43 @@ const corsParams = {
   Bucket: process.env.LOK_S3_BUCKET,
   CORSConfiguration: { CORSRules: thisConfig },
 }
+s3Client.send(new PutBucketCorsCommand(corsParams))
 
-export async function uploadFileToObjectStorage(base64Data, path, fileName, ContentType) {
-  await s3Client.send(new PutBucketCorsCommand(corsParams))
-
-  //
-  const params = {
+export async function uploadFileToObjectStorage(base64Data, path, fileName, ContentType, size) {
+  const post = await createPresignedPost(s3Client, {
     Bucket: process.env.LOK_S3_BUCKET,
     Key: `${path}/${fileName}`,
-    Body: base64Data,
-    ACL: 'public-read',
-    // ContentEncoding: 'base64',
-    ContentType: `${ContentType}`,
-  }
+    Fields: {
+      acl: 'public-read',
+      'Content-Type': `${ContentType}`,
+    },
+    Expires: 600, // seconds
+    Conditions: [
+      ['content-length-range', 0, size], // up to 1 MB
+    ],
+  })
 
-  await s3Client.send(new PutObjectCommand(params))
+  post.downloadURL = `${process.env.LOK_S3_ENDPOINT}/${path}/${fileName}`
+  return post
 
-  return `${process.env.LOK_S3_ENDPOINT}/${path}/${fileName}`
+  // console.log(resCORS)
+  // //
+  // const params = {
+  //   Bucket: process.env.LOK_S3_BUCKET,
+  //   Key: `${path}/${fileName}`,
+  //   // Body: base64Data,
+  //   ACL: 'public-read',
+  //   // ContentEncoding: 'base64',
+  //   ContentType: `${ContentType}`,
+  // }
+
+  // await s3Client.send(new PutObjectCommand(params))
+
+  // let signedUrl = await getSignedUrl(s3Client, new PutObjectCommand(params), {
+  //   Expires: 3600,
+  // })
+
+  // return signedUrl //
 }
 
 export async function deleteFileFromObjectStorage(url) {
@@ -74,14 +96,16 @@ export default async function API(req, res) {
     })
   })
 
-  let url = await uploadFileToObjectStorage(
-    fs.readFileSync(result.files.file.filepath),
+  let data = await uploadFileToObjectStorage(
+    null,
+    // fs.readFileSync(result.files.file.filepath),
     process.env.LOK_S3_FOLDER,
     result.fields.fileName,
-    result.files.file.mimetype,
+    result.fields.mimetype,
+    result.fields.size,
   )
 
-  res.json(url)
+  res.json(data)
 
   // let bodyData = JSON.parse(req.body)
   // let method = bodyData.method
