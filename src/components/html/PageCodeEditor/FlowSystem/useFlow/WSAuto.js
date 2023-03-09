@@ -136,3 +136,25 @@ class MyEventEmitter {
     this._events[name].forEach(fireCallbacks)
   }
 }
+
+/**!SECTION
+ *
+ *
+      let auto = new WSAuto({ roomID: docName, url: AWSBackend[process.env.NODE_ENV].ws })
+      set({ socket: auto })
+
+      auto.on('all-ready', () => {
+        auto.send({
+          action: 'pushGraph',
+          payload: {
+            docName: docName,
+          },
+        })
+      })
+
+      auto.on('pushGraph', (payload) => {
+        //
+        console.log(payload)
+        //
+      })
+ */

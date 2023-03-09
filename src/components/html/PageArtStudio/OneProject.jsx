@@ -129,7 +129,14 @@ export function OneProject({ data }) {
             </div>
           </div>
 
-          <button className='text-xs btn btn-primary'>Edit</button>
+          <button
+            className='text-xs btn btn-primary'
+            onClick={() => {
+              //
+              console.log(123, 'edit')
+            }}>
+            Edit
+          </button>
         </div>
       </div>
     </div>

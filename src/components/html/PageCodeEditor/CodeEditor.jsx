@@ -4,6 +4,7 @@ import { CodeEditorLayout } from './Layout/CodeEditorLayout/CodeEditorLayout'
 import { ShaderEditorLayout } from './Layout/ShaderEditorLayout/ShaderEditorLayout'
 import { ModuleStoreLayout } from './Layout/ModuleStoreLayout/ModuleStoreLayout'
 import { TestLayout } from './Layout/TestLayout/TestLayout'
+import { useRouter } from 'next/router'
 
 function AppIcon({
   title,
@@ -58,6 +59,10 @@ function AppIcon({
 
 export function CodeEditor() {
   let { tabAt } = useCEStore()
+  let router = useRouter()
+  let query = router.query || {}
+  let appVersionID = query.appVersionID
+  let docName = appVersionID
 
   //
   return (
@@ -94,11 +99,19 @@ export function CodeEditor() {
       <div className='bg-gray-200' style={{ height: `calc(100% - 4.5rem)` }}>
         {tabAt === 'codePage' && <CodeEditorLayout></CodeEditorLayout>}
         {tabAt === 'modulePage' && <ModuleStoreLayout></ModuleStoreLayout>}
-        {tabAt === 'shaders' && <ShaderEditorLayout></ShaderEditorLayout>}
+        {tabAt === 'shaders' && docName && <ShaderEditorLayout docName={docName}></ShaderEditorLayout>}
         {tabAt === 'test' && <TestLayout></TestLayout>}
       </div>
     </div>
   )
 }
+
+//
+
+//
+
+//
+
+//
 
 //

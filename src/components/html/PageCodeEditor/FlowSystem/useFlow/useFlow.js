@@ -19,24 +19,31 @@ import { WSAuto } from './WSAuto'
 // }
 //!SECTION
 
+let timerNodes = 0
 let fireSyncNodes = ({ socket, changes, nodes }) => {
   console.log(changes)
 
-  if (changes.type === 'add') {
-    let item = changes.item
-  } else if (changes.type === 'reset') {
-    let item = changes.item
-  } else if (changes.type === 'remove') {
-    let id = changes.id
-  } else if (changes.type === 'dimensions') {
-    let id = changes.id
-  } else if (changes.type === 'position') {
-    let id = changes.id
-  } else if (changes.type === 'select') {
-    let id = changes.id
-  }
+  changes.forEach((oneChange) => {
+    if (oneChange.type === 'add') {
+      let item = oneChange.item
+    } else if (oneChange.type === 'reset') {
+      let item = oneChange.item
+    } else if (oneChange.type === 'remove') {
+      let id = oneChange.id
+    } else if (oneChange.type === 'dimensions') {
+      let id = oneChange.id
+    } else if (oneChange.type === 'position') {
+      let id = oneChange.id
+      let node = nodes.find((r) => r.id === id)
+
+      console.log(node)
+    } else if (oneChange.type === 'select') {
+      let id = oneChange.id
+    }
+  })
 }
 
+let timerEdges = 0
 let fireSyncEdges = ({ socket, changes, edges }) => {
   console.log(changes)
 
@@ -73,19 +80,6 @@ export const useFlow = create((set, get) => {
     socket: false,
     openFile: ({ docName }) => {
       //
-
-      let auto = new WSAuto({ roomID: docName, url: AWSBackend[process.env.NODE_ENV].ws })
-      set({ socket: auto })
-
-      auto.on('all-ready', () => {
-        //
-        auto.send({
-          action: 'pushGraph',
-          payload: {
-            docName: docName,
-          },
-        })
-      })
 
       // let hh = (ev) => {
       //   if (ev.metaKey && ev.shiftKey && ev.key === 'z') {
@@ -161,7 +155,7 @@ export const useFlow = create((set, get) => {
         fireSyncNodes({
           //
           socket: get().socket,
-          change: changes,
+          changes: changes,
           nodes: get().nodes,
         })
       })
@@ -183,7 +177,7 @@ export const useFlow = create((set, get) => {
           fireSyncEdges({
             //
             socket: get().socket,
-            change: changes,
+            changes: changes,
             edges: get().edges,
           })
         }
