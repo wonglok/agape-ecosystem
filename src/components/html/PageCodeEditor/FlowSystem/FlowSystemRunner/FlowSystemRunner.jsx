@@ -75,7 +75,7 @@ function Convo() {
       <group
         onPointerMove={(ev) => {
           if (ev?.object) {
-            console.log(ev?.object?.name)
+            // console.log(ev?.object?.name)
             useFlow.getState().onSyncMesh({ name: ev?.object?.name })
           }
         }}
