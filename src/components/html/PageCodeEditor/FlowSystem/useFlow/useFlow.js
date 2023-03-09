@@ -137,7 +137,7 @@ export const useFlow = create((set, get) => {
         },
       })
       return () => {
-        auto.clean()
+        // auto.clean()
         set({ socket: false })
 
         // window.removeEventListener('keydown', hh)

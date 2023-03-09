@@ -687,7 +687,7 @@
       "type": "EnvironmentMap",
       "data": {
         "label": "envMapPicker",
-        "envMapFileURL": "https://effectnode-2022.s3.ap-southeast-1.amazonaws.com/lok-dev/file-28666411d26c93ef6150b7fbc0ee37d5.hdr",
+        "envMapFileURL": "https://effectnode-2022.s3.ap-southeast-1.amazonaws.com/lok-dev/file-7e0e4b27150c2764304be6fa73c8b08b.hdr",
         "showBG": true,
         "showEnv": true
       },
