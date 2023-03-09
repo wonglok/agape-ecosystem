@@ -7,9 +7,3 @@ export async function getStaticProps() {
 }
 
 //
-
-//
-
-//
-
-//
