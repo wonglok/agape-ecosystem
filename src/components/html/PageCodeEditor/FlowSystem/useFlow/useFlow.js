@@ -69,6 +69,7 @@ export const useFlow = create((set, get) => {
 
   //
   return {
+    onSyncMesh: () => {},
     //
     toolAddOnlyMode: false,
     viewport: { x: 0, y: 0, zoom: 1 },

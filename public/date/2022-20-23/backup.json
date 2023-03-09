@@ -131,7 +131,11 @@
       "sourceHandle": "anySource",
       "targetHandle": "material",
       "target": "_3dd1da9f0df74c49fd69759f03de2f59",
-      "type": "CloseEdge"
+      "type": "CloseEdge",
+      "animated": false,
+      "style": {
+        "stroke": ""
+      }
     }
   ],
   "nodes": [
@@ -218,8 +222,8 @@
         "y": 860
       },
       "id": "_62909ae077692f1d4041729afd498079",
-      "width": 193,
-      "height": 82,
+      "width": 275,
+      "height": 98,
       "selected": false,
       "positionAbsolute": {
         "x": -200,
@@ -239,8 +243,8 @@
         "y": 1020
       },
       "id": "_f7ba3a2fa76d7be1e15ebd9287b138b2",
-      "width": 193,
-      "height": 82,
+      "width": 275,
+      "height": 98,
       "selected": false,
       "positionAbsolute": {
         "x": -230,
@@ -629,16 +633,16 @@
         "objectName": "RetopoFlow010_5"
       },
       "position": {
-        "x": 70,
-        "y": 870
+        "x": 180,
+        "y": 790
       },
       "id": "_448bce237ff76b816a4b427ea2f6037c",
-      "width": 193,
-      "height": 82,
+      "width": 275,
+      "height": 98,
       "selected": false,
       "positionAbsolute": {
-        "x": 70,
-        "y": 870
+        "x": 180,
+        "y": 790
       },
       "dragging": false
     },
@@ -667,7 +671,7 @@
       "type": "GLBPicker",
       "data": {
         "label": "mech",
-        "glbFileURL": "https://effectnode-2022.s3.ap-southeast-1.amazonaws.com/lok-dev/file-80f27816f84c9864cf8ad924bfb764c8.glb",
+        "glbFileURL": "https://effectnode-2022.s3.ap-southeast-1.amazonaws.com/lok-dev/file-de0a989c88c32d6f6919ec8d4124d9d8.glb",
         "flipY": false
       },
       "position": {
@@ -737,8 +741,8 @@
         "y": 420
       },
       "id": "_5201f3f11118a750c8534e394e1a3676",
-      "width": 193,
-      "height": 82
+      "width": 275,
+      "height": 98
     },
     {
       "type": "ReadSceneMesh",
@@ -752,8 +756,8 @@
         "y": 200
       },
       "id": "_3dd1da9f0df74c49fd69759f03de2f59",
-      "width": 193,
-      "height": 82
+      "width": 275,
+      "height": 98
     }
   ]
 }

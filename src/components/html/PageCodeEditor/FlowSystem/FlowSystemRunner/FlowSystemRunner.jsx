@@ -72,7 +72,15 @@ function Convo() {
 
   return (
     <>
-      <RunnerObject key={edges.map((r) => r.id).join('_')} nodes={nodes} edges={edges}></RunnerObject>
+      <group
+        onPointerMove={(ev) => {
+          if (ev?.object) {
+            console.log(ev?.object?.name)
+            useFlow.getState().onSyncMesh({ name: ev?.object?.name })
+          }
+        }}>
+        <RunnerObject key={edges.map((r) => r.id).join('_')} nodes={nodes} edges={edges}></RunnerObject>
+      </group>
     </>
   )
 }

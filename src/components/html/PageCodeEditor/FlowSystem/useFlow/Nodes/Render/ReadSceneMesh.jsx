@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { Handle, Position } from 'reactflow'
 import { useFlow } from '../../useFlow'
 import { getTemplateByNodeInstance } from '../../nodeTypes'
@@ -28,7 +28,7 @@ export const createData = () => {
 export default function GUI({ id, data, selected }) {
   const updateNodeLabel = useFlow((s) => s.updateNodeLabel)
   const updateNodeData = useFlow((s) => s.updateNodeData)
-
+  let objectNameInputRef = useRef()
   return (
     <div
       className={`text-sm rounded-xl transition-transform duration-300 scale-100  border bg-white ${
@@ -67,20 +67,38 @@ export default function GUI({ id, data, selected }) {
           onChange={(evt) => updateNodeLabel(id, evt.target.value)}
           className='w-full h-10 pl-2 text-xs bg-gray-100 appearance-none nodrag rounded-r-xl'
         />
-        {/* <input
-          type='color'
-          defaultValue={data.color}
-          onChange={(evt) => updateNodeColor(id, evt.target.value)}
-          className='h-10 text-xs  opacity-0'
-        /> */}
+
+        <button
+          onClick={() => {
+            //
+            useFlow.setState({
+              onSyncMesh: ({ name }) => {
+                // console.log(name)
+                // updateNodeData(id, 'objectName', name)
+                // objectNameInputRef.current.value = name
+
+                window.dispatchEvent(new CustomEvent('onSyncMesh', { detail: { name, id } }))
+              },
+            })
+          }}
+          className='p-2 bg-blue-300 rounded-xl'>
+          Pick Mesh
+        </button>
       </div>
 
       <div className='flex items-center justify-center'>
         <input
           type='text'
           placeholder='objectName'
+          ref={objectNameInputRef}
           defaultValue={data.objectName}
-          onChange={(evt) => updateNodeData(id, 'objectName', evt.target.value)}
+          onChange={(evt) => {
+            updateNodeData(id, 'objectName', evt.target.value)
+
+            setTimeout(() => {
+              window.dispatchEvent(new CustomEvent('needsUpdate', { detail: {} }))
+            }, 50)
+          }}
           className='w-full h-10 pl-2 text-xs bg-gray-100 appearance-none nodrag rounded-r-xl'
         />
       </div>
@@ -106,19 +124,51 @@ export default function GUI({ id, data, selected }) {
 export const run = async ({ core, globals, getNode, on, send }) => {
   let meshPointer = false
   let timer = 0
+
+  let history = new Map()
+
+  window.addEventListener('onSyncMesh', ({ detail: { name, id } }) => {
+    if (id === getNode().id) {
+      let scan = core?.now?.scene?.getObjectByName(getNode()?.data?.objectName)
+      if (scan) {
+        if (!scan.userData.oMat) {
+          scan.userData.oMat = scan.material.clone()
+        }
+        history.set(scan.uuid, scan)
+      }
+      meshPointer = scan
+      for (let item of history.values()) {
+        if (item.userData.oMat) {
+          item.material = item.userData.oMat.clone()
+        }
+      }
+
+      window.dispatchEvent(new CustomEvent('needsUpdate', { detail: {} }))
+      useFlow.getState().updateNodeData(id, 'objectName', name)
+    }
+    //
+  })
+
   core.onPreload(() => {
     //
     timer = setInterval(() => {
       let scan = core?.now?.scene?.getObjectByName(getNode()?.data?.objectName)
-      if (scan) {
+      if (meshPointer && !scan) {
+        if (meshPointer.userData.oMat) {
+          meshPointer.material = meshPointer.userData.oMat.clone()
+        }
+      } else if (scan) {
         if (!meshPointer) {
           window.dispatchEvent(new CustomEvent('needsUpdate', { detail: {} }))
         }
+
         meshPointer = scan
+      } else {
       }
     })
     //
   })
+
   core.onReady(() => {
     let readyMesh = (fnc = () => {}) => {
       let tt = setInterval(() => {
@@ -168,6 +218,7 @@ export const run = async ({ core, globals, getNode, on, send }) => {
 
     globals.onClean(() => {
       clearInterval(timer)
+      history.clear()
     })
   })
 }

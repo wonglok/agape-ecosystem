@@ -1,11 +1,9 @@
-import { AppVersion } from '@/backend/aws-app-version'
-import { useRouter } from 'next/router'
+import { MaterialProject } from '@/backend/aws-material-project'
+import moment from 'moment'
 import nProgress from 'nprogress'
 import { useEffect, useRef } from 'react'
-import moment from 'moment'
-export function OneAppVersion({ app, version }) {
-  let data = version
-  let router = useRouter()
+
+export function OneProject({ data }) {
   let timerName = useRef(0)
 
   useEffect(() => {
@@ -23,9 +21,12 @@ export function OneAppVersion({ app, version }) {
     }
   })
   return (
-    <div className='w-full mb-5 mr-5 border border-gray-500 shadow-xl rounded-box bg-base-100'>
-      <div className='flex justify-between w-full px-4 pt-4'>
-        <h2 className='w-1/2'>
+    <div className='inline-block mb-5 mr-5 shadow-xl w-72 card bg-base-100'>
+      <figure className='h-52'>
+        <img src='/img/user-image/yo/punk.jpg' alt='Shoes' />
+      </figure>
+      <div className='p-4'>
+        <h2 className='card-title'>
           <textarea
             defaultValue={data.name}
             className='w-full p-2 mb-3 resize-none textarea textarea-bordered'
@@ -34,27 +35,53 @@ export function OneAppVersion({ app, version }) {
               nProgress.start()
               clearTimeout(timerName.current)
               timerName.current = setTimeout(() => {
-                let found = AppVersion.state.items.find((e) => e.oid === data.oid)
+                let found = MaterialProject.state.items.find((e) => e.oid === data.oid)
                 found.name = found.name || ''
                 found.description = found.description || ''
 
                 found.name = ev.target.value
-
-                //
-                AppVersion.update({ object: JSON.parse(JSON.stringify(found)), updateState: false })
+                MaterialProject.update({ object: JSON.parse(JSON.stringify(found)), updateState: false })
                   .catch((r) => {
                     console.error(r)
                   })
                   .finally(() => {
                     nProgress.done()
                   })
-                //
               }, 500)
               // timerName.current
             }}
             placeholder='Project Name'></textarea>
         </h2>
+        <div className='mb-3 text-xs'>
+          <div>Created At: {moment(new Date(data.createdAt)).format('MMMM Do YYYY, h:mm:ss a')}</div>
+          <div>From Now: {moment(new Date(data.createdAt)).fromNow()}</div>
+        </div>
+        <div>
+          <textarea
+            defaultValue={data.description}
+            className='w-full p-2 mb-3 resize-none textarea textarea-bordered'
+            rows={3}
+            onChange={(ev) => {
+              nProgress.start()
+              clearTimeout(timerName.current)
+              timerName.current = setTimeout(() => {
+                let found = MaterialProject.state.items.find((e) => e.oid === data.oid)
+                found.name = found.name || ''
+                found.description = found.description || ''
 
+                found.description = ev.target.value
+                MaterialProject.update({ object: JSON.parse(JSON.stringify(found)), updateState: false })
+                  .catch((r) => {
+                    console.error(r)
+                  })
+                  .finally(() => {
+                    nProgress.done()
+                  })
+              }, 500)
+              // timerName.current
+            }}
+            placeholder='description'></textarea>
+        </div>
         {/* <div>
           <div className='w-full form-control'>
             <label className='cursor-pointer label'>
@@ -63,8 +90,8 @@ export function OneAppVersion({ app, version }) {
             </label>
           </div>
         </div> */}
-
-        <div className='ml-3 card-actions'>
+        {/*  */}
+        <div className='justify-end card-actions'>
           <label htmlFor={'my-modal-remove-item' + data.oid} className='btn btn-error'>
             Remove
           </label>
@@ -85,13 +112,15 @@ export function OneAppVersion({ app, version }) {
                   onClick={(ev) => {
                     nProgress.start()
                     ev.target.classList.toggle('loading')
-                    AppVersion.remove({ oid: data.oid })
+                    MaterialProject.remove({ oid: data.oid })
                       .then(() => {
-                        return AppVersion.listAll({}).then((response) => {
-                          AppVersion.state.items = response.result
+                        return MaterialProject.listAll({}).then((response) => {
+                          MaterialProject.state.items = response.result
                         })
                       })
-                      .catch((r) => console.log(r))
+                      .catch((r) => {
+                        console.error(r)
+                      })
                       .finally(() => {
                         ev.target.classList.toggle('loading')
                         nProgress.done()
@@ -105,48 +134,13 @@ export function OneAppVersion({ app, version }) {
             </div>
           </div>
 
-          <button
-            className='text-xs btn btn-primary'
-            onClick={() => {
-              //
-              //
-
-              router.push(`/admin/app/${version.oid}/editor`)
-            }}>
-            Edit
-          </button>
+          <a href={`/admin/art/${data.oid}/editor`}>
+            <button className='text-xs btn btn-primary'>Edit</button>
+          </a>
         </div>
-      </div>
-      <div className='px-4 mb-3 text-sm'>
-        <div>Created At: {moment(new Date(data.createdAt)).format('MMMM Do YYYY, h:mm:ss a')}</div>
-        <div>From Now: {moment(new Date(data.createdAt)).fromNow()}</div>
-      </div>
-
-      <div className='px-4'>
-        <textarea
-          defaultValue={data.description}
-          className='w-full p-2 mb-3 resize-none textarea textarea-bordered'
-          rows={3}
-          onChange={(ev) => {
-            nProgress.start()
-            clearTimeout(timerName.current)
-            timerName.current = setTimeout(() => {
-              let found = AppVersion.state.items.find((e) => e.oid === data.oid)
-              found.name = found.name || ''
-              found.description = found.description || ''
-
-              found.description = ev.target.value
-              AppVersion.update({ object: JSON.parse(JSON.stringify(found)), updateState: false }).finally(() => {
-                nProgress.done()
-              })
-            }, 500)
-            // timerName.current
-          }}
-          placeholder='description'></textarea>
       </div>
     </div>
   )
 }
 
-//
 //
