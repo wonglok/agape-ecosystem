@@ -80,6 +80,10 @@ function Convo() {
           }
         }}
         onPointerDown={(ev) => {
+          if (ev?.object) {
+            // console.log(ev?.object?.name)
+            useFlow.getState().onSyncMesh({ name: ev?.object?.name })
+          }
           useFlow.setState({ onSyncMesh: () => {} })
         }}>
         {/*  */}
