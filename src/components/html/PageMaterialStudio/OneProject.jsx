@@ -20,6 +20,7 @@ export function OneProject({ data }) {
       window.removeEventListener('keydown', h)
     }
   })
+
   return (
     <div className='inline-block mb-5 mr-5 shadow-xl w-72 card bg-base-100'>
       <figure className='h-52'>
@@ -96,6 +97,8 @@ export function OneProject({ data }) {
             Remove
           </label>
 
+          {/*  */}
+
           <input type='checkbox' id={'my-modal-remove-item' + data.oid} className='modal-toggle' />
           <div className='modal rounded-box'>
             <div className='modal-box'>
@@ -134,7 +137,7 @@ export function OneProject({ data }) {
             </div>
           </div>
 
-          <a href={`/admin/art/${data.oid}/editor`}>
+          <a href={`/admin/material/${data.oid}/editor`}>
             <button className='text-xs btn btn-primary'>Edit</button>
           </a>
         </div>
