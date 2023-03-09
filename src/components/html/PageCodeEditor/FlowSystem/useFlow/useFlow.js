@@ -5,6 +5,7 @@ import { create } from 'zustand'
 import { getID } from '@/backend/aws'
 import { nodeTypeList } from './nodeTypes'
 import { AWSBackend } from 'aws.config'
+import { WSAuto } from './WSAuto'
 // import Worker from 'worker-loader!./Worker.js'
 // import nProgress from 'nprogress'
 // import { addNode } from './Firebase'
@@ -16,8 +17,9 @@ import { AWSBackend } from 'aws.config'
 //   }
 //   return arr
 // }
+//!SECTION
 
-let fireSyncNodes = (changes, nodes) => {
+let fireSyncNodes = ({ socket, changes, nodes }) => {
   console.log(changes)
 
   if (changes.type === 'add') {
@@ -35,7 +37,7 @@ let fireSyncNodes = (changes, nodes) => {
   }
 }
 
-let fireSyncEdges = (changes, edges) => {
+let fireSyncEdges = ({ socket, changes, edges }) => {
   console.log(changes)
 
   if (changes.type === 'add') {
@@ -53,127 +55,6 @@ let fireSyncEdges = (changes, edges) => {
   }
 }
 
-let makeAuto = (itself) => {
-  let self = itself || {}
-  self.events = {}
-
-  self.on = (event, listener) => {
-    if (typeof self.events[event] !== 'object') {
-      self.events[event] = []
-    }
-
-    self.events[event].push(listener)
-  }
-
-  self.off = (event, listener) => {
-    let idx
-
-    if (typeof self.events[event] === 'object') {
-      idx = self.events[event].indexOf(listener)
-
-      if (idx > -1) {
-        self.events[event].splice(idx, 1)
-      }
-    }
-  }
-
-  self.emit = (event) => {
-    let i,
-      listeners,
-      length,
-      args = [].slice.call(arguments, 1)
-
-    if (typeof self.events[event] === 'object') {
-      listeners = self.events[event].slice()
-      length = listeners.length
-
-      for (i = 0; i < length; i++) {
-        listeners[i].apply(self, args)
-      }
-    }
-  }
-
-  self.once = (event, listener) => {
-    self.on(event, function g() {
-      self.removeListener(event, g)
-      listener.apply(self, arguments)
-    })
-  }
-  return self
-}
-
-class WSAuto {
-  constructor({ roomID, url }) {
-    this.url = url
-    this.roomID = roomID
-    //
-    let self = makeAuto(this)
-    this.self = self
-
-    this.send = (v) => {
-      if (this.ws && this.ws.readyState === this.ws.OPEN) {
-        this.ws.send(JSON.stringify(v))
-      } else {
-        let tt = setInterval(() => {
-          if (this.ws && this.ws.readyState === this.ws.OPEN) {
-            clearInterval(tt)
-            this.ws.send(JSON.stringify(v))
-          }
-        })
-      }
-    }
-    this.clean = () => {
-      if (this.ws) {
-        this.ws.close()
-        this.ws.onerror = () => {}
-        this.ws.onclose = () => {}
-        this.ws = {
-          close() {},
-          onerror() {},
-          onclose() {},
-        }
-      }
-    }
-
-    this.init = () => {
-      let ws = new WebSocket(`${this.url}`)
-      this.ws = ws
-
-      ws.onopen = () => {
-        //
-        this.send({ action: 'joinRoom', payload: { roomID } })
-        //
-      }
-
-      ws.onmessage = (ev) => {
-        try {
-          let data = JSON.parse(ev.data)
-          console.log('message', data)
-
-          self.emit(data.action, data.payload)
-        } catch (e) {
-          console.error(e)
-        }
-      }
-      ws.onclose = () => {
-        this.clean()
-        console.log('closed, reconnecting in 10 seconds')
-        setTimeout(() => {
-          this.init()
-        }, 1000 * 10)
-      }
-      ws.onerror = (err) => {
-        console.error(err)
-        this.clean()
-        console.log('error, reconnecting in 10 seconds')
-        setTimeout(() => {
-          this.init()
-        }, 1000 * 10)
-      }
-    }
-    this.init()
-  }
-}
 // addGraphDoc({ title: docName })
 
 export const useFlow = create((set, get) => {
@@ -189,12 +70,22 @@ export const useFlow = create((set, get) => {
     nodes: [],
     edges: [],
     fitView: () => {},
+    socket: false,
     openFile: ({ docName }) => {
       //
-      //
-      //
 
-      let ws = new WSAuto({ roomID: docName, url: AWSBackend[process.env.NODE_ENV].ws })
+      let auto = new WSAuto({ roomID: docName, url: AWSBackend[process.env.NODE_ENV].ws })
+      set({ socket: auto })
+
+      auto.on('all-ready', () => {
+        //
+        auto.send({
+          action: 'pushGraph',
+          payload: {
+            docName: docName,
+          },
+        })
+      })
 
       // let hh = (ev) => {
       //   if (ev.metaKey && ev.shiftKey && ev.key === 'z') {
@@ -241,6 +132,8 @@ export const useFlow = create((set, get) => {
       //     nProgress.done()
       //   }
       // })
+      //
+      //
       // nProgress.start()
       // worker.postMessage({ type: 'load', docName })
 
@@ -250,7 +143,9 @@ export const useFlow = create((set, get) => {
         },
       })
       return () => {
-        ws.clean()
+        auto.clean()
+        set({ socket: false })
+
         // window.removeEventListener('keydown', hh)
         // worker.terminate()
       }
@@ -263,7 +158,12 @@ export const useFlow = create((set, get) => {
       get().saveToDB()
 
       setTimeout(() => {
-        fireSyncNodes(changes, get().nodes)
+        fireSyncNodes({
+          //
+          socket: get().socket,
+          change: changes,
+          nodes: get().nodes,
+        })
       })
     },
     onEdgesChange: (changes) => {
@@ -278,7 +178,15 @@ export const useFlow = create((set, get) => {
       })
 
       setTimeout(() => {
-        fireSyncEdges(changes, get().edges)
+        if (get().socket) {
+          //
+          fireSyncEdges({
+            //
+            socket: get().socket,
+            change: changes,
+            edges: get().edges,
+          })
+        }
       })
     },
     onConnect: (connection) => {

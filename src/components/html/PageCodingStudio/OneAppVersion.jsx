@@ -2,7 +2,7 @@ import { AppVersion } from '@/backend/aws-app-version'
 import { useRouter } from 'next/router'
 import nProgress from 'nprogress'
 import { useEffect, useRef } from 'react'
-
+import moment from 'moment'
 export function OneAppVersion({ app, version }) {
   let data = version
   let router = useRouter()
@@ -116,6 +116,10 @@ export function OneAppVersion({ app, version }) {
             Edit
           </button>
         </div>
+      </div>
+      <div className='px-4 mb-3'>
+        <div>Created At: {moment(new Date(data.createdAt)).format('MMMM Do YYYY, h:mm:ss a')}</div>
+        <div>From Now: {moment(new Date(data.createdAt)).fromNow()}</div>
       </div>
 
       <div className='px-4'>

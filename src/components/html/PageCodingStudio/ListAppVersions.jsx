@@ -26,6 +26,16 @@ export function ListAppVersions({ app }) {
     <div className=''>
       {version.items
         .filter((v) => v.appID === app.oid)
+        .slice()
+        .sort((a, b) => {
+          if (a.createdAt > b.createdAt) {
+            return -1
+          }
+          if (a.createdAt < b.createdAt) {
+            return 1
+          }
+          return 0
+        })
         .map((it) => {
           return (
             <div className='block mr-5' key={it.oid}>
