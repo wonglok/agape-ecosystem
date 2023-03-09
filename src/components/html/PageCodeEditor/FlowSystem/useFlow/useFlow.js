@@ -4,8 +4,10 @@ import { create } from 'zustand'
 // import { IndexeddbPersistence } from 'y-indexeddb'
 import { getID } from '@/backend/aws'
 import { nodeTypeList } from './nodeTypes'
-import Worker from 'worker-loader!./Worker.js'
-import nProgress from 'nprogress'
+import { AWSBackend } from 'aws.config'
+// import Worker from 'worker-loader!./Worker.js'
+// import nProgress from 'nprogress'
+// import { addNode } from './Firebase'
 
 // function toArray(map) {
 //   let arr = []
@@ -15,7 +17,169 @@ import nProgress from 'nprogress'
 //   return arr
 // }
 
+let fireSyncNodes = (changes, nodes) => {
+  console.log(changes)
+
+  if (changes.type === 'add') {
+    let item = changes.item
+  } else if (changes.type === 'reset') {
+    let item = changes.item
+  } else if (changes.type === 'remove') {
+    let id = changes.id
+  } else if (changes.type === 'dimensions') {
+    let id = changes.id
+  } else if (changes.type === 'position') {
+    let id = changes.id
+  } else if (changes.type === 'select') {
+    let id = changes.id
+  }
+}
+
+let fireSyncEdges = (changes, edges) => {
+  console.log(changes)
+
+  if (changes.type === 'add') {
+    let item = changes.item
+  } else if (changes.type === 'reset') {
+    let item = changes.item
+  } else if (changes.type === 'remove') {
+    let id = changes.id
+  } else if (changes.type === 'dimensions') {
+    let id = changes.id
+  } else if (changes.type === 'position') {
+    let id = changes.id
+  } else if (changes.type === 'select') {
+    let id = changes.id
+  }
+}
+
+let makeAuto = (itself) => {
+  let self = itself || {}
+  self.events = {}
+
+  self.on = (event, listener) => {
+    if (typeof self.events[event] !== 'object') {
+      self.events[event] = []
+    }
+
+    self.events[event].push(listener)
+  }
+
+  self.off = (event, listener) => {
+    let idx
+
+    if (typeof self.events[event] === 'object') {
+      idx = self.events[event].indexOf(listener)
+
+      if (idx > -1) {
+        self.events[event].splice(idx, 1)
+      }
+    }
+  }
+
+  self.emit = (event) => {
+    let i,
+      listeners,
+      length,
+      args = [].slice.call(arguments, 1)
+
+    if (typeof self.events[event] === 'object') {
+      listeners = self.events[event].slice()
+      length = listeners.length
+
+      for (i = 0; i < length; i++) {
+        listeners[i].apply(self, args)
+      }
+    }
+  }
+
+  self.once = (event, listener) => {
+    self.on(event, function g() {
+      self.removeListener(event, g)
+      listener.apply(self, arguments)
+    })
+  }
+  return self
+}
+
+class WSAuto {
+  constructor({ roomID, url }) {
+    this.url = url
+    this.roomID = roomID
+    //
+    let self = makeAuto(this)
+    this.self = self
+
+    this.send = (v) => {
+      if (this.ws && this.ws.readyState === this.ws.OPEN) {
+        this.ws.send(JSON.stringify(v))
+      } else {
+        let tt = setInterval(() => {
+          if (this.ws && this.ws.readyState === this.ws.OPEN) {
+            clearInterval(tt)
+            this.ws.send(JSON.stringify(v))
+          }
+        })
+      }
+    }
+    this.clean = () => {
+      if (this.ws) {
+        this.ws.close()
+        this.ws.onerror = () => {}
+        this.ws.onclose = () => {}
+        this.ws = {
+          close() {},
+          onerror() {},
+          onclose() {},
+        }
+      }
+    }
+
+    this.init = () => {
+      let ws = new WebSocket(`${this.url}`)
+      this.ws = ws
+
+      ws.onopen = () => {
+        //
+        this.send({ action: 'joinRoom', payload: { roomID } })
+        //
+      }
+
+      ws.onmessage = (ev) => {
+        try {
+          let data = JSON.parse(ev.data)
+          console.log('message', data)
+
+          self.emit(data.action, data.payload)
+        } catch (e) {
+          console.error(e)
+        }
+      }
+      ws.onclose = () => {
+        this.clean()
+        console.log('closed, reconnecting in 10 seconds')
+        setTimeout(() => {
+          this.init()
+        }, 1000 * 10)
+      }
+      ws.onerror = (err) => {
+        console.error(err)
+        this.clean()
+        console.log('error, reconnecting in 10 seconds')
+        setTimeout(() => {
+          this.init()
+        }, 1000 * 10)
+      }
+    }
+    this.init()
+  }
+}
+// addGraphDoc({ title: docName })
+
 export const useFlow = create((set, get) => {
+  //
+
+  //
   return {
     //
     toolAddOnlyMode: false,
@@ -26,6 +190,12 @@ export const useFlow = create((set, get) => {
     edges: [],
     fitView: () => {},
     openFile: ({ docName }) => {
+      //
+      //
+      //
+
+      let ws = new WSAuto({ roomID: docName, url: AWSBackend[process.env.NODE_ENV].ws })
+
       // let hh = (ev) => {
       //   if (ev.metaKey && ev.shiftKey && ev.key === 'z') {
       //     worker.postMessage({ type: 'redo' })
@@ -35,53 +205,54 @@ export const useFlow = create((set, get) => {
       // }
       // window.addEventListener('keydown', hh)
 
-      let sync = ({ nodes, edges }) => {
-        set({
-          nodes: nodes,
-          edges: edges,
-        })
-      }
+      // let sync = ({ nodes, edges }) => {
+      //   set({
+      //     nodes: nodes,
+      //     edges: edges,
+      //   })
+      // }
 
-      let worker = new Worker()
+      // let worker = new Worker()
 
-      let did = false
-      let initTemplate = () => {
-        if (!did) {
-          did = true
+      // let did = false
+      // let initTemplate = () => {
+      //   if (!did) {
+      //     did = true
 
-          fetch(`/date/2022-20-23/backup.json`)
-            .then((r) => r.json())
-            .then((dat) => {
-              if (get().nodes.length === 0 && get().edges.length === 0) {
-                set({ nodes: dat.nodes, edges: dat.edges })
-              }
-            })
-        }
-      }
-      worker.addEventListener('message', (ev) => {
-        if (ev.data.type === 'sync') {
-          sync({
-            nodes: ev.data.nodes,
-            edges: ev.data.edges,
-          })
+      //     fetch(`/date/2022-20-23/backup.json`)
+      //       .then((r) => r.json())
+      //       .then((dat) => {
+      //         if (get().nodes.length === 0 && get().edges.length === 0) {
+      //           set({ nodes: dat.nodes, edges: dat.edges })
+      //         }
+      //       })
+      //   }
+      // }
+      // worker.addEventListener('message', (ev) => {
+      //   if (ev.data.type === 'sync') {
+      //     sync({
+      //       nodes: ev.data.nodes,
+      //       edges: ev.data.edges,
+      //     })
 
-          setTimeout(() => {
-            initTemplate()
-          })
-          nProgress.done()
-        }
-      })
-      nProgress.start()
-      worker.postMessage({ type: 'load', docName })
+      //     setTimeout(() => {
+      //       initTemplate()
+      //     })
+      //     nProgress.done()
+      //   }
+      // })
+      // nProgress.start()
+      // worker.postMessage({ type: 'load', docName })
 
       set({
         saveToDB: () => {
-          worker.postMessage({ type: 'saveDB', docName, nodes: get().nodes, edges: get().edges })
+          // worker.postMessage({ type: 'saveDB', docName, nodes: get().nodes, edges: get().edges })
         },
       })
       return () => {
+        ws.clean()
         // window.removeEventListener('keydown', hh)
-        worker.terminate()
+        // worker.terminate()
       }
     },
     saveToDB: () => {},
@@ -90,6 +261,10 @@ export const useFlow = create((set, get) => {
         nodes: applyNodeChanges(changes, get().nodes),
       })
       get().saveToDB()
+
+      setTimeout(() => {
+        fireSyncNodes(changes, get().nodes)
+      })
     },
     onEdgesChange: (changes) => {
       set({
@@ -100,6 +275,10 @@ export const useFlow = create((set, get) => {
         set({
           showTool: false,
         })
+      })
+
+      setTimeout(() => {
+        fireSyncEdges(changes, get().edges)
       })
     },
     onConnect: (connection) => {
