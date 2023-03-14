@@ -29,6 +29,8 @@ export default function GUI({ id, data, selected }) {
   const updateNodeLabel = useFlow((s) => s.updateNodeLabel)
   const updateNodeData = useFlow((s) => s.updateNodeData)
   let objectNameInputRef = useRef()
+
+  let refInputText = useRef()
   return (
     <div
       className={`text-sm rounded-xl transition-transform duration-300 scale-100  border bg-white ${
@@ -77,6 +79,11 @@ export default function GUI({ id, data, selected }) {
                 // updateNodeData(id, 'objectName', name)
                 // objectNameInputRef.current.value = name
 
+                if (objectNameInputRef.current) {
+                  objectNameInputRef.current.value = name
+                }
+
+                //
                 window.dispatchEvent(new CustomEvent('onSyncMesh', { detail: { name, id } }))
               },
             })

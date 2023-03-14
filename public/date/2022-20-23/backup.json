@@ -213,7 +213,7 @@
     {
       "type": "ReadSceneMesh",
       "data": {
-        "label": "RetopoFlow325_9",
+        "label": "objectPicker",
         "color": "#a0a0a0",
         "objectName": "RetopoFlow010_12"
       },
@@ -234,7 +234,7 @@
     {
       "type": "ReadSceneMesh",
       "data": {
-        "label": "meshItem1",
+        "label": "objectPicker",
         "color": "#a0a0a0",
         "objectName": "RetopoFlow325_2"
       },
@@ -628,7 +628,7 @@
     {
       "type": "ReadSceneMesh",
       "data": {
-        "label": "meshItem1",
+        "label": "objectPicker",
         "color": "#a0a0a0",
         "objectName": "RetopoFlow010_5"
       },
@@ -732,32 +732,44 @@
     {
       "type": "ReadSceneMesh",
       "data": {
-        "label": "RetopoFlow010_20",
+        "label": "objectPicker",
         "color": "#a0a0a0",
         "objectName": "RetopoFlow010_20"
       },
       "position": {
-        "x": -270,
-        "y": 420
+        "x": -240,
+        "y": 490
       },
       "id": "_5201f3f11118a750c8534e394e1a3676",
       "width": 275,
-      "height": 98
+      "height": 98,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -240,
+        "y": 490
+      },
+      "dragging": false
     },
     {
       "type": "ReadSceneMesh",
       "data": {
-        "label": "RetopoFlow010_4",
+        "label": "objectPicker",
         "color": "#a0a0a0",
-        "objectName": "RetopoFlow010_4"
+        "objectName": "Octahedron"
       },
       "position": {
-        "x": 200,
-        "y": 200
+        "x": 100,
+        "y": 400
       },
       "id": "_3dd1da9f0df74c49fd69759f03de2f59",
       "width": 275,
-      "height": 98
+      "height": 98,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 100,
+        "y": 400
+      },
+      "dragging": false
     }
   ]
 }

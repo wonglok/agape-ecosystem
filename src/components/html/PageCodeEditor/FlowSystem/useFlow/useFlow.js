@@ -67,7 +67,13 @@ let fireSyncEdges = ({ socket, changes, edges }) => {
 export const useFlow = create((set, get) => {
   //
 
+  fetch(`/date/2022-20-23/backup.json`)
+    .then((r) => r.json())
+    .then((dat) => {
+      set({ nodes: dat.nodes, edges: dat.edges })
+    })
   //
+
   return {
     onSyncMesh: () => {},
     //
@@ -89,6 +95,8 @@ export const useFlow = create((set, get) => {
       //     worker.postMessage({ type: 'undo' })
       //   }
       // }
+
+      //
       // window.addEventListener('keydown', hh)
 
       // let sync = ({ nodes, edges }) => {
@@ -114,6 +122,7 @@ export const useFlow = create((set, get) => {
       //       })
       //   }
       // }
+      //
       // worker.addEventListener('message', (ev) => {
       //   if (ev.data.type === 'sync') {
       //     sync({
@@ -233,6 +242,8 @@ export const useFlow = create((set, get) => {
             toolLeft: `${event.clientX - left}px`,
             newNodePos: project({ x: event.clientX - left, y: event.clientY - top - 10 }),
           })
+
+          //
         } else {
           set({
             showTool: false,
